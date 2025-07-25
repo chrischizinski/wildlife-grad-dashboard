@@ -1,0 +1,102 @@
+name: Scrape Jobs and Update Supabase
+
+on:
+  schedule:
+    # Run every Monday at 9 AM UTC (adjust to your timezone)
+    - cron: '0 9 * * 1'
+  workflow_dispatch: # Allow manual trigger
+  push:
+    branches: [ main, add-github-workflows ]
+    paths:
+      - 'wildlife_job_scraper.py'
+      - 'scripts/populate_supabase.py'
+
+jobs:
+  scrape-and-update:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install Chrome dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y wget gnupg unzip
+        wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+        sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+        sudo apt-get update
+        sudo apt-get install -y google-chrome-stable
+
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install supabase python-dotenv
+
+    - name: Check for existing data (determines scrape mode)
+      id: check_data
+      run: |
+        if [ -f "data/processed/verified_graduate_assistantships.json" ] || [ -f "data/historical_positions.json" ]; then
+          echo "mode=incremental" >> $GITHUB_OUTPUT
+          echo "Existing data found - will run INCREMENTAL scrape (Last 7 days)"
+        else
+          echo "mode=comprehensive" >> $GITHUB_OUTPUT
+          echo "No existing data - will run COMPREHENSIVE scrape (All positions)"
+        fi
+        
+    - name: Scrape wildlife jobs
+      run: |
+        echo "Starting job scraping in ${{ steps.check_data.outputs.mode }} mode..."
+        python3 wildlife_job_scraper.py
+        
+    - name: Update Supabase database (append new data)
+      env:
+        SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+      run: |
+        echo "Updating Supabase database with new data..."
+        echo "Mode: ${{ steps.check_data.outputs.mode }}"
+        python3 scripts/populate_supabase.py
+        
+    - name: Generate dashboard data
+      run: |
+        echo "Generating dashboard analytics..."
+        python3 scripts/generate_dashboard_analytics.py
+        
+    - name: Archive data
+      run: |
+        timestamp=$(date +%Y%m%d_%H%M%S)
+        mkdir -p data/archive
+        cp data/enhanced_data.json "data/archive/enhanced_${timestamp}.json"
+        cp data/historical_positions.json "data/archive/historical_${timestamp}.json"
+        
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add data/
+        git add dashboard/data/
+        if git diff --staged --quiet; then
+          echo "No changes to commit"
+        else
+          git commit -m "Automated job data update $(date '+%Y-%m-%d %H:%M:%S')"
+          git push
+        fi
+
+    - name: Workflow summary
+      run: |
+        echo "## Scraping Summary" >> $GITHUB_STEP_SUMMARY
+        if [ -f "data/enhanced_data.json" ]; then
+          total_jobs=$(jq length data/enhanced_data.json)
+          grad_jobs=$(jq '[.[] | select(.is_graduate_position == true)] | length' data/enhanced_data.json)
+          echo "- **Total positions**: $total_jobs" >> $GITHUB_STEP_SUMMARY
+          echo "- **Graduate positions**: $grad_jobs" >> $GITHUB_STEP_SUMMARY
+        fi
+        echo "- **Supabase updated**: ✅" >> $GITHUB_STEP_SUMMARY
+        echo "- **Dashboard refreshed**: ✅" >> $GITHUB_STEP_SUMMARY

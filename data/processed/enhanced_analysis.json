@@ -1,0 +1,35 @@
+{
+  "total_positions": 6,
+  "graduate_positions": 6,
+  "non_graduate_positions": 0,
+  "high_confidence_graduate": 3,
+  "merge_stats": {
+    "new_positions": 2,
+    "updated_positions": 0,
+    "total_positions": 6,
+    "merge_date": "2025-07-15T16:17:55.230306"
+  },
+  "disciplines": {
+    "Environmental Science": 3,
+    "Wildlife Management and Conservation": 3
+  },
+  "position_types": {
+    "Graduate Position": 3,
+    "PhD Position": 3
+  },
+  "geographic_regions": {
+    "Southeast": 3,
+    "Other": 3
+  },
+  "salary_analysis_lincoln_adjusted": {
+    "mean": 29375.0,
+    "median": 29375.0,
+    "min": 29375.0,
+    "max": 29375.0,
+    "count": 3
+  },
+  "temporal_trends": {
+    "2025-07": 6
+  },
+  "last_updated": "2025-07-15T16:17:55.231155"
+}

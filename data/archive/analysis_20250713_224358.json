@@ -1,0 +1,63 @@
+{
+  "total_positions": 878,
+  "graduate_positions": 140,
+  "non_graduate_positions": 738,
+  "high_confidence_graduate": 0,
+  "merge_stats": {
+    "new_positions": 221,
+    "updated_positions": 2,
+    "total_positions": 878,
+    "merge_date": "2025-07-13T22:30:06.173710"
+  },
+  "disciplines": {
+    "Human Dimensions": 15,
+    "Other": 30,
+    "Environmental Science": 45,
+    "Wildlife Management and Conservation": 27,
+    "Fisheries Management and Conservation": 23
+  },
+  "position_types": {
+    "Professional/Other": 529,
+    "Masters Position": 12,
+    "PhD Position": 45,
+    "Graduate Assistantship": 65,
+    "Graduate Position": 6,
+    "Fellowship": 18,
+    "Unknown": 203
+  },
+  "geographic_regions": {
+    "Southeast": 135,
+    "West": 112,
+    "Southwest": 124,
+    "International": 6,
+    "Midwest": 70,
+    "Remote/Multiple": 165,
+    "Northeast": 36,
+    "Other": 27,
+    "Unknown": 203
+  },
+  "salary_analysis_lincoln_adjusted": {
+    "mean": 32637.161413002115,
+    "median": 27272.727272727272,
+    "min": 2173.913043478261,
+    "max": 71774.11764705883,
+    "count": 97
+  },
+  "temporal_trends": {
+    "2025-01": 33,
+    "2024-11": 17,
+    "2025-06": 333,
+    "2025-05": 246,
+    "2024-10": 19,
+    "2025-04": 72,
+    "2025-03": 48,
+    "2025-02": 24,
+    "2024-08": 8,
+    "2024-12": 6,
+    "2024-09": 11,
+    "2024-06": 3,
+    "2025-07": 56,
+    "2024-07": 2
+  },
+  "last_updated": "2025-07-13T22:30:06.191737"
+}

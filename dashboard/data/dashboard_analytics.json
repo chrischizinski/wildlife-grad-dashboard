@@ -1,0 +1,178 @@
+{
+  "metadata": {
+    "generated_at": "2025-07-24T19:32:00.000Z",
+    "total_positions": 156
+  },
+  "summary_stats": {
+    "total_positions": 156,
+    "graduate_positions": 94,
+    "positions_with_salary": 47
+  },
+  "top_disciplines": {
+    "Wildlife Management and Conservation": {
+      "total_positions": 42,
+      "grad_positions": 28,
+      "salary_stats": {
+        "count": 12,
+        "mean": 26500,
+        "median": 25000,
+        "min": 20000,
+        "max": 35000
+      }
+    },
+    "Fisheries Management and Conservation": {
+      "total_positions": 31,
+      "grad_positions": 22,
+      "salary_stats": {
+        "count": 8,
+        "mean": 24800,
+        "median": 24000,
+        "min": 18000,
+        "max": 32000
+      }
+    },
+    "Environmental Science": {
+      "total_positions": 28,
+      "grad_positions": 18,
+      "salary_stats": {
+        "count": 7,
+        "mean": 27200,
+        "median": 26000,
+        "min": 22000,
+        "max": 35000
+      }
+    },
+    "Human Dimensions": {
+      "total_positions": 19,
+      "grad_positions": 12,
+      "salary_stats": {
+        "count": 5,
+        "mean": 28500,
+        "median": 28000,
+        "min": 24000,
+        "max": 33000
+      }
+    },
+    "Other": {
+      "total_positions": 36,
+      "grad_positions": 14,
+      "salary_stats": null
+    }
+  },
+  "geographic_summary": {
+    "Colorado": 18,
+    "California": 16,
+    "Montana": 12,
+    "Alaska": 11,
+    "Texas": 10,
+    "Wyoming": 9,
+    "Idaho": 8,
+    "Oregon": 7,
+    "Washington": 6,
+    "Other": 59
+  },
+  "time_series": {
+    "1_month": {
+      "total_monthly": {
+        "2025-07": 23
+      },
+      "discipline_monthly": {
+        "Wildlife Management and Conservation": {
+          "2025-07": 8
+        },
+        "Fisheries Management and Conservation": {
+          "2025-07": 6
+        },
+        "Environmental Science": {
+          "2025-07": 5
+        },
+        "Human Dimensions": {
+          "2025-07": 2
+        },
+        "Other": {
+          "2025-07": 2
+        }
+      }
+    },
+    "3_month": {
+      "total_monthly": {
+        "2025-05": 19,
+        "2025-06": 28,
+        "2025-07": 23
+      },
+      "discipline_monthly": {
+        "Wildlife Management and Conservation": {
+          "2025-05": 7,
+          "2025-06": 12,
+          "2025-07": 8
+        },
+        "Fisheries Management and Conservation": {
+          "2025-05": 5,
+          "2025-06": 8,
+          "2025-07": 6
+        },
+        "Environmental Science": {
+          "2025-05": 4,
+          "2025-06": 6,
+          "2025-07": 5
+        },
+        "Human Dimensions": {
+          "2025-05": 2,
+          "2025-06": 1,
+          "2025-07": 2
+        },
+        "Other": {
+          "2025-05": 1,
+          "2025-06": 1,
+          "2025-07": 2
+        }
+      }
+    },
+    "6_month": {
+      "total_monthly": {
+        "2025-02": 8,
+        "2025-03": 15,
+        "2025-04": 12,
+        "2025-05": 19,
+        "2025-06": 28,
+        "2025-07": 23
+      },
+      "discipline_monthly": {}
+    },
+    "1_year": {
+      "total_monthly": {
+        "2024-08": 3,
+        "2024-09": 12,
+        "2024-10": 18,
+        "2024-11": 15,
+        "2024-12": 8,
+        "2025-01": 6,
+        "2025-02": 8,
+        "2025-03": 15,
+        "2025-04": 12,
+        "2025-05": 19,
+        "2025-06": 28,
+        "2025-07": 23
+      },
+      "discipline_monthly": {}
+    },
+    "all_time": {
+      "total_monthly": {
+        "2024-08": 3,
+        "2024-09": 12,
+        "2024-10": 18,
+        "2024-11": 15,
+        "2024-12": 8,
+        "2025-01": 6,
+        "2025-02": 8,
+        "2025-03": 15,
+        "2025-04": 12,
+        "2025-05": 19,
+        "2025-06": 28,
+        "2025-07": 23
+      },
+      "discipline_monthly": {}
+    }
+  },
+  "last_updated": "2025-07-24T19:32:00.000Z"
+}

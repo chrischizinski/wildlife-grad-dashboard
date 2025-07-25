@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wildlife Graduate Assistantships Dashboard</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --info-color: #3b82f6;
+            --wildlife-green: #059669;
+            --nature-blue: #0ea5e9;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8fafc;
+            line-height: 1.6;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, var(--wildlife-green) 0%, var(--nature-blue) 100%);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .stats-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            overflow: hidden;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.12);
+        }
+        
+        .stats-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+        
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            margin-bottom: 20px;
+        }
+        
+        .job-card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            transition: all 0.2s ease;
+            margin-bottom: 15px;
+        }
+        
+        .job-card:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-container {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            margin-bottom: 20px;
+        }
+        
+        .filter-badge {
+            background: var(--wildlife-green);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-right: 8px;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
+        
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--wildlife-green);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .discipline-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 500;
+        }
+        
+        .salary-range {
+            color: var(--success-color);
+            font-weight: 600;
+        }
+        
+        .job-meta {
+            color: #64748b;
+            font-size: 0.9em;
+        }
+        
+        .error-container {
+            background: #fee2e2;
+            border: 1px solid #fecaca;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .btn-wildlife {
+            background: var(--wildlife-green);
+            border: var(--wildlife-green);
+            color: white;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-wildlife:hover {
+            background: #047857;
+            color: white;
+            transform: translateY(-1px);
+        }
+        
+        .btn-outline-wildlife {
+            color: var(--wildlife-green);
+            border-color: var(--wildlife-green);
+            border-radius: 8px;
+        }
+        
+        .btn-outline-wildlife:hover {
+            background: var(--wildlife-green);
+            border-color: var(--wildlife-green);
+            color: white;
+        }
+        
+        .pagination {
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .pagination .page-link {
+            border-radius: 8px;
+            margin: 0 2px;
+            border: 1px solid #e2e8f0;
+            color: var(--wildlife-green);
+        }
+        
+        .pagination .page-link:hover {
+            background-color: var(--wildlife-green);
+            border-color: var(--wildlife-green);
+            color: white;
+        }
+        
+        .pagination .page-item.active .page-link {
+            background-color: var(--wildlife-green);
+            border-color: var(--wildlife-green);
+        }
+        
+        .job-title {
+            color: #1e293b;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .job-organization {
+            color: var(--wildlife-green);
+            font-weight: 500;
+        }
+        
+        .job-location {
+            color: #64748b;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 768px) {
+            .stats-card {
+                margin-bottom: 20px;
+            }
+            
+            .chart-container {
+                padding: 15px;
+            }
+            
+            .search-container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="#">
+                <i class="fas fa-leaf me-2"></i>
+                Wildlife Graduate Assistantships
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#overview">Overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#analytics">Analytics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#jobs">Job Search</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Loading State -->
+    <div id="loading-state" class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                <div class="loading-spinner"></div>
+                <h4 class="text-muted mt-3">Loading Wildlife Graduate Assistantships Data...</h4>
+                <p class="text-muted">Preparing comprehensive analytics and job listings</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error State -->
+    <div id="error-state" class="container my-5" style="display: none;">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="error-container text-center">
+                    <i class="fas fa-exclamation-triangle fa-3x text-danger mb-3"></i>
+                    <h4 class="text-danger">Unable to Load Dashboard Data</h4>
+                    <p id="error-message" class="text-muted mb-3"></p>
+                    <button class="btn btn-wildlife" onclick="location.reload()">
+                        <i class="fas fa-redo me-2"></i>Retry Loading
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content" class="container-fluid my-4" style="display: none;">
+        
+        <!-- Overview Section -->
+        <section id="overview" class="mb-5">
+            <div class="row mb-4">
+                <div class="col">
+                    <h2 class="fw-bold text-dark">
+                        <i class="fas fa-chart-bar me-2 text-success"></i>
+                        Dashboard Overview
+                    </h2>
+                    <p class="text-muted">Comprehensive analytics for wildlife and fisheries graduate opportunities</p>
+                </div>
+            </div>
+            
+            <!-- Stats Cards -->
+            <div class="row g-4 mb-4">
+                <div class="col-lg-3 col-md-6">
+                    <div class="card stats-card h-100">
+                        <div class="card-body d-flex align-items-center">
+                            <div class="stats-icon me-3" style="background: linear-gradient(135deg, #059669, #047857);">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                            <div>
+                                <h3 id="total-positions" class="card-title mb-1 fw-bold">0</h3>
+                                <p class="card-text text-muted mb-0">Total Positions</p>
+                                <small class="text-muted">All job postings collected</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="card stats-card h-100">
+                        <div class="card-body d-flex align-items-center">
+                            <div class="stats-icon me-3" style="background: linear-gradient(135deg, #0ea5e9, #0284c7);">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div>
+                                <h3 id="graduate-positions" class="card-title mb-1 fw-bold">0</h3>
+                                <p class="card-text text-muted mb-0">Graduate Positions</p>
+                                <small class="text-muted">Assistantships & fellowships</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="card stats-card h-100">
+                        <div class="card-body d-flex align-items-center">
+                            <div class="stats-icon me-3" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div>
+                                <h3 id="avg-salary" class="card-title mb-1 fw-bold">$0</h3>
+                                <p class="card-text text-muted mb-0">Average Salary</p>
+                                <small class="text-muted">Lincoln, NE adjusted</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="card stats-card h-100">
+                        <div class="card-body d-flex align-items-center">
+                            <div class="stats-icon me-3" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">
+                                <i class="fas fa-chart-pie"></i>
+                            </div>
+                            <div>
+                                <h3 id="total-disciplines" class="card-title mb-1 fw-bold">0</h3>
+                                <p class="card-text text-muted mb-0">Disciplines</p>
+                                <small class="text-muted">Research areas covered</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analytics Section -->
+        <section id="analytics" class="mb-5">
+            <div class="row mb-4">
+                <div class="col">
+                    <h2 class="fw-bold text-dark">
+                        <i class="fas fa-analytics me-2 text-info"></i>
+                        Analytics & Trends
+                    </h2>
+                    <p class="text-muted">Visual insights into graduate assistantship opportunities</p>
+                </div>
+            </div>
+            
+            <!-- Charts Row -->
+            <div class="row g-4">
+                <div class="col-lg-8">
+                    <div class="chart-container">
+                        <h5 class="mb-3">
+                            <i class="fas fa-chart-line me-2 text-success"></i>
+                            Monthly Trends
+                        </h5>
+                        <canvas id="trendsChart" style="height: 300px;"></canvas>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="chart-container">
+                        <h5 class="mb-3">
+                            <i class="fas fa-chart-pie me-2 text-info"></i>
+                            By Discipline
+                        </h5>
+                        <canvas id="disciplineChart" style="height: 300px;"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row g-4 mt-1">
+                <div class="col-lg-6">
+                    <div class="chart-container">
+                        <h5 class="mb-3">
+                            <i class="fas fa-dollar-sign me-2 text-warning"></i>
+                            Salary Distribution
+                        </h5>
+                        <canvas id="salaryChart" style="height: 250px;"></canvas>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="chart-container">
+                        <h5 class="mb-3">
+                            <i class="fas fa-map-marker-alt me-2 text-danger"></i>
+                            Geographic Distribution
+                        </h5>
+                        <canvas id="locationChart" style="height: 250px;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Job Search Section -->
+        <section id="jobs" class="mb-5">
+            <div class="row mb-4">
+                <div class="col">
+                    <h2 class="fw-bold text-dark">
+                        <i class="fas fa-search me-2 text-primary"></i>
+                        Job Search & Listings
+                    </h2>
+                    <p class="text-muted">Search and filter through available graduate assistantships</p>
+                </div>
+            </div>
+            
+            <!-- Search and Filters -->
+            <div class="search-container">
+                <div class="row g-3">
+                    <div class="col-lg-4">
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-search"></i>
+                            </span>
+                            <input type="text" id="search-input" class="form-control" 
+                                   placeholder="Search jobs, organizations, locations...">
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-2">
+                        <select id="discipline-filter" class="form-select">
+                            <option value="">All Disciplines</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-lg-2">
+                        <select id="salary-filter" class="form-select">
+                            <option value="">All Salaries</option>
+                            <option value="0-25000">Under $25K</option>
+                            <option value="25000-35000">$25K - $35K</option>
+                            <option value="35000-50000">$35K - $50K</option>
+                            <option value="50000-999999">Above $50K</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-lg-2">
+                        <select id="sort-filter" class="form-select">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="salary-high">Salary: High to Low</option>
+                            <option value="salary-low">Salary: Low to High</option>
+                            <option value="alphabetical">Alphabetical</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-lg-2">
+                        <button id="clear-filters" class="btn btn-outline-secondary w-100">
+                            <i class="fas fa-times me-1"></i>Clear Filters
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Active Filters Display -->
+                <div id="active-filters" class="mt-3" style="display: none;">
+                    <small class="text-muted me-2">Active Filters:</small>
+                    <div id="filter-badges" class="d-inline"></div>
+                </div>
+            </div>
+            
+            <!-- Results Summary -->
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span id="results-count" class="fw-bold text-success">0</span>
+                            <span class="text-muted">positions found</span>
+                        </div>
+                        <div>
+                            <button id="export-results" class="btn btn-outline-wildlife btn-sm">
+                                <i class="fas fa-download me-1"></i>Export Results
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Job Listings -->
+            <div id="job-listings" class="row">
+                <!-- Jobs will be populated here -->
+            </div>
+            
+            <!-- Pagination -->
+            <nav id="pagination-container" style="display: none;">
+                <ul class="pagination" id="pagination">
+                    <!-- Pagination will be populated here -->
+                </ul>
+            </nav>
+        </section>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Global variables
+        let dashboardData = null;
+        let jobsData = null;
+        let filteredJobs = [];
+        let currentPage = 1;
+        const jobsPerPage = 12;
+        
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', async function() {
+            await loadData();
+        });
+        
+        // Data loading function
+        async function loadData() {
+            try {
+                showLoading();
+                
+                // Try multiple data source paths for GitHub Pages compatibility
+                const dataPaths = [
+                    '../data/enhanced_data.json',
+                    'data/enhanced_data.json',
+                    './data/enhanced_data.json'
+                ];
+                
+                const jobsPaths = [
+                    '../data/historical_positions.json',
+                    'data/historical_positions.json',
+                    './data/historical_positions.json'
+                ];
+                
+                // Load enhanced data
+                let enhancedData = null;
+                for (const path of dataPaths) {
+                    try {
+                        const response = await fetch(path);
+                        if (response.ok) {
+                            enhancedData = await response.json();
+                            console.log(`Enhanced data loaded from: ${path}`);
+                            break;
+                        }
+                    } catch (e) {
+                        console.log(`Failed to load from ${path}:`, e.message);
+                    }
+                }
+                
+                // Load jobs data
+                let jobsResponse = null;
+                for (const path of jobsPaths) {
+                    try {
+                        const response = await fetch(path);
+                        if (response.ok) {
+                            jobsResponse = await response.json();
+                            console.log(`Jobs data loaded from: ${path}`);
+                            break;
+                        }
+                    } catch (e) {
+                        console.log(`Failed to load jobs from ${path}:`, e.message);
+                    }
+                }
+                
+                if (!enhancedData) {
+                    throw new Error('Could not load enhanced data from any path. Please ensure data files are accessible.');
+                }
+                
+                if (!jobsResponse) {
+                    throw new Error('Could not load jobs data from any path. Please ensure data files are accessible.');
+                }
+                
+                dashboardData = enhancedData;
+                jobsData = Array.isArray(jobsResponse) ? jobsResponse : [jobsResponse];
+                
+                // Filter for graduate positions only
+                filteredJobs = jobsData.filter(job => job.is_graduate_position === true);
+                
+                // Initialize dashboard components
+                updateOverviewCards();
+                createCharts();
+                populateFilters();
+                displayJobs();
+                setupEventListeners();
+                
+                hideLoading();
+                
+            } catch (error) {
+                console.error('Error loading data:', error);
+                showError(error.message);
+            }
+        }
+        
+        // Update overview cards
+        function updateOverviewCards() {
+            const totalPositions = dashboardData.summary_stats?.total_positions || 0;
+            const graduatePositions = dashboardData.summary_stats?.graduate_positions || 0;
+            const avgSalary = dashboardData.summary_stats?.salary_statistics?.mean || 0;
+            const disciplineCount = Object.keys(dashboardData.breakdowns?.by_discipline || {}).length;
+            
+            document.getElementById('total-positions').textContent = totalPositions.toLocaleString();
+            document.getElementById('graduate-positions').textContent = graduatePositions.toLocaleString();
+            document.getElementById('avg-salary').textContent = avgSalary > 0 ? 
+                `$${Math.round(avgSalary).toLocaleString()}` : 'N/A';
+            document.getElementById('total-disciplines').textContent = disciplineCount;
+        }
+        
+        // Create charts
+        function createCharts() {
+            createTrendsChart();
+            createDisciplineChart();
+            createSalaryChart();
+            createLocationChart();
+        }
+        
+        // Create trends chart
+        function createTrendsChart() {
+            const ctx = document.getElementById('trendsChart').getContext('2d');
+            const monthlyData = dashboardData.breakdowns?.monthly_trends || {};
+            
+            const labels = Object.keys(monthlyData).sort();
+            const data = labels.map(month => monthlyData[month] || 0);
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels.map(month => {
+                        const [year, monthNum] = month.split('-');
+                        return new Date(year, monthNum - 1).toLocaleDateString('en-US', { 
+                            month: 'short', 
+                            year: 'numeric' 
+                        });
+                    }),
+                    datasets: [{
+                        label: 'Graduate Positions Posted',
+                        data: data,
+                        borderColor: '#059669',
+                        backgroundColor: 'rgba(5, 150, 105, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Number of Positions'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Create discipline chart
+        function createDisciplineChart() {
+            const ctx = document.getElementById('disciplineChart').getContext('2d');
+            const disciplineData = dashboardData.breakdowns?.by_discipline || {};
+            
+            const sortedDisciplines = Object.entries(disciplineData)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 6); // Top 6 disciplines
+            
+            const labels = sortedDisciplines.map(([discipline, _]) => discipline);
+            const data = sortedDisciplines.map(([_, count]) => count);
+            
+            const colors = [
+                '#059669', '#0ea5e9', '#f59e0b', '#8b5cf6', 
+                '#ef4444', '#06b6d4', '#84cc16', '#f97316'
+            ];
+            
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: colors.slice(0, labels.length),
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 15,
+                                usePointStyle: true
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Create salary chart
+        function createSalaryChart() {
+            const ctx = document.getElementById('salaryChart').getContext('2d');
+            
+            // Create salary ranges
+            const salaryRanges = {
+                'Under $20K': 0,
+                '$20K-$30K': 0,
+                '$30K-$40K': 0,
+                '$40K-$50K': 0,
+                'Above $50K': 0
+            };
+            
+            jobsData.forEach(job => {
+                if (job.salary_lincoln_adjusted && job.salary_lincoln_adjusted > 0) {
+                    const salary = job.salary_lincoln_adjusted;
+                    if (salary < 20000) salaryRanges['Under $20K']++;
+                    else if (salary < 30000) salaryRanges['$20K-$30K']++;
+                    else if (salary < 40000) salaryRanges['$30K-$40K']++;
+                    else if (salary < 50000) salaryRanges['$40K-$50K']++;
+                    else salaryRanges['Above $50K']++;
+                }
+            });
+            
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(salaryRanges),
+                    datasets: [{
+                        label: 'Number of Positions',
+                        data: Object.values(salaryRanges),
+                        backgroundColor: 'rgba(5, 150, 105, 0.8)',
+                        borderColor: '#059669',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Number of Positions'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Create location chart
+        function createLocationChart() {
+            const ctx = document.getElementById('locationChart').getContext('2d');
+            const organizationData = dashboardData.breakdowns?.by_organization_type || {};
+            
+            // Get organization types
+            const sortedOrgs = Object.entries(organizationData)
+                .filter(([org, count]) => org && count > 0)
+                .sort((a, b) => b[1] - a[1]);
+            
+            const labels = sortedOrgs.map(([org, _]) => org);
+            const data = sortedOrgs.map(([_, count]) => count);
+            
+            const colors = [
+                '#059669', '#0ea5e9', '#f59e0b', '#8b5cf6', 
+                '#ef4444', '#06b6d4', '#84cc16', '#f97316'
+            ];
+            
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Positions',
+                        data: data,
+                        backgroundColor: colors.slice(0, labels.length),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Number of Positions'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Populate filter dropdowns
+        function populateFilters() {
+            const disciplineFilter = document.getElementById('discipline-filter');
+            const disciplines = new Set();
+            
+            jobsData.forEach(job => {
+                if (job.discipline_primary) {
+                    disciplines.add(job.discipline_primary);
+                }
+            });
+            
+            Array.from(disciplines).sort().forEach(discipline => {
+                const option = document.createElement('option');
+                option.value = discipline;
+                option.textContent = discipline;
+                disciplineFilter.appendChild(option);
+            });
+        }
+        
+        // Display jobs with pagination
+        function displayJobs() {
+            const jobListings = document.getElementById('job-listings');
+            const resultsCount = document.getElementById('results-count');
+            
+            resultsCount.textContent = filteredJobs.length;
+            
+            if (filteredJobs.length === 0) {
+                jobListings.innerHTML = `
+                    <div class="col-12 text-center py-5">
+                        <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                        <h4 class="text-muted">No positions found</h4>
+                        <p class="text-muted">Try adjusting your search criteria or filters</p>
+                    </div>
+                `;
+                hidePagination();
+                return;
+            }
+            
+            // Calculate pagination
+            const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
+            const startIndex = (currentPage - 1) * jobsPerPage;
+            const endIndex = startIndex + jobsPerPage;
+            const jobsToShow = filteredJobs.slice(startIndex, endIndex);
+            
+            // Generate job cards
+            jobListings.innerHTML = jobsToShow.map(job => createJobCard(job)).join('');
+            
+            // Update pagination
+            if (totalPages > 1) {
+                createPagination(totalPages);
+            } else {
+                hidePagination();
+            }
+        }
+        
+        // Create individual job card
+        function createJobCard(job) {
+            const salary = job.salary_lincoln_adjusted && job.salary_lincoln_adjusted > 0
+                ? `$${Math.round(job.salary_lincoln_adjusted).toLocaleString()}`
+                : (job.salary || 'Not specified');
+            
+            const discipline = job.discipline_primary || 'Not specified';
+            const location = job.location || 'Location not specified';
+            const organization = job.organization || 'Organization not specified';
+            const publishedDate = job.published_date || 'Date not specified';
+            
+            return `
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card job-card h-100">
+                        <div class="card-body">
+                            <h6 class="job-title">${escapeHtml(job.title || 'Title not available')}</h6>
+                            <p class="job-organization mb-1">${escapeHtml(organization)}</p>
+                            <p class="job-location mb-2">
+                                <i class="fas fa-map-marker-alt me-1"></i>${escapeHtml(location)}
+                            </p>
+                            
+                            <div class="mb-3">
+                                <span class="discipline-badge bg-light text-dark">
+                                    ${escapeHtml(discipline)}
+                                </span>
+                            </div>
+                            
+                            <div class="job-meta mb-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small>
+                                        <i class="fas fa-calendar me-1"></i>
+                                        Posted: ${escapeHtml(publishedDate)}
+                                    </small>
+                                    <small class="salary-range">
+                                        <i class="fas fa-dollar-sign me-1"></i>
+                                        ${escapeHtml(salary)}
+                                    </small>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-auto">
+                                <button class="btn btn-wildlife btn-sm w-100" onclick="showJobDetails('${job.position_id || Math.random()}')">
+                                    <i class="fas fa-eye me-1"></i>View Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Create pagination
+        function createPagination(totalPages) {
+            const paginationContainer = document.getElementById('pagination-container');
+            const pagination = document.getElementById('pagination');
+            
+            let paginationHTML = '';
+            
+            // Previous button
+            paginationHTML += `
+                <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+                    <a class="page-link" href="#" onclick="changePage(${currentPage - 1}); return false;">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                </li>
+            `;
+            
+            // Page numbers
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= currentPage - 2 && i <= currentPage + 2)) {
+                    paginationHTML += `
+                        <li class="page-item ${i === currentPage ? 'active' : ''}">
+                            <a class="page-link" href="#" onclick="changePage(${i}); return false;">${i}</a>
+                        </li>
+                    `;
+                } else if (i === currentPage - 3 || i === currentPage + 3) {
+                    paginationHTML += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+                }
+            }
+            
+            // Next button
+            paginationHTML += `
+                <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+                    <a class="page-link" href="#" onclick="changePage(${currentPage + 1}); return false;">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </li>
+            `;
+            
+            pagination.innerHTML = paginationHTML;
+            paginationContainer.style.display = 'block';
+        }
+        
+        // Hide pagination
+        function hidePagination() {
+            document.getElementById('pagination-container').style.display = 'none';
+        }
+        
+        // Change page
+        function changePage(page) {
+            const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
+            if (page < 1 || page > totalPages) return;
+            
+            currentPage = page;
+            displayJobs();
+            
+            // Scroll to top of job listings
+            document.getElementById('jobs').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            // Search input with debouncing
+            let searchTimeout;
+            document.getElementById('search-input').addEventListener('input', function(e) {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    applyFilters();
+                }, 300);
+            });
+            
+            // Filter dropdowns
+            document.getElementById('discipline-filter').addEventListener('change', applyFilters);
+            document.getElementById('salary-filter').addEventListener('change', applyFilters);
+            document.getElementById('sort-filter').addEventListener('change', applyFilters);
+            
+            // Clear filters button
+            document.getElementById('clear-filters').addEventListener('click', clearFilters);
+            
+            // Export results button
+            document.getElementById('export-results').addEventListener('click', exportResults);
+        }
+        
+        // Apply filters and search
+        function applyFilters() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const disciplineFilter = document.getElementById('discipline-filter').value;
+            const salaryFilter = document.getElementById('salary-filter').value;
+            const sortFilter = document.getElementById('sort-filter').value;
+            
+            // Start with graduate positions only
+            filteredJobs = jobsData.filter(job => job.is_graduate_position === true);
+            
+            // Apply search filter
+            if (searchTerm) {
+                filteredJobs = filteredJobs.filter(job => {
+                    return (
+                        (job.title && job.title.toLowerCase().includes(searchTerm)) ||
+                        (job.organization && job.organization.toLowerCase().includes(searchTerm)) ||
+                        (job.location && job.location.toLowerCase().includes(searchTerm)) ||
+                        (job.discipline_primary && job.discipline_primary.toLowerCase().includes(searchTerm)) ||
+                        (job.description && job.description.toLowerCase().includes(searchTerm))
+                    );
+                });
+            }
+            
+            // Apply discipline filter
+            if (disciplineFilter) {
+                filteredJobs = filteredJobs.filter(job => job.discipline_primary === disciplineFilter);
+            }
+            
+            // Apply salary filter
+            if (salaryFilter) {
+                const [minSalary, maxSalary] = salaryFilter.split('-').map(Number);
+                filteredJobs = filteredJobs.filter(job => {
+                    const salary = job.salary_lincoln_adjusted || 0;
+                    return salary >= minSalary && salary <= maxSalary;
+                });
+            }
+            
+            // Apply sorting
+            switch (sortFilter) {
+                case 'newest':
+                    filteredJobs.sort((a, b) => new Date(b.published_date || 0) - new Date(a.published_date || 0));
+                    break;
+                case 'oldest':
+                    filteredJobs.sort((a, b) => new Date(a.published_date || 0) - new Date(b.published_date || 0));
+                    break;
+                case 'salary-high':
+                    filteredJobs.sort((a, b) => (b.salary_lincoln_adjusted || 0) - (a.salary_lincoln_adjusted || 0));
+                    break;
+                case 'salary-low':
+                    filteredJobs.sort((a, b) => (a.salary_lincoln_adjusted || 0) - (b.salary_lincoln_adjusted || 0));
+                    break;
+                case 'alphabetical':
+                    filteredJobs.sort((a, b) => (a.title || '').localeCompare(b.title || ''));
+                    break;
+            }
+            
+            // Reset to first page and display
+            currentPage = 1;
+            displayJobs();
+            updateActiveFilters();
+        }
+        
+        // Clear all filters
+        function clearFilters() {
+            document.getElementById('search-input').value = '';
+            document.getElementById('discipline-filter').value = '';
+            document.getElementById('salary-filter').value = '';
+            document.getElementById('sort-filter').value = 'newest';
+            applyFilters();
+        }
+        
+        // Update active filters display
+        function updateActiveFilters() {
+            const activeFiltersDiv = document.getElementById('active-filters');
+            const filterBadgesDiv = document.getElementById('filter-badges');
+            
+            const searchTerm = document.getElementById('search-input').value;
+            const disciplineFilter = document.getElementById('discipline-filter').value;
+            const salaryFilter = document.getElementById('salary-filter').value;
+            
+            let badges = [];
+            
+            if (searchTerm) {
+                badges.push(`<span class="filter-badge">Search: "${searchTerm}"</span>`);
+            }
+            
+            if (disciplineFilter) {
+                badges.push(`<span class="filter-badge">Discipline: ${disciplineFilter}</span>`);
+            }
+            
+            if (salaryFilter) {
+                const salaryText = document.querySelector(`#salary-filter option[value="${salaryFilter}"]`).textContent;
+                badges.push(`<span class="filter-badge">Salary: ${salaryText}</span>`);
+            }
+            
+            if (badges.length > 0) {
+                filterBadgesDiv.innerHTML = badges.join('');
+                activeFiltersDiv.style.display = 'block';
+            } else {
+                activeFiltersDiv.style.display = 'none';
+            }
+        }
+        
+        // Export filtered results
+        function exportResults() {
+            const dataToExport = {
+                export_date: new Date().toISOString(),
+                total_results: filteredJobs.length,
+                jobs: filteredJobs
+            };
+            
+            const jsonString = JSON.stringify(dataToExport, null, 2);
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `wildlife_positions_filtered_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+        
+        // Show job details (placeholder for modal functionality)
+        function showJobDetails(jobId) {
+            const job = jobsData.find(j => j.position_id === jobId);
+            if (job) {
+                alert(`Job Details:\n\nTitle: ${job.title}\nOrganization: ${job.organization}\nLocation: ${job.location}\n\nFull details modal would open here in a production version.`);
+            }
+        }
+        
+        // Utility function to escape HTML
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // UI helper functions
+        function showLoading() {
+            document.getElementById('loading-state').style.display = 'block';
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('error-state').style.display = 'none';
+        }
+        
+        function hideLoading() {
+            document.getElementById('loading-state').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+            document.getElementById('error-state').style.display = 'none';
+        }
+        
+        function showError(message) {
+            document.getElementById('loading-state').style.display = 'none';
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('error-state').style.display = 'block';
+            document.getElementById('error-message').textContent = message;
+        }
+    </script>
+</body>
+</html>
+                
