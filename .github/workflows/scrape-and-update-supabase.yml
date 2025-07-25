@@ -89,7 +89,7 @@ jobs:
           echo "No changes to commit"
         else
           git commit -m "Automated job data update $(date '+%Y-%m-%d %H:%M:%S')"
-          git pull --rebase origin main
+          git pull --rebase --strategy-option=theirs origin main
           git push origin main
         fi
 
