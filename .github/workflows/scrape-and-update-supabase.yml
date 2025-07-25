@@ -82,13 +82,15 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
+        git fetch origin
         git add data/
         git add dashboard/data/
         if git diff --staged --quiet; then
           echo "No changes to commit"
         else
           git commit -m "Automated job data update $(date '+%Y-%m-%d %H:%M:%S')"
-          git push
+          git pull --rebase origin main
+          git push origin main
         fi
 
     - name: Workflow summary
