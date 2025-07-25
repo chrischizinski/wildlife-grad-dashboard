@@ -178,7 +178,10 @@ cython_debug/
 .kilocode/
 .claude/
 
+.env*
+
 # Project-specific temporary files
+data/
 data/*_opportunities_*.json
 data/cleaned_*.json
 data/page_*.png
