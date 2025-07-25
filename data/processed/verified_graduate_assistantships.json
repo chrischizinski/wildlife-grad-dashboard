@@ -21,8 +21,8 @@
     "discipline_keywords": [],
     "is_big10_university": false,
     "university_name": "",
-    "scraped_at": "2025-07-25T18:00:35.138360+00:00",
-    "scrape_run_id": "scrape_20250725_180009_b3214827",
+    "scraped_at": "2025-07-25T18:32:26.072353+00:00",
+    "scrape_run_id": "scrape_20250725_183200_6f194265",
     "scraper_version": "2.0"
   },
   {
@@ -47,8 +47,8 @@
     "discipline_keywords": [],
     "is_big10_university": false,
     "university_name": "",
-    "scraped_at": "2025-07-25T18:00:35.336360+00:00",
-    "scrape_run_id": "scrape_20250725_180009_b3214827",
+    "scraped_at": "2025-07-25T18:32:26.262982+00:00",
+    "scrape_run_id": "scrape_20250725_183200_6f194265",
     "scraper_version": "2.0"
   },
   {
@@ -77,8 +77,8 @@
     ],
     "is_big10_university": false,
     "university_name": "",
-    "scraped_at": "2025-07-25T18:00:35.436794+00:00",
-    "scrape_run_id": "scrape_20250725_180009_b3214827",
+    "scraped_at": "2025-07-25T18:32:26.357841+00:00",
+    "scrape_run_id": "scrape_20250725_183200_6f194265",
     "scraper_version": "2.0"
   },
   {
@@ -109,8 +109,8 @@
     ],
     "is_big10_university": false,
     "university_name": "",
-    "scraped_at": "2025-07-25T18:00:36.205760+00:00",
-    "scrape_run_id": "scrape_20250725_180009_b3214827",
+    "scraped_at": "2025-07-25T18:32:27.072740+00:00",
+    "scrape_run_id": "scrape_20250725_183200_6f194265",
     "scraper_version": "2.0"
   },
   {
@@ -135,8 +135,8 @@
     "discipline_keywords": [],
     "is_big10_university": false,
     "university_name": "",
-    "scraped_at": "2025-07-25T18:00:37.047254+00:00",
-    "scrape_run_id": "scrape_20250725_180009_b3214827",
+    "scraped_at": "2025-07-25T18:32:27.837883+00:00",
+    "scrape_run_id": "scrape_20250725_183200_6f194265",
     "scraper_version": "2.0"
   }
 ]
