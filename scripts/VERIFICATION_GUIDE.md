@@ -124,6 +124,7 @@ python scripts/generate_dashboard_analytics.py
 
 ### 🧠 Smart Sampling (`--smart-sample N`)
 **Best for:** Daily/weekly verification sessions
+- **Automatically excludes already-verified positions** (no re-review needed)
 - Prioritizes unverified positions (score +10)
 - Emphasizes low-confidence classifications (score +5 per low confidence)
 - Targets "Unknown" disciplines (score +8)
@@ -132,17 +133,31 @@ python scripts/generate_dashboard_analytics.py
 
 ### 🌐 Diverse Sampling (`--diverse-sample N`)
 **Best for:** ML model training and comprehensive coverage
+- **Automatically excludes already-verified positions** (no re-review needed)
 - Samples proportionally from each discipline
 - Balances confidence levels (low/medium/high)
-- Includes mix of verified/unverified positions
+- Prioritizes unverified positions for sampling
 - Ensures geographic and temporal spread
 - Prevents bias toward recent or popular positions
 
 ### ⏰ Recent Sampling (`--recent N`)
 **Best for:** Monitoring new incoming positions
+- **Automatically excludes already-verified positions** (no re-review needed)
 - Shows most recently scraped positions
 - Good for staying current with new listings
 - May miss older positions needing verification
+
+### 🔄 **No Re-Review Policy**
+**By default, all sampling strategies exclude positions that have already been human-verified:**
+- ✅ **Prevents redundant verification work**
+- 🎯 **Focuses effort on positions that actually need review**
+- 📊 **Shows verification status in statistics**
+
+**Override when needed:**
+```bash
+# Include already-verified positions (rare use case)
+python scripts/verify_classifications.py --smart-sample 20 --include-verified
+```
 
 ## Tips for Effective Verification
 

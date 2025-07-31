@@ -86,6 +86,16 @@ class ClassificationVerifier:
         """Filter positions based on CLI arguments with diverse sampling strategies."""
         filtered = self.positions.copy()
 
+        # Exclude already human-verified positions by default
+        if not args.include_verified:
+            original_count = len(filtered)
+            filtered = [p for p in filtered if not p.get("human_verified", False)]
+            excluded_count = original_count - len(filtered)
+            if excluded_count > 0:
+                print(
+                    f"✅ Excluded {excluded_count} already-verified positions (use --include-verified to include them)"
+                )
+
         # Filter by confidence threshold
         if args.confidence_threshold:
             filtered = [
@@ -187,9 +197,15 @@ class ClassificationVerifier:
                 for p in positions
                 if not p.get("human_verified", False) and p not in diverse_sample
             ]
-            if unverified:
+            if unverified and remaining_slots > 0:
                 additional = min(remaining_slots, len(unverified))
                 diverse_sample.extend(random.sample(unverified, additional))
+            elif remaining_slots > 0:
+                # If no unverified positions left, fill from any remaining positions
+                remaining = [p for p in positions if p not in diverse_sample]
+                if remaining:
+                    additional = min(remaining_slots, len(remaining))
+                    diverse_sample.extend(random.sample(remaining, additional))
 
         return diverse_sample[:sample_size]
 
@@ -536,13 +552,21 @@ class ClassificationVerifier:
 
         print(f"\n📈 Summary Statistics for {len(positions)} positions:")
 
+        # Verification status distribution
+        verified = sum(1 for p in positions if p.get("human_verified", False))
+        unverified = len(positions) - verified
+
+        print("✅ Verification Status:")
+        print(f"   Human Verified:   {verified:3d} positions")
+        print(f"   Unverified:       {unverified:3d} positions")
+
         # Confidence distribution
         confidences = [p.get("grad_confidence", 0) for p in positions]
         low_conf = sum(1 for c in confidences if c < 0.7)
         medium_conf = sum(1 for c in confidences if 0.7 <= c < 0.9)
         high_conf = sum(1 for c in confidences if c >= 0.9)
 
-        print("🎯 Confidence Distribution:")
+        print("\n🎯 Confidence Distribution:")
         print(f"   Low (< 0.7):    {low_conf:3d} positions")
         print(f"   Medium (0.7-0.9): {medium_conf:3d} positions")
         print(f"   High (≥ 0.9):    {high_conf:3d} positions")
@@ -595,6 +619,11 @@ def main():
         "--stats-only",
         action="store_true",
         help="Show statistics only, don't start verification",
+    )
+    parser.add_argument(
+        "--include-verified",
+        action="store_true",
+        help="Include already human-verified positions in sampling (default: exclude them to avoid re-review)",
     )
 
     args = parser.parse_args()
