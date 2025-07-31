@@ -18,7 +18,8 @@ import statistics
 def load_data():
     """Load the export data from various possible locations."""
     possible_paths = [
-        Path("data/processed/verified_graduate_assistantships.json"),
+        Path("data/processed/dev_verified_graduate_assistantships.json"),  # Development data first
+        Path("data/processed/verified_graduate_assistantships.json"),       # Production data
         Path("dashboard/data/export_data.json"),
         Path("data/export_data.json"),
         Path("export_data.json"),
