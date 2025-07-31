@@ -57,6 +57,17 @@ jobs:
           echo "Starting job scraping in ${{ steps.check_data.outputs.mode }} mode..."
           python3 wildlife_job_scraper.py
 
+      - name: Debug filesystem and verify files
+        run: |
+          echo "=== Debugging filesystem ==="
+          echo "Current working directory: $(pwd)"
+          echo "Directory contents:"
+          ls -la
+          echo "Scripts directory contents:"
+          ls -la scripts/ || echo "Scripts directory not found"
+          echo "Python version: $(python3 --version)"
+          echo "Which python3: $(which python3)"
+
       - name: Update Supabase database (append new data)
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
@@ -64,7 +75,14 @@ jobs:
         run: |
           echo "Updating Supabase database with new data..."
           echo "Mode: ${{ steps.check_data.outputs.mode }}"
-          python3 scripts/populate_supabase.py
+          if [ -f "scripts/populate_supabase.py" ]; then
+            python3 scripts/populate_supabase.py
+          else
+            echo "ERROR: scripts/populate_supabase.py not found!"
+            echo "Available files in scripts/:"
+            ls -la scripts/ || echo "Scripts directory does not exist"
+            exit 1
+          fi
 
       - name: Generate dashboard data
         run: |
