@@ -32,14 +32,35 @@ When reviewing each position, you have these options:
 - **`[s]`** - Skip this position (review later)
 - **`[q]`** - Quit verification session
 
-## Correction Process
+## Comprehensive Correction Process
 
-When you choose `[c]` to correct, you'll be prompted to:
+When you choose `[c]` to correct, you'll be prompted to review **ALL** classification types:
 
-1. **Graduate Position**: Is this truly a graduate assistantship/fellowship?
-2. **Position Type**: Choose from Graduate/Professional/Technician/Exclude
-3. **Discipline**: Select the correct discipline category
-4. **Notes**: Add optional notes about your decision
+### 1. Graduate Position Classification
+- Current classification and confidence score
+- **Reasoning required** if you change the classification
+- Options: Yes (graduate) / No (professional/staff) / Keep current
+
+### 2. Position Type Classification
+- Current: Graduate/Professional/Technician
+- **Reasoning required** for any changes
+- Choose from: Graduate/Professional/Technician/Exclude
+
+### 3. Discipline Classification
+- Current discipline and confidence score
+- Shows ML-identified keywords for context
+- **Reasoning required** for any changes
+- Options: Wildlife & Natural Resources, Environmental Science, etc.
+
+### 4. University Classification
+- Current university name and Big 10 status
+- Shows organization field for context
+- **Reasoning required** for any changes
+- Options: Mark as Big 10, Not Big 10, Update university name
+
+### 5. Overall Notes
+- Optional general comments about the position
+- Helps with future ML model improvements
 
 ## Applying Corrections
 
@@ -137,10 +158,21 @@ python scripts/apply_corrections.py --no-backup
 ## Expected Accuracy Improvements
 
 With regular verification, you should see:
-- **Immediate**: Better quality in dashboard analytics
-- **1 month**: Improved ML confidence scores
-- **3 months**: Fewer "Unknown" classifications
-- **6 months**: Overall classification accuracy >95%
+- **Immediate**: Better quality in dashboard analytics with reasoning for each correction
+- **1 month**: Improved ML confidence scores across all classification types
+- **3 months**: Fewer "Unknown" classifications and better university identification
+- **6 months**: Overall classification accuracy >95% for all fields
+
+## Classification Quality Tracking
+
+The system now tracks accuracy for:
+- 🎓 Graduate Position Classification
+- 🏷️ Position Type Classification
+- 🔬 Discipline Classification
+- 🏫 Big 10 University Classification
+- 🏛️ University Name Identification
+
+Each correction includes human reasoning that helps improve future ML models.
 
 ## Questions?
 

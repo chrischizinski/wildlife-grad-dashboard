@@ -16,7 +16,7 @@ import json
 import shutil
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List
+from typing import Any, Dict, List
 
 
 class CorrectionApplicator:
@@ -100,6 +100,7 @@ class CorrectionApplicator:
                 # Apply corrections
                 corrections = correction.get("corrections", {})
                 original = correction.get("original", {})
+                reasoning = correction.get("reasoning", {})
 
                 changes = []
                 for field, new_value in corrections.items():
@@ -111,12 +112,23 @@ class CorrectionApplicator:
                         # Store original ML prediction for analysis
                         if "ml_original" not in position:
                             position["ml_original"] = original
-                    changes.append(f"{field}: {old_value} → {new_value}")
+                        # Store human reasoning for future ML training
+                        if "human_reasoning" not in position:
+                            position["human_reasoning"] = reasoning
+                    change_text = f"{field}: {old_value} → {new_value}"
+                    if field in reasoning:
+                        change_text += f" (Reason: {reasoning[field]})"
+                    changes.append(change_text)
 
                 stats["corrected"] += 1
                 print(f"🔧 Corrected: {position.get('title', 'Unknown')[:40]}...")
                 for change in changes:
                     print(f"    {change}")
+
+                # Show overall notes if provided
+                notes = correction.get("notes", "")
+                if notes:
+                    print(f"    📝 Notes: {notes}")
 
             elif action == "excluded":
                 # Mark for exclusion
@@ -174,7 +186,7 @@ class CorrectionApplicator:
         )
 
     def show_accuracy_report(self) -> None:
-        """Show ML model accuracy based on human corrections."""
+        """Show ML model accuracy based on human corrections for ALL classifications."""
         corrected_positions = [p for p in self.positions if "ml_original" in p]
 
         if not corrected_positions:
@@ -185,39 +197,74 @@ class CorrectionApplicator:
             f"\n📊 ML Model Accuracy Report ({len(corrected_positions)} corrections analyzed):"
         )
 
-        # Analyze graduate position accuracy
-        grad_correct = 0
-        grad_total = 0
-
-        # Analyze discipline accuracy
-        disc_correct = 0
-        disc_total = 0
+        # Track accuracy for each classification type
+        classifications: Dict[str, Dict[str, Any]] = {
+            "is_graduate_position": {
+                "correct": 0,
+                "total": 0,
+                "name": "🎓 Graduate Position",
+            },
+            "position_type": {"correct": 0, "total": 0, "name": "🏷️  Position Type"},
+            "discipline": {"correct": 0, "total": 0, "name": "🔬 Discipline"},
+            "is_big10_university": {
+                "correct": 0,
+                "total": 0,
+                "name": "🏫 Big 10 University",
+            },
+            "university_name": {"correct": 0, "total": 0, "name": "🏛️  University Name"},
+        }
 
         for pos in corrected_positions:
             original = pos.get("ml_original", {})
+            reasoning = pos.get("human_reasoning", {})
 
-            # Graduate position accuracy
-            if "is_graduate_position" in original:
-                grad_total += 1
-                if original["is_graduate_position"] == pos.get("is_graduate_position"):
-                    grad_correct += 1
+            # Analyze each classification type
+            for field, stats in classifications.items():
+                if field in original:
+                    stats["total"] += 1
+                    original_value = original[field]
+                    current_value = pos.get(field)
 
-            # Discipline accuracy
-            if "discipline" in original and original["discipline"] != "Unknown":
-                disc_total += 1
-                if original["discipline"] == pos.get("discipline"):
-                    disc_correct += 1
+                    # Skip discipline analysis for "Unknown" since that indicates uncertainty
+                    if field == "discipline" and original_value == "Unknown":
+                        stats["total"] -= 1
+                        continue
 
-        if grad_total > 0:
-            grad_accuracy = (grad_correct / grad_total) * 100
+                    if original_value == current_value:
+                        stats["correct"] += 1
+
+        # Display results
+        for field, stats in classifications.items():
+            if stats["total"] > 0:
+                accuracy = (stats["correct"] / stats["total"]) * 100
+                print(
+                    f"{stats['name']}: {accuracy:.1f}% ({stats['correct']}/{stats['total']})"
+                )
+
+        # Show common correction reasons
+        print("\n📝 Common Correction Patterns:")
+        reasoning_counts: Dict[str, int] = {}
+        for pos in corrected_positions:
+            reasoning = pos.get("human_reasoning", {})
+            for field, reason in reasoning.items():
+                key = f"{field}: {reason[:50]}..."
+                reasoning_counts[key] = reasoning_counts.get(key, 0) + 1
+
+        # Show top 5 most common correction patterns
+        for reason, count in sorted(
+            reasoning_counts.items(), key=lambda x: x[1], reverse=True
+        )[:5]:
+            print(f"   {reason} ({count}x)")
+
+        # Overall accuracy
+        total_correct = sum(stats["correct"] for stats in classifications.values())
+        total_classifications = sum(
+            stats["total"] for stats in classifications.values()
+        )
+        if total_classifications > 0:
+            overall_accuracy = (total_correct / total_classifications) * 100
             print(
-                f"🎓 Graduate Position Classification: {grad_accuracy:.1f}% ({grad_correct}/{grad_total})"
-            )
-
-        if disc_total > 0:
-            disc_accuracy = (disc_correct / disc_total) * 100
-            print(
-                f"🔬 Discipline Classification: {disc_accuracy:.1f}% ({disc_correct}/{disc_total})"
+                f"\n🎯 Overall ML Accuracy: {overall_accuracy:.1f}% ({total_correct}/{total_classifications})"
             )
 
 

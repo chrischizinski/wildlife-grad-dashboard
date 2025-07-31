@@ -45,6 +45,24 @@ class ClassificationVerifier:
             "Exclude",  # For positions that shouldn't be in the dataset
         ]
 
+        # Big 10 universities for reference
+        self.big10_universities = [
+            "University of Illinois",
+            "University of Indiana",
+            "University of Iowa",
+            "University of Maryland",
+            "University of Michigan",
+            "Michigan State University",
+            "University of Minnesota",
+            "University of Nebraska",
+            "Northwestern University",
+            "Ohio State University",
+            "Pennsylvania State University",
+            "Purdue University",
+            "Rutgers University",
+            "University of Wisconsin",
+        ]
+
     def load_data(self) -> None:
         """Load position data for verification."""
         if not self.data_file.exists():
@@ -125,6 +143,20 @@ class ClassificationVerifier:
             f"   Discipline: {position.get('discipline', 'N/A')} (confidence: {position.get('discipline_confidence', 'N/A'):.2f})"
         )
 
+        # Show discipline keywords if available
+        keywords = position.get("discipline_keywords", [])
+        if keywords:
+            print(
+                f"   Keywords: {', '.join(keywords[:5])}{'...' if len(keywords) > 5 else ''}"
+            )
+
+        # Show university classification
+        is_big10 = position.get("is_big10_university", False)
+        university = position.get("university_name", "N/A")
+        print(
+            f"   University: {university} {'(Big 10)' if is_big10 else '(Non-Big 10)'}"
+        )
+
         # Show description snippet
         description = position.get("description", "")
         if description:
@@ -180,7 +212,7 @@ class ClassificationVerifier:
                 print("❌ Invalid choice. Please try again.")
 
     def get_corrections(self, position: Dict) -> Dict:
-        """Get detailed corrections for a position."""
+        """Get detailed corrections for ALL classifications with mandatory reasoning."""
         correction = {
             "position_id": position.get("position_id"),
             "action": "corrected",
@@ -188,53 +220,141 @@ class ClassificationVerifier:
                 "is_graduate_position": position.get("is_graduate_position"),
                 "position_type": position.get("position_type"),
                 "discipline": position.get("discipline"),
+                "is_big10_university": position.get("is_big10_university"),
+                "university_name": position.get("university_name"),
             },
             "corrections": {},
+            "reasoning": {},
             "verified_at": datetime.now().isoformat(),
         }
 
-        # Correct graduate position classification
+        has_corrections = False
+
+        # 1. Correct graduate position classification
+        print("\n🎓 Graduate Position Classification")
         print(
-            f"\n🎓 Is this a graduate position? Current: {position.get('is_graduate_position')}"
+            f"    Current: {position.get('is_graduate_position')} (confidence: {position.get('grad_confidence', 'N/A'):.2f})"
         )
-        print("   [y] Yes - Graduate assistantship/fellowship/PhD/Masters")
-        print("   [n] No - Professional/staff/technician position")
-        print("   [ENTER] Keep current classification")
+        print("    [y] Yes - Graduate assistantship/fellowship/PhD/Masters")
+        print("    [n] No - Professional/staff/technician position")
+        print("    [ENTER] Keep current classification")
 
         grad_choice = input("Graduate position? ").strip().lower()
-        if grad_choice == "y":
+        if grad_choice == "y" and not position.get("is_graduate_position"):
             correction["corrections"]["is_graduate_position"] = True
-        elif grad_choice == "n":
+            reason = input("Why is this a graduate position? ").strip()
+            if reason:
+                correction["reasoning"]["is_graduate_position"] = reason
+                has_corrections = True
+        elif grad_choice == "n" and position.get("is_graduate_position"):
             correction["corrections"]["is_graduate_position"] = False
+            reason = input("Why is this NOT a graduate position? ").strip()
+            if reason:
+                correction["reasoning"]["is_graduate_position"] = reason
+                has_corrections = True
 
-        # Correct position type
-        print(f"\n🏷️  Position type? Current: {position.get('position_type')}")
+        # 2. Correct position type
+        print("\n🏷️  Position Type Classification")
+        print(f"    Current: {position.get('position_type')}")
         for i, pt in enumerate(self.position_types, 1):
-            print(f"   [{i}] {pt}")
-        print("   [ENTER] Keep current classification")
+            print(f"    [{i}] {pt}")
+        print("    [ENTER] Keep current classification")
 
         type_choice = input("Position type (number): ").strip()
         if type_choice.isdigit() and 1 <= int(type_choice) <= len(self.position_types):
-            correction["corrections"]["position_type"] = self.position_types[
-                int(type_choice) - 1
-            ]
+            new_type = self.position_types[int(type_choice) - 1]
+            if new_type != position.get("position_type"):
+                correction["corrections"]["position_type"] = new_type
+                reason = input(
+                    f"Why should this be '{new_type}' instead of '{position.get('position_type')}'? "
+                ).strip()
+                if reason:
+                    correction["reasoning"]["position_type"] = reason
+                    has_corrections = True
 
-        # Correct discipline
-        print(f"\n🔬 Discipline? Current: {position.get('discipline')}")
+        # 3. Correct discipline
+        print("\n🔬 Discipline Classification")
+        print(
+            f"    Current: {position.get('discipline')} (confidence: {position.get('discipline_confidence', 'N/A'):.2f})"
+        )
+        keywords = position.get("discipline_keywords", [])
+        if keywords:
+            print(f"    Keywords: {', '.join(keywords[:3])}...")
         for i, disc in enumerate(self.disciplines, 1):
-            print(f"   [{i}] {disc}")
-        print("   [ENTER] Keep current classification")
+            print(f"    [{i}] {disc}")
+        print("    [ENTER] Keep current classification")
 
         disc_choice = input("Discipline (number): ").strip()
         if disc_choice.isdigit() and 1 <= int(disc_choice) <= len(self.disciplines):
-            correction["corrections"]["discipline"] = self.disciplines[
-                int(disc_choice) - 1
-            ]
+            new_discipline = self.disciplines[int(disc_choice) - 1]
+            if new_discipline != position.get("discipline"):
+                correction["corrections"]["discipline"] = new_discipline
+                reason = input(
+                    f"Why should this be '{new_discipline}' instead of '{position.get('discipline')}'? "
+                ).strip()
+                if reason:
+                    correction["reasoning"]["discipline"] = reason
+                    has_corrections = True
 
-        # Optional notes
-        notes = input("\n📝 Notes (optional): ").strip()
-        if notes:
-            correction["notes"] = notes
+        # 4. Correct university classification
+        print("\n🏫 University Classification")
+        print(
+            f"    Current: {position.get('university_name', 'N/A')} {'(Big 10)' if position.get('is_big10_university') else '(Non-Big 10)'}"
+        )
+
+        # Extract university name from organization if needed
+        org = position.get("organization", "")
+        print(f"    Organization: {org}")
+
+        print("    [y] This is a Big 10 university")
+        print("    [n] This is NOT a Big 10 university")
+        print("    [u] Update university name")
+        print("    [ENTER] Keep current classification")
+
+        univ_choice = input("University classification: ").strip().lower()
+
+        if univ_choice == "y" and not position.get("is_big10_university"):
+            correction["corrections"]["is_big10_university"] = True
+            # Try to identify the university
+            univ_name = input("Which Big 10 university is this? ").strip()
+            if univ_name:
+                correction["corrections"]["university_name"] = univ_name
+                correction["reasoning"][
+                    "university"
+                ] = f"Identified as Big 10 university: {univ_name}"
+                has_corrections = True
+
+        elif univ_choice == "n" and position.get("is_big10_university"):
+            correction["corrections"]["is_big10_university"] = False
+            reason = input("Why is this NOT a Big 10 university? ").strip()
+            if reason:
+                correction["reasoning"]["university"] = reason
+                has_corrections = True
+
+        elif univ_choice == "u":
+            new_name = input("Enter correct university name: ").strip()
+            if new_name and new_name != position.get("university_name"):
+                correction["corrections"]["university_name"] = new_name
+                is_big10 = (
+                    input("Is this a Big 10 university? [y/n]: ").strip().lower() == "y"
+                )
+                correction["corrections"]["is_big10_university"] = is_big10
+                correction["reasoning"][
+                    "university"
+                ] = f"Updated university name to: {new_name}"
+                has_corrections = True
+
+        # Overall notes about the correction
+        if has_corrections:
+            overall_notes = input(
+                "\n📝 Overall notes about this correction (optional): "
+            ).strip()
+            if overall_notes:
+                correction["notes"] = overall_notes
+
+        # Remove empty reasoning dict if no corrections were made
+        if not has_corrections:
+            correction["reasoning"] = {}
 
         return correction
 
