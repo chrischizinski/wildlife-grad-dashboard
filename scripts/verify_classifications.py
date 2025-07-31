@@ -83,7 +83,7 @@ class ClassificationVerifier:
             print(f"📝 Loaded {len(self.corrections)} existing corrections")
 
     def filter_positions(self, args) -> List[Dict]:
-        """Filter positions based on CLI arguments."""
+        """Filter positions based on CLI arguments with diverse sampling strategies."""
         filtered = self.positions.copy()
 
         # Filter by confidence threshold
@@ -104,13 +104,6 @@ class ClassificationVerifier:
                 f"🔬 Filtered to {len(filtered)} positions with discipline '{args.discipline}'"
             )
 
-        # Filter to recent positions
-        if args.recent:
-            # Sort by scraped_at date and take most recent
-            filtered.sort(key=lambda x: x.get("scraped_at", ""), reverse=True)
-            filtered = filtered[: args.recent]
-            print(f"⏰ Showing {len(filtered)} most recent positions")
-
         # Filter by days
         if args.days:
             cutoff = datetime.now() - timedelta(days=args.days)
@@ -120,7 +113,124 @@ class ClassificationVerifier:
                 f"📅 Filtered to {len(filtered)} positions from last {args.days} days"
             )
 
+        # Apply sampling strategy
+        if args.recent:
+            # Sort by scraped_at date and take most recent
+            filtered.sort(key=lambda x: x.get("scraped_at", ""), reverse=True)
+            filtered = filtered[: args.recent]
+            print(f"⏰ Showing {len(filtered)} most recent positions")
+        elif args.diverse_sample:
+            # Diverse sampling across the full dataset
+            filtered = self._get_diverse_sample(filtered, args.diverse_sample)
+            print(f"🌐 Selected {len(filtered)} diverse positions from full dataset")
+        elif args.smart_sample:
+            # Smart sampling prioritizing positions that need review
+            filtered = self._get_smart_sample(filtered, args.smart_sample)
+            print(
+                f"🧠 Selected {len(filtered)} positions using smart sampling strategy"
+            )
+
         return filtered
+
+    def _get_diverse_sample(
+        self, positions: List[Dict], sample_size: int
+    ) -> List[Dict]:
+        """Get a diverse sample across disciplines, confidence levels, and time periods."""
+        import random
+
+        if len(positions) <= sample_size:
+            return positions
+
+        # Separate positions by categories for balanced sampling
+        by_discipline: Dict[str, List[Dict]] = {}
+        by_confidence: Dict[str, List[Dict]] = {"low": [], "medium": [], "high": []}
+        by_verification: Dict[str, List[Dict]] = {"unverified": [], "verified": []}
+
+        for pos in positions:
+            # Group by discipline
+            disc = pos.get("discipline", "Unknown")
+            if disc not in by_discipline:
+                by_discipline[disc] = []
+            by_discipline[disc].append(pos)
+
+            # Group by confidence level
+            confidence = pos.get("grad_confidence", 0.5)
+            if confidence < 0.7:
+                by_confidence["low"].append(pos)
+            elif confidence < 0.9:
+                by_confidence["medium"].append(pos)
+            else:
+                by_confidence["high"].append(pos)
+
+            # Group by verification status
+            if pos.get("human_verified", False):
+                by_verification["verified"].append(pos)
+            else:
+                by_verification["unverified"].append(pos)
+
+        diverse_sample = []
+
+        # Sample from each discipline proportionally
+        disciplines = list(by_discipline.keys())
+        discipline_samples = max(1, sample_size // len(disciplines))
+
+        for disc in disciplines:
+            disc_positions = by_discipline[disc]
+            sample_count = min(discipline_samples, len(disc_positions))
+            diverse_sample.extend(random.sample(disc_positions, sample_count))
+
+        # Fill remaining slots with random unverified positions
+        remaining_slots = sample_size - len(diverse_sample)
+        if remaining_slots > 0:
+            unverified = [
+                p
+                for p in positions
+                if not p.get("human_verified", False) and p not in diverse_sample
+            ]
+            if unverified:
+                additional = min(remaining_slots, len(unverified))
+                diverse_sample.extend(random.sample(unverified, additional))
+
+        return diverse_sample[:sample_size]
+
+    def _get_smart_sample(self, positions: List[Dict], sample_size: int) -> List[Dict]:
+        """Get a smart sample prioritizing positions that most need human review."""
+        # Score positions based on how much they need review
+        scored_positions = []
+
+        for pos in positions:
+            score = 0.0
+
+            # Higher score for unverified positions
+            if not pos.get("human_verified", False):
+                score += 10
+
+            # Higher score for low confidence
+            grad_conf = pos.get("grad_confidence", 1.0)
+            disc_conf = pos.get("discipline_confidence", 1.0)
+            score += (1.0 - grad_conf) * 5
+            score += (1.0 - disc_conf) * 5
+
+            # Higher score for "Unknown" disciplines
+            if pos.get("discipline") == "Unknown":
+                score += 8
+
+            # Higher score for conflicting classifications
+            if pos.get("grad_confidence", 1.0) < 0.8 and pos.get(
+                "is_graduate_position", True
+            ):
+                score += 3
+
+            # Add some randomness to avoid always showing the same positions
+            import random
+
+            score += random.uniform(0, 2)  # nosec B311
+
+            scored_positions.append((score, pos))
+
+        # Sort by score (highest first) and take top positions
+        scored_positions.sort(key=lambda x: x[0], reverse=True)
+        return [pos for score, pos in scored_positions[:sample_size]]
 
     def display_position(self, position: Dict, index: int, total: int) -> None:
         """Display a position for verification."""
@@ -468,6 +578,18 @@ def main():
     )
     parser.add_argument("--all", action="store_true", help="Verify all positions")
 
+    # Sampling strategies
+    parser.add_argument(
+        "--diverse-sample",
+        type=int,
+        help="Select N diverse positions from across the full dataset (balanced by discipline, confidence, etc.)",
+    )
+    parser.add_argument(
+        "--smart-sample",
+        type=int,
+        help="Select N positions using smart sampling (prioritizes unverified, low-confidence, Unknown disciplines)",
+    )
+
     # Options
     parser.add_argument(
         "--stats-only",
@@ -477,12 +599,22 @@ def main():
 
     args = parser.parse_args()
 
-    # Default to recent 20 if no filter specified
+    # Default to smart sampling if no filter specified
     if not any(
-        [args.recent, args.days, args.confidence_threshold, args.discipline, args.all]
+        [
+            args.recent,
+            args.days,
+            args.confidence_threshold,
+            args.discipline,
+            args.all,
+            args.diverse_sample,
+            args.smart_sample,
+        ]
     ):
-        args.recent = 20
-        print("💡 No filter specified, defaulting to --recent 20")
+        args.smart_sample = 20
+        print(
+            "💡 No filter specified, defaulting to --smart-sample 20 (prioritizes positions needing review)"
+        )
 
     verifier = ClassificationVerifier()
     verifier.load_data()

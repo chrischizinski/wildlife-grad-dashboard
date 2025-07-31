@@ -2,24 +2,38 @@
 
 ## Quick Start
 
-### 1. Review Recent Positions (Recommended for weekly verification)
+### 1. Smart Sampling (Recommended - Default Behavior)
 ```bash
-python scripts/verify_classifications.py --recent 20
+# Automatically prioritizes positions needing review (unverified, low-confidence, Unknown disciplines)
+python scripts/verify_classifications.py
+# or explicitly:
+python scripts/verify_classifications.py --smart-sample 20
 ```
 
-### 2. Focus on Low-Confidence Classifications
+### 2. Diverse Sampling (Best for Training ML Models)
+```bash
+# Balanced sample across all disciplines, confidence levels, and time periods
+python scripts/verify_classifications.py --diverse-sample 25
+```
+
+### 3. Focus on Low-Confidence Classifications
 ```bash
 python scripts/verify_classifications.py --confidence-threshold 0.8
 ```
 
-### 3. Review Specific Disciplines (e.g., "Unknown" positions)
+### 4. Review Specific Disciplines
 ```bash
 python scripts/verify_classifications.py --discipline "Unknown"
 ```
 
-### 4. Check Statistics First
+### 5. Review Recent Positions
 ```bash
-python scripts/verify_classifications.py --recent 50 --stats-only
+python scripts/verify_classifications.py --recent 20
+```
+
+### 6. Check Statistics First
+```bash
+python scripts/verify_classifications.py --smart-sample 50 --stats-only
 ```
 
 ## Interactive Commands During Verification
@@ -79,12 +93,19 @@ python scripts/generate_dashboard_analytics.py
 
 ## Recommended Weekly Workflow
 
-1. **Quick stats check**:
+1. **Smart sampling session (10-15 minutes)**:
    ```bash
-   python scripts/verify_classifications.py --recent 50 --stats-only
+   # Default smart sampling - automatically finds positions needing review
+   python scripts/verify_classifications.py --smart-sample 20
    ```
 
-2. **Focus on problem areas**:
+2. **Diverse sampling for ML training (weekly)**:
+   ```bash
+   # Balanced sample across the full dataset for better ML training
+   python scripts/verify_classifications.py --diverse-sample 15
+   ```
+
+3. **Focus on specific problem areas (as needed)**:
    ```bash
    # Review unknown disciplines
    python scripts/verify_classifications.py --discipline "Unknown"
@@ -93,11 +114,35 @@ python scripts/generate_dashboard_analytics.py
    python scripts/verify_classifications.py --confidence-threshold 0.7
    ```
 
-3. **Apply corrections**:
+4. **Apply corrections**:
    ```bash
    python scripts/apply_corrections.py
    python scripts/generate_dashboard_analytics.py
    ```
+
+## Sampling Strategy Guide
+
+### 🧠 Smart Sampling (`--smart-sample N`)
+**Best for:** Daily/weekly verification sessions
+- Prioritizes unverified positions (score +10)
+- Emphasizes low-confidence classifications (score +5 per low confidence)
+- Targets "Unknown" disciplines (score +8)
+- Identifies conflicting classifications (score +3)
+- Adds randomness to avoid repetition
+
+### 🌐 Diverse Sampling (`--diverse-sample N`)
+**Best for:** ML model training and comprehensive coverage
+- Samples proportionally from each discipline
+- Balances confidence levels (low/medium/high)
+- Includes mix of verified/unverified positions
+- Ensures geographic and temporal spread
+- Prevents bias toward recent or popular positions
+
+### ⏰ Recent Sampling (`--recent N`)
+**Best for:** Monitoring new incoming positions
+- Shows most recently scraped positions
+- Good for staying current with new listings
+- May miss older positions needing verification
 
 ## Tips for Effective Verification
 
