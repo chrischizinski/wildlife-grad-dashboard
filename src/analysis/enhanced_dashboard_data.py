@@ -8,7 +8,7 @@ import re
 from collections import defaultdict
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 
 def load_verified_graduate_data() -> List[Dict]:
@@ -36,7 +36,7 @@ def parse_date(date_str: str) -> Optional[datetime]:
         # Handle YYYY-MM-DD format
         elif "-" in date_str:
             return datetime.strptime(date_str, "%Y-%m-%d")
-    except:
+    except (ValueError, TypeError):
         pass
 
     return None
@@ -70,7 +70,7 @@ def extract_salary_amount(salary_str: str) -> float:
                 if "per month" in salary_str.lower() or "month" in salary_str.lower():
                     amount *= 12
                 return amount
-            except:
+            except (ValueError, AttributeError, IndexError):
                 continue
 
     return 0
@@ -114,7 +114,7 @@ def extract_salary_value(salary_str: str) -> Optional[float]:
 
                 if 1000 <= value <= 200000:
                     amounts.append(value)
-            except:
+            except (ValueError, AttributeError, IndexError):
                 continue
 
     return max(amounts) if amounts else None
@@ -185,11 +185,11 @@ def consolidate_discipline(discipline: str) -> str:
 
 def generate_discipline_analytics(positions: List[Dict]) -> Dict:
     """Generate detailed analytics by discipline using consolidated categories."""
-    discipline_data = defaultdict(
+    discipline_data: Dict[str, Dict[str, Any]] = defaultdict(
         lambda: {
             "count": 0,
             "grad_salaries": [],  # Only graduate assistantship salaries
-            "monthly_trends": defaultdict(int),
+            "monthly_trends": defaultdict(int),  # type: ignore
             "positions": [],
         }
     )
@@ -278,8 +278,10 @@ def generate_time_series_data(positions: List[Dict], timeframes: List[str]) -> D
                 filtered_positions.append(pos)
 
         # Generate monthly counts overall and by discipline
-        monthly_counts = defaultdict(int)
-        discipline_monthly = defaultdict(lambda: defaultdict(int))
+        monthly_counts: Dict[str, int] = defaultdict(int)
+        discipline_monthly: Dict[str, Dict[str, int]] = defaultdict(
+            lambda: defaultdict(int)
+        )  # type: ignore
 
         for pos in filtered_positions:
             pub_date = parse_date(pos.get("published_date", ""))

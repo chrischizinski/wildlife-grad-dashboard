@@ -13,13 +13,18 @@ import uuid
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, List, Optional
+from typing import Any, Dict, List, Optional
 
 import pandas as pd
 from dotenv import load_dotenv
 from fake_useragent import UserAgent
 from pydantic import BaseModel, Field, field_validator
 from selenium import webdriver
+from selenium.common.exceptions import (
+    NoSuchElementException,
+    StaleElementReferenceException,
+    TimeoutException,
+)
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -171,7 +176,7 @@ class WildlifeJobScraper:
         """
         min_delay = min_seconds or self.config.min_delay
         max_delay = max_seconds or self.config.max_delay
-        delay = random.uniform(min_delay, max_delay)
+        delay = random.uniform(min_delay, max_delay)  # nosec B311
         time.sleep(delay)
 
     def setup_driver(self) -> webdriver.Chrome:
@@ -367,7 +372,7 @@ class WildlifeJobScraper:
                             if job_url.startswith("/")
                             else base_domain + "/" + job_url
                         )
-            except:
+            except (AttributeError, NoSuchElementException):
                 self.logger.warning(f"Could not extract URL for job: {title}")
 
             # Extract optional fields with fallbacks
@@ -375,7 +380,11 @@ class WildlifeJobScraper:
                 try:
                     elem = job_element.find_element(By.XPATH, xpath)
                     return elem.text.strip() or default
-                except:
+                except (
+                    NoSuchElementException,
+                    AttributeError,
+                    StaleElementReferenceException,
+                ):
                     return default
 
             organization = safe_extract(".//p")
@@ -401,7 +410,11 @@ class WildlifeJobScraper:
                     tag.text.strip() for tag in tag_elements if tag.text.strip()
                 )
                 tags = tags or "N/A"
-            except:
+            except (
+                NoSuchElementException,
+                AttributeError,
+                StaleElementReferenceException,
+            ):
                 tags = "N/A"
 
             return JobListing(
@@ -464,7 +477,12 @@ class WildlifeJobScraper:
                             description and len(description) > 100
                         ):  # Ensure we got substantial content
                             break
-                    except:
+                    except (
+                        NoSuchElementException,
+                        AttributeError,
+                        StaleElementReferenceException,
+                        TimeoutException,
+                    ):
                         continue
 
                 if not description:
@@ -501,7 +519,12 @@ class WildlifeJobScraper:
                         requirements = parent.text.strip()
                         if requirements and len(requirements) > 50:
                             break
-                    except:
+                    except (
+                        NoSuchElementException,
+                        AttributeError,
+                        StaleElementReferenceException,
+                        TimeoutException,
+                    ):
                         continue
 
             except Exception as e:
@@ -562,7 +585,12 @@ class WildlifeJobScraper:
                         contact_info = contact_element.text.strip()
                         if contact_info and "@" in contact_info:
                             break
-                    except:
+                    except (
+                        NoSuchElementException,
+                        AttributeError,
+                        StaleElementReferenceException,
+                        TimeoutException,
+                    ):
                         continue
 
             except Exception as e:
@@ -1175,7 +1203,7 @@ class WildlifeJobScraper:
                 "osu": "Ohio State University",
                 "ohio state": "Ohio State University",
                 "purdue": "Purdue University",
-                "uw": "University of Wisconsin",
+                "uw-madison": "University of Wisconsin",
                 "wisconsin": "University of Wisconsin",
                 "iowa": "University of Iowa",
                 "iu": "Indiana University",
@@ -1187,7 +1215,7 @@ class WildlifeJobScraper:
                 "unl": "University of Nebraska",
                 "nebraska": "University of Nebraska",
                 "oregon": "University of Oregon",
-                "uw": "University of Washington",  # Note: conflicts with Wisconsin
+                "uw-seattle": "University of Washington",
                 "washington": "University of Washington",
             }
 
@@ -1340,7 +1368,7 @@ class WildlifeJobScraper:
                             f"Calculated {pages_needed} pages from {total_results} total results"
                         )
                         return list(range(1, pages_needed + 1))
-                except:
+                except (ValueError, AttributeError, IndexError):
                     pass
 
                 self.logger.info("No pagination found, assuming single page")
@@ -1552,7 +1580,7 @@ class WildlifeJobScraper:
         df.to_csv(csv_path, index=False, encoding="utf-8")
 
         # Also save classification report
-        report = {
+        report: Dict[str, Any] = {
             "total_positions_scraped": len(jobs),
             "verified_graduate_assistantships": len(graduate_jobs),
             "confidence_threshold": min_confidence,
@@ -1636,7 +1664,7 @@ def main() -> None:
             print("Classification report saved to: classification_report.json")
 
             # Show position type breakdown
-            position_types = {}
+            position_types: Dict[str, int] = {}
             for job in jobs:
                 pos_type = job.position_type
                 position_types[pos_type] = position_types.get(pos_type, 0) + 1

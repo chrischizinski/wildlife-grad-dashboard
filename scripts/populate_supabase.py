@@ -237,7 +237,7 @@ class SupabasePopulator:
         for i in range(0, len(new_jobs), batch_size):
             batch = new_jobs[i : i + batch_size]
             try:
-                result = self.supabase.table("jobs").insert(batch).execute()
+                self.supabase.table("jobs").insert(batch).execute()
                 successful_inserts += len(batch)
                 print(f"Inserted batch {i//batch_size + 1}: {len(batch)} jobs")
             except Exception as e:
@@ -336,7 +336,7 @@ def main():
             )
             if response.lower() == "y":
                 print("Clearing existing data...")
-                result = (
+                (
                     populator.supabase.table("jobs")
                     .delete()
                     .neq("id", "00000000-0000-0000-0000-000000000000")

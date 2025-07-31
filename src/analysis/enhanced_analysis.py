@@ -19,7 +19,6 @@ from typing import Dict, List, Tuple
 # For NLP-based classification
 try:
     import numpy as np
-    from sklearn.cluster import KMeans
     from sklearn.feature_extraction.text import TfidfVectorizer
     from sklearn.metrics.pairwise import cosine_similarity
 
@@ -618,7 +617,7 @@ class CostOfLivingAdjuster:
             "wichita": 0.8,
             # State-level indices (for when city not found)
             "california": 1.4,
-            "new york": 1.3,
+            "new york state": 1.3,
             "massachusetts": 1.3,
             "connecticut": 1.25,
             "new jersey": 1.2,
@@ -969,7 +968,6 @@ class HistoricalDataManager:
 
         new_count = 0
         updated_count = 0
-        duplicate_count = 0
 
         current_date = datetime.now().isoformat()
 
@@ -1300,7 +1298,7 @@ class EnhancedAnalyzer:
     def _analyze_temporal_trends(self, historical_data: List[Dict]) -> Dict:
         """Analyze temporal trends in job postings."""
         # Group by published month/year
-        monthly_counts = defaultdict(int)
+        monthly_counts: Dict[str, int] = defaultdict(int)
 
         for pos in historical_data:
             pub_date = pos.get("published_date", "")
@@ -1311,7 +1309,7 @@ class EnhancedAnalyzer:
                         month, day, year = pub_date.split("/")
                         year_month = f"{year}-{month.zfill(2)}"
                         monthly_counts[year_month] += 1
-                except:
+                except (ValueError, AttributeError, IndexError):
                     continue
 
         return dict(monthly_counts)
