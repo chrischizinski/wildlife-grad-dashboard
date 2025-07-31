@@ -9,10 +9,10 @@ echo
 
 if [[ $REPLY =~ ^[Yy]$ ]]; then
     echo "🗑️  Removing data files from version control..."
-    
+
     # Remove data files from tracking
     git rm --cached data/processed/*.json data/processed/*.csv data/raw/*.json data/raw/*.csv dashboard/data/*.json 2>/dev/null || true
-    
+
     # Add to gitignore
     cat >> .gitignore << EOF
 
@@ -24,10 +24,10 @@ data/raw/*.csv
 dashboard/data/*.json
 !dashboard/data/.gitkeep
 EOF
-    
+
     # Create .gitkeep files to preserve directory structure
     touch data/processed/.gitkeep data/raw/.gitkeep dashboard/data/.gitkeep
-    
+
     echo "✅ Data files excluded from version control"
     echo "📁 Directory structure preserved with .gitkeep files"
     echo "🤖 Data will now be managed exclusively by GitHub Actions"

@@ -24,7 +24,7 @@ class DataFetcher {
         try {
             console.log('=== SUPABASE FETCH START ===');
             console.log('Fetching analytics from Supabase...');
-            
+
             // Get basic analytics
             console.log('Querying job_analytics...');
             const { data: analytics, error: analyticsError } = await supabaseClient
@@ -87,7 +87,7 @@ class DataFetcher {
     async fetchFromJSON() {
         try {
             console.log('Fetching data from JSON files...');
-            
+
             // First try the lightweight dashboard analytics file
             try {
                 const analyticsResponse = await fetch('../data/dashboard_analytics.json').catch(() => {
@@ -97,10 +97,10 @@ class DataFetcher {
                         return fetch('data/dashboard_analytics.json');
                     });
                 });
-                
+
                 if (analyticsResponse.ok) {
                     const dashboardData = await analyticsResponse.json();
-                    
+
                     // Try to load export data as well
                     let exportData = [];
                     try {
@@ -115,14 +115,14 @@ class DataFetcher {
                     } catch (exportError) {
                         console.log('Export data not available, using empty array');
                     }
-                    
+
                     console.log('Using lightweight dashboard analytics');
                     return { dashboardData, exportData };
                 }
             } catch (analyticsError) {
                 console.log('Lightweight analytics not available, trying full enhanced data');
             }
-            
+
             // Fallback to the original large files
             const [enhancedResponse, exportResponse] = await Promise.all([
                 fetch('../data/enhanced_data.json').catch(() => {
@@ -140,19 +140,19 @@ class DataFetcher {
                     });
                 })
             ]);
-            
+
             if (!enhancedResponse.ok) {
                 throw new Error(`Enhanced data fetch failed: ${enhancedResponse.status}`);
             }
             if (!exportResponse.ok) {
                 throw new Error(`Export data fetch failed: ${exportResponse.status}`);
             }
-            
+
             const dashboardData = await enhancedResponse.json();
             const exportData = await exportResponse.json();
-            
+
             return { dashboardData, exportData };
-            
+
         } catch (error) {
             console.error('Error fetching JSON data:', error);
             throw error;
@@ -161,7 +161,7 @@ class DataFetcher {
 
     transformSupabaseData(analytics, disciplines, geographic, monthlyTrends) {
         console.log('Transforming Supabase data:', { analytics, disciplines, geographic, monthlyTrends });
-        
+
         // Transform disciplines data
         const disciplineStats = {};
         disciplines.forEach(disc => {
@@ -255,7 +255,7 @@ let dataFetcher = null;
 // Chart color scheme - exactly 5 categories
 const disciplineColors = {
     'Fisheries Management and Conservation': '#4682B4',  // Ocean blue
-    'Wildlife Management and Conservation': '#2E8B57',   // Forest green  
+    'Wildlife Management and Conservation': '#2E8B57',   // Forest green
     'Human Dimensions': '#CD853F',                       // Warm brown
     'Environmental Science': '#9932CC',                  // Purple
     'Other': '#708090'                                   // Slate gray
@@ -277,20 +277,20 @@ function escapeHTML(str) {
 async function initDashboard() {
     try {
         showLoading();
-        
+
         // Initialize data fetcher
         dataFetcher = new DataFetcher();
-        
+
         // Fetch data
         const result = await dataFetcher.fetchAnalytics();
         dashboardData = result.dashboardData;
         exportData = result.exportData;
-        
+
         console.log('Dashboard data loaded successfully:', {
             totalPositions: dashboardData.summary_stats?.total_positions || dashboardData.total_positions,
             exportRecords: exportData?.length || 0
         });
-        
+
         // Initialize all components
         updateOverviewCards();
         createDisciplineIndicators();
@@ -301,9 +301,9 @@ async function initDashboard() {
         }
         setupEventListeners();
         updateFooter();
-        
+
         hideLoading();
-        
+
     } catch (error) {
         console.error('Error initializing dashboard:', error);
         showError(`Failed to load dashboard data: ${error.message}`);
@@ -319,17 +319,17 @@ function updateOverviewCards() {
     const metadata = dashboardData.metadata || {};
     const summaryStats = dashboardData.summary_stats || {};
     const overview = dashboardData.overview || {};
-    
+
     // Safely access data with fallbacks and ensure numeric values
     const totalPositions = metadata.total_positions || dashboardData.total_positions || summaryStats.total_positions || 0;
     const gradPositions = summaryStats.graduate_positions || overview.graduate_positions || dashboardData.graduate_assistantships || 0;
     const salaryPositions = summaryStats.positions_with_salary || metadata.positions_with_salary || overview.positions_with_salaries || 0;
-    
+
     // Count disciplines from breakdowns if available
     const breakdowns = dashboardData.breakdowns || {};
     const disciplineData = breakdowns.by_discipline || dashboardData.top_disciplines || {};
     const disciplinesCount = Object.keys(disciplineData).length || overview.total_disciplines || 0;
-    
+
     // Ensure values are numbers before calling toLocaleString
     document.getElementById('total-jobs').textContent = (totalPositions || 0).toLocaleString();
     document.getElementById('grad-positions').textContent = (gradPositions || 0).toLocaleString();
@@ -342,26 +342,26 @@ function updateOverviewCards() {
  */
 function createDisciplineIndicators() {
     const container = document.getElementById('discipline-cards');
-    
+
     // Handle both old and new data structures
     const disciplines = dashboardData.top_disciplines || dashboardData.breakdowns?.by_discipline || {};
-    
+
     container.innerHTML = '';
-    
+
     // If no disciplines data, show a message
     if (!disciplines || Object.keys(disciplines).length === 0) {
         container.innerHTML = '<div class="col-12"><p class="text-muted">No discipline data available</p></div>';
         return;
     }
-    
+
     Object.entries(disciplines).forEach(([discipline, data]) => {
         const color = disciplineColors[discipline] || '#708090';
-        
+
         // Handle different data structures
         let gradPositions = 0;
         let avgSalary = 'N/A';
         let totalPositions = 0;
-        
+
         if (typeof data === 'object' && data !== null) {
             // New structure with detailed data
             gradPositions = data.grad_positions || 0;
@@ -374,7 +374,7 @@ function createDisciplineIndicators() {
             totalPositions = data;
             gradPositions = Math.floor(data * 0.6); // Estimate 60% are grad positions
         }
-        
+
         const card = document.createElement('div');
         card.className = 'col-lg-3 col-md-4 col-sm-6 mb-4';
         card.innerHTML = `
@@ -420,7 +420,7 @@ function createDisciplineIndicators() {
         `;
         container.appendChild(card);
     });
-    
+
     // Initialize tooltips for the newly created cards
     setTimeout(() => initializeTooltips(), 100);
 }
@@ -447,12 +447,12 @@ function initializeCharts() {
  */
 function calculatePercentageChange(data) {
     if (data.length < 2) return 0;
-    
+
     const firstValue = data.find(val => val > 0) || 0; // First non-zero value
     const lastValue = data[data.length - 1] || 0;
-    
+
     if (firstValue === 0) return lastValue > 0 ? 100 : 0;
-    
+
     return Math.round(((lastValue - firstValue) / firstValue) * 100);
 }
 
@@ -475,13 +475,13 @@ function getTrendColor(percentageChange, baseColor) {
 function createTrendChart() {
     const ctx = document.getElementById('trend-chart');
     if (!ctx) return;
-    
+
     const chartCtx = ctx.getContext('2d');
-    
+
     if (currentTrendChart) {
         currentTrendChart.destroy();
     }
-    
+
     // Check if time series data exists
     const timeSeriesData = dashboardData.time_series?.[currentTimeframe];
     if (!timeSeriesData) {
@@ -515,19 +515,19 @@ function createTrendChart() {
         });
         return;
     }
-    
+
     // Prepare data
     const months = Object.keys(timeSeriesData.total_monthly || {}).sort();
     const showOverall = document.getElementById('show-overall')?.checked || false;
-    
+
     const datasets = [];
-    
+
     // Overall trend
     if (showOverall && timeSeriesData.total_monthly) {
         const overallData = months.map(month => timeSeriesData.total_monthly[month] || 0);
         const overallChange = calculatePercentageChange(overallData);
         const overallColor = getTrendColor(overallChange, '#000000');
-        
+
         datasets.push({
             label: `Overall (${overallChange >= 0 ? '+' : ''}${overallChange}%)`,
             data: overallData,
@@ -537,17 +537,17 @@ function createTrendChart() {
             tension: 0.1
         });
     }
-    
+
     // Individual discipline trends
     const disciplineData = timeSeriesData.discipline_monthly || {};
     const topDisciplines = dashboardData.top_disciplines || dashboardData.breakdowns?.by_discipline || {};
-    
+
     Object.entries(disciplineData).forEach(([discipline, monthlyData]) => {
         if (topDisciplines[discipline]) { // Only show top disciplines
             const data = months.map(month => monthlyData[month] || 0);
             const percentageChange = calculatePercentageChange(data);
             const trendColor = getTrendColor(percentageChange, disciplineColors[discipline]);
-            
+
             datasets.push({
                 label: `${discipline} (${percentageChange >= 0 ? '+' : ''}${percentageChange}%)`,
                 data: data,
@@ -558,7 +558,7 @@ function createTrendChart() {
             });
         }
     });
-    
+
     currentTrendChart = new Chart(chartCtx, {
         type: 'line',
         data: {
@@ -610,10 +610,10 @@ function createTrendChart() {
 function createSalaryChart() {
     const ctx = document.getElementById('salary-chart');
     if (!ctx) return;
-    
+
     const chartCtx = ctx.getContext('2d');
     const disciplines = dashboardData.discipline_analytics || dashboardData.top_disciplines || {};
-    
+
     // Filter disciplines with salary data
     const disciplinesWithSalary = Object.entries(disciplines)
         .filter(([_, data]) => {
@@ -627,7 +627,7 @@ function createSalaryChart() {
             const meanB = b[1].salary_stats?.mean || 0;
             return meanB - meanA;
         });
-    
+
     // If no salary data, create a placeholder chart
     if (disciplinesWithSalary.length === 0) {
         new Chart(chartCtx, {
@@ -655,10 +655,10 @@ function createSalaryChart() {
         });
         return;
     }
-    
+
     const labels = disciplinesWithSalary.map(([discipline, _]) => discipline);
     const means = disciplinesWithSalary.map(([_, data]) => Math.round(data.salary_stats.mean || 0));
-    
+
     new Chart(chartCtx, {
         type: 'bar',
         data: {
@@ -719,10 +719,10 @@ function createSalaryChart() {
 function createLocationChart() {
     const ctx = document.getElementById('location-chart');
     if (!ctx) return;
-    
+
     const chartCtx = ctx.getContext('2d');
     const geographic = dashboardData.geographic_summary || dashboardData.breakdowns?.by_state || {};
-    
+
     // If no geographic data, create a placeholder
     if (!geographic || Object.keys(geographic).length === 0) {
         new Chart(chartCtx, {
@@ -748,18 +748,18 @@ function createLocationChart() {
         });
         return;
     }
-    
+
     const sortedRegions = Object.entries(geographic)
         .sort((a, b) => b[1] - a[1]);
-    
+
     const labels = sortedRegions.map(([region, _]) => region);
     const data = sortedRegions.map(([_, count]) => count);
-    
+
     const colors = [
         '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
         '#9966FF', '#FF9F40', '#FF6384', '#C9CBCF'
     ];
-    
+
     new Chart(chartCtx, {
         type: 'doughnut',
         data: {
@@ -801,7 +801,7 @@ function setupEventListeners() {
             }
         });
     });
-    
+
     // Show overall trend toggle
     const overallToggle = document.getElementById('show-overall');
     if (overallToggle) {
@@ -811,21 +811,21 @@ function setupEventListeners() {
             }
         });
     }
-    
+
     // Download buttons
     const downloadButtons = {
         'download-json': downloadJSON,
         'download-csv': downloadCSV,
         'download-analytics': downloadAnalytics
     };
-    
+
     Object.entries(downloadButtons).forEach(([id, handler]) => {
         const element = document.getElementById(id);
         if (element) {
             element.addEventListener('click', handler);
         }
     });
-    
+
     // Initialize Bootstrap tooltips
     initializeTooltips();
 }
@@ -858,10 +858,10 @@ function downloadAnalytics() {
 
 function convertToCSV(data) {
     if (!data || data.length === 0) return '';
-    
+
     const headers = Object.keys(data[0]);
     const csvRows = [headers.join(',')];
-    
+
     for (const row of data) {
         const values = headers.map(header => {
             const value = row[header];
@@ -872,7 +872,7 @@ function convertToCSV(data) {
         });
         csvRows.push(values.join(','));
     }
-    
+
     return csvRows.join('\n');
 }
 
@@ -880,7 +880,7 @@ function downloadFile(data, filename, mimeType) {
     const content = typeof data === 'string' ? data : JSON.stringify(data, null, 2);
     const blob = new Blob([content], { type: mimeType });
     const url = URL.createObjectURL(blob);
-    
+
     const link = document.createElement('a');
     link.href = url;
     link.download = filename;
@@ -901,17 +901,17 @@ function updateFooter() {
     } else if (dashboardData.metadata?.generated_at) {
         lastUpdated = new Date(dashboardData.metadata.generated_at).toLocaleDateString();
     }
-    
+
     const footerLastUpdated = document.getElementById('footer-last-updated');
     if (footerLastUpdated) {
         footerLastUpdated.innerHTML = `<i class="fas fa-clock me-2"></i>Last updated: ${lastUpdated}`;
     }
-    
+
     // Handle total positions with fallbacks
     const metadata = dashboardData.metadata || {};
     const summaryStats = dashboardData.summary_stats || {};
     const totalPositions = metadata.total_positions || dashboardData.total_positions || summaryStats.total_positions || 0;
-    
+
     const footerTotalPositions = document.getElementById('footer-total-positions');
     if (footerTotalPositions) {
         footerTotalPositions.textContent = (totalPositions || 0).toLocaleString();
@@ -925,7 +925,7 @@ function showLoading() {
     const loading = document.getElementById('loading');
     const mainContent = document.getElementById('main-content');
     const error = document.getElementById('error');
-    
+
     if (loading) loading.classList.remove('d-none');
     if (mainContent) mainContent.classList.add('d-none');
     if (error) error.classList.add('d-none');
@@ -934,7 +934,7 @@ function showLoading() {
 function hideLoading() {
     const loading = document.getElementById('loading');
     const mainContent = document.getElementById('main-content');
-    
+
     if (loading) loading.classList.add('d-none');
     if (mainContent) mainContent.classList.remove('d-none');
 }
@@ -943,7 +943,7 @@ function showError(message) {
     const loading = document.getElementById('loading');
     const error = document.getElementById('error');
     const errorMessage = document.getElementById('error-message');
-    
+
     if (loading) loading.classList.add('d-none');
     if (error) error.classList.remove('d-none');
     if (errorMessage) errorMessage.textContent = message;

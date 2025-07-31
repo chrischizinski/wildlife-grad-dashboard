@@ -24,26 +24,26 @@ CREATE TABLE jobs (
     project_details TEXT,
     contact_info TEXT,
     application_deadline TEXT,
-    
+
     -- Graduate position classification
     is_graduate_position BOOLEAN DEFAULT FALSE,
     grad_confidence DECIMAL(3,2) CHECK (grad_confidence >= 0 AND grad_confidence <= 1),
     position_type position_type DEFAULT 'Unknown',
-    
+
     -- Discipline classification
     discipline TEXT,
     discipline_confidence DECIMAL(3,2) CHECK (discipline_confidence >= 0 AND discipline_confidence <= 1),
     discipline_keywords TEXT[], -- Array of keywords
-    
+
     -- University information
     is_big10_university BOOLEAN DEFAULT FALSE,
     university_name TEXT,
-    
+
     -- Metadata
     scraped_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     scrape_run_id TEXT,
     scraper_version TEXT DEFAULT '2.0',
-    
+
     -- Indexing and constraints
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
@@ -59,9 +59,9 @@ CREATE INDEX idx_jobs_scrape_run_id ON jobs (scrape_run_id);
 
 -- Full text search index
 CREATE INDEX idx_jobs_search ON jobs USING gin(
-    to_tsvector('english', 
-        COALESCE(title, '') || ' ' || 
-        COALESCE(description, '') || ' ' || 
+    to_tsvector('english',
+        COALESCE(title, '') || ' ' ||
+        COALESCE(description, '') || ' ' ||
         COALESCE(organization, '') || ' ' ||
         COALESCE(discipline, '')
     )
@@ -69,7 +69,7 @@ CREATE INDEX idx_jobs_search ON jobs USING gin(
 
 -- Analytics view for dashboard performance
 CREATE OR REPLACE VIEW job_analytics AS
-SELECT 
+SELECT
     COUNT(*) as total_positions,
     COUNT(*) FILTER (WHERE is_graduate_position = true) as graduate_positions,
     COUNT(*) FILTER (WHERE salary IS NOT NULL AND salary != '' AND salary != 'none') as positions_with_salary,
@@ -82,21 +82,21 @@ FROM jobs;
 
 -- Monthly trends view
 CREATE OR REPLACE VIEW monthly_trends AS
-SELECT 
+SELECT
     EXTRACT(YEAR FROM published_date) as year,
     EXTRACT(MONTH FROM published_date) as month,
     TO_CHAR(published_date, 'YYYY-MM') as month_key,
     COUNT(*) as total_positions,
     COUNT(*) FILTER (WHERE is_graduate_position = true) as graduate_positions,
     COUNT(*) FILTER (WHERE salary IS NOT NULL AND salary != '' AND salary != 'none') as positions_with_salary
-FROM jobs 
+FROM jobs
 WHERE published_date IS NOT NULL
 GROUP BY year, month, month_key
 ORDER BY year DESC, month DESC;
 
 -- Discipline breakdown view
 CREATE OR REPLACE VIEW discipline_analytics AS
-SELECT 
+SELECT
     discipline,
     COUNT(*) as total_positions,
     COUNT(*) FILTER (WHERE is_graduate_position = true) as grad_positions,
@@ -104,24 +104,24 @@ SELECT
     AVG(discipline_confidence) as avg_discipline_confidence,
     COUNT(*) FILTER (WHERE salary IS NOT NULL AND salary != '' AND salary != 'none') as positions_with_salary,
     array_agg(DISTINCT unnest(discipline_keywords)) FILTER (WHERE discipline_keywords IS NOT NULL) as all_keywords
-FROM jobs 
+FROM jobs
 WHERE discipline IS NOT NULL AND discipline != 'Unknown'
 GROUP BY discipline
 ORDER BY grad_positions DESC, total_positions DESC;
 
 -- Geographic distribution view
 CREATE OR REPLACE VIEW geographic_distribution AS
-SELECT 
-    CASE 
-        WHEN location ~* ',\s*([A-Z]{2})\s*$' THEN 
+SELECT
+    CASE
+        WHEN location ~* ',\s*([A-Z]{2})\s*$' THEN
             regexp_replace(location, '^.*,\s*([A-Z]{2})\s*$', '\1')
-        WHEN location ~* ',\s*([A-Za-z\s]+)\s*$' THEN 
+        WHEN location ~* ',\s*([A-Za-z\s]+)\s*$' THEN
             trim(regexp_replace(location, '^.*,\s*([A-Za-z\s]+)\s*$', '\1'))
         ELSE 'Unknown'
     END as state_or_country,
     COUNT(*) as total_positions,
     COUNT(*) FILTER (WHERE is_graduate_position = true) as graduate_positions
-FROM jobs 
+FROM jobs
 WHERE location IS NOT NULL AND location != ''
 GROUP BY state_or_country
 ORDER BY graduate_positions DESC, total_positions DESC;
@@ -143,9 +143,9 @@ END;
 $$ language 'plpgsql';
 
 -- Trigger to automatically update updated_at
-CREATE TRIGGER update_jobs_updated_at 
-    BEFORE UPDATE ON jobs 
-    FOR EACH ROW 
+CREATE TRIGGER update_jobs_updated_at
+    BEFORE UPDATE ON jobs
+    FOR EACH ROW
     EXECUTE FUNCTION update_updated_at_column();
 
 -- Insert some sample data structure comment

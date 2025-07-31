@@ -1,6 +1,6 @@
 /**
  * Supabase Configuration for Wildlife Graduate Assistantships Dashboard
- * 
+ *
  * IMPORTANT: Replace these values with your actual Supabase project credentials
  * The anon key is safe to expose in client-side code as it's protected by RLS policies
  */
@@ -23,7 +23,7 @@ function initializeSupabase() {
         console.error('Supabase library not loaded');
         return false;
     }
-    
+
     try {
         supabaseClient = supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
         console.log('Supabase client initialized successfully');
@@ -38,7 +38,7 @@ function initializeSupabase() {
  * Check if Supabase is properly configured
  */
 function isSupabaseConfigured() {
-    return SUPABASE_CONFIG.url !== 'https://your-project-id.supabase.co' && 
+    return SUPABASE_CONFIG.url !== 'https://your-project-id.supabase.co' &&
            SUPABASE_CONFIG.anonKey !== 'your-anon-key-here';
 }
 

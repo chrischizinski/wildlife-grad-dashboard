@@ -12,13 +12,13 @@ class AnalyticsDashboard {
             currentPeriod: 6, // months for trends chart
             showBig10Only: false // Big 10 filter state
         };
-        
+
         this.charts = {};
         this.insights = [];
-        
+
         this.init();
     }
-    
+
     /**
      * Sanitize HTML content to prevent XSS attacks
      * @param {string} str - String to sanitize
@@ -30,10 +30,10 @@ class AnalyticsDashboard {
         div.textContent = str;
         return div.innerHTML;
     }
-    
+
     async init() {
         this.showLoading();
-        
+
         try {
             await this.loadData();
             this.renderDashboard();
@@ -44,7 +44,7 @@ class AnalyticsDashboard {
             this.showError(error.message);
         }
     }
-    
+
     /**
      * Extract salary value from job data - handles multiple formats
      * @param {Object} job - Job object
@@ -55,12 +55,12 @@ class AnalyticsDashboard {
         if (job.salary_lincoln_adjusted && typeof job.salary_lincoln_adjusted === 'number' && job.salary_lincoln_adjusted > 0) {
             return job.salary_lincoln_adjusted;
         }
-        
+
         // Try numeric salary fields
         if (job.salary_min && job.salary_max) {
             return (job.salary_min + job.salary_max) / 2;
         }
-        
+
         // Parse salary_range string (e.g., "$25,000 - $30,000")
         if (job.salary_range && typeof job.salary_range === 'string') {
             const ranges = job.salary_range.match(/\$?[\d,]+/g);
@@ -79,11 +79,11 @@ class AnalyticsDashboard {
                 }
             }
         }
-        
+
         // Fallback - no valid salary found
         return 0;
     }
-    
+
     /**
      * Generate analytics data from jobs when enhanced_data.json is not available
      * @param {Array} jobs - Array of job objects
@@ -92,7 +92,7 @@ class AnalyticsDashboard {
     generateAnalyticsFromJobs(jobs) {
         const gradJobs = jobs.filter(job => job.is_graduate_assistantship);
         const big10Jobs = gradJobs.filter(job => job.is_big10_university);
-        
+
         return {
             summary: {
                 total_positions: gradJobs.length,
@@ -122,7 +122,7 @@ class AnalyticsDashboard {
             ]
         };
     }
-    
+
     calculateDisciplineBreakdown(jobs) {
         const breakdown = {};
         jobs.forEach(job => {
@@ -131,7 +131,7 @@ class AnalyticsDashboard {
         });
         return breakdown;
     }
-    
+
     calculateRegionalDistribution(jobs) {
         const distribution = {};
         jobs.forEach(job => {
@@ -140,7 +140,7 @@ class AnalyticsDashboard {
         });
         return distribution;
     }
-    
+
     getBig10Universities(jobs) {
         const unis = {};
         jobs.forEach(job => {
@@ -150,7 +150,7 @@ class AnalyticsDashboard {
         });
         return unis;
     }
-    
+
     getOtherUniversities(jobs) {
         const unis = {};
         jobs.forEach(job => {
@@ -160,31 +160,31 @@ class AnalyticsDashboard {
         });
         return unis;
     }
-    
+
     async loadData() {
         const cacheBuster = '?t=' + Date.now();
-        
+
         try {
             const [jobsResponse, analyticsResponse] = await Promise.all([
                 // Try verified graduate assistantships first, fallback to export_data
-                fetch('data/verified_graduate_assistantships.json' + cacheBuster).catch(() => 
+                fetch('data/verified_graduate_assistantships.json' + cacheBuster).catch(() =>
                     fetch('./data/verified_graduate_assistantships.json' + cacheBuster)
                 ).catch(() =>
-                    fetch('data/export_data.json' + cacheBuster).catch(() => 
+                    fetch('data/export_data.json' + cacheBuster).catch(() =>
                         fetch('./data/export_data.json' + cacheBuster)
                     )
                 ),
-                fetch('data/enhanced_data.json' + cacheBuster).catch(() => 
+                fetch('data/enhanced_data.json' + cacheBuster).catch(() =>
                     fetch('./data/enhanced_data.json' + cacheBuster)
                 )
             ]);
-            
+
             if (!jobsResponse.ok) {
                 throw new Error('Failed to fetch jobs data');
             }
-            
+
             const allJobs = await jobsResponse.json();
-            
+
             // Try to load analytics, but don't fail if it's missing
             try {
                 if (analyticsResponse.ok) {
@@ -197,13 +197,13 @@ class AnalyticsDashboard {
                 console.warn('Failed to load analytics data, generating from jobs data');
                 this.data.analytics = this.generateAnalyticsFromJobs(allJobs);
             }
-            
+
             // Store all jobs for trends chart (which can be filtered by user)
             this.data.allJobs = allJobs;
-            
+
             // Filter to last 6 months for all other analytics
             this.data.jobs = this.filterJobsToRecentMonths(allJobs, 6);
-            
+
         } catch (error) {
             if (window.location.protocol === 'file:') {
                 throw new Error('CORS Error: Please serve this dashboard from a web server. Run: python3 -m http.server 8080 in the dashboard directory, then visit http://localhost:8080');
@@ -211,14 +211,14 @@ class AnalyticsDashboard {
             throw error;
         }
     }
-    
+
     filterJobsToRecentMonths(jobs, months) {
         const cutoffDate = new Date();
         cutoffDate.setMonth(cutoffDate.getMonth() - months);
-        
+
         return jobs.filter(job => {
             if (!job.published_date) return false;
-            
+
             try {
                 const [month, day, year] = job.published_date.split('/');
                 const jobDate = new Date(year, month - 1, day);
@@ -228,24 +228,24 @@ class AnalyticsDashboard {
             }
         });
     }
-    
+
     filterJobsByBig10(jobs, big10Only = false) {
         if (!big10Only) return jobs;
         return jobs.filter(job => job.is_big10_university === true);
     }
-    
+
     getFilteredJobs() {
         // Apply all active filters
         let filteredJobs = this.data.jobs;
-        
+
         // Apply Big 10 filter if active
         if (this.data.showBig10Only) {
             filteredJobs = this.filterJobsByBig10(filteredJobs, true);
         }
-        
+
         return filteredJobs;
     }
-    
+
     renderDashboard() {
         this.updateHeaderMetrics();
         this.renderDisciplineAnalysis();
@@ -257,7 +257,7 @@ class AnalyticsDashboard {
         this.updateFilterStatus(); // Update filter status and Big 10 count
         this.fixHeaderColors();
     }
-    
+
     fixHeaderColors() {
         // Force card headers to be dark text
         const cardHeaders = document.querySelectorAll('.analytics-card .card-header h5, .analytics-card .card-header h6');
@@ -265,14 +265,14 @@ class AnalyticsDashboard {
             header.style.color = '#111827';
             header.style.fontWeight = '600';
         });
-        
+
         // Force specific chart titles to be white text
         const chartTitles = document.querySelectorAll('.col-lg-8 h6.mb-3, .col-lg-4 h6.mb-3');
         chartTitles.forEach(title => {
             title.style.color = 'white';
             title.style.fontWeight = '600';
         });
-        
+
         // Nuclear option - find by text content
         const allH6 = document.querySelectorAll('h6');
         allH6.forEach(h6 => {
@@ -282,17 +282,17 @@ class AnalyticsDashboard {
             }
         });
     }
-    
+
     wrapLabel(text, maxLength) {
         if (text.length <= maxLength) {
             return text;
         }
-        
+
         // Find a good break point (space, hyphen, or slash)
         const words = text.split(/[\s\-\/]+/);
         let line1 = '';
         let line2 = '';
-        
+
         for (let i = 0; i < words.length; i++) {
             const testLine1 = line1 + (line1 ? ' ' : '') + words[i];
             if (testLine1.length <= maxLength) {
@@ -302,34 +302,34 @@ class AnalyticsDashboard {
                 break;
             }
         }
-        
+
         // If line2 is too long, truncate it
         if (line2.length > maxLength) {
             line2 = line2.substring(0, maxLength - 3) + '...';
         }
-        
+
         // Return as newline-separated string for Chart.js
         return line1 + (line2 ? '\n' + line2 : '');
     }
-    
+
     generateSparklineData(jobs, months = 6) {
         const monthlyData = {};
         const now = new Date();
-        
+
         // Initialize months with days count for each month
         for (let i = months - 1; i >= 0; i--) {
             const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
             const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-            
+
             // Get number of days in this month
             const daysInMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-            
+
             monthlyData[monthKey] = {
                 count: 0,
                 days: daysInMonth
             };
         }
-        
+
         // Count jobs by month
         jobs.forEach(job => {
             if (job.published_date) {
@@ -344,49 +344,49 @@ class AnalyticsDashboard {
                 }
             }
         });
-        
+
         // Calculate positions per 30 days (monthly moving average)
         return Object.values(monthlyData).map(data => {
             const positionsPer30Days = (data.count / data.days) * 30;
             return Math.round(positionsPer30Days * 100) / 100; // Round to 2 decimal places
         });
     }
-    
+
     createSparkline(canvasId, data, color = '#059669') {
         const canvas = document.getElementById(canvasId);
         if (!canvas) return;
-        
+
         const ctx = canvas.getContext('2d');
         const width = canvas.width;
         const height = canvas.height;
-        
+
         // Clear canvas
         ctx.clearRect(0, 0, width, height);
-        
+
         if (data.length < 2) return;
-        
+
         const max = Math.max(...data, 1);
         const min = Math.min(...data);
         const range = max - min || 1;
-        
+
         // Draw line
         ctx.strokeStyle = color;
         ctx.lineWidth = 2;
         ctx.beginPath();
-        
+
         for (let i = 0; i < data.length; i++) {
             const x = (i / (data.length - 1)) * width;
             const y = height - ((data[i] - min) / range) * height;
-            
+
             if (i === 0) {
                 ctx.moveTo(x, y);
             } else {
                 ctx.lineTo(x, y);
             }
         }
-        
+
         ctx.stroke();
-        
+
         // Fill area under curve
         ctx.fillStyle = color + '20'; // 20% opacity
         ctx.lineTo(width, height);
@@ -394,16 +394,16 @@ class AnalyticsDashboard {
         ctx.closePath();
         ctx.fill();
     }
-    
+
     getTrendIndicator(data) {
         if (data.length < 3) {
             return { text: '', class: '' };
         }
-        
+
         // Compare last 2 months vs previous 2 months
         const recent = data.slice(-2).reduce((a, b) => a + b, 0);
         const previous = data.slice(-4, -2).reduce((a, b) => a + b, 0);
-        
+
         if (recent > previous * 1.2) {
             return { text: '↗', class: 'trend-up' };
         } else if (recent < previous * 0.8) {
@@ -412,94 +412,94 @@ class AnalyticsDashboard {
             return { text: '→', class: 'trend-stable' };
         }
     }
-    
+
     updateHeaderMetrics() {
         const jobs = this.getFilteredJobs();
         const { analytics } = this.data;
-        
+
         // Total assistantships
         const gradJobs = jobs.filter(job => job.discipline_primary !== 'Other');
         document.getElementById('total-assistantships').textContent = gradJobs.length;
-        
+
         // Average stipend (Lincoln-adjusted)
         const validSalaries = gradJobs
             .map(job => this.extractSalaryValue(job))
             .filter(salary => salary && salary > 0);
-        
-        const avgStipend = validSalaries.length > 0 
+
+        const avgStipend = validSalaries.length > 0
             ? Math.round(validSalaries.reduce((a, b) => a + b) / validSalaries.length)
             : 0;
-        
-        document.getElementById('avg-stipend').textContent = 
+
+        document.getElementById('avg-stipend').textContent =
             (avgStipend && avgStipend > 0 && typeof avgStipend === 'number') ? `$${avgStipend.toLocaleString()}` : 'N/A';
-        
+
         // Top discipline
         const disciplineCounts = {};
         gradJobs.forEach(job => {
             const discipline = job.discipline_primary || 'Other';
             disciplineCounts[discipline] = (disciplineCounts[discipline] || 0) + 1;
         });
-        
+
         const topDiscipline = Object.entries(disciplineCounts)
             .sort(([,a], [,b]) => b - a)[0];
-        
+
         if (topDiscipline) {
             const [name, count] = topDiscipline;
             const percentage = Math.round((count / gradJobs.length) * 100);
-            
-            document.getElementById('top-discipline').textContent = 
+
+            document.getElementById('top-discipline').textContent =
                 name.length > 20 ? name.substring(0, 20) + '...' : name;
-            document.getElementById('discipline-percentage').textContent = 
+            document.getElementById('discipline-percentage').textContent =
                 `${percentage}% of positions`;
         }
-        
+
         // Geographic spread
         const regions = new Set(jobs.map(job => job.geographic_region).filter(r => r));
         document.getElementById('geographic-spread').textContent = regions.size;
-        
+
         const regionCounts = {};
         jobs.forEach(job => {
             const region = job.geographic_region || 'Unknown';
             regionCounts[region] = (regionCounts[region] || 0) + 1;
         });
-        
+
         const topRegion = Object.entries(regionCounts)
             .sort(([,a], [,b]) => b - a)[0];
-        
+
         if (topRegion) {
             document.getElementById('top-region').textContent = `Top: ${topRegion[0]}`;
         }
-        
+
         // Update timestamps
         if (analytics && analytics.last_updated) {
             const lastUpdated = new Date(analytics.last_updated).toLocaleDateString();
             document.getElementById('last-updated').textContent = `Last updated: ${lastUpdated}`;
-            document.getElementById('footer-last-updated').innerHTML = 
+            document.getElementById('footer-last-updated').innerHTML =
                 `<i class="fas fa-clock me-2"></i>Last updated: ${lastUpdated}`;
         }
-        
+
         const filterText = this.data.showBig10Only ? " (Big 10 only)" : "";
         document.getElementById('total-positions').textContent = `${jobs.length} verified graduate assistantships (last 6 months)${filterText}`;
     }
-    
+
     renderDisciplineAnalysis() {
         const jobs = this.getFilteredJobs();
         const gradJobs = jobs.filter(job => job.discipline_primary !== 'Other');
-        
+
         // Discipline breakdown
         const disciplines = {};
-        
+
         // Add Overall category first
         const allSalaries = gradJobs.map(job => this.extractSalaryValue(job)).filter(salary => salary > 0);
         const allLocations = new Set(gradJobs.map(job => job.geographic_region).filter(region => region));
-        
+
         disciplines['Overall'] = {
             count: gradJobs.length,
             salaries: allSalaries,
             locations: allLocations,
             jobs: gradJobs
         };
-        
+
         // Add individual disciplines
         gradJobs.forEach(job => {
             const discipline = job.discipline_primary || 'Other';
@@ -521,35 +521,35 @@ class AnalyticsDashboard {
                 disciplines[discipline].locations.add(job.geographic_region);
             }
         });
-        
+
         // Create discipline cards
         const container = document.getElementById('discipline-cards');
         container.innerHTML = '';
-        
+
         // Sort disciplines with Overall first, then by count
         const sortedDisciplines = Object.entries(disciplines).sort(([nameA, a], [nameB, b]) => {
             if (nameA === 'Overall') return -1;
             if (nameB === 'Overall') return 1;
             return b.count - a.count;
         });
-        
+
         sortedDisciplines.forEach(([discipline, data], index) => {
-                const avgSalary = data.salaries.length > 0 
+                const avgSalary = data.salaries.length > 0
                     ? Math.round(data.salaries.reduce((a, b) => a + b) / data.salaries.length)
                     : 0;
-                
+
                 const card = document.createElement('div');
                 card.className = 'col-lg-6 col-xl-4 mb-3';
-                
+
                 // Add special styling for Overall card
                 const isOverall = discipline === 'Overall';
                 const cardClass = isOverall ? 'discipline-card overall-card' : 'discipline-card';
                 const sparklineId = `sparkline-${index}`;
-                
+
                 // Generate trend indicator
                 const sparklineData = this.generateSparklineData(data.jobs || []);
                 const trend = this.getTrendIndicator(sparklineData);
-                
+
                 card.innerHTML = `
                     <div class="${cardClass}">
                         <div class="card-body">
@@ -585,60 +585,60 @@ class AnalyticsDashboard {
                     </div>
                 `;
                 container.appendChild(card);
-                
+
                 // Create sparkline after DOM element is added
                 setTimeout(() => {
                     const color = isOverall ? '#047857' : '#059669';
                     this.createSparkline(sparklineId, sparklineData, color);
                 }, 10);
             });
-        
+
         // Create salary comparison chart
         this.createSalaryComparisonChart(disciplines);
     }
-    
+
     createSalaryComparisonChart(disciplines) {
         const ctx = document.getElementById('salary-comparison-chart').getContext('2d');
-        
+
         const boxPlotData = [];
         const labels = [];
-        
+
         // Sort disciplines with Overall first, then by count
         const sortedDisciplinesForChart = Object.entries(disciplines).sort(([nameA, a], [nameB, b]) => {
             if (nameA === 'Overall') return -1;
             if (nameB === 'Overall') return 1;
             return b.count - a.count;
         });
-        
+
         sortedDisciplinesForChart.forEach(([discipline, data]) => {
                 if (data.salaries.length >= 3) { // Need at least 3 data points for box plot
                     const sortedSalaries = data.salaries.sort((a, b) => a - b);
                     const n = sortedSalaries.length;
-                    
+
                     // Calculate quartiles
                     const q1Index = Math.floor(n * 0.25);
                     const q2Index = Math.floor(n * 0.5);
                     const q3Index = Math.floor(n * 0.75);
-                    
+
                     const q1 = sortedSalaries[q1Index];
                     const median = sortedSalaries[q2Index];
                     const q3 = sortedSalaries[q3Index];
                     const min = sortedSalaries[0];
                     const max = sortedSalaries[n - 1];
-                    
+
                     // Calculate IQR and outliers
                     const iqr = q3 - q1;
                     const lowerFence = q1 - 1.5 * iqr;
                     const upperFence = q3 + 1.5 * iqr;
-                    
+
                     // Find whisker ends (closest values within fences)
                     const lowerWhisker = sortedSalaries.find(val => val >= lowerFence) || min;
                     const upperWhisker = sortedSalaries.reverse().find(val => val <= upperFence) || max;
                     sortedSalaries.reverse(); // restore order
-                    
+
                     // Find outliers
                     const outliers = sortedSalaries.filter(val => val < lowerFence || val > upperFence);
-                    
+
                     // Split long discipline names into two lines
                     const wrappedLabel = this.wrapLabel(discipline, 12);
                     labels.push(wrappedLabel);
@@ -652,7 +652,7 @@ class AnalyticsDashboard {
                     });
                 }
             });
-        
+
         this.charts.salaryComparison = new Chart(ctx, {
             type: 'boxplot',
             data: {
@@ -738,22 +738,22 @@ class AnalyticsDashboard {
             }
         });
     }
-    
+
     createMarketShareChart(disciplines) {
         const ctx = document.getElementById('discipline-pie-chart').getContext('2d');
-        
+
         const data = Object.entries(disciplines)
             .sort(([,a], [,b]) => b.count - a.count)
             .map(([discipline, data]) => ({
                 label: discipline,
                 value: data.count
             }));
-        
+
         const colors = [
             '#059669', '#22c55e', '#0ea5e9', '#f59e0b', '#ef4444',
             '#166534', '#1e40af', '#92400e', '#047857', '#065f46'
         ];
-        
+
         this.charts.marketShare = new Chart(ctx, {
             type: 'doughnut',
             data: {
@@ -786,18 +786,18 @@ class AnalyticsDashboard {
             }
         });
     }
-    
+
     renderTrendsAnalysis() {
         this.createTrendsChart();
         this.renderSeasonalPatterns();
     }
-    
+
     createTrendsChart() {
         const ctx = document.getElementById('trends-chart').getContext('2d');
-        
+
         // Use the selected period (3, 6, or 12 months)
         const periodMonths = this.data.currentPeriod || 6;
-        
+
         // Process temporal data using ALL jobs (not filtered to 6 months)
         const monthlyData = {};
         this.data.allJobs.forEach(job => {
@@ -811,19 +811,19 @@ class AnalyticsDashboard {
                 }
             }
         });
-        
+
         // Get last N months based on selected period
         const months = [];
         const values = [];
         const now = new Date();
-        
+
         for (let i = periodMonths - 1; i >= 0; i--) {
             const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
             const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
             months.push(date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }));
             values.push(monthlyData[monthKey] || 0);
         }
-        
+
         this.charts.trends = new Chart(ctx, {
             type: 'line',
             data: {
@@ -884,11 +884,11 @@ class AnalyticsDashboard {
             }
         });
     }
-    
+
     renderSeasonalPatterns() {
         const seasonalData = this.analyzeSeasonalPatterns();
         const container = document.getElementById('seasonal-insights');
-        
+
         container.innerHTML = seasonalData.map(season => `
             <div class="seasonal-pattern">
                 <div class="season-name">${this.escapeHTML(season.name)}</div>
@@ -899,7 +899,7 @@ class AnalyticsDashboard {
             </div>
         `).join('');
     }
-    
+
     analyzeSeasonalPatterns() {
         // Analyze posting patterns by season using filtered 6-month data
         const seasons = {
@@ -908,13 +908,13 @@ class AnalyticsDashboard {
             'Fall': { months: [9, 10, 11], count: 0 },
             'Winter': { months: [12, 1, 2], count: 0 }
         };
-        
+
         jobs.forEach(job => {
             if (job.published_date) {
                 try {
                     const [month] = job.published_date.split('/');
                     const monthNum = parseInt(month);
-                    
+
                     for (const [seasonName, seasonData] of Object.entries(seasons)) {
                         if (seasonData.months.includes(monthNum)) {
                             seasonData.count++;
@@ -926,7 +926,7 @@ class AnalyticsDashboard {
                 }
             }
         });
-        
+
         return Object.entries(seasons).map(([name, data]) => ({
             name,
             count: data.count,
@@ -934,23 +934,23 @@ class AnalyticsDashboard {
             trendText: data.count > 10 ? '+High' : data.count > 5 ? 'Stable' : 'Low'
         }));
     }
-    
+
     renderGeographicAnalysis() {
         this.createGeographicMap();
         this.renderRegionalBreakdown();
         this.renderCostOfLivingAnalysis();
     }
-    
+
     createGeographicMap() {
         const jobs = this.getFilteredJobs();
         const regionData = {};
         const disciplineByRegion = {};
-        
+
         // Process jobs by region
         jobs.forEach(job => {
             const region = job.geographic_region || 'Unknown';
             const discipline = job.discipline_primary || 'Other';
-            
+
             if (!regionData[region]) {
                 regionData[region] = {
                     count: 0,
@@ -958,20 +958,20 @@ class AnalyticsDashboard {
                     disciplines: {}
                 };
             }
-            
+
             regionData[region].count++;
-            
+
             const salary = this.extractSalaryValue(job);
             if (salary > 0) {
                 regionData[region].salaries.push(salary);
             }
-            
+
             if (!regionData[region].disciplines[discipline]) {
                 regionData[region].disciplines[discipline] = 0;
             }
             regionData[region].disciplines[discipline]++;
         });
-        
+
         // Map regions to US state abbreviations for choropleth
         const regionToStates = {
             'Northeast': ['ME', 'NH', 'VT', 'MA', 'RI', 'CT', 'NY', 'NJ', 'PA'],
@@ -983,55 +983,55 @@ class AnalyticsDashboard {
             'Great Plains': ['ND', 'SD', 'NE', 'KS', 'OK', 'TX'],
             'Rocky Mountains': ['MT', 'ID', 'WY', 'CO', 'UT', 'NV']
         };
-        
+
         // Prepare data for Plotly
         const plotData = [];
         const plotText = [];
         const plotStates = [];
         const plotValues = [];
-        
+
         Object.entries(regionData).forEach(([region, data]) => {
-            const avgSalary = data.salaries.length > 0 
+            const avgSalary = data.salaries.length > 0
                 ? Math.round(data.salaries.reduce((a, b) => a + b) / data.salaries.length)
                 : 0;
-            
+
             // Get top disciplines for this region
             const topDisciplines = Object.entries(data.disciplines)
                 .sort(([,a], [,b]) => b - a)
                 .slice(0, 3)
                 .map(([disc, count]) => `${disc}: ${Math.round((count / data.count) * 100)}%`)
                 .join('<br>');
-            
+
             const percentage = Math.round((data.count / jobs.length) * 100);
-            
+
             // If this is Pacific region, combine it with West for mapping purposes
             let displayRegion = region;
             let combinedCount = data.count;
-            
+
             if (region === 'Pacific' && regionData['West']) {
                 // Combine Pacific data with West data for AK/HI shading
                 displayRegion = 'West + Pacific';
                 combinedCount = data.count + regionData['West'].count;
             }
-            
+
             const hoverText = `<b>${displayRegion}</b><br>` +
                 `Positions: ${data.count}<br>` +
                 `Percentage: ${percentage}%<br>` +
                 `Avg Salary: $${avgSalary.toLocaleString()}<br>` +
                 `<br><b>Top Disciplines:</b><br>${topDisciplines}`;
-            
+
             // Map region to states
             const states = regionToStates[region] || [];
             states.forEach(state => {
                 plotStates.push(state);
                 // Use combined count for Pacific states to match West region intensity
-                const valueToUse = region === 'Pacific' && regionData['West'] ? 
+                const valueToUse = region === 'Pacific' && regionData['West'] ?
                     regionData['West'].count : data.count;
                 plotValues.push(valueToUse);
                 plotText.push(hoverText);
             });
         });
-        
+
         const mapData = [{
             type: 'choropleth',
             locationmode: 'USA-states',
@@ -1053,7 +1053,7 @@ class AnalyticsDashboard {
                 tickfont: { color: 'white' }
             }
         }];
-        
+
         const layout = {
             geo: {
                 scope: 'usa',
@@ -1071,15 +1071,15 @@ class AnalyticsDashboard {
             margin: { l: 0, r: 0, t: 0, b: 0 },
             height: 400
         };
-        
+
         const config = {
             displayModeBar: false,
             responsive: true
         };
-        
+
         Plotly.newPlot('geographic-map', mapData, layout, config);
     }
-    
+
     renderRegionalBreakdown() {
         const jobs = this.getFilteredJobs();
         const regional = {};
@@ -1094,16 +1094,16 @@ class AnalyticsDashboard {
                 regional[region].salaries.push(salary);
             }
         });
-        
+
         const container = document.getElementById('regional-breakdown');
         container.innerHTML = Object.entries(regional)
             .sort(([,a], [,b]) => b.count - a.count)
             .map(([region, data]) => {
-                const avgSalary = data.salaries.length > 0 
+                const avgSalary = data.salaries.length > 0
                     ? Math.round(data.salaries.reduce((a, b) => a + b) / data.salaries.length)
                     : 0;
                 const safeRegion = this.escapeHTML(region);
-                
+
                 return `
                     <div class="regional-item mb-2">
                         <div class="region-name">${safeRegion}</div>
@@ -1115,11 +1115,11 @@ class AnalyticsDashboard {
                 `;
             }).join('');
     }
-    
+
     renderCostOfLivingAnalysis() {
         const costAnalysis = this.analyzeCostOfLiving();
         const container = document.getElementById('cost-of-living-analysis');
-        
+
         container.innerHTML = `
             <div class="insight-item">
                 <div class="d-flex align-items-start">
@@ -1134,26 +1134,26 @@ class AnalyticsDashboard {
             </div>
         `;
     }
-    
+
     analyzeCostOfLiving() {
         const costIndices = this.data.jobs
             .map(job => job.cost_of_living_index || 1.0)
             .filter(index => index > 0);
-        
-        const avgAdjustment = costIndices.length > 0 
+
+        const avgAdjustment = costIndices.length > 0
             ? Math.round(((costIndices.reduce((a, b) => a + b) / costIndices.length) - 1) * 100)
             : 0;
-        
+
         return {
             adjustment: avgAdjustment,
             highestCost: 'Western regions' // Simplified for demo
         };
     }
-    
+
     renderMarketInsights() {
         const insights = this.generateMarketInsights();
         const container = document.getElementById('market-insights');
-        
+
         container.innerHTML = insights.map(insight => `
             <div class="insight-item">
                 <div class="d-flex align-items-start">
@@ -1168,20 +1168,20 @@ class AnalyticsDashboard {
             </div>
         `).join('');
     }
-    
+
     generateMarketInsights() {
         const jobs = this.getFilteredJobs();
         const gradJobs = jobs.filter(job => job.discipline_primary !== 'Other');
-        
+
         const insights = [];
-        
+
         // Market size insight
         insights.push({
             icon: 'fas fa-chart-pie',
             title: 'Market Activity',
             description: `${gradJobs.length} verified graduate assistantships identified across ${new Set(gradJobs.map(j => j.discipline_primary)).size} disciplines, representing high-quality research opportunities with project details and funding confirmation.`
         });
-        
+
         // Salary insight
         const validSalaries = gradJobs.map(job => this.extractSalaryValue(job)).filter(salary => salary > 0);
         if (validSalaries.length > 0) {
@@ -1189,14 +1189,14 @@ class AnalyticsDashboard {
                 min: Math.min(...validSalaries),
                 max: Math.max(...validSalaries)
             };
-            
+
             insights.push({
                 icon: 'fas fa-money-bill-wave',
                 title: 'Compensation Range',
                 description: `Stipends range from $${Math.round(salaryRange.min).toLocaleString()} to $${Math.round(salaryRange.max).toLocaleString()}, with significant variation across disciplines and regions.`
             });
         }
-        
+
         // Geographic insight
         const regions = new Set(jobs.map(job => job.geographic_region).filter(r => r));
         insights.push({
@@ -1204,28 +1204,28 @@ class AnalyticsDashboard {
             title: 'Geographic Diversity',
             description: `Opportunities span ${regions.size} geographic regions, providing flexibility for students with location preferences.`
         });
-        
+
         return insights;
     }
-    
+
     renderOrganizationsChart() {
         const jobs = this.getFilteredJobs();
         const ctx = document.getElementById('organizations-chart').getContext('2d');
-        
+
         const orgCounts = {};
         jobs.forEach(job => {
             const org = job.organization;
             orgCounts[org] = (orgCounts[org] || 0) + 1;
         });
-        
+
         const topOrgs = Object.entries(orgCounts)
             .sort(([,a], [,b]) => b - a)
             .slice(0, 10);
-        
+
         this.charts.organizations = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: topOrgs.map(([org]) => 
+                labels: topOrgs.map(([org]) =>
                     org.length > 30 ? org.substring(0, 30) + '...' : org
                 ),
                 datasets: [{
@@ -1274,7 +1274,7 @@ class AnalyticsDashboard {
             }
         });
     }
-    
+
     setupEventListeners() {
         // Trend period buttons
         document.querySelectorAll('input[name="trendPeriod"]').forEach(input => {
@@ -1283,15 +1283,15 @@ class AnalyticsDashboard {
                 this.updateTrendsChart();
             });
         });
-        
+
         // Export buttons
         document.getElementById('export-csv').addEventListener('click', () => this.exportData('csv'));
         document.getElementById('export-json').addEventListener('click', () => this.exportData('json'));
         document.getElementById('export-pdf').addEventListener('click', () => this.exportReport());
-        
+
         // Refresh button
         document.getElementById('refresh-data').addEventListener('click', () => this.refreshData());
-        
+
         // About section collapse handler
         const aboutCollapse = document.getElementById('aboutContent');
         const aboutButton = document.querySelector('[data-bs-target="#aboutContent"]');
@@ -1303,33 +1303,33 @@ class AnalyticsDashboard {
                 aboutButton.querySelector('i').classList.replace('fa-chevron-up', 'fa-chevron-down');
             });
         }
-        
+
         // Enhanced Big 10 toggle with better UX
         document.getElementById('big10-toggle').addEventListener('change', (e) => {
             const isChecked = e.target.checked;
             this.data.showBig10Only = isChecked;
-            
+
             // Add visual feedback during filter change
             this.showFilteringIndicator();
-            
+
             // Debounced update for better performance
             clearTimeout(this.filterTimeout);
             this.filterTimeout = setTimeout(() => {
                 this.refreshDashboard();
                 this.updateFilterStatus();
                 this.hideFilteringIndicator();
-                
+
                 // Show success toast
                 this.showFilterToast(isChecked);
             }, 150);
         });
     }
-    
+
     refreshDashboard() {
         // Re-render all components with current filter settings
         this.renderDashboard();
     }
-    
+
     showFilteringIndicator() {
         // Add pulsing animation to toggle button
         const toggleLabel = document.querySelector('label[for="big10-toggle"]');
@@ -1338,14 +1338,14 @@ class AnalyticsDashboard {
             toggleLabel.style.transition = 'opacity 0.2s ease';
         }
     }
-    
+
     hideFilteringIndicator() {
         const toggleLabel = document.querySelector('label[for="big10-toggle"]');
         if (toggleLabel) {
             toggleLabel.style.opacity = '1';
         }
     }
-    
+
     showFilterToast(isBig10Only) {
         // Create a subtle toast notification
         const toast = document.createElement('div');
@@ -1355,7 +1355,7 @@ class AnalyticsDashboard {
         const iconType = isBig10Only ? 'university' : 'globe';
         const titleText = isBig10Only ? 'Big 10 Filter Active' : 'Showing All Universities';
         const descText = isBig10Only ? 'Displaying only Big 10 university positions' : 'Displaying positions from all universities';
-        
+
         toast.innerHTML = `
             <div class="alert alert-${this.escapeHTML(alertType)} alert-dismissible fade show shadow-sm" role="alert" style="min-width: 300px;">
                 <i class="fas fa-${this.escapeHTML(iconType)} me-2"></i>
@@ -1365,33 +1365,33 @@ class AnalyticsDashboard {
                 </small>
             </div>
         `;
-        
+
         document.body.appendChild(toast);
-        
+
         // Auto-remove after 3 seconds
         setTimeout(() => {
             toast.remove();
         }, 3000);
     }
-    
+
     updateFilterStatus() {
         // Update header status to show current filter
         const jobs = this.getFilteredJobs();
         const allJobs = this.data.jobs;
         const statusElement = document.getElementById('total-positions');
         const subtitle = document.querySelector('.analytics-header-card p.text-muted');
-        
+
         if (statusElement) {
             const count = jobs.length;
             statusElement.textContent = count.toLocaleString();
         }
-        
+
         if (subtitle) {
             const filterText = this.data.showBig10Only ? ' • Big 10 universities only' : '';
             const baseText = `Last ${this.data.currentPeriod} months • Last updated: ${new Date().toLocaleDateString()}`;
             subtitle.innerHTML = `<span>${baseText}${filterText}</span>`;
         }
-        
+
         // Update Big 10 count badge
         const big10Count = this.filterJobsByBig10(allJobs, true).length;
         const countBadge = document.getElementById('big10-count');
@@ -1399,7 +1399,7 @@ class AnalyticsDashboard {
             countBadge.textContent = big10Count;
             countBadge.style.display = big10Count > 0 ? 'inline' : 'none';
         }
-        
+
         // Update toggle button appearance when active
         const toggleLabel = document.querySelector('label[for="big10-toggle"]');
         if (toggleLabel) {
@@ -1418,7 +1418,7 @@ class AnalyticsDashboard {
                 toggleLabel.style.transform = '';
             }
         }
-        
+
         // Show/hide filter info panel
         const filterPanel = document.getElementById('filter-info-panel');
         if (filterPanel) {
@@ -1437,24 +1437,24 @@ class AnalyticsDashboard {
             }
         }
     }
-    
+
     updateTrendsChart() {
         if (this.charts.trends) {
             this.charts.trends.destroy();
         }
-        
+
         // Update the current period from the checked radio button
         const checkedPeriod = document.querySelector('input[name="trendPeriod"]:checked');
         if (checkedPeriod) {
             this.data.currentPeriod = parseInt(checkedPeriod.value);
         }
-        
+
         this.createTrendsChart();
     }
-    
+
     exportData(format) {
         let data, filename, mimeType;
-        
+
         if (format === 'csv') {
             data = this.convertToCSV(this.data.jobs);
             filename = 'wildlife_assistantships_analytics.csv';
@@ -1464,7 +1464,7 @@ class AnalyticsDashboard {
             filename = 'wildlife_assistantships_analytics.json';
             mimeType = 'application/json';
         }
-        
+
         const blob = new Blob([data], { type: mimeType });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -1473,32 +1473,32 @@ class AnalyticsDashboard {
         link.click();
         URL.revokeObjectURL(url);
     }
-    
+
     convertToCSV(jobs) {
         const headers = [
             'title', 'organization', 'location', 'discipline_primary',
             'salary_lincoln_adjusted', 'geographic_region', 'published_date'
         ];
-        
+
         const csvData = [
             headers.join(','),
-            ...jobs.map(job => 
+            ...jobs.map(job =>
                 headers.map(header => {
                     const value = job[header] || '';
-                    return typeof value === 'string' && value.includes(',') 
+                    return typeof value === 'string' && value.includes(',')
                         ? `"${value}"` : value;
                 }).join(',')
             )
         ];
-        
+
         return csvData.join('\\n');
     }
-    
+
     exportReport() {
         // Generate comprehensive PDF report (placeholder)
         alert('PDF report generation would be implemented here using libraries like jsPDF');
     }
-    
+
     async refreshData() {
         this.showLoading();
         try {
@@ -1509,21 +1509,21 @@ class AnalyticsDashboard {
             this.showError('Failed to refresh data: ' + error.message);
         }
     }
-    
+
     updateFooter() {
         if (this.data.analytics && this.data.analytics.last_updated) {
             const lastUpdated = new Date(this.data.analytics.last_updated).toLocaleDateString();
-            document.getElementById('footer-last-updated').innerHTML = 
+            document.getElementById('footer-last-updated').innerHTML =
                 `<i class="fas fa-clock me-2"></i>Last updated: ${lastUpdated}`;
         }
-        
+
         // Update footer total positions
         const footerTotal = document.getElementById('footer-total-positions');
         if (footerTotal) {
             footerTotal.textContent = this.data.jobs.length.toLocaleString();
         }
     }
-    
+
     checkFirstTimeUser() {
         // Check if user has visited before
         const hasVisited = localStorage.getItem('wildlife-dashboard-visited');
@@ -1535,7 +1535,7 @@ class AnalyticsDashboard {
             }, 1000);
         }
     }
-    
+
     showWelcomeToast() {
         const toast = document.createElement('div');
         toast.className = 'position-fixed bottom-0 end-0 m-3';
@@ -1560,9 +1560,9 @@ class AnalyticsDashboard {
                 </div>
             </div>
         `;
-        
+
         document.body.appendChild(toast);
-        
+
         // Add secure event listener for the Learn More button
         const learnMoreBtn = toast.querySelector('#welcome-learn-more-btn');
         if (learnMoreBtn) {
@@ -1582,7 +1582,7 @@ class AnalyticsDashboard {
                 bsToast.hide();
             });
         }
-        
+
         // Auto-remove after 15 seconds
         setTimeout(() => {
             const bsToast = new bootstrap.Toast(toast.querySelector('.toast'));
@@ -1590,18 +1590,18 @@ class AnalyticsDashboard {
             setTimeout(() => toast.remove(), 500);
         }, 15000);
     }
-    
+
     showLoading() {
         document.getElementById('loading').classList.remove('d-none');
         document.getElementById('main-content').classList.add('d-none');
         document.getElementById('error').classList.add('d-none');
     }
-    
+
     hideLoading() {
         document.getElementById('loading').classList.add('d-none');
         document.getElementById('main-content').classList.remove('d-none');
     }
-    
+
     showError(message) {
         document.getElementById('loading').classList.add('d-none');
         document.getElementById('main-content').classList.add('d-none');

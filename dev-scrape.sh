@@ -31,7 +31,7 @@ fi
 echo "📊 Development data generated successfully!"
 echo "📍 Files created:"
 echo "  - data/processed/dev_verified_graduate_assistantships.json"
-echo "  - data/raw/dev_all_positions_detailed.json" 
+echo "  - data/raw/dev_all_positions_detailed.json"
 echo "  - dashboard/data/dev_dashboard_analytics.json"
 echo ""
 echo "💡 Use these dev files for local testing without conflicts!"

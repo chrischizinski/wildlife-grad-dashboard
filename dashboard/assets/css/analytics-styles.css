@@ -390,16 +390,16 @@ body.analytics-dashboard {
         padding: 1.5rem;
         margin-bottom: 1.5rem;
     }
-    
+
     .analytics-dashboard .discipline-stats {
         flex-direction: row;
         justify-content: space-around;
     }
-    
+
     .analytics-dashboard .chart-container {
         height: 300px;
     }
-    
+
     .analytics-dashboard .filter-controls {
         padding: 1rem;
     }
@@ -409,12 +409,12 @@ body.analytics-dashboard {
     .analytics-dashboard .analytics-header-card {
         padding: 1rem;
     }
-    
+
     .analytics-dashboard .analytics-card .card-body,
     .analytics-dashboard .filter-controls {
         padding: 1rem;
     }
-    
+
     .analytics-dashboard .chart-container {
         height: 250px;
     }
@@ -438,7 +438,7 @@ body.analytics-dashboard {
         --primary-color: #047857;
         --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
-    
+
     .analytics-dashboard .analytics-card,
     .analytics-dashboard .insight-item {
         border: 1px solid #374151;

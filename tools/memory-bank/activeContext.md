@@ -80,4 +80,3 @@
 - tests/test_enhanced_analysis.py
 - tests/test_wildlife_scraper.py
 - wildlife_job_scraper.py
-

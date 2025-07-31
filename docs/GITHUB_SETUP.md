@@ -6,7 +6,7 @@ This guide will walk you through setting up the complete automated workflow for 
 
 The system consists of:
 - **Automated Scraping**: Weekly job data collection via GitHub Actions
-- **Data Processing**: AI-powered classification and analytics generation  
+- **Data Processing**: AI-powered classification and analytics generation
 - **Dashboard Deployment**: Automatic deployment to GitHub Pages
 - **Big 10 Filtering**: University classification and filtering capabilities
 

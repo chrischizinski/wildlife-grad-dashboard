@@ -86,7 +86,7 @@ graph TB
     F --> G[Analytics Generation]
     G --> H[Dashboard & Visualization]
     G --> I[Data Export APIs]
-    
+
     J[GitHub Actions] --> B
     K[Cost-of-Living Database] --> E
     L[Geographic Classification] --> E
@@ -303,21 +303,21 @@ graph TB
   "project_details": "string (research project information)",
   "contact_info": "string (contact information)",
   "application_deadline": "string (application deadline)",
-  
+
   "is_graduate_position": "boolean (ML classification)",
   "grad_confidence": "float (0-1 confidence score)",
   "position_type": "string (Graduate/Professional/Technician)",
-  
+
   "discipline": "string (primary discipline category)",
   "discipline_confidence": "float (0-1 confidence score)",
   "discipline_keywords": "array (matching keywords)",
-  
+
   "salary_lincoln_adjusted": "float (cost-adjusted salary)",
   "cost_of_living_index": "float (location cost index)",
   "geographic_region": "string (regional classification)",
   "is_big10_university": "boolean (university classification)",
   "university_name": "string (standardized name)",
-  
+
   "first_seen": "string (ISO timestamp)",
   "last_updated": "string (ISO timestamp)",
   "scraped_at": "string (ISO timestamp)",
@@ -331,7 +331,7 @@ graph TB
 {
   "summary": {
     "total_positions": "integer",
-    "graduate_positions": "integer", 
+    "graduate_positions": "integer",
     "avg_salary_lincoln": "float",
     "data_freshness": "string (ISO timestamp)"
   },
@@ -424,7 +424,7 @@ graph TB
 graph LR
     A[GitHub Repository] --> B[GitHub Actions]
     B --> C[Weekly Scraping]
-    B --> D[Data Processing]  
+    B --> D[Data Processing]
     B --> E[Dashboard Build]
     E --> F[GitHub Pages]
     C --> G[Data Archive]
@@ -467,7 +467,7 @@ graph LR
 - **System Maintainers**: Technical team ensuring platform reliability
 - **Data Sources**: Texas A&M Wildlife Jobs Board and potential future sources
 
-### Secondary Stakeholders  
+### Secondary Stakeholders
 - **Graduate Students**: Indirect beneficiaries through improved career resources
 - **Academic Institutions**: Users of workforce development insights
 - **Professional Organizations**: Consumers of industry trend analysis

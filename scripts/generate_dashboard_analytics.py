@@ -8,18 +8,21 @@ GitHub Pages deployment while keeping the full dataset archived for long-term tr
 """
 
 import json
-import sys
-from pathlib import Path
-from datetime import datetime
-from collections import defaultdict, Counter
 import statistics
+import sys
+from collections import Counter, defaultdict
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, List
 
 
-def load_data():
+def load_data() -> List[Dict[str, Any]]:
     """Load the export data from various possible locations."""
     possible_paths = [
-        Path("data/processed/dev_verified_graduate_assistantships.json"),  # Development data first
-        Path("data/processed/verified_graduate_assistantships.json"),       # Production data
+        Path(
+            "data/processed/dev_verified_graduate_assistantships.json"
+        ),  # Development data first
+        Path("data/processed/verified_graduate_assistantships.json"),  # Production data
         Path("dashboard/data/export_data.json"),
         Path("data/export_data.json"),
         Path("export_data.json"),
@@ -34,7 +37,9 @@ def load_data():
     raise FileNotFoundError("Could not find export_data.json in any expected location")
 
 
-def archive_data(data, analytics):
+def archive_data(
+    data: List[Dict[str, Any]], analytics: Dict[str, Any]
+) -> tuple[Path, Path]:
     """Archive the full dataset with timestamp for long-term analysis."""
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
@@ -58,20 +63,22 @@ def archive_data(data, analytics):
     return export_archive_path, analytics_archive_path
 
 
-def calculate_analytics(data):
+def calculate_analytics(data: List[Dict[str, Any]]) -> Dict[str, Any]:
     """Calculate analytics from the raw job data."""
 
     # Initialize counters
     total_positions = len(data)
     grad_positions = 0
     salary_positions = 0
-    disciplines = defaultdict(
+    disciplines: Dict[str, Dict[str, Any]] = defaultdict(
         lambda: {"total_positions": 0, "grad_positions": 0, "salaries": []}
     )
 
-    geographic_dist = Counter()
-    monthly_counts = defaultdict(int)
-    discipline_monthly = defaultdict(lambda: defaultdict(int))
+    geographic_dist: Counter[str] = Counter()
+    monthly_counts: Dict[str, int] = defaultdict(int)
+    discipline_monthly: Dict[str, Dict[str, int]] = defaultdict(
+        lambda: defaultdict(int)
+    )
 
     # Process each job
     for job in data:
@@ -234,7 +241,7 @@ def calculate_analytics(data):
     }
 
 
-def main():
+def main() -> None:
     """Main function to generate analytics."""
     try:
         # Load data

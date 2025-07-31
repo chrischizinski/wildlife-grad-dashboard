@@ -23,7 +23,7 @@ let currentTrendChart = null;
 // Chart color scheme - exactly 5 categories
 const disciplineColors = {
     'Fisheries Management and Conservation': '#4682B4',  // Ocean blue
-    'Wildlife Management and Conservation': '#2E8B57',   // Forest green  
+    'Wildlife Management and Conservation': '#2E8B57',   // Forest green
     'Human Dimensions': '#CD853F',                       // Warm brown
     'Environmental Science': '#9932CC',                  // Purple
     'Other': '#708090'                                   // Slate gray
@@ -35,7 +35,7 @@ const disciplineColors = {
 async function initDashboard() {
     try {
         showLoading();
-        
+
         // Try to load data files with better error handling
         try {
             // Load both enhanced data and export data
@@ -49,25 +49,25 @@ async function initDashboard() {
                     return fetch('./data/export_data.json');
                 })
             ]);
-            
+
             if (!enhancedResponse.ok) {
                 throw new Error(`Enhanced data fetch failed: ${enhancedResponse.status} ${enhancedResponse.statusText}`);
             }
             if (!exportResponse.ok) {
                 throw new Error(`Export data fetch failed: ${exportResponse.status} ${exportResponse.statusText}`);
             }
-            
+
             dashboardData = await enhancedResponse.json();
             exportData = await exportResponse.json();
-            
+
             console.log('Dashboard data loaded successfully:', {
                 totalPositions: dashboardData.total_positions,
                 exportRecords: exportData.length
             });
-            
+
         } catch (fetchError) {
             console.error('Fetch error:', fetchError);
-            
+
             // If fetch fails, show a helpful error message about CORS
             if (window.location.protocol === 'file:') {
                 showError('CORS Error: Please serve this dashboard from a web server. Run: python3 -m http.server 8080 in the dashboard directory, then visit http://localhost:8080');
@@ -76,16 +76,16 @@ async function initDashboard() {
                 throw fetchError;
             }
         }
-        
+
         // Initialize all components
         updateOverviewCards();
         createDisciplineIndicators();
         initializeCharts();
         setupEventListeners();
         updateFooter();
-        
+
         hideLoading();
-        
+
     } catch (error) {
         console.error('Error initializing dashboard:', error);
         showError(`Failed to load dashboard data: ${error.message}`);
@@ -97,13 +97,13 @@ async function initDashboard() {
  */
 function updateOverviewCards() {
     const overview = dashboardData.overview || {};
-    
+
     // Safely access data with fallbacks
     const totalPositions = dashboardData.total_positions || 0;
     const gradPositions = overview.graduate_positions || dashboardData.graduate_assistantships || 0;
     const salaryPositions = overview.positions_with_salaries || 0;
     const disciplinesCount = overview.total_disciplines || 0;
-    
+
     document.getElementById('total-jobs').textContent = totalPositions.toLocaleString();
     document.getElementById('grad-positions').textContent = gradPositions.toLocaleString();
     document.getElementById('salary-positions').textContent = salaryPositions.toLocaleString();
@@ -116,14 +116,14 @@ function updateOverviewCards() {
 function createDisciplineIndicators() {
     const container = document.getElementById('discipline-cards');
     const disciplines = dashboardData.top_disciplines;
-    
+
     container.innerHTML = '';
-    
+
     Object.entries(disciplines).forEach(([discipline, data]) => {
         const color = disciplineColors[discipline] || '#708090';
         const gradPositions = data.grad_positions || 0;
         const avgSalary = data.salary_stats.mean ? `$${Math.round(data.salary_stats.mean).toLocaleString()}` : 'N/A';
-        
+
         const card = document.createElement('div');
         card.className = 'col-lg-3 col-md-4 col-sm-6 mb-4';
         card.innerHTML = `
@@ -132,9 +132,9 @@ function createDisciplineIndicators() {
                     <h6 class="card-title text-truncate" title="${escapeHTML(discipline)}">${escapeHTML(discipline)}</h6>
                     <div class="row">
                         <div class="col-6 text-center">
-                            <h4 class="text-primary mb-0" 
-                                data-bs-toggle="tooltip" 
-                                data-bs-placement="top" 
+                            <h4 class="text-primary mb-0"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="top"
                                 data-bs-title="All job postings in this discipline (includes graduate positions, internships, and professional roles)">
                                 ${escapeHTML(data.total_positions)}
                             </h4>
@@ -143,9 +143,9 @@ function createDisciplineIndicators() {
                             </small>
                         </div>
                         <div class="col-6 text-center">
-                            <h4 class="text-success mb-0" 
-                                data-bs-toggle="tooltip" 
-                                data-bs-placement="top" 
+                            <h4 class="text-success mb-0"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="top"
                                 data-bs-title="Confirmed graduate assistantships, fellowships, and PhD/Masters positions only (excludes internships and professional jobs)">
                                 ${escapeHTML(gradPositions)}
                             </h4>
@@ -157,9 +157,9 @@ function createDisciplineIndicators() {
                     <hr class="my-2">
                     <div class="d-flex justify-content-between align-items-center p-2 rounded" style="background-color: rgba(0,0,0,0.05)">
                         <small class="text-muted fw-medium">Avg Salary:</small>
-                        <small class="fw-bold text-success" 
-                               data-bs-toggle="tooltip" 
-                               data-bs-placement="top" 
+                        <small class="fw-bold text-success"
+                               data-bs-toggle="tooltip"
+                               data-bs-placement="top"
                                data-bs-title="Average salary for graduate positions in this discipline, adjusted to Lincoln, NE cost of living">
                             ${avgSalary}
                         </small>
@@ -169,7 +169,7 @@ function createDisciplineIndicators() {
         `;
         container.appendChild(card);
     });
-    
+
     // Initialize tooltips for the newly created cards
     setTimeout(() => initializeTooltips(), 100);
 }
@@ -188,12 +188,12 @@ function initializeCharts() {
  */
 function calculatePercentageChange(data) {
     if (data.length < 2) return 0;
-    
+
     const firstValue = data.find(val => val > 0) || 0; // First non-zero value
     const lastValue = data[data.length - 1] || 0;
-    
+
     if (firstValue === 0) return lastValue > 0 ? 100 : 0;
-    
+
     return Math.round(((lastValue - firstValue) / firstValue) * 100);
 }
 
@@ -216,23 +216,23 @@ function getTrendColor(percentageChange, baseColor) {
 function createTrendChart() {
     const ctx = document.getElementById('trend-chart').getContext('2d');
     const timeSeriesData = dashboardData.time_series[currentTimeframe];
-    
+
     if (currentTrendChart) {
         currentTrendChart.destroy();
     }
-    
+
     // Prepare data
     const months = Object.keys(timeSeriesData.total_monthly).sort();
     const showOverall = document.getElementById('show-overall').checked;
-    
+
     const datasets = [];
-    
+
     // Overall trend
     if (showOverall) {
         const overallData = months.map(month => timeSeriesData.total_monthly[month] || 0);
         const overallChange = calculatePercentageChange(overallData);
         const overallColor = getTrendColor(overallChange, '#000000');
-        
+
         datasets.push({
             label: `Overall (${overallChange >= 0 ? '+' : ''}${overallChange}%)`,
             data: overallData,
@@ -242,7 +242,7 @@ function createTrendChart() {
             tension: 0.1
         });
     }
-    
+
     // Individual discipline trends
     const disciplineData = timeSeriesData.discipline_monthly;
     Object.entries(disciplineData).forEach(([discipline, monthlyData]) => {
@@ -250,7 +250,7 @@ function createTrendChart() {
             const data = months.map(month => monthlyData[month] || 0);
             const percentageChange = calculatePercentageChange(data);
             const trendColor = getTrendColor(percentageChange, disciplineColors[discipline]);
-            
+
             datasets.push({
                 label: `${discipline} (${percentageChange >= 0 ? '+' : ''}${percentageChange}%)`,
                 data: data,
@@ -261,7 +261,7 @@ function createTrendChart() {
             });
         }
     });
-    
+
     currentTrendChart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -288,14 +288,14 @@ function createTrendChart() {
                         generateLabels: function(chart) {
                             const original = Chart.defaults.plugins.legend.labels.generateLabels;
                             const labels = original.call(this, chart);
-                            
+
                             // Color the legend text based on trend
                             labels.forEach((label, index) => {
                                 const dataset = chart.data.datasets[index];
                                 label.fillStyle = dataset.borderColor;
                                 label.strokeStyle = dataset.borderColor;
                             });
-                            
+
                             return labels;
                         }
                     }
@@ -326,17 +326,17 @@ function createTrendChart() {
 function createSalaryChart() {
     const ctx = document.getElementById('salary-chart').getContext('2d');
     const disciplines = dashboardData.discipline_analytics;
-    
+
     // Filter disciplines with salary data
     const disciplinesWithSalary = Object.entries(disciplines)
         .filter(([_, data]) => data.salary_stats.count > 0)
         .sort((a, b) => b[1].salary_stats.mean - a[1].salary_stats.mean);
-    
+
     const labels = disciplinesWithSalary.map(([discipline, _]) => discipline);
     const means = disciplinesWithSalary.map(([_, data]) => Math.round(data.salary_stats.mean));
     const mins = disciplinesWithSalary.map(([_, data]) => Math.round(data.salary_stats.min));
     const maxs = disciplinesWithSalary.map(([_, data]) => Math.round(data.salary_stats.max));
-    
+
     new Chart(ctx, {
         type: 'bar',
         data: {
@@ -415,18 +415,18 @@ function createSalaryChart() {
 function createLocationChart() {
     const ctx = document.getElementById('location-chart').getContext('2d');
     const geographic = dashboardData.geographic_summary;
-    
+
     const sortedRegions = Object.entries(geographic)
         .sort((a, b) => b[1] - a[1]);
-    
+
     const labels = sortedRegions.map(([region, _]) => region);
     const data = sortedRegions.map(([_, count]) => count);
-    
+
     const colors = [
         '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
         '#9966FF', '#FF9F40', '#FF6384', '#C9CBCF'
     ];
-    
+
     new Chart(ctx, {
         type: 'doughnut',
         data: {
@@ -466,17 +466,17 @@ function setupEventListeners() {
             createTrendChart();
         });
     });
-    
+
     // Show overall trend toggle
     document.getElementById('show-overall').addEventListener('change', () => {
         createTrendChart();
     });
-    
+
     // Download buttons
     document.getElementById('download-json').addEventListener('click', downloadJSON);
     document.getElementById('download-csv').addEventListener('click', downloadCSV);
     document.getElementById('download-analytics').addEventListener('click', downloadAnalytics);
-    
+
     // Initialize Bootstrap tooltips
     initializeTooltips();
 }
@@ -511,10 +511,10 @@ function downloadAnalytics() {
  */
 function convertToCSV(data) {
     if (!data || data.length === 0) return '';
-    
+
     const headers = Object.keys(data[0]);
     const csvRows = [headers.join(',')];
-    
+
     for (const row of data) {
         const values = headers.map(header => {
             const value = row[header];
@@ -526,7 +526,7 @@ function convertToCSV(data) {
         });
         csvRows.push(values.join(','));
     }
-    
+
     return csvRows.join('\n');
 }
 
@@ -537,7 +537,7 @@ function downloadFile(data, filename, mimeType) {
     const content = typeof data === 'string' ? data : JSON.stringify(data, null, 2);
     const blob = new Blob([content], { type: mimeType });
     const url = URL.createObjectURL(blob);
-    
+
     const link = document.createElement('a');
     link.href = url;
     link.download = filename;
@@ -551,13 +551,13 @@ function downloadFile(data, filename, mimeType) {
  * Update footer information
  */
 function updateFooter() {
-    const lastUpdated = dashboardData.last_updated ? 
+    const lastUpdated = dashboardData.last_updated ?
         new Date(dashboardData.last_updated).toLocaleDateString() : 'Never';
-    document.getElementById('footer-last-updated').innerHTML = 
+    document.getElementById('footer-last-updated').innerHTML =
         `<i class="fas fa-clock me-2"></i>Last updated: ${lastUpdated}`;
-    
+
     const totalPositions = dashboardData.total_positions || 0;
-    document.getElementById('footer-total-positions').textContent = 
+    document.getElementById('footer-total-positions').textContent =
         totalPositions.toLocaleString();
 }
 
