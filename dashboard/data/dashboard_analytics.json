@@ -1,101 +1,132 @@
 {
   "metadata": {
-    "generated_at": "2025-07-27T04:45:43.660597",
-    "total_positions": 2
+    "generated_at": "2025-07-31T13:29:13.681133",
+    "total_positions": 9
   },
   "summary_stats": {
-    "total_positions": 2,
-    "graduate_positions": 2,
-    "positions_with_salary": 1
+    "total_positions": 9,
+    "graduate_positions": 9,
+    "positions_with_salary": 2
   },
   "top_disciplines": {
-    "Unknown": {
-      "total_positions": 1,
-      "grad_positions": 1,
+    "Wildlife & Natural Resources": {
+      "total_positions": 3,
+      "grad_positions": 3,
       "salary_stats": {
         "count": 1,
-        "mean": 23500.0,
-        "median": 23500.0,
-        "min": 23500.0,
-        "max": 23500.0
+        "mean": 22000.0,
+        "median": 22000.0,
+        "min": 22000.0,
+        "max": 22000.0
       }
     },
-    "Wildlife & Natural Resources": {
-      "total_positions": 1,
-      "grad_positions": 1,
+    "Unknown": {
+      "total_positions": 3,
+      "grad_positions": 3,
       "salary_stats": null
+    },
+    "Natural Resource Management": {
+      "total_positions": 3,
+      "grad_positions": 3,
+      "salary_stats": {
+        "count": 1,
+        "mean": 34.0,
+        "median": 34.0,
+        "min": 34.0,
+        "max": 34.0
+      }
     }
   },
   "geographic_summary": {
-    "Alabama)": 1,
-    "South Africa": 1
+    "Texas": 1,
+    "Idaho": 1,
+    "Washington": 1,
+    "South Dakota": 1,
+    "South Africa": 1,
+    "Illinois": 1,
+    "Oregon": 1
   },
   "time_series": {
     "1_month": {
       "total_monthly": {
-        "2025-07": 2
+        "2025-07": 9
       },
       "discipline_monthly": {
-        "Unknown": {
-          "2025-07": 1
-        },
         "Wildlife & Natural Resources": {
-          "2025-07": 1
+          "2025-07": 3
+        },
+        "Unknown": {
+          "2025-07": 3
+        },
+        "Natural Resource Management": {
+          "2025-07": 3
         }
       }
     },
     "3_month": {
       "total_monthly": {
-        "2025-07": 2
+        "2025-07": 9
       },
       "discipline_monthly": {
-        "Unknown": {
-          "2025-07": 1
-        },
         "Wildlife & Natural Resources": {
-          "2025-07": 1
+          "2025-07": 3
+        },
+        "Unknown": {
+          "2025-07": 3
+        },
+        "Natural Resource Management": {
+          "2025-07": 3
         }
       }
     },
     "6_month": {
       "total_monthly": {
-        "2025-07": 2
+        "2025-07": 9
       },
       "discipline_monthly": {
-        "Unknown": {
-          "2025-07": 1
-        },
         "Wildlife & Natural Resources": {
-          "2025-07": 1
+          "2025-07": 3
+        },
+        "Unknown": {
+          "2025-07": 3
+        },
+        "Natural Resource Management": {
+          "2025-07": 3
         }
       }
     },
     "1_year": {
       "total_monthly": {
-        "2025-07": 2
+        "2025-07": 9
       },
       "discipline_monthly": {
-        "Unknown": {
-          "2025-07": 1
-        },
         "Wildlife & Natural Resources": {
-          "2025-07": 1
+          "2025-07": 3
+        },
+        "Unknown": {
+          "2025-07": 3
+        },
+        "Natural Resource Management": {
+          "2025-07": 3
         }
       }
     },
     "all_time": {
       "total_monthly": {
-        "2025-07": 2
+        "2025-07": 9
       },
       "discipline_monthly": {
-        "Unknown": {
-          "2025-07": 1
-        },
         "Wildlife & Natural Resources": {
-          "2025-07": 1
+          "2025-07": 3
+        },
+        "Unknown": {
+          "2025-07": 3
+        },
+        "Natural Resource Management": {
+          "2025-07": 3
         }
       }
     }
   },
-  "last_updated": "2025-07-27T04:45:43.660613"
+  "last_updated": "2025-07-31T13:29:13.681138"
 }
