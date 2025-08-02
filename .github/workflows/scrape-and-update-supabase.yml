@@ -123,8 +123,8 @@ jobs:
         run: |
           echo "## Scraping Summary" >> $GITHUB_STEP_SUMMARY
           if [ -f "data/enhanced_data.json" ]; then
-            total_jobs=$(jq length data/enhanced_data.json)
-            grad_jobs=$(jq '[.[] | select(.is_graduate_position == true)] | length' data/enhanced_data.json)
+            total_jobs=$(jq '.positions | length' data/enhanced_data.json)
+            grad_jobs=$(jq '.positions | map(select(.is_graduate_position == true)) | length' data/enhanced_data.json)
             echo "- **Total positions**: $total_jobs" >> $GITHUB_STEP_SUMMARY
             echo "- **Graduate positions**: $grad_jobs" >> $GITHUB_STEP_SUMMARY
           fi
