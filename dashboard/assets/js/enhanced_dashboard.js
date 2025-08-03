@@ -36,6 +36,9 @@ async function initDashboard() {
     try {
         showLoading();
 
+        // Add modern loading animations
+        addLoadingAnimations();
+
         // Try to load data files with better error handling
         try {
             // Load both enhanced data and export data
@@ -77,12 +80,16 @@ async function initDashboard() {
             }
         }
 
-        // Initialize all components
+        // Initialize all components with staggered animations
         updateOverviewCards();
         createDisciplineIndicators();
         initializeCharts();
         setupEventListeners();
         updateFooter();
+
+        // Add entrance animations and enhanced interactivity
+        addEntranceAnimations();
+        enhanceInteractivity();
 
         hideLoading();
 
@@ -579,6 +586,89 @@ function showError(message) {
     document.getElementById('loading').classList.add('d-none');
     document.getElementById('error').classList.remove('d-none');
     document.getElementById('error-message').textContent = message;
+}
+
+/**
+ * Add modern loading animations
+ */
+function addLoadingAnimations() {
+    const loadingElement = document.getElementById('loading');
+    if (loadingElement) {
+        loadingElement.classList.add('fade-in');
+    }
+}
+
+/**
+ * Add entrance animations to dashboard elements
+ */
+function addEntranceAnimations() {
+    // Animate stats cards with stagger
+    const statsCards = document.querySelectorAll('.stats-card');
+    statsCards.forEach((card, index) => {
+        setTimeout(() => {
+            card.classList.add('fade-in');
+        }, index * 100);
+    });
+
+    // Animate chart containers
+    const chartContainers = document.querySelectorAll('.chart-container');
+    chartContainers.forEach((container, index) => {
+        setTimeout(() => {
+            container.classList.add('scale-in');
+        }, 500 + (index * 150));
+    });
+
+    // Animate discipline cards
+    const disciplineCards = document.querySelectorAll('#discipline-cards .card');
+    disciplineCards.forEach((card, index) => {
+        setTimeout(() => {
+            card.classList.add('slide-in');
+        }, 800 + (index * 50));
+    });
+}
+
+/**
+ * Enhanced chart creation with loading states
+ */
+function createChartWithLoading(chartId, createFunction) {
+    const container = document.querySelector(`#${chartId}`).closest('.chart-container');
+    if (container) {
+        container.classList.add('loading-shimmer');
+
+        setTimeout(() => {
+            container.classList.remove('loading-shimmer');
+            createFunction();
+            container.classList.add('fade-in');
+        }, 300);
+    } else {
+        createFunction();
+    }
+}
+
+/**
+ * Add hover effects to interactive elements
+ */
+function enhanceInteractivity() {
+    // Add click feedback to buttons
+    document.querySelectorAll('.btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 100);
+        });
+    });
+
+    // Add hover effects to cards
+    document.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-2px)';
+        });
+
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = '';
+        });
+    });
 }
 
 // Initialize dashboard when DOM is loaded
