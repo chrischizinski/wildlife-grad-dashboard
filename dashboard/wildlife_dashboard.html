@@ -61,6 +61,22 @@
             padding: 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
             margin-bottom: 20px;
+            position: relative;
+            height: 350px; /* Fixed height for consistency */
+        }
+
+        .chart-container canvas {
+            max-height: 300px !important;
+            height: 300px !important;
+        }
+
+        .chart-container-small {
+            height: 280px;
+        }
+
+        .chart-container-small canvas {
+            max-height: 230px !important;
+            height: 230px !important;
         }
 
         .job-card {
@@ -363,7 +379,7 @@
             <!-- Modern Compact Charts Grid -->
             <div class="row g-3 mb-4">
                 <div class="col-lg-6">
-                    <div class="chart-container">
+                    <div class="chart-container chart-container-small">
                         <h5>
                             <i class="fas fa-chart-line me-2"></i>
                             Monthly Trends
@@ -373,10 +389,10 @@
                 </div>
 
                 <div class="col-lg-6">
-                    <div class="chart-container">
+                    <div class="chart-container chart-container-small">
                         <h5>
-                            <i class="fas fa-chart-pie me-2"></i>
-                            By Discipline
+                            <i class="fas fa-chart-bar me-2"></i>
+                            Top Disciplines
                         </h5>
                         <canvas id="disciplineChart"></canvas>
                     </div>
@@ -385,7 +401,7 @@
 
             <div class="row g-3">
                 <div class="col-lg-6">
-                    <div class="chart-container">
+                    <div class="chart-container chart-container-small">
                         <h5>
                             <i class="fas fa-dollar-sign me-2"></i>
                             Salary Distribution
@@ -395,7 +411,7 @@
                 </div>
 
                 <div class="col-lg-6">
-                    <div class="chart-container">
+                    <div class="chart-container chart-container-small">
                         <h5>
                             <i class="fas fa-map-marker-alt me-2"></i>
                             Geographic Distribution
@@ -923,9 +939,19 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            top: 10,
+                            bottom: 10
+                        }
+                    },
                     plugins: {
                         legend: {
-                            position: 'top'
+                            position: 'top',
+                            labels: {
+                                padding: 15,
+                                usePointStyle: true
+                            }
                         }
                     },
                     scales: {
@@ -936,6 +962,9 @@
                             title: {
                                 display: true,
                                 text: 'Number of Posts'
+                            },
+                            grid: {
+                                color: 'rgba(0,0,0,0.1)'
                             }
                         },
                         y1: {
@@ -949,6 +978,11 @@
                             grid: {
                                 drawOnChartArea: false,
                             },
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(0,0,0,0.1)'
+                            }
                         }
                     }
                 }
@@ -986,9 +1020,19 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            top: 10,
+                            bottom: 10
+                        }
+                    },
                     plugins: {
                         legend: {
-                            position: 'bottom'
+                            position: 'bottom',
+                            labels: {
+                                padding: 15,
+                                usePointStyle: true
+                            }
                         }
                     }
                 }
@@ -1026,12 +1070,26 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            top: 10,
+                            bottom: 10
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
                     scales: {
                         r: {
                             beginAtZero: true,
                             title: {
                                 display: true,
                                 text: 'Number of Posts'
+                            },
+                            grid: {
+                                color: 'rgba(0,0,0,0.1)'
                             }
                         }
                     }
@@ -1075,6 +1133,12 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            top: 10,
+                            bottom: 10
+                        }
+                    },
                     plugins: {
                         legend: {
                             display: false
@@ -1086,6 +1150,14 @@
                             title: {
                                 display: true,
                                 text: 'Number of Positions'
+                            },
+                            grid: {
+                                color: 'rgba(0,0,0,0.1)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(0,0,0,0.1)'
                             }
                         }
                     }
@@ -1179,6 +1251,12 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            top: 10,
+                            bottom: 10
+                        }
+                    },
                     plugins: {
                         legend: {
                             display: false
@@ -1186,14 +1264,22 @@
                     },
                     scales: {
                         y: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0,0,0,0.1)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(0,0,0,0.1)'
+                            }
                         }
                     }
                 }
             });
         }
 
-        // Create discipline chart
+        // Create discipline chart (horizontal bar chart)
         function createDisciplineChart() {
             const ctx = document.getElementById('disciplineChart').getContext('2d');
             const disciplines = analyticsData.disciplines;
@@ -1204,10 +1290,11 @@
             if (charts.discipline) charts.discipline.destroy();
 
             charts.discipline = new Chart(ctx, {
-                type: 'doughnut',
+                type: 'bar',
                 data: {
-                    labels: disciplineNames.map(name => name.split(' ').slice(0, 2).join(' ')),
+                    labels: disciplineNames.map(name => name.split(' ').slice(0, 3).join(' ')),
                     datasets: [{
+                        label: 'Total Positions',
                         data: disciplineValues,
                         backgroundColor: [
                             '#059669',
@@ -1215,15 +1302,31 @@
                             '#f59e0b',
                             '#8b5cf6',
                             '#ef4444'
-                        ]
+                        ],
+                        borderWidth: 1,
+                        borderColor: '#ffffff'
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    indexAxis: 'y',
                     plugins: {
                         legend: {
-                            position: 'bottom'
+                            display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0,0,0,0.1)'
+                            }
+                        },
+                        y: {
+                            grid: {
+                                display: false
+                            }
                         }
                     }
                 }
@@ -1258,6 +1361,12 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            top: 10,
+                            bottom: 10
+                        }
+                    },
                     plugins: {
                         legend: {
                             display: false
@@ -1266,10 +1375,18 @@
                     scales: {
                         y: {
                             beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0,0,0,0.1)'
+                            },
                             ticks: {
                                 callback: function(value) {
                                     return '$' + value.toLocaleString();
                                 }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(0,0,0,0.1)'
                             }
                         }
                     }
@@ -1277,7 +1394,7 @@
             });
         }
 
-        // Create location chart
+        // Create location chart (donut chart)
         function createLocationChart() {
             const ctx = document.getElementById('locationChart').getContext('2d');
 
@@ -1293,7 +1410,7 @@
             if (charts.location) charts.location.destroy();
 
             charts.location = new Chart(ctx, {
-                type: 'pie',
+                type: 'doughnut',
                 data: {
                     labels: Object.keys(locationData),
                     datasets: [{
@@ -1304,7 +1421,10 @@
                             '#f59e0b',
                             '#8b5cf6',
                             '#ef4444'
-                        ]
+                        ],
+                        borderWidth: 3,
+                        borderColor: '#ffffff',
+                        cutout: '65%'
                     }]
                 },
                 options: {
@@ -1312,7 +1432,11 @@
                     maintainAspectRatio: false,
                     plugins: {
                         legend: {
-                            position: 'bottom'
+                            position: 'bottom',
+                            labels: {
+                                padding: 15,
+                                usePointStyle: true
+                            }
                         }
                     }
                 }
