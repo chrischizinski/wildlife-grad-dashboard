@@ -330,6 +330,29 @@ body {
     .job-card .card-body {
         padding: 1rem;
     }
+
+    /* Mobile chart adjustments */
+    .chart-container {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .chart-container canvas {
+        height: 250px !important;
+        max-height: 250px !important;
+    }
+
+    #trendsChart,
+    #disciplineChart {
+        height: 280px !important;
+        max-height: 280px !important;
+    }
+
+    #salaryChart,
+    #locationChart {
+        height: 220px !important;
+        max-height: 220px !important;
+    }
 }
 
 /* Animation Classes */
@@ -390,6 +413,35 @@ body {
     border: 0;
 }
 
+/* Chart Container Styles */
+.chart-container {
+    position: relative;
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--box-shadow);
+}
+
+.chart-container canvas {
+    max-height: 400px !important;
+    height: 300px !important;
+    width: 100% !important;
+}
+
+/* Specific chart heights for different types */
+#trendsChart,
+#disciplineChart {
+    height: 350px !important;
+    max-height: 350px !important;
+}
+
+#salaryChart,
+#locationChart {
+    height: 280px !important;
+    max-height: 280px !important;
+}
+
 /* Print Styles */
 @media print {
     .navbar,
@@ -402,6 +454,11 @@ body {
     .card {
         box-shadow: none !important;
         border: 1px solid #ccc !important;
+    }
+
+    .chart-container canvas {
+        height: 200px !important;
+        max-height: 200px !important;
     }
 }
 

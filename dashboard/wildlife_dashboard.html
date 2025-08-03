@@ -368,7 +368,7 @@
                             <i class="fas fa-chart-line me-2 text-success"></i>
                             Monthly Trends
                         </h5>
-                        <canvas id="trendsChart" style="height: 300px;"></canvas>
+                        <canvas id="trendsChart"></canvas>
                     </div>
                 </div>
 
@@ -378,7 +378,7 @@
                             <i class="fas fa-chart-pie me-2 text-info"></i>
                             By Discipline
                         </h5>
-                        <canvas id="disciplineChart" style="height: 300px;"></canvas>
+                        <canvas id="disciplineChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -390,7 +390,7 @@
                             <i class="fas fa-dollar-sign me-2 text-warning"></i>
                             Salary Distribution
                         </h5>
-                        <canvas id="salaryChart" style="height: 250px;"></canvas>
+                        <canvas id="salaryChart"></canvas>
                     </div>
                 </div>
 
@@ -400,7 +400,7 @@
                             <i class="fas fa-map-marker-alt me-2 text-danger"></i>
                             Geographic Distribution
                         </h5>
-                        <canvas id="locationChart" style="height: 250px;"></canvas>
+                        <canvas id="locationChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -648,6 +648,7 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    resizeDelay: 0,
                     plugins: {
                         legend: {
                             display: false
@@ -661,6 +662,9 @@
                                 text: 'Number of Positions'
                             }
                         }
+                    },
+                    layout: {
+                        padding: 10
                     }
                 }
             });
@@ -697,6 +701,7 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    resizeDelay: 0,
                     plugins: {
                         legend: {
                             position: 'bottom',
@@ -705,6 +710,9 @@
                                 usePointStyle: true
                             }
                         }
+                    },
+                    layout: {
+                        padding: 10
                     }
                 }
             });
@@ -749,6 +757,7 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    resizeDelay: 0,
                     plugins: {
                         legend: {
                             display: false
@@ -762,6 +771,9 @@
                                 text: 'Number of Positions'
                             }
                         }
+                    },
+                    layout: {
+                        padding: 10
                     }
                 }
             });
@@ -799,6 +811,7 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    resizeDelay: 0,
                     indexAxis: 'y',
                     plugins: {
                         legend: {
@@ -813,6 +826,9 @@
                                 text: 'Number of Positions'
                             }
                         }
+                    },
+                    layout: {
+                        padding: 10
                     }
                 }
             });
