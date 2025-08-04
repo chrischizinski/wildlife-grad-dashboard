@@ -1,56 +1,55 @@
-# Wildlife Graduate Assistantships Analytics Platform
+# Wildlife Graduate Position Intelligence Dashboard
 
-[![Scraper Status](https://github.com/chrischizinski/wildlife-grad/actions/workflows/scrape-and-update-supabase.yml/badge.svg)](https://github.com/chrischizinski/wildlife-grad/actions/workflows/scrape-and-update-supabase.yml)
-[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-brightgreen?logo=github)](https://chrischizinski.github.io/wildlife-grad/)
-[![Last Commit](https://img.shields.io/github/last-commit/chrischizinski/wildlife-grad)](https://github.com/chrischizinski/wildlife-grad/commits/main)
+[![Scraper Status](https://github.com/chrischizinski/wildlife-grad-dashboard/actions/workflows/scrape-and-update-supabase.yml/badge.svg)](https://github.com/chrischizinski/wildlife-grad-dashboard/actions/workflows/scrape-and-update-supabase.yml)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-brightgreen?logo=github)](https://chrischizinski.github.io/wildlife-grad-dashboard/)
+[![Last Commit](https://img.shields.io/github/last-commit/chrischizinski/wildlife-grad-dashboard)](https://github.com/chrischizinski/wildlife-grad-dashboard/commits/main)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-A comprehensive platform for tracking and analyzing graduate assistantship opportunities in wildlife, fisheries, and natural resources. Features automated web scraping, machine learning classification, historical data tracking, and interactive analytics dashboards.
+A **Graduate Position Intelligence Platform** that transforms wildlife job posting data into actionable insights for graduate students. Features automated web scraping, machine learning classification, Supabase integration, and a graduate-focused analytics dashboard.
 
-**📊 [View Live Analytics Dashboard](https://chrischizinski.github.io/wildlife-grad/)**
+**📊 [View Live Graduate Dashboard](https://chrischizinski.github.io/wildlife-grad-dashboard/)**
 
 ## 🚀 Project Status
 
-[![Issues](https://img.shields.io/github/issues/chrischizinski/wildlife-grad)](https://github.com/chrischizinski/wildlife-grad/issues)
-[![Pull Requests](https://img.shields.io/github/issues-pr/chrischizinski/wildlife-grad)](https://github.com/chrischizinski/wildlife-grad/pulls)
-[![Code Size](https://img.shields.io/github/languages/code-size/chrischizinski/wildlife-grad)](https://github.com/chrischizinski/wildlife-grad)
-[![Stars](https://img.shields.io/github/stars/chrischizinski/wildlife-grad)](https://github.com/chrischizinski/wildlife-grad/stargazers)
+[![Issues](https://img.shields.io/github/issues/chrischizinski/wildlife-grad-dashboard)](https://github.com/chrischizinski/wildlife-grad-dashboard/issues)
+[![Pull Requests](https://img.shields.io/github/issues-pr/chrischizinski/wildlife-grad-dashboard)](https://github.com/chrischizinski/wildlife-grad-dashboard/pulls)
+[![Code Size](https://img.shields.io/github/languages/code-size/chrischizinski/wildlife-grad-dashboard)](https://github.com/chrischizinski/wildlife-grad-dashboard)
+[![Stars](https://img.shields.io/github/stars/chrischizinski/wildlife-grad-dashboard)](https://github.com/chrischizinski/wildlife-grad-dashboard/stargazers)
 
-### 📊 Data & Analytics
-- **1,587 total positions** tracked with historical deduplication
-- **305 positions with salary data** (avg: $33,596 Lincoln-adjusted)
-- **Real ML classification** using TF-IDF + cosine similarity across 11 disciplines
-- **Interactive dashboards** with advanced filtering and analytics
-- **Fully automated** weekly scraping via GitHub Actions
-- **Production-ready** with XSS protection and accessibility compliance
+### 📊 Graduate Position Intelligence
+- **96 total positions** analyzed with ML classification
+- **13 graduate positions** identified (13.5% classification rate)
+- **Graduate-focused analytics** showing only verified graduate opportunities
+- **Contextual intelligence** with total-vs-graduate position insights
+- **Supabase-powered** real-time data storage and analytics
+- **Production-ready** dashboard with comprehensive testing
 
-### 🔄 Automation Status
-- **Weekly Scraping**: Every Sunday via GitHub Actions
-- **Dashboard Deployment**: Automatic on data updates
-- **Security Scanning**: Integrated vulnerability detection
-- **Historical Archiving**: Timestamped data preservation
+### 🔄 System Architecture
+- **Supabase Database**: Real-time data storage with graduate-focused views
+- **Dashboard Intelligence**: Context-aware graduate position analytics
+- **Migration Tools**: Legacy data migration with duplicate detection
+- **Testing Framework**: Comprehensive validation of all components
 
 ## ✨ Key Features
 
-### 🔍 **Advanced Data Collection**
-- **Multi-source scraping** from Texas A&M Wildlife and Fisheries job board
-- **Anti-detection measures** with randomized delays and user-agent rotation
-- **Robust pagination handling** across multiple pages
-- **Data validation** using Pydantic models with comprehensive error handling
+### 🎓 **Graduate Position Intelligence**
+- **Smart Classification**: ML-powered identification of graduate vs. professional positions
+- **Context Banner**: Shows "Out of X positions analyzed, Y identified as graduate opportunities"
+- **Graduate-Only Metrics**: All dashboard statistics filtered to graduate positions only
+- **Classification Transparency**: Displays success rate and methodology
 
-### 🧠 **Enhanced Analytics Engine**
-- **Machine Learning Classification**: Real TF-IDF + cosine similarity (not just keywords)
-- **11 Discipline Categories**: Wildlife, Fisheries, Environmental Science, Human Dimensions, etc.
-- **Smart Location Parsing**: 70+ cities with cost-of-living indices
-- **Advanced Salary Analysis**: Handles ranges, monthly→annual, k-suffix notation
-- **Historical Tracking**: Deduplication with first_seen/last_updated timestamps
+### 🧠 **Advanced Analytics Engine**
+- **Machine Learning Classification**: TF-IDF + cosine similarity for position type detection
+- **Discipline Analysis**: Wildlife, Fisheries, Environmental Science, Human Dimensions
+- **Supabase Integration**: Real-time database with graduate-focused views
+- **Intelligent Filtering**: All queries filter by `is_graduate_position = true`
 
-### 📊 **Analytics Dashboard**
-- **Comprehensive Analytics**: Graduate assistantship trends, salary analysis, and market insights
-- **Interactive Visualizations**: Chart.js and Plotly with responsive design
-- **Big 10 University Filter**: Focus on positions at major research institutions
-- **Export Capabilities**: JSON/CSV download with complete datasets
+### 📊 **Graduate-Focused Dashboard**
+- **True Graduate Analytics**: Market insights specific to graduate opportunities
+- **Interactive Visualizations**: Charts showing only graduate position data
+- **Contextual Intelligence**: Total positions vs. graduate positions breakdown
 - **Mobile-Optimized**: Responsive design for all devices
+- **Export Capabilities**: Graduate-only data export in JSON/CSV formats
 
 ### 🔒 **Enterprise-Grade Security**
 - **XSS Protection**: All user data sanitized with escapeHTML functions
@@ -61,64 +60,80 @@ A comprehensive platform for tracking and analyzing graduate assistantship oppor
 ## 📁 Project Structure
 
 ```
-wildlife-grad/
+wildlife-grad-dashboard/
 ├── 🤖 Core Scraping Engine
-│   ├── wildlife_job_scraper.py     # Main scraper with enhanced analysis
+│   ├── wildlife_job_scraper.py     # Main scraper with ML classification
 │   └── requirements.txt            # Python dependencies
 │
-├── 📊 Analytics & Processing
+├── 📊 Graduate Analytics Platform
 │   ├── src/
 │   │   ├── analysis/
 │   │   │   ├── enhanced_analysis.py         # ML classification & analysis
-│   │   │   └── enhanced_dashboard_data.py   # Dashboard data generation
+│   │   │   └── enhanced_dashboard_data.py   # Graduate-focused data generation
 │   │   └── utils/
 │   │       └── server.py                    # Development server utilities
-│   └── tests/                      # Unit tests for validation
+│   └── tests/                      # Comprehensive test suite
 │
-├── 📊 Analytics Dashboard
+├── 📊 Graduate Intelligence Dashboard
 │   ├── dashboard/
-│   │   ├── pages/
-│   │   │   └── analytics_dashboard.html     # Analytics & insights dashboard
+│   │   ├── wildlife_dashboard.html          # Main graduate dashboard
 │   │   ├── assets/
 │   │   │   ├── js/
-│   │   │   │   └── analytics_dashboard.js       # Analytics logic (XSS-protected)
+│   │   │   │   ├── supabase-dashboard.js    # Graduate-focused dashboard logic
+│   │   │   │   └── supabase-config.js       # Database configuration
 │   │   │   └── css/
-│   │   │       └── analytics-styles.css         # Clean CSS (no !important)
+│   │   │       └── enhanced-styles.css      # Graduate dashboard styling
 │   │   └── data/                            # Dashboard data files
+│
+├── 🗄️ Database & Migration
+│   ├── database/
+│   │   └── supabase_schema.sql              # Graduate-focused database views
+│   ├── migrate_legacy_data.py               # Data migration with duplicate detection
+│   ├── cleanup_legacy_files.py              # Legacy file cleanup
+│   └── update_views.sql                     # Database view updates
 │
 ├── 💾 Data Storage
 │   ├── data/
-│   │   ├── verified_graduate_assistantships.json  # Current verified positions
-│   │   ├── historical_positions.json               # All historical data
-│   │   ├── enhanced_data.json                      # Analytics summary
-│   │   └── archive/                                # Timestamped backups
+│   │   ├── raw/                             # Original scraped data
+│   │   ├── processed/                       # Graduate-classified positions
+│   │   └── legacy_backup_*/                 # Archived legacy data
 │
-└── ⚙️ Automation
-    └── .github/workflows/
-        └── scrape-and-update-supabase.yml    # Weekly automated scraping & Supabase updates
+└── 🧪 Testing & Validation
+    ├── test_views.py                        # Database view testing
+    ├── test_dashboard.py                    # Dashboard functionality testing
+    └── scripts/                             # Verification and analysis scripts
 ```
 
 ## 🚀 Quick Start
 
-### Option 1: View Live Dashboard
-Visit the deployed dashboard: `https://chrischizinski.github.io/wildlife-grad/`
+### Option 1: View Live Graduate Dashboard
+Visit the deployed dashboard: **[https://chrischizinski.github.io/wildlife-grad-dashboard/](https://chrischizinski.github.io/wildlife-grad-dashboard/)**
 
 ### Option 2: Local Development
 ```bash
 # Clone repository
-git clone <repository-url>
-cd wildlife-grad
+git clone https://github.com/chrischizinski/wildlife-grad-dashboard.git
+cd wildlife-grad-dashboard
 
 # Install dependencies
 pip install -r requirements.txt
 
-# Run scraper locally
-python wildlife_job_scraper.py
-
-# Serve dashboard locally
+# Serve graduate dashboard locally
 cd dashboard
 python -m http.server 8080
-# Visit: http://localhost:8080/enhanced_index.html
+# Visit: http://localhost:8080/wildlife_dashboard.html
+```
+
+### Option 3: Database Setup
+```bash
+# Update Supabase views for graduate intelligence
+# Copy SQL from update_views.sql and run in Supabase SQL Editor
+
+# Test database connectivity
+python test_views.py
+
+# Migrate legacy data (if needed)
+python migrate_legacy_data.py
 ```
 
 ### Option 3: GitHub Actions Setup

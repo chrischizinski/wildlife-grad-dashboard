@@ -1620,6 +1620,25 @@ function updateFooter() {
     if (footerTotalPositions) {
         footerTotalPositions.textContent = (graduatePositions || 0).toLocaleString();
     }
+
+    // Update footer about section statistics
+    const footerTotalAnalyzed = document.getElementById('footer-total-analyzed');
+    const footerGradPositions = document.getElementById('footer-graduate-positions');
+    const footerClassificationRate = document.getElementById('footer-classification-rate');
+    const footerLastUpdated = document.getElementById('footer-last-updated');
+
+    if (footerTotalAnalyzed && metadata.total_scraped_positions) {
+        footerTotalAnalyzed.textContent = metadata.total_scraped_positions.toLocaleString();
+    }
+    if (footerGradPositions && graduatePositions) {
+        footerGradPositions.textContent = graduatePositions.toLocaleString();
+    }
+    if (footerClassificationRate && metadata.classification_rate) {
+        footerClassificationRate.textContent = metadata.classification_rate + '%';
+    }
+    if (footerLastUpdated && lastUpdated) {
+        footerLastUpdated.textContent = new Date(lastUpdated).toLocaleDateString();
+    }
 }
 
 /**
