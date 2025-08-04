@@ -261,6 +261,34 @@ const disciplineColors = {
     'Other': '#708090'                                   // Slate gray
 };
 
+// Big Ten Universities list for classification
+const BIG_TEN_UNIVERSITIES = [
+    'University of Illinois',
+    'Indiana University',
+    'University of Iowa',
+    'University of Maryland',
+    'University of Michigan',
+    'Michigan State University',
+    'University of Minnesota',
+    'University of Nebraska',
+    'Northwestern University',
+    'Ohio State University',
+    'Pennsylvania State University',
+    'Purdue University',
+    'Rutgers University',
+    'University of Wisconsin'
+];
+
+// Function to check if a university is Big Ten
+function isBigTenUniversity(organizationName) {
+    if (!organizationName) return false;
+    const orgLower = organizationName.toLowerCase();
+    return BIG_TEN_UNIVERSITIES.some(bigTenU =>
+        orgLower.includes(bigTenU.toLowerCase()) ||
+        orgLower.includes(bigTenU.split(' ').pop().toLowerCase())
+    );
+}
+
 /**
  * Sanitize HTML content to prevent XSS attacks
  */
@@ -296,6 +324,7 @@ async function initDashboard() {
         createDisciplineIndicators();
         if (typeof Chart !== 'undefined') {
             initializeCharts();
+            createBigTenAnalysis();
         } else {
             console.warn('Chart.js not available, skipping charts');
         }
@@ -440,6 +469,224 @@ function initializeCharts() {
     createTrendChart();
     createSalaryChart();
     createLocationChart();
+}
+
+/**
+ * Create Big Ten analysis charts and statistics
+ */
+function createBigTenAnalysis() {
+    const positions = exportData || [];
+    let big10Count = 0;
+    let nonBig10Count = 0;
+    let big10Salaries = [];
+    let nonBig10Salaries = [];
+
+    // Analyze positions by university type
+    positions.forEach(position => {
+        if (position.organization) {
+            if (isBigTenUniversity(position.organization)) {
+                big10Count++;
+                if (position.salary && position.salary > 0) {
+                    big10Salaries.push(position.salary);
+                }
+            } else {
+                nonBig10Count++;
+                if (position.salary && position.salary > 0) {
+                    nonBig10Salaries.push(position.salary);
+                }
+            }
+        }
+    });
+
+    // Update Big Ten statistics cards
+    document.getElementById('big10-positions').textContent = big10Count.toLocaleString();
+    document.getElementById('non-big10-positions').textContent = nonBig10Count.toLocaleString();
+
+    // Create Big Ten comparison chart
+    createBigTenComparisonChart(big10Count, nonBig10Count);
+
+    // Create Big Ten salary comparison chart
+    createBigTenSalaryChart(big10Salaries, nonBig10Salaries);
+
+    // Create university type distribution chart
+    createUniversityTypeChart(big10Count, nonBig10Count);
+}
+
+/**
+ * Create Big Ten vs Non-Big Ten comparison chart
+ */
+function createBigTenComparisonChart(big10Count, nonBig10Count) {
+    const ctx = document.getElementById('big10-comparison-chart');
+    if (!ctx) return;
+
+    const chartCtx = ctx.getContext('2d');
+
+    new Chart(chartCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Big Ten Universities', 'Other Universities'],
+            datasets: [
+                {
+                    label: 'Graduate Positions',
+                    data: [big10Count, nonBig10Count],
+                    backgroundColor: ['#3b82f6', '#6b7280'],
+                    borderColor: ['#2563eb', '#4b5563'],
+                    borderWidth: 2
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const total = big10Count + nonBig10Count;
+                            const percentage = ((context.raw / total) * 100).toFixed(1);
+                            return `${context.raw} positions (${percentage}%)`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Number of Positions'
+                    },
+                    grid: {
+                        color: 'rgba(0,0,0,0.1)'
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+}
+
+/**
+ * Create Big Ten salary comparison chart
+ */
+function createBigTenSalaryChart(big10Salaries, nonBig10Salaries) {
+    const ctx = document.getElementById('big10-salary-chart');
+    if (!ctx) return;
+
+    const chartCtx = ctx.getContext('2d');
+
+    // Calculate averages
+    const big10Avg = big10Salaries.length > 0 ?
+        big10Salaries.reduce((a, b) => a + b, 0) / big10Salaries.length : 0;
+    const nonBig10Avg = nonBig10Salaries.length > 0 ?
+        nonBig10Salaries.reduce((a, b) => a + b, 0) / nonBig10Salaries.length : 0;
+
+    new Chart(chartCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Big Ten', 'Other Universities'],
+            datasets: [
+                {
+                    label: 'Average Salary',
+                    data: [Math.round(big10Avg), Math.round(nonBig10Avg)],
+                    backgroundColor: ['#10b981', '#f59e0b'],
+                    borderColor: ['#059669', '#d97706'],
+                    borderWidth: 2
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `$${context.raw.toLocaleString()}`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Average Salary (USD)'
+                    },
+                    ticks: {
+                        callback: function(value) {
+                            return '$' + value.toLocaleString();
+                        }
+                    },
+                    grid: {
+                        color: 'rgba(0,0,0,0.1)'
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+}
+
+/**
+ * Create university type distribution chart
+ */
+function createUniversityTypeChart(big10Count, nonBig10Count) {
+    const ctx = document.getElementById('university-type-chart');
+    if (!ctx) return;
+
+    const chartCtx = ctx.getContext('2d');
+
+    new Chart(chartCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Big Ten Universities', 'Other Universities'],
+            datasets: [{
+                data: [big10Count, nonBig10Count],
+                backgroundColor: ['#3b82f6', '#6b7280'],
+                borderWidth: 3,
+                borderColor: '#ffffff',
+                cutout: '60%'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        padding: 15,
+                        usePointStyle: true
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const total = big10Count + nonBig10Count;
+                            const percentage = ((context.raw / total) * 100).toFixed(1);
+                            return `${context.label}: ${context.raw} (${percentage}%)`;
+                        }
+                    }
+                }
+            }
+        }
+    });
 }
 
 /**

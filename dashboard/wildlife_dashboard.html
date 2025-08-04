@@ -9,6 +9,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="assets/js/supabase-config.js"></script>
 
     <style>
         :root {
@@ -248,10 +250,13 @@
                         <a class="nav-link" href="#overview">Overview</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#analytics">Analytics</a>
+                        <a class="nav-link" href="#market-insights">Market Insights</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#monthly-trends">Monthly Trends</a>
+                        <a class="nav-link" href="#university-analysis">University Analysis</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#monthly-trends">Advanced Analytics</a>
                     </li>
                 </ul>
             </div>
@@ -259,7 +264,7 @@
     </nav>
 
     <!-- Loading State -->
-    <div id="loading-state" class="container my-5">
+    <div id="loading" class="container my-5">
         <div class="row justify-content-center">
             <div class="col-md-6 text-center">
                 <div class="loading-spinner"></div>
@@ -270,7 +275,7 @@
     </div>
 
     <!-- Error State -->
-    <div id="error-state" class="container my-5" style="display: none;">
+    <div id="error" class="container my-5 d-none">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="error-container text-center">
@@ -286,7 +291,7 @@
     </div>
 
     <!-- Main Content -->
-    <div id="main-content" class="container-fluid my-4" style="display: none;">
+    <div id="main-content" class="container-fluid my-4 d-none">
 
         <!-- Overview Section -->
         <section id="overview" class="mb-5">
@@ -309,7 +314,7 @@
                                 <i class="fas fa-briefcase"></i>
                             </div>
                             <div>
-                                <h3 id="total-positions" class="card-title mb-1 fw-bold">0</h3>
+                                <h3 id="total-jobs" class="card-title mb-1 fw-bold">0</h3>
                                 <p class="card-text text-muted mb-0">Total Positions</p>
                                 <small class="text-muted">All job postings collected</small>
                             </div>
@@ -324,7 +329,7 @@
                                 <i class="fas fa-graduation-cap"></i>
                             </div>
                             <div>
-                                <h3 id="graduate-positions" class="card-title mb-1 fw-bold">0</h3>
+                                <h3 id="grad-positions" class="card-title mb-1 fw-bold">0</h3>
                                 <p class="card-text text-muted mb-0">Graduate Positions</p>
                                 <small class="text-muted">Assistantships & fellowships</small>
                             </div>
@@ -339,9 +344,9 @@
                                 <i class="fas fa-dollar-sign"></i>
                             </div>
                             <div>
-                                <h3 id="avg-salary" class="card-title mb-1 fw-bold">$0</h3>
-                                <p class="card-text text-muted mb-0">Average Salary</p>
-                                <small class="text-muted">Lincoln, NE adjusted</small>
+                                <h3 id="salary-positions" class="card-title mb-1 fw-bold">0</h3>
+                                <p class="card-text text-muted mb-0">Positions with Salary</p>
+                                <small class="text-muted">Salary data available</small>
                             </div>
                         </div>
                     </div>
@@ -354,7 +359,7 @@
                                 <i class="fas fa-chart-pie"></i>
                             </div>
                             <div>
-                                <h3 id="total-disciplines" class="card-title mb-1 fw-bold">0</h3>
+                                <h3 id="disciplines-count" class="card-title mb-1 fw-bold">0</h3>
                                 <p class="card-text text-muted mb-0">Disciplines</p>
                                 <small class="text-muted">Research areas covered</small>
                             </div>
@@ -362,51 +367,72 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Discipline Cards -->
+            <div class="row" id="discipline-cards">
+                <!-- Discipline cards will be populated by JavaScript -->
+            </div>
         </section>
 
-        <!-- Analytics Section -->
-        <section id="analytics" class="mb-5">
+        <!-- Market Insights Section -->
+        <section id="market-insights" class="mb-5">
             <div class="row mb-4">
                 <div class="col">
                     <h2 class="fw-bold text-dark">
-                        <i class="fas fa-analytics me-2 text-info"></i>
-                        Analytics & Trends
+                        <i class="fas fa-chart-line me-2 text-info"></i>
+                        Market Insights
                     </h2>
-                    <p class="text-muted">Visual insights into graduate assistantship opportunities</p>
+                    <p class="text-muted">Key trends and patterns in the wildlife graduate job market</p>
                 </div>
             </div>
 
-            <!-- Modern Compact Charts Grid -->
+            <!-- Primary Insights Row -->
             <div class="row g-3 mb-4">
-                <div class="col-lg-6">
-                    <div class="chart-container chart-container-small">
-                        <h5>
-                            <i class="fas fa-chart-line me-2"></i>
-                            Monthly Trends
-                        </h5>
-                        <canvas id="trendsChart"></canvas>
+                <div class="col-lg-8">
+                    <div class="chart-container">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="mb-0">
+                                <i class="fas fa-chart-line me-2"></i>
+                                Monthly Posting Trends
+                            </h5>
+                            <div class="btn-group btn-group-sm" role="group">
+                                <input type="radio" class="btn-check" name="timeframe" id="time-1month" value="1_month">
+                                <label class="btn btn-outline-secondary" for="time-1month">1M</label>
+
+                                <input type="radio" class="btn-check" name="timeframe" id="time-6months" value="6_months">
+                                <label class="btn btn-outline-secondary" for="time-6months">6M</label>
+
+                                <input type="radio" class="btn-check" name="timeframe" id="time-1year" value="1_year" checked>
+                                <label class="btn btn-outline-secondary" for="time-1year">1Y</label>
+
+                                <input type="radio" class="btn-check" name="timeframe" id="time-all" value="all_time">
+                                <label class="btn btn-outline-secondary" for="time-all">ALL</label>
+                            </div>
+                        </div>
+                        <canvas id="trend-chart"></canvas>
                     </div>
                 </div>
 
-                <div class="col-lg-6">
-                    <div class="chart-container chart-container-small">
-                        <h5>
-                            <i class="fas fa-chart-bar me-2"></i>
+                <div class="col-lg-4">
+                    <div class="chart-container">
+                        <h5 class="mb-3">
+                            <i class="fas fa-graduation-cap me-2"></i>
                             Top Disciplines
                         </h5>
-                        <canvas id="disciplineChart"></canvas>
+                        <canvas id="discipline-chart"></canvas>
                     </div>
                 </div>
             </div>
 
+            <!-- Secondary Insights Row -->
             <div class="row g-3">
                 <div class="col-lg-6">
                     <div class="chart-container chart-container-small">
                         <h5>
                             <i class="fas fa-dollar-sign me-2"></i>
-                            Salary Distribution
+                            Salary Analysis by Discipline
                         </h5>
-                        <canvas id="salaryChart"></canvas>
+                        <canvas id="salary-chart"></canvas>
                     </div>
                 </div>
 
@@ -416,7 +442,85 @@
                             <i class="fas fa-map-marker-alt me-2"></i>
                             Geographic Distribution
                         </h5>
-                        <canvas id="locationChart"></canvas>
+                        <canvas id="location-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- University Analysis Section -->
+        <section id="university-analysis" class="mb-5">
+            <div class="row mb-4">
+                <div class="col">
+                    <h2 class="fw-bold text-dark">
+                        <i class="fas fa-university me-2 text-primary"></i>
+                        University Analysis
+                    </h2>
+                    <p class="text-muted">Comparing opportunities at Big Ten vs other institutions</p>
+                </div>
+            </div>
+
+            <!-- Big 10 vs Non-Big 10 Comparison -->
+            <div class="row g-3 mb-4">
+                <div class="col-lg-8">
+                    <div class="chart-container">
+                        <h5 class="mb-3">
+                            <i class="fas fa-balance-scale me-2"></i>
+                            Big Ten vs Non-Big Ten Positions
+                        </h5>
+                        <canvas id="big10-comparison-chart"></canvas>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class="stats-card text-center">
+                                <div class="card-body">
+                                    <div class="stats-icon bg-primary mx-auto mb-3">
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <h3 id="big10-positions" class="text-primary mb-1">--</h3>
+                                    <p class="text-muted mb-0">Big Ten Positions</p>
+                                    <small class="text-muted">Conference universities</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="stats-card text-center">
+                                <div class="card-body">
+                                    <div class="stats-icon bg-secondary mx-auto mb-3">
+                                        <i class="fas fa-building"></i>
+                                    </div>
+                                    <h3 id="non-big10-positions" class="text-secondary mb-1">--</h3>
+                                    <p class="text-muted mb-0">Other Universities</p>
+                                    <small class="text-muted">Non-conference institutions</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Big 10 Salary Comparison -->
+            <div class="row g-3">
+                <div class="col-lg-6">
+                    <div class="chart-container chart-container-small">
+                        <h5>
+                            <i class="fas fa-money-bill-wave me-2"></i>
+                            Salary Comparison: Big Ten vs Others
+                        </h5>
+                        <canvas id="big10-salary-chart"></canvas>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="chart-container chart-container-small">
+                        <h5>
+                            <i class="fas fa-chart-donut me-2"></i>
+                            Position Distribution by University Type
+                        </h5>
+                        <canvas id="university-type-chart"></canvas>
                     </div>
                 </div>
             </div>
@@ -671,1041 +775,16 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        // Global variables for analytics dashboard
-        let dashboardData = null;
-        let analyticsData = null;
-        let currentTimeframe = '12months';
-        let currentDiscipline = 'all';
-        let currentDegreeType = 'all';
-        let charts = {};
-
-        // Initialize analytics dashboard
-        document.addEventListener('DOMContentLoaded', async function() {
-            await loadAnalyticsData();
-        });
-
-        // Load analytics data
-        async function loadAnalyticsData() {
-            try {
-                showLoading();
-
-                // Load enhanced data for analytics
-                const dataPaths = [
-                    'data/enhanced_data.json',
-                    './data/enhanced_data.json',
-                    '../data/enhanced_data.json'
-                ];
-
-                let enhancedData = null;
-                for (const path of dataPaths) {
-                    try {
-                        const response = await fetch(path);
-                        if (response.ok) {
-                            enhancedData = await response.json();
-                            console.log(`Analytics data loaded from: ${path}`);
-                            break;
-                        }
-                    } catch (e) {
-                        console.log(`Failed to load from ${path}:`, e.message);
-                    }
-                }
-
-                if (!enhancedData) {
-                    throw new Error('Could not load analytics data. Please ensure data files are accessible.');
-                }
-
-                dashboardData = enhancedData;
-                analyticsData = processAnalyticsData(enhancedData);
-
-                // Initialize analytics components
-                updateOverviewCards();
-                updateLastUpdated();
-                populateAnalyticsFilters();
-                updateAnalyticsMetrics();
-                createAnalyticsCharts();
-                createPerformanceTable();
-                setupAnalyticsEventListeners();
-
-                hideLoading();
-
-            } catch (error) {
-                console.error('Error loading analytics data:', error);
-                showError(error.message);
-            }
-        }
-
-        // Process raw data for analytics
-        function processAnalyticsData(data) {
-            const timeSeriesData = data.time_series || {};
-            const disciplines = data.top_disciplines || {};
-
-            return {
-                timeSeries: timeSeriesData,
-                disciplines: disciplines,
-                totalPositions: data.total_positions || 0,
-                lastUpdated: data.last_updated || null,
-                overview: data.overview || {}
-            };
-        }
-
-        // Update overview cards
-        // Update overview cards
-        function updateOverviewCards() {
-            const totalPositions = dashboardData.total_positions || 0;
-            const graduatePositions = dashboardData.overview?.graduate_positions || 0;
-            const avgSalary = dashboardData.overview?.avg_salary || 0;
-            const disciplinesCount = Object.keys(dashboardData.top_disciplines || {}).length;
-
-            document.getElementById('total-positions').textContent = totalPositions.toLocaleString();
-            document.getElementById('graduate-positions').textContent = graduatePositions.toLocaleString();
-            document.getElementById('avg-salary').textContent = avgSalary > 0 ? `$${Math.round(avgSalary).toLocaleString()}` : 'N/A';
-            document.getElementById('total-disciplines').textContent = disciplinesCount;
-        }
-
-        // Update last updated timestamp
-        function updateLastUpdated() {
-            const lastUpdated = analyticsData.lastUpdated;
-            const lastUpdatedElement = document.getElementById('last-updated');
-
-            if (lastUpdated) {
-                const date = new Date(lastUpdated);
-                lastUpdatedElement.textContent = date.toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
+        // Initialize Supabase when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Wait for Supabase library to load
+            if (typeof supabase !== 'undefined') {
+                initializeSupabase();
             } else {
-                lastUpdatedElement.textContent = 'Unknown';
+                console.error('Supabase library not loaded');
             }
-        }
-
-        // Populate analytics filter dropdowns
-        function populateAnalyticsFilters() {
-            const disciplineFilter = document.getElementById('analytics-discipline-filter');
-            const disciplines = Object.keys(analyticsData.disciplines);
-
-            // Clear existing options except "All Disciplines"
-            disciplineFilter.innerHTML = '<option value="all">All Disciplines</option>';
-
-            disciplines.forEach(discipline => {
-                const option = document.createElement('option');
-                option.value = discipline;
-                option.textContent = discipline;
-                disciplineFilter.appendChild(option);
-            });
-        }
-
-        // Calculate analytics metrics based on current filters
-        function calculateAnalyticsMetrics() {
-            const timeSeriesData = analyticsData.timeSeries;
-            const currentPeriod = currentTimeframe;
-
-            // Get relevant time series data
-            let relevantData = {};
-            if (timeSeriesData && timeSeriesData[currentPeriod]) {
-                relevantData = timeSeriesData[currentPeriod];
-            } else if (timeSeriesData['1_year']) {
-                relevantData = timeSeriesData['1_year'];
-            }
-
-            const monthlyData = relevantData.total_monthly || {};
-            const months = Object.keys(monthlyData).sort();
-            const values = months.map(month => monthlyData[month] || 0);
-
-            // Calculate growth rate
-            let growthRate = 0;
-            if (values.length >= 2) {
-                const firstValue = values[0] || 1;
-                const lastValue = values[values.length - 1] || 0;
-                growthRate = ((lastValue - firstValue) / firstValue * 100);
-            }
-
-            // Calculate average posts per period
-            const avgPostsPeriod = values.length > 0 ? Math.round(values.reduce((a, b) => a + b, 0) / values.length) : 0;
-
-            // Find peak month
-            let peakMonth = 'N/A';
-            if (months.length > 0) {
-                const maxValue = Math.max(...values);
-                const maxIndex = values.indexOf(maxValue);
-                if (maxIndex >= 0) {
-                    const date = new Date(months[maxIndex] + '-01');
-                    peakMonth = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-                }
-            }
-
-            // Find top discipline
-            const disciplines = analyticsData.disciplines;
-            let topDiscipline = 'N/A';
-            if (disciplines && Object.keys(disciplines).length > 0) {
-                topDiscipline = Object.keys(disciplines).reduce((a, b) =>
-                    (disciplines[a]?.total_positions || 0) > (disciplines[b]?.total_positions || 0) ? a : b
-                );
-                topDiscipline = topDiscipline.split(' ').slice(0, 2).join(' '); // Shorten for display
-            }
-
-            // Calculate MS/PhD split (placeholder - would need more detailed data)
-            const msPhdSplit = '60/40'; // This would be calculated from actual data
-
-            // Calculate salary trend (placeholder)
-            const salaryTrend = '+2.5%'; // This would be calculated from actual salary data
-
-            return {
-                growthRate: growthRate.toFixed(1) + '%',
-                avgPostsPeriod,
-                peakMonth,
-                topDiscipline,
-                msPhdSplit,
-                salaryTrend
-            };
-        }
-
-        // Update analytics metrics display
-        function updateAnalyticsMetrics() {
-            const metrics = calculateAnalyticsMetrics();
-
-            document.getElementById('posting-growth-rate').textContent = metrics.growthRate;
-            document.getElementById('avg-posts-period').textContent = metrics.avgPostsPeriod;
-            document.getElementById('peak-month').textContent = metrics.peakMonth;
-            document.getElementById('top-discipline').textContent = metrics.topDiscipline;
-            document.getElementById('ms-phd-split').textContent = metrics.msPhdSplit;
-            document.getElementById('salary-trend').textContent = metrics.salaryTrend;
-        }
-
-        // Create analytics charts
-        function createAnalyticsCharts() {
-            createMonthlyTrendsChart();
-            createDegreeTypeChart();
-            createSeasonalPatternsChart();
-            createSalaryDistributionChart();
-            createPostingHeatMap();
-
-            // Also create the original charts for the analytics section
-            createOriginalCharts();
-        }
-
-        // Create monthly trends chart with growth indicators
-        function createMonthlyTrendsChart() {
-            const ctx = document.getElementById('monthlyTrendsChart').getContext('2d');
-            const timeSeriesData = analyticsData.timeSeries;
-
-            let relevantData = {};
-            if (timeSeriesData && timeSeriesData[currentTimeframe.replace('months', '_months')]) {
-                relevantData = timeSeriesData[currentTimeframe.replace('months', '_months')];
-            } else if (timeSeriesData['1_year']) {
-                relevantData = timeSeriesData['1_year'];
-            }
-
-            const monthlyData = relevantData.total_monthly || {};
-            const months = Object.keys(monthlyData).sort();
-            const values = months.map(month => monthlyData[month] || 0);
-
-            // Create growth indicator line
-            const growthData = values.map((value, index) => {
-                if (index === 0) return 0;
-                const prevValue = values[index - 1] || 1;
-                return ((value - prevValue) / prevValue * 100);
-            });
-
-            if (charts.monthlyTrends) charts.monthlyTrends.destroy();
-
-            charts.monthlyTrends = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: months.map(month => {
-                        const date = new Date(month + '-01');
-                        return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-                    }),
-                    datasets: [{
-                        label: 'Monthly Posts',
-                        data: values,
-                        borderColor: '#3b82f6',
-                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                        tension: 0.4,
-                        fill: true,
-                        yAxisID: 'y'
-                    }, {
-                        label: 'Growth Rate (%)',
-                        data: growthData,
-                        borderColor: '#10b981',
-                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                        type: 'line',
-                        tension: 0.4,
-                        yAxisID: 'y1'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    layout: {
-                        padding: {
-                            top: 10,
-                            bottom: 10
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                            labels: {
-                                padding: 15,
-                                usePointStyle: true
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            type: 'linear',
-                            display: true,
-                            position: 'left',
-                            title: {
-                                display: true,
-                                text: 'Number of Posts'
-                            },
-                            grid: {
-                                color: 'rgba(0,0,0,0.1)'
-                            }
-                        },
-                        y1: {
-                            type: 'linear',
-                            display: true,
-                            position: 'right',
-                            title: {
-                                display: true,
-                                text: 'Growth Rate (%)'
-                            },
-                            grid: {
-                                drawOnChartArea: false,
-                            },
-                        },
-                        x: {
-                            grid: {
-                                color: 'rgba(0,0,0,0.1)'
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        // Create degree type distribution chart
-        function createDegreeTypeChart() {
-            const ctx = document.getElementById('degreeTypeChart').getContext('2d');
-
-            // This would be calculated from actual data - using placeholder values
-            const degreeData = {
-                'Master\'s': 180,
-                'PhD': 120,
-                'Other': 45
-            };
-
-            if (charts.degreeType) charts.degreeType.destroy();
-
-            charts.degreeType = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: Object.keys(degreeData),
-                    datasets: [{
-                        data: Object.values(degreeData),
-                        backgroundColor: [
-                            '#3b82f6',
-                            '#10b981',
-                            '#f59e0b'
-                        ],
-                        borderWidth: 2,
-                        borderColor: '#ffffff'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    layout: {
-                        padding: {
-                            top: 10,
-                            bottom: 10
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                padding: 15,
-                                usePointStyle: true
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        // Create seasonal patterns chart
-        function createSeasonalPatternsChart() {
-            const ctx = document.getElementById('seasonalPatternsChart').getContext('2d');
-
-            // Calculate seasonal averages (placeholder data)
-            const seasonalData = {
-                'Spring': 85,
-                'Summer': 65,
-                'Fall': 120,
-                'Winter': 95
-            };
-
-            if (charts.seasonalPatterns) charts.seasonalPatterns.destroy();
-
-            charts.seasonalPatterns = new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: Object.keys(seasonalData),
-                    datasets: [{
-                        label: 'Average Posts by Season',
-                        data: Object.values(seasonalData),
-                        borderColor: '#8b5cf6',
-                        backgroundColor: 'rgba(139, 92, 246, 0.2)',
-                        pointBackgroundColor: '#8b5cf6',
-                        pointBorderColor: '#ffffff',
-                        pointBorderWidth: 2
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    layout: {
-                        padding: {
-                            top: 10,
-                            bottom: 10
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        r: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Number of Posts'
-                            },
-                            grid: {
-                                color: 'rgba(0,0,0,0.1)'
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        // Create salary distribution trends chart
-        function createSalaryDistributionChart() {
-            const ctx = document.getElementById('salaryDistributionChart').getContext('2d');
-
-            // Salary ranges data (placeholder)
-            const salaryRanges = {
-                'Under $25K': 45,
-                '$25K-$35K': 125,
-                '$35K-$45K': 89,
-                '$45K-$55K': 67,
-                'Over $55K': 34
-            };
-
-            if (charts.salaryDistribution) charts.salaryDistribution.destroy();
-
-            charts.salaryDistribution = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: Object.keys(salaryRanges),
-                    datasets: [{
-                        label: 'Number of Positions',
-                        data: Object.values(salaryRanges),
-                        backgroundColor: [
-                            '#ef4444',
-                            '#f59e0b',
-                            '#10b981',
-                            '#3b82f6',
-                            '#8b5cf6'
-                        ],
-                        borderWidth: 1,
-                        borderColor: '#ffffff'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    layout: {
-                        padding: {
-                            top: 10,
-                            bottom: 10
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Number of Positions'
-                            },
-                            grid: {
-                                color: 'rgba(0,0,0,0.1)'
-                            }
-                        },
-                        x: {
-                            grid: {
-                                color: 'rgba(0,0,0,0.1)'
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        // Create posting volume heat map
-        function createPostingHeatMap() {
-            const heatmapContainer = document.getElementById('posting-heatmap');
-
-            // Generate sample heat map data
-            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-            const years = ['2022', '2023', '2024'];
-
-            let heatmapHTML = '<div class="row text-center mb-2"><div class="col-1"></div>';
-            months.forEach(month => {
-                heatmapHTML += `<div class="col-1 small fw-bold">${month}</div>`;
-            });
-            heatmapHTML += '</div>';
-
-            years.forEach(year => {
-                heatmapHTML += `<div class="row text-center mb-1">`;
-                heatmapHTML += `<div class="col-1 small fw-bold">${year}</div>`;
-
-                months.forEach(() => {
-                    const intensity = Math.floor(Math.random() * 100);
-                    let colorClass = 'bg-light';
-                    if (intensity > 75) colorClass = 'bg-success';
-                    else if (intensity > 50) colorClass = 'bg-warning';
-                    else if (intensity > 25) colorClass = 'bg-info';
-
-                    heatmapHTML += `<div class="col-1">
-                        <div class="p-2 m-1 rounded ${colorClass}" style="min-height: 25px;"
-                             title="${intensity} posts" data-bs-toggle="tooltip">
-                        </div>
-                    </div>`;
-                });
-                heatmapHTML += '</div>';
-            });
-
-            heatmapContainer.innerHTML = heatmapHTML;
-
-            // Initialize tooltips
-            const tooltipTriggerList = [].slice.call(heatmapContainer.querySelectorAll('[data-bs-toggle="tooltip"]'));
-            tooltipTriggerList.map(function (tooltipTriggerEl) {
-                return new bootstrap.Tooltip(tooltipTriggerEl);
-            });
-        }
-
-        // Create original charts for analytics section
-        function createOriginalCharts() {
-            createTrendsChart();
-            createDisciplineChart();
-            createSalaryChart();
-            createLocationChart();
-        }
-
-        // Create trends chart
-        function createTrendsChart() {
-            const ctx = document.getElementById('trendsChart').getContext('2d');
-            const timeSeriesData = analyticsData.timeSeries;
-
-            let relevantData = {};
-            if (timeSeriesData && timeSeriesData['1_year']) {
-                relevantData = timeSeriesData['1_year'];
-            }
-
-            const monthlyData = relevantData.total_monthly || {};
-            const months = Object.keys(monthlyData).sort().slice(-6); // Last 6 months
-            const values = months.map(month => monthlyData[month] || 0);
-
-            if (charts.trends) charts.trends.destroy();
-
-            charts.trends = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: months.map(month => {
-                        const date = new Date(month + '-01');
-                        return date.toLocaleDateString('en-US', { month: 'short' });
-                    }),
-                    datasets: [{
-                        label: 'Monthly Posts',
-                        data: values,
-                        borderColor: '#059669',
-                        backgroundColor: 'rgba(5, 150, 105, 0.1)',
-                        tension: 0.4,
-                        fill: true
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    layout: {
-                        padding: {
-                            top: 10,
-                            bottom: 10
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(0,0,0,0.1)'
-                            }
-                        },
-                        x: {
-                            grid: {
-                                color: 'rgba(0,0,0,0.1)'
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        // Create discipline chart (horizontal bar chart)
-        function createDisciplineChart() {
-            const ctx = document.getElementById('disciplineChart').getContext('2d');
-            const disciplines = analyticsData.disciplines;
-
-            const disciplineNames = Object.keys(disciplines).slice(0, 5);
-            const disciplineValues = disciplineNames.map(name => disciplines[name]?.total_positions || 0);
-
-            if (charts.discipline) charts.discipline.destroy();
-
-            charts.discipline = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: disciplineNames.map(name => name.split(' ').slice(0, 3).join(' ')),
-                    datasets: [{
-                        label: 'Total Positions',
-                        data: disciplineValues,
-                        backgroundColor: [
-                            '#059669',
-                            '#0ea5e9',
-                            '#f59e0b',
-                            '#8b5cf6',
-                            '#ef4444'
-                        ],
-                        borderWidth: 1,
-                        borderColor: '#ffffff'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    indexAxis: 'y',
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        x: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(0,0,0,0.1)'
-                            }
-                        },
-                        y: {
-                            grid: {
-                                display: false
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        // Create salary chart
-        function createSalaryChart() {
-            const ctx = document.getElementById('salaryChart').getContext('2d');
-            const disciplines = analyticsData.disciplines;
-
-            const disciplineNames = Object.keys(disciplines).slice(0, 5);
-            const salaryData = disciplineNames.map(name => {
-                const salaryStats = disciplines[name]?.salary_stats;
-                return salaryStats?.mean ? Math.round(salaryStats.mean) : 0;
-            });
-
-            if (charts.salary) charts.salary.destroy();
-
-            charts.salary = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: disciplineNames.map(name => name.split(' ').slice(0, 2).join(' ')),
-                    datasets: [{
-                        label: 'Average Salary',
-                        data: salaryData,
-                        backgroundColor: '#f59e0b',
-                        borderColor: '#d97706',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    layout: {
-                        padding: {
-                            top: 10,
-                            bottom: 10
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(0,0,0,0.1)'
-                            },
-                            ticks: {
-                                callback: function(value) {
-                                    return '$' + value.toLocaleString();
-                                }
-                            }
-                        },
-                        x: {
-                            grid: {
-                                color: 'rgba(0,0,0,0.1)'
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        // Create location chart (donut chart)
-        function createLocationChart() {
-            const ctx = document.getElementById('locationChart').getContext('2d');
-
-            // Geographic data (placeholder)
-            const locationData = {
-                'West': 85,
-                'South': 72,
-                'Northeast': 58,
-                'Midwest': 45,
-                'Other': 25
-            };
-
-            if (charts.location) charts.location.destroy();
-
-            charts.location = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: Object.keys(locationData),
-                    datasets: [{
-                        data: Object.values(locationData),
-                        backgroundColor: [
-                            '#059669',
-                            '#0ea5e9',
-                            '#f59e0b',
-                            '#8b5cf6',
-                            '#ef4444'
-                        ],
-                        borderWidth: 3,
-                        borderColor: '#ffffff',
-                        cutout: '65%'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                padding: 15,
-                                usePointStyle: true
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        // Create performance table
-        function createPerformanceTable() {
-            const tableBody = document.querySelector('#discipline-performance-table tbody');
-            const disciplines = analyticsData.disciplines;
-
-            tableBody.innerHTML = '';
-
-            Object.keys(disciplines).forEach(disciplineName => {
-                const discipline = disciplines[disciplineName];
-                const row = document.createElement('tr');
-
-                // Calculate metrics (some are placeholders)
-                const totalPosts = discipline.total_positions || 0;
-                const currentPeriod = Math.floor(totalPosts * 0.15); // Placeholder
-                const growthRate = ((Math.random() - 0.5) * 20).toFixed(1) + '%';
-                const avgSalary = discipline.salary_stats?.mean ?
-                    '$' + Math.round(discipline.salary_stats.mean).toLocaleString() : 'N/A';
-                const msPhdSplit = '60/40'; // Placeholder
-                const marketShare = ((totalPosts / analyticsData.totalPositions) * 100).toFixed(1) + '%';
-                const velocity = (totalPosts / 12).toFixed(1); // Posts per month
-
-                row.innerHTML = `
-                    <td class="fw-semibold">${disciplineName}</td>
-                    <td>${totalPosts}</td>
-                    <td>${currentPeriod}</td>
-                    <td class="${parseFloat(growthRate) >= 0 ? 'text-success' : 'text-danger'}">${growthRate}</td>
-                    <td>${avgSalary}</td>
-                    <td>${msPhdSplit}</td>
-                    <td>${marketShare}</td>
-                    <td>${velocity}/mo</td>
-                `;
-
-                tableBody.appendChild(row);
-            });
-        }
-
-        // Setup event listeners for analytics
-        function setupAnalyticsEventListeners() {
-            // Filter change listeners
-            document.getElementById('analytics-discipline-filter').addEventListener('change', function() {
-                currentDiscipline = this.value;
-                updateAnalyticsDisplay();
-            });
-
-            document.getElementById('degree-type-filter').addEventListener('change', function() {
-                currentDegreeType = this.value;
-                updateAnalyticsDisplay();
-            });
-
-            document.getElementById('time-period-filter').addEventListener('change', function() {
-                currentTimeframe = this.value;
-                updateAnalyticsDisplay();
-            });
-
-            document.getElementById('reset-analytics-filters').addEventListener('click', function() {
-                currentDiscipline = 'all';
-                currentDegreeType = 'all';
-                currentTimeframe = '12months';
-
-                document.getElementById('analytics-discipline-filter').value = 'all';
-                document.getElementById('degree-type-filter').value = 'all';
-                document.getElementById('time-period-filter').value = '12months';
-
-                updateAnalyticsDisplay();
-            });
-
-            // Export functionality
-            document.getElementById('export-filtered-csv').addEventListener('click', function(e) {
-                e.preventDefault();
-                exportFilteredData('csv');
-            });
-
-            document.getElementById('export-filtered-json').addEventListener('click', function(e) {
-                e.preventDefault();
-                exportFilteredData('json');
-            });
-
-            document.getElementById('export-analytics-report').addEventListener('click', function(e) {
-                e.preventDefault();
-                exportAnalyticsReport();
-            });
-
-            document.getElementById('export-performance-matrix').addEventListener('click', function(e) {
-                e.preventDefault();
-                exportPerformanceMatrix();
-            });
-        }
-
-        // Update analytics display based on current filters
-        function updateAnalyticsDisplay() {
-            updateAnalyticsMetrics();
-            createMonthlyTrendsChart();
-            createPerformanceTable();
-        }
-
-        // Export functionality
-        function exportFilteredData(format) {
-            // Generate filtered data based on current filters
-            const filteredData = generateFilteredDataset();
-            const timestamp = new Date().toISOString().split('T')[0];
-            const filename = `wildlife_grad_positions_${currentTimeframe}_${currentDiscipline}_${timestamp}`;
-
-            if (format === 'csv') {
-                const csv = convertToCSV(filteredData);
-                downloadFile(csv, `${filename}.csv`, 'text/csv');
-            } else if (format === 'json') {
-                const json = JSON.stringify(filteredData, null, 2);
-                downloadFile(json, `${filename}.json`, 'application/json');
-            }
-        }
-
-        function exportAnalyticsReport() {
-            const metrics = calculateAnalyticsMetrics();
-            const timestamp = new Date().toISOString().split('T')[0];
-
-            const report = {
-                generatedDate: timestamp,
-                timeframe: currentTimeframe,
-                discipline: currentDiscipline,
-                degreeType: currentDegreeType,
-                metrics: metrics,
-                summary: {
-                    totalPositions: analyticsData.totalPositions,
-                    lastUpdated: analyticsData.lastUpdated,
-                    topDisciplines: Object.keys(analyticsData.disciplines).slice(0, 5),
-                    reportScope: `Analytics report for ${currentTimeframe} timeframe${currentDiscipline !== 'all' ? `, filtered by ${currentDiscipline}` : ''}`
-                },
-                disciplineBreakdown: analyticsData.disciplines
-            };
-
-            const json = JSON.stringify(report, null, 2);
-            downloadFile(json, `wildlife_analytics_report_${timestamp}.json`, 'application/json');
-        }
-
-        function exportPerformanceMatrix() {
-            const disciplines = analyticsData.disciplines;
-            const timestamp = new Date().toISOString().split('T')[0];
-
-            const performanceData = Object.keys(disciplines).map(disciplineName => {
-                const discipline = disciplines[disciplineName];
-                const totalPosts = discipline.total_positions || 0;
-                const currentPeriod = Math.floor(totalPosts * 0.15);
-                const growthRate = ((Math.random() - 0.5) * 20).toFixed(1);
-                const avgSalary = discipline.salary_stats?.mean ? Math.round(discipline.salary_stats.mean) : null;
-                const marketShare = ((totalPosts / analyticsData.totalPositions) * 100).toFixed(1);
-                const velocity = (totalPosts / 12).toFixed(1);
-
-                return {
-                    discipline: disciplineName,
-                    totalPosts: totalPosts,
-                    currentPeriod: currentPeriod,
-                    growthRate: parseFloat(growthRate),
-                    avgSalary: avgSalary,
-                    msPhdSplit: '60/40', // Placeholder
-                    marketSharePercent: parseFloat(marketShare),
-                    postingVelocityPerMonth: parseFloat(velocity)
-                };
-            });
-
-            const csv = convertToCSV(performanceData);
-            downloadFile(csv, `discipline_performance_matrix_${timestamp}.csv`, 'text/csv');
-        }
-
-        function generateFilteredDataset() {
-            // This would generate a filtered dataset based on current filters
-            // For now, we'll create a sample dataset structure
-            const timeSeriesData = analyticsData.timeSeries;
-            let relevantData = {};
-
-            if (timeSeriesData && timeSeriesData[currentTimeframe.replace('months', '_months')]) {
-                relevantData = timeSeriesData[currentTimeframe.replace('months', '_months')];
-            } else if (timeSeriesData['1_year']) {
-                relevantData = timeSeriesData['1_year'];
-            }
-
-            const monthlyData = relevantData.total_monthly || {};
-            const disciplines = analyticsData.disciplines;
-
-            // Generate sample position data for export
-            const positions = [];
-            let positionId = 1;
-
-            Object.keys(disciplines).forEach(disciplineName => {
-                if (currentDiscipline === 'all' || currentDiscipline === disciplineName) {
-                    const discipline = disciplines[disciplineName];
-                    const totalPositions = discipline.total_positions || 0;
-
-                    // Generate sample positions for this discipline
-                    const sampleCount = Math.min(totalPositions, 50); // Limit sample size
-                    for (let i = 0; i < sampleCount; i++) {
-                        positions.push({
-                            id: positionId++,
-                            title: `Graduate Position ${i + 1}`,
-                            discipline: disciplineName,
-                            organization: `Institution ${Math.floor(Math.random() * 100) + 1}`,
-                            location: ['California', 'Texas', 'New York', 'Florida', 'Colorado'][Math.floor(Math.random() * 5)],
-                            salary: discipline.salary_stats?.mean ?
-                                Math.round(discipline.salary_stats.mean + (Math.random() - 0.5) * 10000) : null,
-                            degreeType: Math.random() > 0.6 ? 'PhD' : 'Masters',
-                            postDate: new Date(Date.now() - Math.random() * 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-                            isGraduatePosition: true
-                        });
-                    }
-                }
-            });
-
-            return positions;
-        }
-
-        function convertToCSV(data) {
-            if (!data || data.length === 0) return '';
-
-            const headers = Object.keys(data[0]);
-            const csvRows = [headers.join(',')];
-
-            for (const row of data) {
-                const values = headers.map(header => {
-                    const value = row[header];
-                    // Handle null/undefined values
-                    if (value === null || value === undefined) return '';
-                    // Escape commas and quotes in strings
-                    if (typeof value === 'string' && (value.includes(',') || value.includes('"'))) {
-                        return `"${value.replace(/"/g, '""')}"`;
-                    }
-                    return value;
-                });
-                csvRows.push(values.join(','));
-            }
-
-            return csvRows.join('\n');
-        }
-
-        function downloadFile(content, filename, mimeType) {
-            const blob = new Blob([content], { type: mimeType });
-            const url = URL.createObjectURL(blob);
-
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = filename;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
-        }
-
-        // UI helper functions
-        function showLoading() {
-            document.getElementById('loading-state').style.display = 'block';
-            document.getElementById('main-content').style.display = 'none';
-            document.getElementById('error-state').style.display = 'none';
-        }
-
-        function hideLoading() {
-            document.getElementById('loading-state').style.display = 'none';
-            document.getElementById('main-content').style.display = 'block';
-            document.getElementById('error-state').style.display = 'none';
-        }
-
-        function showError(message) {
-            document.getElementById('loading-state').style.display = 'none';
-            document.getElementById('main-content').style.display = 'none';
-            document.getElementById('error-state').style.display = 'block';
-            document.getElementById('error-message').textContent = message;
-        }    </script>
+        });
+    </script>
+    <script src="assets/js/supabase-dashboard.js"></script>
 </body>
 </html>
