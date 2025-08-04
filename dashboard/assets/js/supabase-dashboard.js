@@ -162,12 +162,12 @@ class DataFetcher {
     transformSupabaseData(analytics, disciplines, geographic, monthlyTrends) {
         console.log('Transforming Supabase data:', { analytics, disciplines, geographic, monthlyTrends });
 
-        // Transform disciplines data
+        // Transform disciplines data (now all graduate positions)
         const disciplineStats = {};
         disciplines.forEach(disc => {
             disciplineStats[disc.discipline] = {
-                total_positions: disc.total_positions,
-                grad_positions: disc.grad_positions,
+                total_positions: disc.graduate_positions,
+                grad_positions: disc.graduate_positions,
                 salary_stats: disc.avg_salary ? { mean: disc.avg_salary } : null
             };
         });
@@ -181,23 +181,29 @@ class DataFetcher {
         // Transform time series data
         const timeSeriesData = this.buildTimeSeriesFromTrends(monthlyTrends);
 
-        // Build dashboard data structure matching expected format
+        // Build dashboard data structure matching expected format for graduate positions dashboard
         const dashboardData = {
             metadata: {
                 generated_at: new Date().toISOString(),
-                total_positions: analytics.total_positions
+                total_scraped_positions: analytics.total_scraped_positions,
+                graduate_positions: analytics.graduate_positions,
+                classification_rate: analytics.total_scraped_positions > 0 ?
+                    ((analytics.graduate_positions / analytics.total_scraped_positions) * 100).toFixed(1) : 0
             },
             summary_stats: {
-                total_positions: analytics.total_positions,
+                total_scraped_positions: analytics.total_scraped_positions,
                 graduate_positions: analytics.graduate_positions,
-                positions_with_salary: analytics.positions_with_salary
+                graduate_positions_with_salary: analytics.graduate_positions_with_salary,
+                graduate_disciplines: analytics.graduate_disciplines,
+                classification_rate: analytics.total_scraped_positions > 0 ?
+                    ((analytics.graduate_positions / analytics.total_scraped_positions) * 100).toFixed(1) : 0
             },
             top_disciplines: disciplineStats,
             geographic_summary: geographicSummary,
             time_series: timeSeriesData,
             last_updated: analytics.last_updated,
             // Add compatibility fields for the UI
-            total_positions: analytics.total_positions,
+            total_positions: analytics.graduate_positions, // Now refers to graduate positions only
             graduate_assistantships: analytics.graduate_positions
         };
 
@@ -210,30 +216,30 @@ class DataFetcher {
     }
 
     buildTimeSeriesFromTrends(monthlyTrends) {
-        const totalMonthly = {};
+        const graduateMonthly = {};
         monthlyTrends.forEach(trend => {
-            totalMonthly[trend.month_key] = trend.total_positions;
+            graduateMonthly[trend.month_key] = trend.graduate_positions;
         });
 
         return {
             '1_month': {
-                total_monthly: this.getLastNMonths(totalMonthly, 1),
+                total_monthly: this.getLastNMonths(graduateMonthly, 1),
                 discipline_monthly: {}
             },
             '3_month': {
-                total_monthly: this.getLastNMonths(totalMonthly, 3),
+                total_monthly: this.getLastNMonths(graduateMonthly, 3),
                 discipline_monthly: {}
             },
             '6_month': {
-                total_monthly: this.getLastNMonths(totalMonthly, 6),
+                total_monthly: this.getLastNMonths(graduateMonthly, 6),
                 discipline_monthly: {}
             },
             '1_year': {
-                total_monthly: this.getLastNMonths(totalMonthly, 12),
+                total_monthly: this.getLastNMonths(graduateMonthly, 12),
                 discipline_monthly: {}
             },
             'all_time': {
-                total_monthly: totalMonthly,
+                total_monthly: graduateMonthly,
                 discipline_monthly: {}
             }
         };
@@ -326,8 +332,8 @@ async function initDashboard() {
         }
 
         // Extract last updated date
-        lastDataUpdate = dashboardData.metadata?.generated_at || 
-                        dashboardData.last_updated || 
+        lastDataUpdate = dashboardData.metadata?.generated_at ||
+                        dashboardData.last_updated ||
                         dashboardData.metadata?.last_updated ||
                         null;
 
@@ -365,26 +371,49 @@ async function initDashboard() {
  * Update overview summary cards
  */
 function updateOverviewCards() {
-    // Handle both old and new data structures
+    // Handle both old and new data structures for graduate positions dashboard
     const metadata = dashboardData.metadata || {};
     const summaryStats = dashboardData.summary_stats || {};
-    const overview = dashboardData.overview || {};
 
-    // Safely access data with fallbacks and ensure numeric values
-    const totalPositions = metadata.total_positions || dashboardData.total_positions || summaryStats.total_positions || 0;
-    const gradPositions = summaryStats.graduate_positions || overview.graduate_positions || dashboardData.graduate_assistantships || 0;
-    const salaryPositions = summaryStats.positions_with_salary || metadata.positions_with_salary || overview.positions_with_salaries || 0;
+    // Graduate positions dashboard stats (all metrics are for graduate positions only)
+    const totalScrapedPositions = metadata.total_scraped_positions || summaryStats.total_scraped_positions || 0;
+    const gradPositions = metadata.graduate_positions || summaryStats.graduate_positions || dashboardData.graduate_assistantships || 0;
+    const gradSalaryPositions = summaryStats.graduate_positions_with_salary || 0;
+    const classificationRate = metadata.classification_rate || summaryStats.classification_rate || 0;
 
-    // Count disciplines from breakdowns if available
-    const breakdowns = dashboardData.breakdowns || {};
-    const disciplineData = breakdowns.by_discipline || dashboardData.top_disciplines || {};
-    const disciplinesCount = Object.keys(disciplineData).length || overview.total_disciplines || 0;
+    // Count disciplines from graduate positions only
+    const disciplineData = dashboardData.top_disciplines || {};
+    const disciplinesCount = Object.keys(disciplineData).length || summaryStats.graduate_disciplines || 0;
 
-    // Ensure values are numbers before calling toLocaleString
-    document.getElementById('total-jobs').textContent = (totalPositions || 0).toLocaleString();
+    // Update cards to show graduate-focused metrics
+    document.getElementById('total-jobs').textContent = (gradPositions || 0).toLocaleString();
     document.getElementById('grad-positions').textContent = (gradPositions || 0).toLocaleString();
-    document.getElementById('salary-positions').textContent = (salaryPositions || 0).toLocaleString();
+    document.getElementById('salary-positions').textContent = (gradSalaryPositions || 0).toLocaleString();
     document.getElementById('disciplines-count').textContent = disciplinesCount;
+
+    // Add contextual information about classification rate
+    updateContextualInfo(totalScrapedPositions, gradPositions, classificationRate);
+}
+
+/**
+ * Update contextual information banner
+ */
+function updateContextualInfo(totalScrapedPositions, gradPositions, classificationRate) {
+    const contextBanner = document.getElementById('context-banner');
+    if (contextBanner && totalScrapedPositions > 0) {
+        contextBanner.innerHTML = `
+            <div class="alert alert-info d-flex align-items-center" role="alert">
+                <i class="fas fa-info-circle me-2"></i>
+                <div>
+                    <strong>Graduate Position Intelligence:</strong>
+                    Out of ${totalScrapedPositions.toLocaleString()} job postings analyzed,
+                    ${gradPositions.toLocaleString()} (${classificationRate}%) were identified as graduate opportunities.
+                    All metrics below reflect graduate positions only.
+                </div>
+            </div>
+        `;
+        contextBanner.classList.remove('d-none');
+    }
 }
 
 /**
@@ -1582,14 +1611,14 @@ function updateFooter() {
         footerLastUpdated.innerHTML = `<i class="fas fa-clock me-2"></i>Last updated: ${lastUpdated}`;
     }
 
-    // Handle total positions with fallbacks
+    // Handle graduate positions with fallbacks
     const metadata = dashboardData.metadata || {};
     const summaryStats = dashboardData.summary_stats || {};
-    const totalPositions = metadata.total_positions || dashboardData.total_positions || summaryStats.total_positions || 0;
+    const graduatePositions = metadata.graduate_positions || summaryStats.graduate_positions || dashboardData.graduate_assistantships || 0;
 
     const footerTotalPositions = document.getElementById('footer-total-positions');
     if (footerTotalPositions) {
-        footerTotalPositions.textContent = (totalPositions || 0).toLocaleString();
+        footerTotalPositions.textContent = (graduatePositions || 0).toLocaleString();
     }
 }
 

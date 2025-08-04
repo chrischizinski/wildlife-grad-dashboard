@@ -67,49 +67,47 @@ CREATE INDEX idx_jobs_search ON jobs USING gin(
     )
 );
 
--- Analytics view for dashboard performance
+-- Analytics view for graduate positions dashboard
 CREATE OR REPLACE VIEW job_analytics AS
 SELECT
-    COUNT(*) as total_positions,
+    COUNT(*) as total_scraped_positions,
     COUNT(*) FILTER (WHERE is_graduate_position = true) as graduate_positions,
-    COUNT(*) FILTER (WHERE salary IS NOT NULL AND salary != '' AND salary != 'none') as positions_with_salary,
-    COUNT(DISTINCT discipline) FILTER (WHERE discipline IS NOT NULL) as unique_disciplines,
-    COUNT(DISTINCT EXTRACT(YEAR FROM published_date) || '-' || LPAD(EXTRACT(MONTH FROM published_date)::text, 2, '0')) as months_with_data,
-    MIN(published_date) as earliest_posting,
-    MAX(published_date) as latest_posting,
+    COUNT(*) FILTER (WHERE is_graduate_position = true AND salary IS NOT NULL AND salary != '' AND salary != 'none') as graduate_positions_with_salary,
+    COUNT(DISTINCT discipline) FILTER (WHERE is_graduate_position = true AND discipline IS NOT NULL) as graduate_disciplines,
+    COUNT(DISTINCT EXTRACT(YEAR FROM published_date) || '-' || LPAD(EXTRACT(MONTH FROM published_date)::text, 2, '0')) FILTER (WHERE is_graduate_position = true) as months_with_graduate_data,
+    MIN(published_date) FILTER (WHERE is_graduate_position = true) as earliest_graduate_posting,
+    MAX(published_date) FILTER (WHERE is_graduate_position = true) as latest_graduate_posting,
     MAX(updated_at) as last_updated
 FROM jobs;
 
--- Monthly trends view
+-- Monthly trends view for graduate positions
 CREATE OR REPLACE VIEW monthly_trends AS
 SELECT
     EXTRACT(YEAR FROM published_date) as year,
     EXTRACT(MONTH FROM published_date) as month,
     TO_CHAR(published_date, 'YYYY-MM') as month_key,
-    COUNT(*) as total_positions,
     COUNT(*) FILTER (WHERE is_graduate_position = true) as graduate_positions,
-    COUNT(*) FILTER (WHERE salary IS NOT NULL AND salary != '' AND salary != 'none') as positions_with_salary
+    COUNT(*) FILTER (WHERE is_graduate_position = true AND salary IS NOT NULL AND salary != '' AND salary != 'none') as graduate_positions_with_salary
 FROM jobs
-WHERE published_date IS NOT NULL
+WHERE published_date IS NOT NULL AND is_graduate_position = true
 GROUP BY year, month, month_key
 ORDER BY year DESC, month DESC;
 
--- Discipline breakdown view
+-- Discipline breakdown view for graduate positions only
 CREATE OR REPLACE VIEW discipline_analytics AS
 SELECT
     discipline,
-    COUNT(*) as total_positions,
-    COUNT(*) FILTER (WHERE is_graduate_position = true) as grad_positions,
+    COUNT(*) as graduate_positions,
     AVG(grad_confidence) as avg_grad_confidence,
     AVG(discipline_confidence) as avg_discipline_confidence,
-    COUNT(*) FILTER (WHERE salary IS NOT NULL AND salary != '' AND salary != 'none') as positions_with_salary,
+    COUNT(*) FILTER (WHERE salary IS NOT NULL AND salary != '' AND salary != 'none') as graduate_positions_with_salary,
     array_agg(DISTINCT unnest(discipline_keywords)) FILTER (WHERE discipline_keywords IS NOT NULL) as all_keywords
 FROM jobs
-WHERE discipline IS NOT NULL AND discipline != 'Unknown'
+WHERE discipline IS NOT NULL AND discipline != 'Unknown' AND is_graduate_position = true
 GROUP BY discipline
-ORDER BY grad_positions DESC, total_positions DESC;
+ORDER BY graduate_positions DESC;
 
--- Geographic distribution view
+-- Geographic distribution view for graduate positions only
 CREATE OR REPLACE VIEW geographic_distribution AS
 SELECT
     CASE
@@ -119,12 +117,11 @@ SELECT
             trim(regexp_replace(location, '^.*,\s*([A-Za-z\s]+)\s*$', '\1'))
         ELSE 'Unknown'
     END as state_or_country,
-    COUNT(*) as total_positions,
-    COUNT(*) FILTER (WHERE is_graduate_position = true) as graduate_positions
+    COUNT(*) as graduate_positions
 FROM jobs
-WHERE location IS NOT NULL AND location != ''
+WHERE location IS NOT NULL AND location != '' AND is_graduate_position = true
 GROUP BY state_or_country
-ORDER BY graduate_positions DESC, total_positions DESC;
+ORDER BY graduate_positions DESC;
 
 -- Enable Row Level Security (optional, for future multi-user support)
 ALTER TABLE jobs ENABLE ROW LEVEL SECURITY;
