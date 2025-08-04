@@ -251,6 +251,8 @@ let exportData = null;
 let currentTimeframe = '1_month';
 let currentTrendChart = null;
 let dataFetcher = null;
+let connectionStatus = 'loading'; // 'connected', 'disconnected', 'loading'
+let lastDataUpdate = null;
 
 // Chart color scheme - exactly 5 categories
 const disciplineColors = {
@@ -314,14 +316,31 @@ async function initDashboard() {
         dashboardData = result.dashboardData;
         exportData = result.exportData;
 
-        console.log('Dashboard data loaded successfully:', {
+        // Determine connection status
+        if (dataFetcher.useSupabase) {
+            connectionStatus = 'connected';
+            console.log('✅ Connected to Supabase database');
+        } else {
+            connectionStatus = 'disconnected';
+            console.log('⚠️ Using JSON fallback - Supabase unavailable');
+        }
+
+        // Extract last updated date
+        lastDataUpdate = dashboardData.metadata?.generated_at || 
+                        dashboardData.last_updated || 
+                        dashboardData.metadata?.last_updated ||
+                        null;
+
+        console.log('Dashboard data loaded:', {
+            connectionStatus: connectionStatus,
+            dataSource: dataFetcher.useSupabase ? 'Supabase' : 'JSON files',
             totalPositions: dashboardData.summary_stats?.total_positions || dashboardData.total_positions,
             exportRecords: exportData?.length || 0,
-            dashboardDataStructure: Object.keys(dashboardData),
-            exportDataSample: exportData?.slice(0, 2)
+            lastUpdated: lastDataUpdate
         });
 
         // Initialize all components
+        updateConnectionStatus();
         updateOverviewCards();
         createDisciplineIndicators();
         if (typeof Chart !== 'undefined') {
@@ -456,6 +475,48 @@ function createDisciplineIndicators() {
     setTimeout(() => initializeTooltips(), 100);
 }
 
+/**
+ * Update connection status banner
+ */
+function updateConnectionStatus() {
+    const banner = document.getElementById('status-banner');
+    const statusIcon = document.getElementById('status-icon');
+    const statusText = document.getElementById('status-text');
+    const lastUpdatedDate = document.getElementById('last-updated-date');
+
+    // Show the banner
+    banner.classList.remove('d-none');
+
+    // Update connection status
+    if (connectionStatus === 'connected') {
+        statusIcon.className = 'fas fa-circle me-2 status-connected';
+        statusText.textContent = 'Connected to Database';
+        statusText.className = 'fw-semibold text-success';
+    } else if (connectionStatus === 'disconnected') {
+        statusIcon.className = 'fas fa-exclamation-triangle me-2 status-disconnected';
+        statusText.textContent = 'Database Connection Failed - Using Local Data';
+        statusText.className = 'fw-semibold text-warning';
+    } else {
+        statusIcon.className = 'fas fa-spinner fa-spin me-2 status-loading';
+        statusText.textContent = 'Connecting to Database...';
+        statusText.className = 'fw-semibold text-info';
+    }
+
+    // Update last updated date
+    if (lastDataUpdate) {
+        const date = new Date(lastDataUpdate);
+        lastUpdatedDate.textContent = date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    } else {
+        lastUpdatedDate.textContent = 'Unknown';
+    }
+}
+
 // Include the rest of the original dashboard functions here...
 // (initializeCharts, createTrendChart, createSalaryChart, createLocationChart, etc.)
 // For brevity, I'll include the essential ones and reference the originals
@@ -502,11 +563,8 @@ function createBigTenAnalysis() {
             }
         });
     } else {
-        // Use sample data if no export data available
-        big10Count = 85;
-        nonBig10Count = 156;
-        big10Salaries = [32000, 35000, 33000, 34000, 36000];
-        nonBig10Salaries = [30000, 31000, 29000, 32000, 33000];
+        // No position data available
+        console.warn('No position data available for Big Ten analysis');
     }
 
     // Update Big Ten statistics cards
@@ -529,6 +587,27 @@ function createBigTenAnalysis() {
 function createBigTenComparisonChart(big10Count, nonBig10Count) {
     const ctx = document.getElementById('big10-comparison-chart');
     if (!ctx) return;
+
+    // If no data, show no data message
+    if (big10Count === 0 && nonBig10Count === 0) {
+        const chartContainer = ctx.closest('.chart-container');
+        if (chartContainer) {
+            chartContainer.innerHTML = `
+                <h5 class="mb-3">
+                    <i class="fas fa-balance-scale me-2"></i>
+                    Big Ten vs Non-Big Ten Positions
+                </h5>
+                <div class="chart-no-data">
+                    <div class="text-center">
+                        <i class="fas fa-university fa-2x mb-2"></i>
+                        <div>No university data available</div>
+                        <small class="text-muted">Connect to database to view university comparison</small>
+                    </div>
+                </div>
+            `;
+        }
+        return;
+    }
 
     const chartCtx = ctx.getContext('2d');
 
@@ -723,14 +802,24 @@ function createTrendChart() {
         });
         data = months.map(month => timeSeriesData.total_monthly[month] || 0);
     } else {
-        // Create sample trend data if no time series available
-        const sampleMonths = ['2023-09', '2023-10', '2023-11', '2023-12', '2024-01', '2024-02'];
-        labels = sampleMonths.map(month => {
-            const [year, monthNum] = month.split('-');
-            const date = new Date(year, monthNum - 1);
-            return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-        });
-        data = [12, 18, 25, 15, 22, 28]; // Sample data
+        // No data available - show empty chart
+        const chartContainer = ctx.closest('.chart-container');
+        if (chartContainer) {
+            chartContainer.innerHTML = `
+                <h5>
+                    <i class="fas fa-chart-line me-2"></i>
+                    Monthly Posting Trends
+                </h5>
+                <div class="chart-no-data">
+                    <div class="text-center">
+                        <i class="fas fa-chart-line fa-2x mb-2"></i>
+                        <div>No trend data available</div>
+                        <small class="text-muted">Connect to database to view trends</small>
+                    </div>
+                </div>
+            `;
+        }
+        return;
     }
 
     new Chart(chartCtx, {
@@ -793,10 +882,25 @@ function createDisciplineChart() {
         return typeof disciplineData === 'object' ? disciplineData.total_positions || disciplineData.grad_positions || 0 : disciplineData || 0;
     });
 
-    // If no discipline data, create sample data
+    // If no discipline data available
     if (disciplineNames.length === 0) {
-        disciplineNames = ['Wildlife Management', 'Fisheries', 'Conservation Biology', 'Ecology', 'Environmental Science'];
-        disciplineValues = [45, 32, 28, 22, 18];
+        const chartContainer = ctx.closest('.chart-container');
+        if (chartContainer) {
+            chartContainer.innerHTML = `
+                <h5 class="mb-3">
+                    <i class="fas fa-graduation-cap me-2"></i>
+                    Top Disciplines
+                </h5>
+                <div class="chart-no-data">
+                    <div class="text-center">
+                        <i class="fas fa-graduation-cap fa-2x mb-2"></i>
+                        <div>No discipline data available</div>
+                        <small class="text-muted">Connect to database to view disciplines</small>
+                    </div>
+                </div>
+            `;
+        }
+        return;
     }
 
     new Chart(chartCtx, {
@@ -874,9 +978,24 @@ function createSalaryChart() {
         labels = disciplinesWithSalary.map(([discipline, _]) => discipline.split(' ').slice(0, 2).join(' '));
         salaryData = disciplinesWithSalary.map(([_, data]) => Math.round(data.salary_stats.mean));
     } else {
-        // Sample salary data
-        labels = ['Wildlife Mgmt', 'Fisheries', 'Conservation', 'Ecology', 'Environmental'];
-        salaryData = [32000, 35000, 30000, 33000, 31000];
+        // No salary data available
+        const chartContainer = ctx.closest('.chart-container');
+        if (chartContainer) {
+            chartContainer.innerHTML = `
+                <h5>
+                    <i class="fas fa-dollar-sign me-2"></i>
+                    Salary Analysis by Discipline
+                </h5>
+                <div class="chart-no-data">
+                    <div class="text-center">
+                        <i class="fas fa-dollar-sign fa-2x mb-2"></i>
+                        <div>No salary data available</div>
+                        <small class="text-muted">Connect to database to view salary analysis</small>
+                    </div>
+                </div>
+            `;
+        }
+        return;
     }
 
     new Chart(chartCtx, {
@@ -946,9 +1065,24 @@ function createLocationChart() {
         labels = sortedRegions.map(([region, _]) => region);
         locationData = sortedRegions.map(([_, count]) => count);
     } else {
-        // Sample geographic data
-        labels = ['California', 'Texas', 'Colorado', 'Florida', 'Montana', 'Other'];
-        locationData = [28, 22, 18, 16, 12, 25];
+        // No geographic data available
+        const chartContainer = ctx.closest('.chart-container');
+        if (chartContainer) {
+            chartContainer.innerHTML = `
+                <h5>
+                    <i class="fas fa-map-marker-alt me-2"></i>
+                    Geographic Distribution
+                </h5>
+                <div class="chart-no-data">
+                    <div class="text-center">
+                        <i class="fas fa-map-marker-alt fa-2x mb-2"></i>
+                        <div>No geographic data available</div>
+                        <small class="text-muted">Connect to database to view geographic distribution</small>
+                    </div>
+                </div>
+            `;
+        }
+        return;
     }
 
     const colors = [

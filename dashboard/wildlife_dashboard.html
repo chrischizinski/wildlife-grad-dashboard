@@ -218,6 +218,34 @@
             font-size: 0.9em;
         }
 
+        .status-connected {
+            color: #10b981;
+        }
+
+        .status-disconnected {
+            color: #ef4444;
+        }
+
+        .status-loading {
+            color: #f59e0b;
+        }
+
+        #status-banner {
+            font-size: 0.9em;
+        }
+
+        .chart-no-data {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            background-color: #f8fafc;
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            color: #64748b;
+            font-size: 0.9em;
+        }
+
         @media (max-width: 768px) {
             .stats-card {
                 margin-bottom: 20px;
@@ -229,6 +257,15 @@
 
             .search-container {
                 padding: 15px;
+            }
+
+            #status-banner .col-md-6 {
+                text-align: center !important;
+                margin-bottom: 0.5rem;
+            }
+
+            #status-banner .col-md-6:last-child {
+                margin-bottom: 0;
             }
         }
     </style>
@@ -262,6 +299,26 @@
             </div>
         </div>
     </nav>
+
+    <!-- Connection Status and Last Updated Banner -->
+    <div id="status-banner" class="bg-light border-bottom py-2 d-none">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div id="connection-status" class="d-flex align-items-center">
+                        <i id="status-icon" class="fas fa-circle me-2"></i>
+                        <span id="status-text" class="fw-semibold"></span>
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div id="last-updated-banner" class="d-flex align-items-center justify-content-md-end">
+                        <i class="fas fa-clock me-2 text-muted"></i>
+                        <span class="text-muted">Last Updated: <span id="last-updated-date" class="fw-semibold">Loading...</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Loading State -->
     <div id="loading" class="container my-5">
