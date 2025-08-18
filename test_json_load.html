@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test JSON Loading</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .success { color: green; }
+        .error { color: red; }
+        pre { background: #f4f4f4; padding: 10px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h1>JSON Loading Test</h1>
+    <div id="status">Testing...</div>
+    <pre id="result"></pre>
+
+    <script>
+        async function testJSONLoad() {
+            const status = document.getElementById('status');
+            const result = document.getElementById('result');
+
+            try {
+                console.log('Testing JSON load...');
+                const response = await fetch('./dashboard/data/dashboard_analytics.json');
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+
+                status.innerHTML = '<span class="success">✅ JSON loaded successfully!</span>';
+                result.textContent = JSON.stringify(data, null, 2);
+
+                console.log('JSON data loaded:', data);
+
+            } catch (error) {
+                status.innerHTML = `<span class="error">❌ Error: ${error.message}</span>`;
+                result.textContent = error.stack;
+                console.error('JSON load failed:', error);
+            }
+        }
+
+        testJSONLoad();
+    </script>
+</body>
+</html>

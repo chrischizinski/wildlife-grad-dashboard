@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supabase Connection Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .log { background: #f4f4f4; border: 1px solid #ddd; border-radius: 4px; padding: 10px; margin: 10px 0; white-space: pre-wrap; max-height: 400px; overflow-y: auto; }
+        .error { color: red; }
+        .success { color: green; }
+        .info { color: blue; }
+        .warning { color: orange; }
+    </style>
+</head>
+<body>
+    <h1>Supabase Connection Diagnostic</h1>
+    <div id="status">Initializing...</div>
+    <div id="log" class="log"></div>
+
+    <!-- Load Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+        const log = document.getElementById('log');
+        const status = document.getElementById('status');
+
+        function addLog(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const className = type === 'error' ? 'error' : type === 'success' ? 'success' : type === 'warning' ? 'warning' : 'info';
+            log.innerHTML += `<span class="${className}">[${timestamp}] ${message}</span>\n`;
+            log.scrollTop = log.scrollHeight;
+            console.log(`[${timestamp}] ${message}`);
+        }
+
+        // Same config as the dashboard
+        const SUPABASE_CONFIG = {
+            url: 'https://mqbkzveymkehgkbcjgba.supabase.co',
+            anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1xYmt6dmV5bWtlaGdrYmNqZ2JhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgzNjM0MzYsImV4cCI6MjA2MzkzOTQzNn0.ojHZfb5ydVEVKQShv3pmW8bqXPksBc0jmJOfPz0lqCw'
+        };
+
+        function isSupabaseConfigured() {
+            return SUPABASE_CONFIG.url !== 'https://your-project-id.supabase.co' &&
+                   SUPABASE_CONFIG.anonKey !== 'your-anon-key-here';
+        }
+
+        async function testSupabaseConnection() {
+            addLog('=== SUPABASE CONNECTION TEST START ===');
+
+            try {
+                // Check if Supabase library loaded
+                if (typeof supabase === 'undefined') {
+                    throw new Error('Supabase library not loaded');
+                }
+                addLog('✓ Supabase library loaded', 'success');
+
+                // Check configuration
+                const configured = isSupabaseConfigured();
+                addLog(`✓ Configuration check: ${configured ? 'CONFIGURED' : 'NOT CONFIGURED'}`, configured ? 'success' : 'error');
+
+                if (!configured) {
+                    throw new Error('Supabase not properly configured');
+                }
+
+                // Initialize client
+                const supabaseClient = supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
+                addLog('✓ Supabase client created', 'success');
+
+                // Test basic connectivity
+                addLog('Testing basic connectivity...', 'info');
+                const { data: healthCheck, error: healthError } = await Promise.race([
+                    supabaseClient.from('health_check').select('count').limit(1),
+                    new Promise((_, reject) => setTimeout(() => reject(new Error('Health check timeout')), 5000))
+                ]);
+
+                if (healthError && !healthError.message.includes('relation "public.health_check" does not exist')) {
+                    addLog(`Health check failed: ${healthError.message}`, 'warning');
+                } else {
+                    addLog('✓ Basic connectivity working', 'success');
+                }
+
+                // Test each required table
+                const tables = ['job_analytics', 'discipline_analytics', 'geographic_distribution', 'monthly_trends'];
+
+                for (const table of tables) {
+                    addLog(`Testing table: ${table}`, 'info');
+                    try {
+                        const { data, error } = await Promise.race([
+                            supabaseClient.from(table).select('*').limit(1),
+                            new Promise((_, reject) => setTimeout(() => reject(new Error(`${table} query timeout`)), 8000))
+                        ]);
+
+                        if (error) {
+                            addLog(`❌ Table ${table}: ${error.message}`, 'error');
+                        } else {
+                            addLog(`✓ Table ${table}: ${data ? data.length : 0} records accessible`, 'success');
+                        }
+                    } catch (tableError) {
+                        addLog(`❌ Table ${table}: ${tableError.message}`, 'error');
+                    }
+                }
+
+                // Test the exact queries the dashboard uses
+                addLog('=== TESTING DASHBOARD QUERIES ===', 'info');
+
+                // Test job_analytics single query
+                addLog('Testing job_analytics.single()...', 'info');
+                try {
+                    const { data: analytics, error: analyticsError } = await Promise.race([
+                        supabaseClient.from('job_analytics').select('*').single(),
+                        new Promise((_, reject) => setTimeout(() => reject(new Error('job_analytics query timeout')), 10000))
+                    ]);
+
+                    if (analyticsError) {
+                        addLog(`❌ job_analytics query: ${analyticsError.message}`, 'error');
+                    } else {
+                        addLog(`✓ job_analytics query successful`, 'success');
+                        addLog(`Data: ${JSON.stringify(analytics, null, 2)}`, 'info');
+                    }
+                } catch (error) {
+                    addLog(`❌ job_analytics query failed: ${error.message}`, 'error');
+                }
+
+                status.innerHTML = '<span class="success">Supabase diagnostic complete - check logs above</span>';
+
+            } catch (error) {
+                addLog(`❌ CRITICAL ERROR: ${error.message}`, 'error');
+                addLog(`Stack: ${error.stack}`, 'error');
+                status.innerHTML = `<span class="error">Supabase connection failed: ${error.message}</span>`;
+            }
+
+            addLog('=== SUPABASE CONNECTION TEST END ===');
+        }
+
+        // Start test when page loads
+        window.addEventListener('load', () => {
+            status.textContent = 'Running Supabase diagnostic...';
+            testSupabaseConnection();
+        });
+    </script>
+</body>
+</html>

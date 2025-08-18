@@ -17,8 +17,8 @@ The system consists of:
 ### 1. Repository Setup
 ```bash
 # Clone or ensure you're in the repository
-git clone https://github.com/chrischizinski/wildlife-grad.git
-cd wildlife-grad
+git clone https://github.com/chrischizinski/wildlife-grad-dashboard.git
+cd wildlife-grad-dashboard
 
 # Verify setup
 python scripts/verify_github_setup.py
