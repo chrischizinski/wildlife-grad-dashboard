@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "dashboard/**"
+      - "web/**"
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
@@ -30,10 +30,10 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      - name: Copy dashboard files to build directory
+      - name: Copy web dashboard files to build directory
         run: |
           mkdir -p _site
-          cp -r dashboard/* _site/
+          cp -r web/* _site/
           ls -la _site/
 
       - name: Upload artifact

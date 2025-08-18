@@ -61,47 +61,59 @@ A **Graduate Position Intelligence Platform** that transforms wildlife job posti
 
 ```
 wildlife-grad-dashboard/
-├── 🤖 Core Scraping Engine
-│   ├── wildlife_job_scraper.py     # Main scraper with ML classification
-│   └── requirements.txt            # Python dependencies
+├── 🐍 Python Source Code
+│   └── src/
+│       └── wildlife_grad/                   # Main package
+│           ├── scraper/                     # Web scraping components
+│           │   └── wildlife_job_scraper.py  # Main scraper with ML classification
+│           ├── analysis/                    # ML classification & analytics
+│           │   ├── enhanced_analysis.py     # Position classification engine
+│           │   └── enhanced_dashboard_data.py # Analytics data generation
+│           ├── database/                    # Database operations
+│           │   ├── migrate_legacy_data.py   # Data migration utilities
+│           │   └── update_supabase_*.py     # Database maintenance scripts
+│           └── utils/                       # Utility functions
+│               └── server.py                # Development server utilities
 │
-├── 📊 Graduate Analytics Platform
-│   ├── src/
-│   │   ├── analysis/
-│   │   │   ├── enhanced_analysis.py         # ML classification & analysis
-│   │   │   └── enhanced_dashboard_data.py   # Graduate-focused data generation
-│   │   └── utils/
-│   │       └── server.py                    # Development server utilities
-│   └── tests/                      # Comprehensive test suite
+├── 🌐 Web Dashboard
+│   └── web/                                 # Web interface (GitHub Pages)
+│       ├── wildlife_dashboard.html          # Main graduate dashboard
+│       ├── assets/
+│       │   ├── js/
+│       │   │   ├── supabase-dashboard.js    # Dashboard logic
+│       │   │   └── supabase-config.js       # Database configuration
+│       │   └── css/
+│       │       └── enhanced-styles.css      # Dashboard styling
+│       └── data/                            # Dashboard data files
 │
-├── 📊 Graduate Intelligence Dashboard
-│   ├── dashboard/
-│   │   ├── wildlife_dashboard.html          # Main graduate dashboard
-│   │   ├── assets/
-│   │   │   ├── js/
-│   │   │   │   ├── supabase-dashboard.js    # Graduate-focused dashboard logic
-│   │   │   │   └── supabase-config.js       # Database configuration
-│   │   │   └── css/
-│   │   │       └── enhanced-styles.css      # Graduate dashboard styling
-│   │   └── data/                            # Dashboard data files
+├── 🧪 Testing & Validation
+│   └── tests/
+│       ├── unit/                           # Unit tests
+│       ├── integration/                    # Integration tests
+│       └── __init__.py
 │
-├── 🗄️ Database & Migration
-│   ├── database/
-│   │   └── supabase_schema.sql              # Graduate-focused database views
-│   ├── migrate_legacy_data.py               # Data migration with duplicate detection
-│   ├── cleanup_legacy_files.py              # Legacy file cleanup
-│   └── update_views.sql                     # Database view updates
+├── ⚙️ Configuration & Scripts
+│   ├── scripts/                            # CLI scripts and automation
+│   │   ├── populate_supabase.py            # Database population
+│   │   └── generate_dashboard_analytics.py # Analytics generation
+│   ├── config/                             # Configuration files
+│   │   ├── sql/                            # Database schemas and views
+│   │   └── *.sql                           # SQL migration files
+│   └── temp/                               # Temporary files and debug tools
 │
 ├── 💾 Data Storage
-│   ├── data/
-│   │   ├── raw/                             # Original scraped data
-│   │   ├── processed/                       # Graduate-classified positions
-│   │   └── legacy_backup_*/                 # Archived legacy data
+│   └── data/
+│       ├── raw/                            # Original scraped data
+│       ├── processed/                      # Graduate-classified positions
+│       ├── archive/                        # Historical data backups
+│       └── legacy_backup_*/                # Archived legacy data
 │
-└── 🧪 Testing & Validation
-    ├── test_views.py                        # Database view testing
-    ├── test_dashboard.py                    # Dashboard functionality testing
-    └── scripts/                             # Verification and analysis scripts
+└── 📚 Documentation & Tools
+    ├── docs/                               # Project documentation
+    ├── tools/                              # Development tools
+    ├── pyproject.toml                      # Modern Python packaging
+    ├── setup.py                            # Setuptools configuration
+    └── requirements.txt                    # Python dependencies
 ```
 
 ## 🚀 Quick Start
@@ -115,11 +127,12 @@ Visit the deployed dashboard: **[https://chrischizinski.github.io/wildlife-grad-
 git clone https://github.com/chrischizinski/wildlife-grad-dashboard.git
 cd wildlife-grad-dashboard
 
-# Install dependencies
-pip install -r requirements.txt
+# Install dependencies (using modern packaging)
+pip install -e .
+# Or: pip install -r requirements.txt
 
 # Serve graduate dashboard locally
-cd dashboard
+cd web
 python -m http.server 8080
 # Visit: http://localhost:8080/wildlife_dashboard.html
 ```
@@ -127,13 +140,13 @@ python -m http.server 8080
 ### Option 3: Database Setup
 ```bash
 # Update Supabase views for graduate intelligence
-# Copy SQL from update_views.sql and run in Supabase SQL Editor
+# Copy SQL from config/sql/ and run in Supabase SQL Editor
 
 # Test database connectivity
-python test_views.py
+python tests/integration/test_views.py
 
 # Migrate legacy data (if needed)
-python migrate_legacy_data.py
+python -m src.wildlife_grad.database.migrate_legacy_data
 ```
 
 ### Option 3: GitHub Actions Setup
@@ -146,7 +159,7 @@ python migrate_legacy_data.py
 
 ### Scraper Parameters
 ```python
-from wildlife_job_scraper import ScraperConfig, WildlifeJobScraper
+from src.wildlife_grad.scraper.wildlife_job_scraper import ScraperConfig, WildlifeJobScraper
 
 config = ScraperConfig(
     base_url="https://jobs.rwfm.tamu.edu/search/",

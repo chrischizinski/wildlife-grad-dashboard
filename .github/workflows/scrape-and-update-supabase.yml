@@ -8,7 +8,7 @@ on:
   push:
     branches: [main, add-github-workflows]
     paths:
-      - "wildlife_job_scraper.py"
+      - "src/wildlife_grad/scraper/wildlife_job_scraper.py"
       - "scripts/populate_supabase.py"
 permissions:
   contents: write
@@ -55,7 +55,7 @@ jobs:
       - name: Scrape wildlife jobs
         run: |
           echo "Starting job scraping in ${{ steps.check_data.outputs.mode }} mode..."
-          python3 wildlife_job_scraper.py
+          python3 -m src.wildlife_grad.scraper.wildlife_job_scraper
 
       - name: Debug filesystem and verify files
         run: |
@@ -89,12 +89,12 @@ jobs:
           echo "Generating dashboard analytics..."
           python3 scripts/generate_dashboard_analytics.py
 
-      - name: Copy data files to dashboard directory
+      - name: Copy data files to web dashboard directory
         run: |
           echo "Copying data files for GitHub Pages deployment..."
-          cp data/processed/verified_graduate_assistantships.json dashboard/data/
-          cp data/enhanced_data.json dashboard/data/
-          cp data/historical_positions.json dashboard/data/
+          cp data/processed/verified_graduate_assistantships.json web/data/
+          cp data/enhanced_data.json web/data/
+          cp data/historical_positions.json web/data/
           echo "Data files copied successfully"
 
       - name: Archive data
@@ -110,7 +110,7 @@ jobs:
           git config --local user.name "GitHub Action"
           git fetch origin
           git add data/
-          git add dashboard/data/
+          git add web/data/
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
