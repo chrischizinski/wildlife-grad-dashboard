@@ -1608,28 +1608,42 @@ class WildlifeJobScraper:
 
 def main() -> None:
     """Main entry point for the enhanced scraper."""
+    import sys
+
     try:
         # Generate unique run ID for this scraping session
         run_id = f"scrape_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}_{str(uuid.uuid4())[:8]}"
 
         config = ScraperConfig()
 
-        # Detect if this is first run (comprehensive) or subsequent run (incremental)
-        # Check if we have any existing data in the database or processed files
-        has_existing_data = (
-            Path("data/processed/verified_graduate_assistantships.json").exists()
-            or Path("data/historical_positions.json").exists()
-            or Path("data/enhanced_data.json").exists()
+        # Check for command-line arguments to force comprehensive mode
+        force_comprehensive = any(
+            arg in ["--comprehensive", "--all-time", "--all"] for arg in sys.argv
         )
 
-        if has_existing_data:
-            print("Existing data detected - running in INCREMENTAL mode (Last 7 days)")
-            config.set_incremental_mode()
-        else:
-            print(
-                "No existing data found - running in COMPREHENSIVE mode (All positions)"
-            )
+        if force_comprehensive:
+            print("🔄 FORCING COMPREHENSIVE mode via command-line argument")
+            print("Will scrape ALL graduate positions regardless of existing data")
             config.set_comprehensive_mode()
+        else:
+            # Detect if this is first run (comprehensive) or subsequent run (incremental)
+            # Check if we have any existing data in the database or processed files
+            has_existing_data = (
+                Path("data/processed/verified_graduate_assistantships.json").exists()
+                or Path("data/historical_positions.json").exists()
+                or Path("data/enhanced_data.json").exists()
+            )
+
+            if has_existing_data:
+                print(
+                    "Existing data detected - running in INCREMENTAL mode (Last 7 days)"
+                )
+                config.set_incremental_mode()
+            else:
+                print(
+                    "No existing data found - running in COMPREHENSIVE mode (All positions)"
+                )
+                config.set_comprehensive_mode()
 
         scraper = WildlifeJobScraper(config)
         scraper.scrape_run_id = run_id

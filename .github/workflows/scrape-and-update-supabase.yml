@@ -52,7 +52,9 @@ jobs:
       - name: Scrape wildlife jobs
         run: |
           echo "Starting job scraping in ${{ steps.check_data.outputs.mode }} mode..."
-          python3 -m src.wildlife_grad.scraper.wildlife_job_scraper
+          # TEMPORARY: Force comprehensive mode with --all-time flag
+          python3 -m src.wildlife_grad.scraper.wildlife_job_scraper --all-time
+          echo "✅ Comprehensive scrape completed - graduate positions from all time periods collected"
 
       - name: Debug filesystem and verify files
         run: |
