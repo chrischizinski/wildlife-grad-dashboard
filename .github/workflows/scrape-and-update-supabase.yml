@@ -44,13 +44,10 @@ jobs:
       - name: Check for existing data (determines scrape mode)
         id: check_data
         run: |
-          if [ -f "data/processed/verified_graduate_assistantships.json" ] || [ -f "data/historical_positions.json" ]; then
-            echo "mode=incremental" >> $GITHUB_OUTPUT
-            echo "Existing data found - will run INCREMENTAL scrape (Last 7 days)"
-          else
-            echo "mode=comprehensive" >> $GITHUB_OUTPUT
-            echo "No existing data - will run COMPREHENSIVE scrape (All positions)"
-          fi
+          # TEMPORARY: Force comprehensive scrape for testing Supabase restoration
+          echo "mode=comprehensive" >> $GITHUB_OUTPUT
+          echo "🔄 FORCING COMPREHENSIVE scrape for Supabase restoration test (All positions)"
+          echo "⚠️ This will be reverted to incremental mode after successful test"
 
       - name: Scrape wildlife jobs
         run: |
