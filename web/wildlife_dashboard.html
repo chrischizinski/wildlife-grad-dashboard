@@ -9,68 +9,86 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="assets/js/supabase-config.js"></script>
     <script src="assets/js/region-mapper.js"></script>
 
     <style>
         :root {
-            --primary-color: #2563eb;
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --info-color: #3b82f6;
-            --wildlife-green: #059669;
-            --nature-blue: #0ea5e9;
+            /* Modern, neutral-forward palette */
+            --primary-color: #0ea5e9;   /* sky-500 */
+            --success-color: #22c55e;   /* green-500 */
+            --warning-color: #f59e0b;   /* amber-500 */
+            --info-color: #2563eb;      /* blue-600 */
+            --neutral-50: #f8fafc;      /* slate-50 */
+            --neutral-100: #f1f5f9;     /* slate-100 */
+            --neutral-200: #e2e8f0;     /* slate-200 */
+            --neutral-300: #cbd5e1;     /* slate-300 */
+            --neutral-600: #475569;     /* slate-600 */
+            --neutral-700: #334155;     /* slate-700 */
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: #f8fafc;
+            background-color: var(--neutral-50);
             line-height: 1.6;
+            color: var(--neutral-700);
         }
 
         .navbar {
-            background: linear-gradient(135deg, var(--wildlife-green) 0%, var(--nature-blue) 100%);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: #ffffff;
+            border-bottom: 1px solid var(--neutral-200);
         }
 
         .stats-card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            border: 1px solid var(--neutral-200);
+            border-radius: 12px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             overflow: hidden;
+            background: #ffffff;
         }
 
         .stats-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.12);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
         }
 
         .stats-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            color: white;
+            font-size: 20px;
+            color: var(--neutral-700);
+            background: var(--neutral-100);
+            border: 1px solid var(--neutral-200);
         }
 
         .chart-container {
             background: white;
-            border-radius: 15px;
+            border-radius: 12px;
             padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-            margin-bottom: 20px;
+            border: 1px solid var(--neutral-200);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+            margin-bottom: 24px;
             position: relative;
             height: 350px; /* Fixed height for consistency */
+            overflow: visible; /* allow legend/buttons to render outside canvas area */
         }
 
         .chart-container canvas {
             max-height: 300px !important;
             height: 300px !important;
+        }
+
+        /* Extra space for containers with custom legend */
+        .chart-container.has-custom-legend {
+            height: 420px;
+        }
+        .chart-container.has-custom-legend canvas {
+            max-height: 340px !important;
+            height: 340px !important;
         }
 
         .chart-container-small {
@@ -83,9 +101,10 @@
         }
 
         .job-card {
-            border: none;
+            border: 1px solid var(--neutral-200);
             border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            background: #ffffff;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
             transition: all 0.2s ease;
             margin-bottom: 15px;
         }
@@ -104,11 +123,12 @@
         }
 
         .filter-badge {
-            background: var(--wildlife-green);
-            color: white;
+            background: var(--neutral-100);
+            color: var(--neutral-700);
             padding: 4px 12px;
             border-radius: 20px;
             font-size: 0.85em;
+            border: 1px solid var(--neutral-200);
             margin-right: 8px;
             margin-bottom: 5px;
             display: inline-block;
@@ -161,6 +181,39 @@
             opacity: 1;
         }
 
+        /* Custom legend styles (HTML-based) */
+        .custom-legend {
+            margin-top: 6px;
+            position: absolute;
+            left: 16px;
+            right: 16px;
+            bottom: 10px;
+            background: transparent;
+            z-index: 15;
+        }
+        .custom-legend__item.btn {
+            font-size: 12px;
+            line-height: 1.2;
+        }
+
+        /* Lightweight skeleton loader */
+        .skeleton-box {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 37%, #f3f4f6 63%);
+            background-size: 400% 100%;
+            animation: shimmer 1.4s ease infinite;
+            z-index: 5;
+        }
+        @keyframes shimmer {
+            0% { background-position: 100% 0; }
+            100% { background-position: 0 0; }
+        }
+
         .error-container {
             background: #fee2e2;
             border: 1px solid #fecaca;
@@ -170,8 +223,8 @@
         }
 
         .btn-wildlife {
-            background: var(--wildlife-green);
-            border: var(--wildlife-green);
+            background: var(--primary-color);
+            border: var(--primary-color);
             color: white;
             border-radius: 8px;
             transition: all 0.2s ease;
@@ -184,14 +237,14 @@
         }
 
         .btn-outline-wildlife {
-            color: var(--wildlife-green);
-            border-color: var(--wildlife-green);
+            color: var(--primary-color);
+            border-color: var(--primary-color);
             border-radius: 8px;
         }
 
         .btn-outline-wildlife:hover {
-            background: var(--wildlife-green);
-            border-color: var(--wildlife-green);
+            background: var(--primary-color);
+            border-color: var(--primary-color);
             color: white;
         }
 
@@ -479,7 +532,7 @@
                                 <input type="radio" class="btn-check" name="timeframe" id="time-1month" value="1_month">
                                 <label class="btn btn-outline-secondary" for="time-1month">1M</label>
 
-                                <input type="radio" class="btn-check" name="timeframe" id="time-6months" value="6_months">
+                                <input type="radio" class="btn-check" name="timeframe" id="time-6months" value="6_month">
                                 <label class="btn btn-outline-secondary" for="time-6months">6M</label>
 
                                 <input type="radio" class="btn-check" name="timeframe" id="time-1year" value="1_year" checked>
@@ -508,10 +561,17 @@
             <div class="row g-3">
                 <div class="col-lg-6">
                     <div class="chart-container chart-container-small">
-                        <h5>
-                            <i class="fas fa-dollar-sign me-2"></i>
-                            Salary Analysis by Discipline
-                        </h5>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h5 class="mb-0">
+                                <i class="fas fa-dollar-sign me-2"></i>
+                                Salary Analysis by Discipline
+                            </h5>
+                            <div class="form-check form-switch small d-flex align-items-center gap-2">
+                                <input class="form-check-input" type="checkbox" id="toggle-ne-adjust" checked>
+                                <label class="form-check-label" for="toggle-ne-adjust">NE Adjusted</label>
+                                <i class="fas fa-circle-info text-muted" data-bs-toggle="tooltip" data-bs-placement="left" title="Toggles cost-of-living to Lincoln, NE baseline. Uses state-level indices; falls back to regional averages."></i>
+                            </div>
+                        </div>
                         <canvas id="salary-chart"></canvas>
                     </div>
                 </div>
@@ -904,23 +964,27 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        // Initialize Supabase when DOM is loaded, then initialize dashboard
+        // Add/remove skeletons on all chart containers during loading
+        function addSkeletons() {
+            document.querySelectorAll('.chart-container').forEach(c => {
+                if (!c.querySelector('.skeleton-box')) {
+                    const sk = document.createElement('div');
+                    sk.className = 'skeleton-box';
+                    c.style.position = c.style.position || 'relative';
+                    c.appendChild(sk);
+                }
+            });
+        }
+        function removeSkeletons() {
+            document.querySelectorAll('.chart-container .skeleton-box').forEach(sk => sk.remove());
+        }
+        // Initialize dashboard when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
             console.log('=== HTML DOM LOADED ===');
-
-            // Wait for Supabase library to load
-            if (typeof supabase !== 'undefined') {
-                console.log('Supabase library found, initializing client...');
-                const supabaseInitialized = initializeSupabase();
-                console.log('Supabase initialized:', supabaseInitialized);
-            } else {
-                console.error('Supabase library not loaded');
-            }
-
-            // Note: initDashboard() will be called by the supabase-dashboard.js file
+            // Note: initDashboard() will be called by the dashboard.js file
             console.log('=== HTML DOM INIT COMPLETE ===');
         });
     </script>
-    <script src="assets/js/supabase-dashboard.js?v=1.4"></script>
+    <script src="assets/js/supabase-dashboard.js?v=2.0"></script>
 </body>
 </html>

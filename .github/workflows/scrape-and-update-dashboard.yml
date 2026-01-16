@@ -1,15 +1,16 @@
-name: Scrape Jobs and Update Supabase
+name: Scrape Jobs and Update Dashboard
 
 on:
   schedule:
-    # Run every Monday at 9 AM UTC (adjust to your timezone)
+    # Run every Sunday at 4 AM UTC for weekly scrape
     - cron: "0 4 * * 0"
   workflow_dispatch: # Allow manual trigger
   push:
-    branches: [main, add-github-workflows]
+    branches: [main]
     paths:
       - "src/wildlife_grad/scraper/wildlife_job_scraper.py"
-      - "scripts/populate_supabase.py"
+      - "scripts/generate_dashboard_analytics.py"
+
 permissions:
   contents: write
 
@@ -39,7 +40,6 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install supabase python-dotenv
 
       - name: Check for existing data (determines scrape mode)
         id: check_data
@@ -57,33 +57,6 @@ jobs:
           echo "Starting job scraping in ${{ steps.check_data.outputs.mode }} mode..."
           python3 -m src.wildlife_grad.scraper.wildlife_job_scraper
 
-      - name: Debug filesystem and verify files
-        run: |
-          echo "=== Debugging filesystem ==="
-          echo "Current working directory: $(pwd)"
-          echo "Directory contents:"
-          ls -la
-          echo "Scripts directory contents:"
-          ls -la scripts/ || echo "Scripts directory not found"
-          echo "Python version: $(python3 --version)"
-          echo "Which python3: $(which python3)"
-
-      - name: Update Supabase database (append new data)
-        env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
-        run: |
-          echo "Updating Supabase database with new data..."
-          echo "Mode: ${{ steps.check_data.outputs.mode }}"
-          if [ -f "scripts/populate_supabase.py" ]; then
-            python3 scripts/populate_supabase.py
-          else
-            echo "ERROR: scripts/populate_supabase.py not found!"
-            echo "Available files in scripts/:"
-            ls -la scripts/ || echo "Scripts directory does not exist"
-            exit 1
-          fi
-
       - name: Generate dashboard data
         run: |
           echo "Generating dashboard analytics..."
@@ -92,17 +65,20 @@ jobs:
       - name: Copy data files to web dashboard directory
         run: |
           echo "Copying data files for GitHub Pages deployment..."
+          mkdir -p web/data
           cp data/processed/verified_graduate_assistantships.json web/data/
-          cp data/enhanced_data.json web/data/
-          cp data/historical_positions.json web/data/
+          [ -f data/enhanced_data.json ] && cp data/enhanced_data.json web/data/ || echo "enhanced_data.json not found, skipping"
+          [ -f data/historical_positions.json ] && cp data/historical_positions.json web/data/ || echo "historical_positions.json not found, skipping"
+          [ -f dashboard/data/dashboard_analytics.json ] && cp dashboard/data/dashboard_analytics.json web/data/ || echo "dashboard_analytics.json not in dashboard/data/, checking other locations"
+          [ -f data/dashboard_analytics.json ] && cp data/dashboard_analytics.json web/data/ || echo "dashboard_analytics.json not found in data/"
           echo "Data files copied successfully"
 
       - name: Archive data
         run: |
           timestamp=$(date +%Y%m%d_%H%M%S)
           mkdir -p data/archive
-          cp data/enhanced_data.json "data/archive/enhanced_${timestamp}.json"
-          cp data/historical_positions.json "data/archive/historical_${timestamp}.json"
+          [ -f data/enhanced_data.json ] && cp data/enhanced_data.json "data/archive/enhanced_${timestamp}.json"
+          [ -f data/historical_positions.json ] && cp data/historical_positions.json "data/archive/historical_${timestamp}.json"
 
       - name: Commit and push changes
         run: |
@@ -122,11 +98,13 @@ jobs:
       - name: Workflow summary
         run: |
           echo "## Scraping Summary" >> $GITHUB_STEP_SUMMARY
-          if [ -f "data/enhanced_data.json" ]; then
-            total_jobs=$(jq '.positions | length' data/enhanced_data.json)
-            grad_jobs=$(jq '.positions | map(select((.is_graduate_position == true) or (.position_type == "Graduate"))) | length' data/enhanced_data.json)
-            echo "- **Total positions**: $total_jobs" >> $GITHUB_STEP_SUMMARY
-            echo "- **Graduate positions**: $grad_jobs" >> $GITHUB_STEP_SUMMARY
+          if [ -f "data/processed/verified_graduate_assistantships.json" ]; then
+            total_jobs=$(jq 'length' data/processed/verified_graduate_assistantships.json 2>/dev/null || echo "0")
+            echo "- **Graduate positions**: $total_jobs" >> $GITHUB_STEP_SUMMARY
           fi
-          echo "- **Supabase updated**: ✅" >> $GITHUB_STEP_SUMMARY
-          echo "- **Dashboard refreshed**: ✅" >> $GITHUB_STEP_SUMMARY
+          if [ -f "data/enhanced_data.json" ]; then
+            total_all=$(jq '.positions | length' data/enhanced_data.json 2>/dev/null || echo "0")
+            echo "- **Total positions scraped**: $total_all" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "- **Dashboard refreshed**: Yes" >> $GITHUB_STEP_SUMMARY
+          echo "- **Mode**: ${{ steps.check_data.outputs.mode }}" >> $GITHUB_STEP_SUMMARY

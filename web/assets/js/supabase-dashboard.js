@@ -1,150 +1,47 @@
 /**
- * Supabase-enabled Wildlife Jobs Dashboard
- * Enhanced version that can fetch data from Supabase or fall back to JSON files
+ * Wildlife Jobs Dashboard
+ * Static JSON-based dashboard for graduate assistantship positions
  */
 
 /**
- * Data fetching functions
+ * Runtime logging utilities (toggle with ?debug=1 or localStorage.WGD_DEBUG="1")
+ */
+const WGD_DEBUG = (() => {
+    try {
+        const fromQs = new URLSearchParams(window.location.search).has('debug');
+        const fromStorage = (window.localStorage && localStorage.getItem('WGD_DEBUG') === '1');
+        return fromQs || fromStorage;
+    } catch (_) { return false; }
+})();
+
+const dlog = (...args) => { if (WGD_DEBUG) console.log(...args); };
+const dwarn = (...args) => { if (WGD_DEBUG) console.warn(...args); };
+const derror = (...args) => { if (WGD_DEBUG) console.error(...args); };
+
+/**
+ * Data fetching functions - loads from static JSON files
  */
 class DataFetcher {
     constructor() {
-        console.log('=== DataFetcher Constructor ===');
-        console.log('supabaseClient exists:', !!supabaseClient);
-        console.log('isSupabaseConfigured():', typeof isSupabaseConfigured === 'function' ? isSupabaseConfigured() : 'function not available');
-
-        this.useSupabase = supabaseClient && isSupabaseConfigured();
-        console.log(`Data source: ${this.useSupabase ? 'Supabase' : 'JSON files'}`);
-        console.log('=== End Constructor ===');
+        dlog('=== DataFetcher Constructor ===');
+        dlog('Data source: JSON files');
+        dlog('=== End Constructor ===');
     }
 
     async fetchAnalytics() {
-        if (this.useSupabase) {
-            return await this.fetchFromSupabase();
-        } else {
-            return await this.fetchFromJSON();
-        }
-    }
-
-    async fetchFromSupabase() {
-        try {
-            console.log('=== SUPABASE FETCH START ===');
-            console.log('Fetching analytics from Supabase...');
-
-            // Get basic analytics with timeout
-            console.log('Querying job_analytics...');
-            const { data: analytics, error: analyticsError } = await Promise.race([
-                supabaseClient
-                    .from('job_analytics')
-                    .select('*')
-                    .single(),
-                new Promise((_, reject) =>
-                    setTimeout(() => reject(new Error('job_analytics query timeout after 10 seconds')), 10000)
-                )
-            ]);
-
-            console.log('Analytics result:', { analytics, analyticsError });
-            if (analyticsError) throw new Error(`Analytics query failed: ${analyticsError.message}`);
-
-            // Get discipline breakdown with timeout
-            console.log('Querying discipline_analytics...');
-            const { data: disciplines, error: disciplinesError } = await Promise.race([
-                supabaseClient
-                    .from('discipline_analytics')
-                    .select('*')
-                    .order('graduate_positions', { ascending: false })
-                    .limit(10),
-                new Promise((_, reject) =>
-                    setTimeout(() => reject(new Error('discipline_analytics query timeout after 10 seconds')), 10000)
-                )
-            ]);
-
-            console.log('Disciplines result:', { disciplines, disciplinesError });
-            if (disciplinesError) throw new Error(`Disciplines query failed: ${disciplinesError.message}`);
-
-            // Get geographic distribution with timeout
-            console.log('Querying geographic_distribution...');
-            const { data: geographic, error: geoError } = await Promise.race([
-                supabaseClient
-                    .from('geographic_distribution')
-                    .select('*')
-                    .order('graduate_positions', { ascending: false })
-                    .limit(10),
-                new Promise((_, reject) =>
-                    setTimeout(() => reject(new Error('geographic_distribution query timeout after 10 seconds')), 10000)
-                )
-            ]);
-
-            console.log('Geographic result:', { geographic, geoError });
-            if (geoError) throw new Error(`Geographic query failed: ${geoError.message}`);
-
-            // Get monthly trends for different timeframes with timeout
-            console.log('Querying monthly_trends...');
-            const { data: monthlyTrends, error: trendsError } = await Promise.race([
-                supabaseClient
-                    .from('monthly_trends')
-                    .select('*')
-                    .order('year', { ascending: false })
-                    .order('month', { ascending: false })
-                    .limit(24), // Last 2 years
-                new Promise((_, reject) =>
-                    setTimeout(() => reject(new Error('monthly_trends query timeout after 10 seconds')), 10000)
-                )
-            ]);
-
-            console.log('Monthly trends result:', { monthlyTrends, trendsError });
-            if (trendsError) throw new Error(`Monthly trends query failed: ${trendsError.message}`);
-
-            console.log('All Supabase queries successful, transforming data...');
-
-            // Get individual job records for detailed analysis
-            console.log('Fetching individual job records...');
-            let exportData = [];
-            try {
-                const { data: jobs, error: jobsError } = await Promise.race([
-                    supabaseClient
-                        .from('jobs')
-                        .select('*')
-                        .eq('is_graduate_position', true)
-                        .limit(1000),
-                    new Promise((_, reject) =>
-                        setTimeout(() => reject(new Error('jobs query timeout after 10 seconds')), 10000)
-                    )
-                ]);
-
-                if (jobsError) {
-                    console.warn('Could not fetch job records:', jobsError.message);
-                } else {
-                    exportData = jobs || [];
-                    console.log(`Fetched ${exportData.length} individual job records`);
-                }
-            } catch (error) {
-                console.warn('Error fetching job records:', error.message);
-            }
-
-            // Transform data to match expected format
-            const dashboardData = this.transformSupabaseData(analytics, disciplines, geographic, monthlyTrends);
-            console.log('=== SUPABASE FETCH COMPLETE ===');
-            return { dashboardData, exportData };
-
-        } catch (error) {
-            console.error('=== SUPABASE FETCH ERROR ===');
-            console.error('Error details:', error);
-            console.error('Stack trace:', error.stack);
-            console.log('Falling back to JSON files...');
-            return await this.fetchFromJSON();
-        }
+        return await this.fetchFromJSON();
     }
 
     async fetchFromJSON() {
         try {
-            console.log('Fetching data from JSON files...');
+            dlog('Fetching data from JSON files...');
 
             // First try the lightweight dashboard analytics file
             try {
                 const analyticsResponse = await fetch('./data/dashboard_analytics.json').catch(() => {
-                    console.log('Trying dashboard_analytics.json from dashboard directory');
+                    dlog('Trying dashboard_analytics.json from dashboard directory');
                     return fetch('data/dashboard_analytics.json').catch(() => {
-                        console.log('Trying dashboard_analytics.json from relative path');
+                        dlog('Trying dashboard_analytics.json from relative path');
                         return fetch('../data/dashboard_analytics.json');
                     });
                 });
@@ -164,29 +61,32 @@ class DataFetcher {
                             exportData = await exportResponse.json();
                         }
                     } catch (exportError) {
-                        console.log('Export data not available, using empty array');
+                        dlog('Export data not available, using empty array');
                     }
 
-                    console.log('Using lightweight dashboard analytics');
+                    // Ensure dashboard shape matches what the UI expects
+                    this.ensureDashboardCompatibility(dashboardData);
+
+                    dlog('Using lightweight dashboard analytics');
                     return { dashboardData, exportData };
                 }
             } catch (analyticsError) {
-                console.log('Lightweight analytics not available, trying full enhanced data');
+                dlog('Lightweight analytics not available, trying full enhanced data');
             }
 
             // Fallback to the original large files
             const [enhancedResponse, exportResponse] = await Promise.all([
                 fetch('./data/enhanced_data.json').catch(() => {
-                    console.log('Trying enhanced_data.json from dashboard directory');
+                    dlog('Trying enhanced_data.json from dashboard directory');
                     return fetch('data/enhanced_data.json').catch(() => {
-                        console.log('Trying enhanced_data.json from relative path');
+                        dlog('Trying enhanced_data.json from relative path');
                         return fetch('../data/enhanced_data.json');
                     });
                 }),
                 fetch('./data/export_data.json').catch(() => {
-                    console.log('Trying export_data.json from dashboard directory');
+                    dlog('Trying export_data.json from dashboard directory');
                     return fetch('data/export_data.json').catch(() => {
-                        console.log('Trying export_data.json from relative path');
+                        dlog('Trying export_data.json from relative path');
                         return fetch('../data/export_data.json');
                     });
                 })
@@ -202,6 +102,9 @@ class DataFetcher {
             const dashboardData = await enhancedResponse.json();
             const exportData = await exportResponse.json();
 
+            // Ensure dashboard shape for enhanced data as well
+            this.ensureDashboardCompatibility(dashboardData);
+
             return { dashboardData, exportData };
 
         } catch (error) {
@@ -210,8 +113,109 @@ class DataFetcher {
         }
     }
 
+    ensureDashboardCompatibility(dashboardData) {
+        // Normalize summary -> summary_stats if needed
+        if (!dashboardData.summary_stats && dashboardData.summary) {
+            const s = dashboardData.summary;
+            dashboardData.summary_stats = {
+                total_scraped_positions: s.total_positions ?? s.total_scraped_positions ?? 0,
+                graduate_positions: s.graduate_positions ?? 0,
+                graduate_positions_with_salary: s.graduate_positions_with_salary ?? s.graduate_positions ?? 0,
+                graduate_disciplines: s.graduate_disciplines ?? 0,
+                classification_rate: s.graduate_rate ?? s.classification_rate ?? 0
+            };
+        }
+
+        // Provide metadata.last_updated if available
+        if (!dashboardData.metadata) dashboardData.metadata = {};
+        if (!dashboardData.metadata.last_updated && (dashboardData.last_updated || dashboardData.summary?.last_updated)) {
+            dashboardData.metadata.last_updated = dashboardData.last_updated || dashboardData.summary.last_updated;
+        }
+
+        // Build time_series from monthly_trends if missing
+        if (!dashboardData.time_series && Array.isArray(dashboardData.monthly_trends)) {
+            dashboardData.time_series = this.buildTimeSeriesFromTrends(dashboardData.monthly_trends);
+        }
+
+        // Map disciplines -> top_disciplines if needed
+        if (!dashboardData.top_disciplines && dashboardData.disciplines) {
+            const td = {};
+            Object.entries(dashboardData.disciplines).forEach(([name, val]) => {
+                const count = typeof val === 'object' && 'graduate_positions' in val ? val.graduate_positions : (val || 0);
+                td[name] = {
+                    total_positions: count,
+                    grad_positions: count,
+                    salary_stats: null
+                };
+            });
+            dashboardData.top_disciplines = td;
+        }
+
+        // Map geography -> geographic_summary if needed
+        if (!dashboardData.geographic_summary && dashboardData.geography) {
+            dashboardData.geographic_summary = dashboardData.geography;
+        }
+    }
+
+    // --- Discipline trend enrichment helpers ---
+    monthKeyFromDate(dateStr) {
+        if (!dateStr) return null;
+        try {
+            // Accept YYYY-MM or YYYY-MM-DD or full ISO
+            const m = String(dateStr).slice(0, 7);
+            if (/^\d{4}-\d{2}$/.test(m)) return m;
+            const d = new Date(dateStr);
+            if (!isNaN(d)) {
+                const y = d.getUTCFullYear();
+                const mm = String(d.getUTCMonth() + 1).padStart(2, '0');
+                return `${y}-${mm}`;
+            }
+        } catch (_) { /* noop */ }
+        return null;
+    }
+
+    buildDisciplineMonthly(positions) {
+        const result = {};
+        positions.forEach(p => {
+            // Only count graduate positions if flag present; otherwise include
+            if (typeof p.is_graduate_position !== 'undefined' && !p.is_graduate_position) return;
+            const disc = p.discipline || 'Other';
+            const mk = this.monthKeyFromDate(p.published_date || p.scraped_at || p.created_at);
+            if (!mk) return;
+            if (!result[disc]) result[disc] = {};
+            result[disc][mk] = (result[disc][mk] || 0) + 1;
+        });
+        return result;
+    }
+
+    limitMonths(mapObj, n) {
+        // Return a new object with only the last n months (by key sort)
+        const entries = Object.entries(mapObj).sort((a,b) => a[0].localeCompare(b[0]));
+        return Object.fromEntries(entries.slice(-n));
+    }
+
+    addDisciplineTrends(dashboardData, positions, maxDisciplines = 5) {
+        if (!dashboardData.time_series) return;
+        const discMonthly = this.buildDisciplineMonthly(positions);
+        const topNames = Object.keys(dashboardData.top_disciplines || {}).slice(0, maxDisciplines);
+
+        const inject = (target, monthsLimit) => {
+            target.discipline_monthly = target.discipline_monthly || {};
+            topNames.forEach(name => {
+                const series = discMonthly[name] || {};
+                target.discipline_monthly[name] = monthsLimit ? this.limitMonths(series, monthsLimit) : series;
+            });
+        };
+
+        if (dashboardData.time_series['1_month']) inject(dashboardData.time_series['1_month'], 1);
+        if (dashboardData.time_series['3_month']) inject(dashboardData.time_series['3_month'], 3);
+        if (dashboardData.time_series['6_month']) inject(dashboardData.time_series['6_month'], 6);
+        if (dashboardData.time_series['1_year']) inject(dashboardData.time_series['1_year'], 12);
+        if (dashboardData.time_series['all_time']) inject(dashboardData.time_series['all_time'], 0);
+    }
+
     transformSupabaseData(analytics, disciplines, geographic, monthlyTrends) {
-        console.log('Transforming Supabase data:', { analytics, disciplines, geographic, monthlyTrends });
+        dlog('Transforming Supabase data:', { analytics, disciplines, geographic, monthlyTrends });
 
         // Transform disciplines data (now all graduate positions)
         const disciplineStats = {};
@@ -228,13 +232,13 @@ class DataFetcher {
 
         // If we have region mapping function available, use it to group by regions
         if (typeof groupGeographicDataByRegions === 'function') {
-            console.log('Using region mapping for geographic data');
-            console.log('Original geographic data:', geographic);
+            dlog('Using region mapping for geographic data');
+            dlog('Original geographic data:', geographic);
             geographicSummary = groupGeographicDataByRegions(geographic);
-            console.log('Transformed regional data:', geographicSummary);
+            dlog('Transformed regional data:', geographicSummary);
         } else {
             // Fallback to original state/country mapping
-            console.log('Region mapping not available, using original geographic data');
+            dlog('Region mapping not available, using original geographic data');
             geographic.forEach(geo => {
                 const locationKey = geo.region || geo.state_or_country || 'Unknown';
                 geographicSummary[locationKey] = geo.graduate_positions;
@@ -270,7 +274,7 @@ class DataFetcher {
             graduate_assistantships: analytics.graduate_positions
         };
 
-        console.log('Transformed dashboard data:', dashboardData);
+        dlog('Transformed dashboard data:', dashboardData);
 
         return dashboardData;
     }
@@ -314,11 +318,164 @@ class DataFetcher {
 // Initialize the enhanced dashboard with original functionality
 let dashboardData = null;
 let exportData = null;
-let currentTimeframe = '1_month';
+let currentTimeframe = '1_year';
 let currentTrendChart = null;
+let currentSalaryChart = null;
+let currentSalaryDistributionChart = null;
 let dataFetcher = null;
 let connectionStatus = 'loading'; // 'connected', 'disconnected', 'loading'
 let lastDataUpdate = null;
+let useLincolnAdjustment = (typeof localStorage !== 'undefined' ? localStorage.getItem('NE_ADJUST') !== '0' : true);
+let COL_INDEX = null; // fine-grained COL indices (loaded at runtime)
+
+// Discipline color mapping for multi-line trend chart
+let disciplineColorMap = {};
+// Modern, accessible palette (muted brights)
+const DISCIPLINE_PALETTE = [
+    '#2563eb', // blue-600
+    '#0ea5e9', // sky-500
+    '#14b8a6', // teal-500
+    '#22c55e', // green-500
+    '#f59e0b', // amber-500
+    '#f97316', // orange-500
+    '#ef4444', // red-500
+    '#a855f7', // purple-500
+    '#8b5cf6', // violet-500
+    '#06b6d4'  // cyan-500
+];
+function buildDisciplineColorMap() {
+    disciplineColorMap = {};
+    const names = Object.keys(dashboardData?.top_disciplines || {});
+    names.forEach((name, idx) => {
+        disciplineColorMap[name] = DISCIPLINE_PALETTE[idx % DISCIPLINE_PALETTE.length];
+    });
+}
+function getDisciplineColor(name) {
+    return disciplineColorMap[name] || '#6b7280';
+}
+
+// Normalize timeframe values across controls
+function normalizeTimeframe(val) {
+    if (!val) return '1_year';
+    const map = {
+        '1month': '1_month',
+        '6months': '6_month',
+        '12months': '1_year',
+        '24months': 'all_time',
+        'all': 'all_time',
+        '6_months': '6_month',
+    };
+    return map[val] || val;
+}
+
+// --- Salary utilities (NE adjustment) ---
+function parseSalaryFromText(text) {
+    if (!text || typeof text !== 'string') return 0;
+    const nums = text.match(/\$?\s*([0-9][0-9,]*)/g);
+    if (!nums) return 0;
+    const values = nums.map(n => parseInt(n.replace(/[$,\s]/g, ''), 10)).filter(v => !isNaN(v));
+    if (!values.length) return 0;
+    // If a range, average; otherwise single value
+    const sum = values.reduce((a,b)=>a+b,0);
+    return Math.round(sum / values.length);
+}
+
+function mapPositionToRegion(pos) {
+    try {
+        const raw = pos.location || pos.state_or_country || pos.country || '';
+        if (typeof mapLocationToRegion !== 'function') return 'Unknown';
+        // Try the full string first
+        let region = mapLocationToRegion(raw);
+        if (region && region !== 'Unknown' && region !== 'International') return region;
+        // Try tokens split by commas, parentheses, hyphens
+        const tokens = String(raw).split(/[(),]|\s-\s|\/|\|/).map(t => t.trim()).filter(Boolean);
+        for (const t of tokens.reverse()) { // try more specific tokens at the end
+            region = mapLocationToRegion(t);
+            if (region && region !== 'Unknown' && region !== 'International') return region;
+        }
+        return region || 'Unknown';
+    } catch (_) {}
+    return 'Unknown';
+}
+
+const REGION_COL_INDEX = {
+    'Northeast US': 1.12,
+    'West US': 1.10,
+    'Southwest US': 0.98,
+    'Southeast US': 0.94,
+    'Midwest US': 1.00,
+    'US Territories': 1.05,
+    'International': 1.00,
+    'Unknown': 1.00
+};
+
+function getCOLIndexForPosition(pos) {
+    // State-level only: ignore city-level entries for consistency and performance
+    if (COL_INDEX) {
+        const raw = (pos.location || pos.state_or_country || pos.country || '').toString().toLowerCase();
+        if (raw) {
+            const paren = (raw.match(/\(([^)]*)\)/) || [,''])[1];
+            const hay = (paren ? paren + ' ' : '') + raw;
+            // State full-name match
+            for (const [state, idx] of Object.entries(COL_INDEX.states || {})) {
+                if (state.length > 3 && hay.includes(state)) return idx;
+            }
+            // Abbreviation heuristic (last two-letter token)
+            const m = hay.match(/\b([a-z]{2})\b(?!.*\b[a-z]{2}\b)/);
+            if (m) {
+                const ab = m[1];
+                const abMap = { al:'alabama', ak:'alaska', az:'arizona', ar:'arkansas', ca:'california', co:'colorado', ct:'connecticut', dc:'district of columbia', de:'delaware', fl:'florida', ga:'georgia', hi:'hawaii', id:'idaho', il:'illinois', in:'indiana', ia:'iowa', ks:'kansas', ky:'kentucky', la:'louisiana', me:'maine', md:'maryland', ma:'massachusetts', mi:'michigan', mn:'minnesota', ms:'mississippi', mo:'missouri', mt:'montana', ne:'nebraska', nv:'nevada', nh:'new hampshire', nj:'new jersey', nm:'new mexico', ny:'new york state', nc:'north carolina', nd:'north dakota', oh:'ohio', ok:'oklahoma', or:'oregon', pa:'pennsylvania', ri:'rhode island', sc:'south carolina', sd:'south dakota', tn:'tennessee', tx:'texas', ut:'utah', vt:'vermont', va:'virginia', wa:'washington', wv:'west virginia', wi:'wisconsin', wy:'wyoming' };
+                const stateName = abMap[ab];
+                if (stateName && COL_INDEX.states[stateName]) return COL_INDEX.states[stateName];
+            }
+        }
+    }
+    const region = mapPositionToRegion(pos);
+    return REGION_COL_INDEX[region] || 1.0;
+}
+
+function getAnnualSalaryRaw(pos) {
+    // Prefer numeric salary field
+    if (typeof pos.salary === 'number' && pos.salary > 0) return pos.salary;
+    // Parse from text fields
+    if (typeof pos.salary === 'string') {
+        const v = parseSalaryFromText(pos.salary);
+        if (v > 0) return v;
+    }
+    if (typeof pos.salary_range === 'string') {
+        const v = parseSalaryFromText(pos.salary_range);
+        if (v > 0) return v;
+    }
+    if (typeof pos.description === 'string') {
+        const v = parseSalaryFromText(pos.description);
+        if (v > 0) return v;
+    }
+    return 0;
+}
+
+function getAnnualSalaryAdjusted(pos, adjusted) {
+    // If dataset already provides Lincoln adjusted, prefer it when adjusted is true
+    if (adjusted && typeof pos.salary_lincoln_adjusted === 'number' && pos.salary_lincoln_adjusted > 0) {
+        return pos.salary_lincoln_adjusted;
+    }
+    const base = getAnnualSalaryRaw(pos);
+    if (!base) return 0;
+    if (!adjusted) return base;
+    const idx = getCOLIndexForPosition(pos) || 1.0;
+    return Math.round(base / idx);
+}
+
+async function loadColIndex() {
+    if (COL_INDEX) return COL_INDEX;
+    try {
+        const resp = await fetch('assets/data/col_index.json');
+        if (!resp.ok) throw new Error('not found');
+        COL_INDEX = await resp.json();
+    } catch (e) {
+        COL_INDEX = null;
+    }
+    return COL_INDEX;
+}
 
 // Chart color scheme - exactly 5 categories
 const disciplineColors = {
@@ -330,31 +487,37 @@ const disciplineColors = {
 };
 
 // Big Ten Universities list for classification
-const BIG_TEN_UNIVERSITIES = [
-    'University of Illinois',
-    'Indiana University',
-    'University of Iowa',
-    'University of Maryland',
-    'University of Michigan',
-    'Michigan State University',
-    'University of Minnesota',
-    'University of Nebraska',
-    'Northwestern University',
-    'Ohio State University',
-    'Pennsylvania State University',
-    'Purdue University',
-    'Rutgers University',
-    'University of Wisconsin'
+const BIG_TEN_PATTERNS = [
+    /\buniversity of illinois\b.*(urbana|uiuc|champaign)?/i,
+    /\bindiana university\b.*(bloomington)?/i,
+    /\buniversity of iowa\b/i,
+    /\buniversity of maryland\b/i,
+    /\buniversity of michigan\b/i,
+    /\bmichigan state university\b/i,
+    /\buniversity of minnesota\b.*(twin cities|minneapolis|st\.? paul)?/i,
+    /\buniversity of nebraska\b.*(lincoln|unl)?/i,
+    /\bnorthwestern university\b/i,
+    /\bohio state university\b|\bthe ohio state university\b|\boSU\b/i,
+    /\bpennsylvania state university\b|\bpenn state\b/i,
+    /\bpurdue university\b/i,
+    /\brutgers\b/i,
+    /\buniversity of wisconsin\b.*(madison|uw\s?-?madison)?/i
 ];
 
-// Function to check if a university is Big Ten
+function normalizeOrgName(name) {
+    return String(name || '')
+        .toLowerCase()
+        .replace(/\([^)]*\)/g, ' ') // remove parenthetical descriptors
+        .replace(/[.,]/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+}
+
+// Function to check if a university is Big Ten (robust aliases)
 function isBigTenUniversity(organizationName) {
     if (!organizationName) return false;
-    const orgLower = organizationName.toLowerCase();
-    return BIG_TEN_UNIVERSITIES.some(bigTenU =>
-        orgLower.includes(bigTenU.toLowerCase()) ||
-        orgLower.includes(bigTenU.split(' ').pop().toLowerCase())
-    );
+    const org = normalizeOrgName(organizationName);
+    return BIG_TEN_PATTERNS.some(rx => rx.test(org));
 }
 
 /**
@@ -372,27 +535,53 @@ function escapeHTML(str) {
  */
 async function initDashboard() {
     try {
-        console.log('=== DASHBOARD INITIALIZATION START ===');
+        dlog('=== DASHBOARD INITIALIZATION START ===');
         showLoading();
+        // Show connection status banner in loading state immediately
+        connectionStatus = 'loading';
+        updateConnectionStatus();
 
         // Initialize data fetcher
-        console.log('Creating DataFetcher...');
+        dlog('Creating DataFetcher...');
         dataFetcher = new DataFetcher();
-        console.log('DataFetcher created successfully');
+        dlog('DataFetcher created successfully');
+
+        // Determine initial timeframe from UI controls before rendering charts
+        const timeframeRadios = document.querySelectorAll('input[name="timeframe"]');
+        const checkedRadio = Array.from(timeframeRadios).find(r => r.checked);
+        if (checkedRadio) {
+            currentTimeframe = normalizeTimeframe(checkedRadio.value);
+        } else {
+            const timePeriodFilter = document.getElementById('time-period-filter');
+            if (timePeriodFilter) {
+                currentTimeframe = normalizeTimeframe(timePeriodFilter.value);
+            }
+        }
+
+        // Fetch COL index (non-blocking)
+        await loadColIndex().catch(() => {});
 
         // Fetch data
-        console.log('Fetching analytics data...');
+        dlog('Fetching analytics data...');
         const result = await dataFetcher.fetchAnalytics();
         dashboardData = result.dashboardData;
         exportData = result.exportData;
 
+        // If JSON path provided exportData, also enrich discipline trends
+        if (Array.isArray(exportData) && exportData.length) {
+            dataFetcher.addDisciplineTrends(dashboardData, exportData);
+        }
+
+        // Build color map from the current top disciplines
+        buildDisciplineColorMap();
+
         // Determine connection status
         if (dataFetcher.useSupabase) {
             connectionStatus = 'connected';
-            console.log('✅ Connected to Supabase database');
+            dlog('✅ Connected to Supabase database');
         } else {
             connectionStatus = 'disconnected';
-            console.log('⚠️ Using JSON fallback - Supabase unavailable');
+            dlog('⚠️ Using JSON fallback - Supabase unavailable');
         }
 
         // Extract last updated date
@@ -401,7 +590,7 @@ async function initDashboard() {
                         dashboardData.metadata?.last_updated ||
                         null;
 
-        console.log('Dashboard data loaded:', {
+        dlog('Dashboard data loaded:', {
             connectionStatus: connectionStatus,
             dataSource: dataFetcher.useSupabase ? 'Supabase' : 'JSON files',
             totalPositions: dashboardData.summary_stats?.graduate_positions || dashboardData.total_positions,
@@ -409,18 +598,31 @@ async function initDashboard() {
             lastUpdated: lastDataUpdate
         });
 
+        // Apply modern Chart.js defaults
+        try {
+            if (typeof Chart !== 'undefined') {
+                Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+                Chart.defaults.color = '#334155';            // slate-700
+                Chart.defaults.borderColor = 'rgba(148, 163, 184, 0.3)'; // slate-400 @ 30%
+                Chart.defaults.plugins.legend.labels.color = '#334155';
+                Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(15, 23, 42, 0.9)'; // slate-900 @ 90%
+                Chart.defaults.plugins.tooltip.titleColor = '#ffffff';
+                Chart.defaults.plugins.tooltip.bodyColor = '#ffffff';
+            }
+        } catch (_) {}
+
         // Initialize all components
         updateConnectionStatus();
         updateOverviewCards();
         createDisciplineIndicators();
-        console.log('About to check Chart availability...');
-        console.log('typeof Chart:', typeof Chart);
+        dlog('About to check Chart availability...');
+        dlog('typeof Chart:', typeof Chart);
         if (typeof Chart !== 'undefined') {
-            console.log('Chart is available, calling initializeCharts()...');
+            dlog('Chart is available, calling initializeCharts()...');
             initializeCharts();
-            console.log('initializeCharts() completed, calling createBigTenAnalysis()...');
+            dlog('initializeCharts() completed, calling createBigTenAnalysis()...');
             createBigTenAnalysis();
-            console.log('createBigTenAnalysis() completed');
+            dlog('createBigTenAnalysis() completed');
         } else {
             console.warn('Chart.js not available, skipping charts');
         }
@@ -433,13 +635,16 @@ async function initDashboard() {
         }, 500); // Small delay to ensure charts are fully rendered
 
         hideLoading();
-        console.log('=== DASHBOARD INITIALIZATION SUCCESS ===');
+        // Initialize any tooltips (including NE Adjust info)
+        try { initializeTooltips(); } catch (_) {}
+        dlog('=== DASHBOARD INITIALIZATION SUCCESS ===');
 
     } catch (error) {
-        console.error('=== DASHBOARD INITIALIZATION ERROR ===');
-        console.error('Error initializing dashboard:', error);
-        console.error('Error stack:', error.stack);
-        console.error('Error details:', {
+        console.error('Failed to initialize dashboard:', error.message);
+        derror('=== DASHBOARD INITIALIZATION ERROR ===');
+        derror('Error initializing dashboard:', error);
+        derror('Error stack:', error.stack);
+        derror('Error details:', {
             name: error.name,
             message: error.message,
             stack: error.stack
@@ -467,11 +672,15 @@ function updateOverviewCards() {
     const disciplineData = dashboardData.top_disciplines || {};
     const disciplinesCount = Object.keys(disciplineData).length || summaryStats.graduate_disciplines || 0;
 
-    // Update cards to show graduate-focused metrics
-    document.getElementById('total-jobs').textContent = (gradPositions || 0).toLocaleString();
-    document.getElementById('grad-positions').textContent = (gradPositions || 0).toLocaleString();
-    document.getElementById('salary-positions').textContent = (gradSalaryPositions || 0).toLocaleString();
-    document.getElementById('disciplines-count').textContent = disciplinesCount;
+    // Update cards to show graduate-focused metrics (defensive: only if element exists)
+    const elTotalJobs = document.getElementById('total-jobs') || document.getElementById('total-positions');
+    if (elTotalJobs) elTotalJobs.textContent = (totalScrapedPositions || gradPositions || 0).toLocaleString();
+    const elGrad = document.getElementById('grad-positions');
+    if (elGrad) elGrad.textContent = (gradPositions || 0).toLocaleString();
+    const elSalary = document.getElementById('salary-positions');
+    if (elSalary) elSalary.textContent = (gradSalaryPositions || 0).toLocaleString();
+    const elDisc = document.getElementById('disciplines-count');
+    if (elDisc) elDisc.textContent = disciplinesCount;
 
     // Add contextual information about classification rate
     updateContextualInfo(totalScrapedPositions, gradPositions, classificationRate);
@@ -503,6 +712,10 @@ function updateContextualInfo(totalScrapedPositions, gradPositions, classificati
  */
 function createDisciplineIndicators() {
     const container = document.getElementById('discipline-cards');
+    if (!container) {
+        // Not present in modern layout; skip rendering indicator cards
+        return;
+    }
 
     // Handle both old and new data structures
     const disciplines = dashboardData.top_disciplines || dashboardData.breakdowns?.by_discipline || {};
@@ -638,8 +851,8 @@ function updateConnectionStatus() {
 function initializeCharts() {
     console.log('=== initializeCharts called ===');
     console.log('Chart.js available:', typeof Chart !== 'undefined');
-    console.log('dashboardData available:', !!dashboardData);
-    console.log('dashboardData keys:', dashboardData ? Object.keys(dashboardData) : 'null');
+    dlog('dashboardData available:', !!dashboardData);
+    dlog('dashboardData keys:', dashboardData ? Object.keys(dashboardData) : 'null');
 
     if (typeof Chart === 'undefined') {
         console.warn('Chart.js not available, skipping chart initialization');
@@ -651,14 +864,14 @@ function initializeCharts() {
     createLocationChart();
 
     // Monthly trends section charts
-    console.log('Creating monthly trends charts...');
+    dlog('Creating monthly trends charts...');
     createMonthlyTrendsChart();
     createDegreeTypeChart();
     createSeasonalPatternsChart();
     createSalaryDistributionChart();
 
     // Update monthly trends KPIs
-    console.log('Updating monthly trends KPIs...');
+    dlog('Updating monthly trends KPIs...');
     updateMonthlyTrendsKPIs();
 }
 
@@ -667,7 +880,7 @@ function initializeCharts() {
  */
 function createBigTenAnalysis() {
     const positions = exportData || [];
-    console.log(`Big Ten analysis: Processing ${positions.length} positions`);
+    dlog(`Big Ten analysis: Processing ${positions.length} positions`);
 
     let big10Count = 0;
     let nonBig10Count = 0;
@@ -675,7 +888,7 @@ function createBigTenAnalysis() {
     let nonBig10Salaries = [];
 
     if (positions.length > 0) {
-        console.log('Sample position data:', positions[0]);
+        dlog('Sample position data:', positions[0]);
         // Analyze positions by university type
         positions.forEach(position => {
             if (position.organization) {
@@ -697,12 +910,17 @@ function createBigTenAnalysis() {
         console.warn('No position data available for Big Ten analysis');
     }
 
-    // Update Big Ten statistics cards
-    document.getElementById('big10-positions').textContent = big10Count.toLocaleString();
-    document.getElementById('non-big10-positions').textContent = nonBig10Count.toLocaleString();
+    // Update Big Ten statistics cards (only if present in layout)
+    const elBig10 = document.getElementById('big10-positions');
+    const elNon = document.getElementById('non-big10-positions');
+    if (elBig10) elBig10.textContent = big10Count.toLocaleString();
+    if (elNon) elNon.textContent = nonBig10Count.toLocaleString();
 
-    // Create Big Ten salary comparison chart
-    createBigTenSalaryChart(big10Salaries, nonBig10Salaries);
+    // Create Big Ten salary comparison chart if canvas exists
+    const salaryCanvas = document.getElementById('big10-salary-chart');
+    if (salaryCanvas) {
+        createBigTenSalaryChart(big10Salaries, nonBig10Salaries);
+    }
 }
 
 /**
@@ -729,7 +947,7 @@ function createBigTenSalaryChart(big10Salaries, nonBig10Salaries) {
                     label: 'Average Salary',
                     data: [Math.round(big10Avg), Math.round(nonBig10Avg)],
                     backgroundColor: ['#10b981', '#f59e0b'],
-                    borderColor: ['#059669', '#d97706'],
+                    borderColor: ['#10b981', '#f59e0b'],
                     borderWidth: 2
                 }
             ]
@@ -864,7 +1082,7 @@ function createTrendChart() {
         return;
     }
 
-    new Chart(chartCtx, {
+    const monthlyChart = new Chart(chartCtx, {
         type: 'line',
         data: {
             labels: labels,
@@ -952,13 +1170,7 @@ function createDisciplineChart() {
             datasets: [{
                 label: 'Positions',
                 data: disciplineValues,
-                backgroundColor: [
-                    '#059669',
-                    '#0ea5e9',
-                    '#f59e0b',
-                    '#8b5cf6',
-                    '#ef4444'
-                ],
+                backgroundColor: disciplineNames.map(name => getDisciplineColor(name)),
                 borderWidth: 1,
                 borderColor: '#ffffff'
             }]
@@ -970,6 +1182,13 @@ function createDisciplineChart() {
             plugins: {
                 legend: {
                     display: false
+                },
+                tooltip: {
+                    enabled: true,
+                    callbacks: {
+                        title: (items) => items[0]?.label || '',
+                        label: (ctx) => `${ctx.formattedValue} positions`
+                    }
                 }
             },
             scales: {
@@ -1040,15 +1259,16 @@ function createSalaryChart() {
         return;
     }
 
-    new Chart(chartCtx, {
+    if (currentSalaryChart) { try { currentSalaryChart.destroy(); } catch (_) {} }
+    currentSalaryChart = new Chart(chartCtx, {
         type: 'bar',
         data: {
             labels: labels,
             datasets: [{
                 label: 'Average Salary',
                 data: salaryData,
-                backgroundColor: '#f59e0b',
-                borderColor: '#d97706',
+                backgroundColor: labels.map(name => getDisciplineColor(name)),
+                borderColor: labels.map(name => getDisciplineColor(name)),
                 borderWidth: 1
             }]
         },
@@ -1058,6 +1278,13 @@ function createSalaryChart() {
             plugins: {
                 legend: {
                     display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `$${context.raw.toLocaleString()}`;
+                        }
+                    }
                 }
             },
             scales: {
@@ -1127,17 +1354,13 @@ function createLocationChart() {
         return;
     }
 
-    const colors = [
-        '#059669', '#0ea5e9', '#f59e0b', '#8b5cf6', '#ef4444', '#6b7280'
-    ];
-
     new Chart(chartCtx, {
         type: 'doughnut',
         data: {
             labels: labels,
             datasets: [{
                 data: locationData,
-                backgroundColor: colors.slice(0, labels.length),
+                backgroundColor: labels.map((name, idx) => DISCIPLINE_PALETTE[idx % DISCIPLINE_PALETTE.length]),
                 borderWidth: 3,
                 borderColor: '#ffffff',
                 cutout: '65%'
@@ -1151,7 +1374,8 @@ function createLocationChart() {
                     position: 'bottom',
                     labels: {
                         padding: 15,
-                        usePointStyle: true
+                        usePointStyle: true,
+                        boxWidth: 10
                     }
                 }
             }
@@ -1235,15 +1459,13 @@ function createTrendChart() {
 
     // Prepare data
     const months = Object.keys(timeSeriesData.total_monthly || {}).sort();
-    const showOverall = document.getElementById('show-overall')?.checked || false;
-
     const datasets = [];
 
-    // Overall trend
-    if (showOverall && timeSeriesData.total_monthly) {
+    // Always include overall trend when data exists
+    if (timeSeriesData.total_monthly) {
         const overallData = months.map(month => timeSeriesData.total_monthly[month] || 0);
         const overallChange = calculatePercentageChange(overallData);
-        const overallColor = getTrendColor(overallChange, '#000000');
+        const overallColor = '#0ea5e9';
 
         datasets.push({
             label: `Overall (${overallChange >= 0 ? '+' : ''}${overallChange}%)`,
@@ -1262,11 +1484,10 @@ function createTrendChart() {
     Object.entries(disciplineData).forEach(([discipline, monthlyData]) => {
         if (topDisciplines[discipline]) { // Only show top disciplines
             const data = months.map(month => monthlyData[month] || 0);
-            const percentageChange = calculatePercentageChange(data);
-            const trendColor = getTrendColor(percentageChange, disciplineColors[discipline]);
+            const trendColor = getDisciplineColor(discipline);
 
             datasets.push({
-                label: `${discipline} (${percentageChange >= 0 ? '+' : ''}${percentageChange}%)`,
+                label: discipline,
                 data: data,
                 borderColor: trendColor,
                 backgroundColor: trendColor + '20',
@@ -1290,15 +1511,21 @@ function createTrendChart() {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
+                legend: { display: false },
                 title: {
                     display: true,
                     text: `Position Trends - ${currentTimeframe.replace('_', ' ').toUpperCase()}`
                 },
-                legend: {
-                    display: true,
-                    position: 'bottom',
-                    labels: {
-                        usePointStyle: true
+                tooltip: {
+                    enabled: true,
+                    mode: 'index',
+                    intersect: false,
+                    callbacks: {
+                        label: function(context) {
+                            const label = context.dataset.label || '';
+                            const value = context.parsed.y ?? 0;
+                            return `${label}: ${value.toLocaleString()} positions`;
+                        }
                     }
                 }
             },
@@ -1316,9 +1543,26 @@ function createTrendChart() {
                         text: 'Month'
                     }
                 }
+            },
+            interaction: {
+                mode: 'index',
+                intersect: false
+            },
+            elements: {
+                point: {
+                    radius: 3,
+                    hitRadius: 10,
+                    hoverRadius: 6
+                }
             }
         }
     });
+
+    // Render custom legend with top-N and show more toggle
+    const container = ctx.closest('.chart-container');
+    if (container) {
+        renderCustomLegend(currentTrendChart, container, { topN: 5 });
+    }
 }
 
 /**
@@ -1329,52 +1573,42 @@ function createSalaryChart() {
     if (!ctx) return;
 
     const chartCtx = ctx.getContext('2d');
-    const disciplines = dashboardData.discipline_analytics || dashboardData.top_disciplines || {};
+    // Prefer computing from exportData to support NE toggle
+    const positions = Array.isArray(exportData) ? exportData : [];
+    const topDisciplines = Object.keys(dashboardData.top_disciplines || {}).slice(0, 5);
+    let labels = [];
+    let means = [];
 
-    // Filter disciplines with salary data
-    const disciplinesWithSalary = Object.entries(disciplines)
-        .filter(([_, data]) => {
-            if (typeof data === 'object' && data.salary_stats) {
-                return data.salary_stats.count > 0 && data.salary_stats.mean > 0;
+    if (positions.length && topDisciplines.length) {
+        topDisciplines.forEach(name => {
+            const group = positions.filter(p => (p.discipline || p.discipline_primary || 'Other') === name);
+            const vals = group.map(p => getAnnualSalaryAdjusted(p, useLincolnAdjustment)).filter(v => v > 0);
+            if (vals.length) {
+                labels.push(name);
+                means.push(Math.round(vals.reduce((a,b)=>a+b,0)/vals.length));
             }
-            return false;
-        })
-        .sort((a, b) => {
-            const meanA = a[1].salary_stats?.mean || 0;
-            const meanB = b[1].salary_stats?.mean || 0;
-            return meanB - meanA;
         });
+    }
 
-    // If no salary data, create a placeholder chart
-    if (disciplinesWithSalary.length === 0) {
+    // Fallback to aggregated stats if no exportData-derived values
+    if (!labels.length) {
+        const disciplines = dashboardData.discipline_analytics || dashboardData.top_disciplines || {};
+        const list = Object.entries(disciplines)
+            .filter(([_, data]) => data && data.salary_stats && data.salary_stats.mean > 0)
+            .sort((a, b) => (b[1].salary_stats?.mean || 0) - (a[1].salary_stats?.mean || 0))
+            .slice(0, 5);
+        labels = list.map(([name]) => name);
+        means = list.map(([_, data]) => Math.round(data.salary_stats.mean || 0));
+    }
+
+    if (!labels.length) {
         new Chart(chartCtx, {
             type: 'bar',
-            data: {
-                labels: ['No Data'],
-                datasets: [{
-                    label: 'No salary data available',
-                    data: [0],
-                    backgroundColor: '#6c757d80',
-                    borderColor: '#6c757d',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Graduate Salary Analysis - No Data Available'
-                    }
-                }
-            }
+            data: { labels: ['No Data'], datasets: [{ label: 'No salary data available', data: [0], backgroundColor: '#6c757d80', borderColor: '#6c757d', borderWidth: 1 }] },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { title: { display: true, text: 'Graduate Salary Analysis - No Data Available' } } }
         });
         return;
     }
-
-    const labels = disciplinesWithSalary.map(([discipline, _]) => discipline);
-    const means = disciplinesWithSalary.map(([_, data]) => Math.round(data.salary_stats.mean || 0));
 
     new Chart(chartCtx, {
         type: 'bar',
@@ -1382,10 +1616,10 @@ function createSalaryChart() {
             labels: labels,
             datasets: [
                 {
-                    label: 'Average Salary',
+                    label: useLincolnAdjustment ? 'Average Salary (NE Adjusted)' : 'Average Salary',
                     data: means,
-                    backgroundColor: labels.map(discipline => disciplineColors[discipline] + '80'),
-                    borderColor: labels.map(discipline => disciplineColors[discipline]),
+                    backgroundColor: labels.map(discipline => (getDisciplineColor(discipline) + '80')),
+                    borderColor: labels.map(discipline => getDisciplineColor(discipline)),
                     borderWidth: 1
                 }
             ]
@@ -1396,7 +1630,7 @@ function createSalaryChart() {
             plugins: {
                 title: {
                     display: true,
-                    text: 'Graduate Salary Analysis by Discipline'
+                    text: useLincolnAdjustment ? 'Graduate Salary Analysis by Discipline (NE Adjusted)' : 'Graduate Salary Analysis by Discipline'
                 },
                 legend: {
                     display: true,
@@ -1508,13 +1742,27 @@ function createLocationChart() {
  * Setup event listeners
  */
 function setupEventListeners() {
+
     // Time frame selection
     const timeframeRadios = document.querySelectorAll('input[name="timeframe"]');
+    const checkedRadio = Array.from(timeframeRadios).find(r => r.checked);
+    if (checkedRadio) {
+        currentTimeframe = normalizeTimeframe(checkedRadio.value);
+    }
     timeframeRadios.forEach(radio => {
         radio.addEventListener('change', (e) => {
-            currentTimeframe = e.target.value;
+            currentTimeframe = normalizeTimeframe(e.target.value);
+            // Sync the select control
+            const sel = document.getElementById('time-period-filter');
+            if (sel) {
+                const reverseMap = { '1_month': '1month', '6_month': '6months', '1_year': '12months', 'all_time': 'all' };
+                sel.value = reverseMap[currentTimeframe] || sel.value;
+            }
             if (typeof createTrendChart === 'function') {
                 createTrendChart();
+            }
+            if (typeof createMonthlyTrendsChart === 'function') {
+                createMonthlyTrendsChart();
             }
         });
     });
@@ -1533,11 +1781,26 @@ function setupEventListeners() {
     const timePeriodFilter = document.getElementById('time-period-filter');
     if (timePeriodFilter) {
         timePeriodFilter.addEventListener('change', (e) => {
-            currentTimeframe = e.target.value;
+            currentTimeframe = normalizeTimeframe(e.target.value);
             if (typeof createMonthlyTrendsChart === 'function') {
                 createMonthlyTrendsChart();
             }
+            // Sync radio buttons
+            const mapToRadioId = { '1_month': 'time-1month', '6_month': 'time-6months', '1_year': 'time-1year', 'all_time': 'time-all' };
+            const targetId = mapToRadioId[currentTimeframe];
+            if (targetId) {
+                const radio = document.getElementById(targetId);
+                if (radio) radio.checked = true;
+                if (typeof createTrendChart === 'function') {
+                    createTrendChart();
+                }
+            }
         });
+
+        // Initialize currentTimeframe from select default if present
+        if (!checkedRadio) {
+            currentTimeframe = normalizeTimeframe(timePeriodFilter.value);
+        }
     }
 
     // Download buttons
@@ -1676,6 +1939,7 @@ function showLoading() {
     if (loading) loading.classList.remove('d-none');
     if (mainContent) mainContent.classList.add('d-none');
     if (error) error.classList.add('d-none');
+    try { if (typeof addSkeletons === 'function') addSkeletons(); } catch (_) {}
 }
 
 function hideLoading() {
@@ -1684,6 +1948,7 @@ function hideLoading() {
 
     if (loading) loading.classList.add('d-none');
     if (mainContent) mainContent.classList.remove('d-none');
+    try { if (typeof removeSkeletons === 'function') removeSkeletons(); } catch (_) {}
 }
 
 function showError(message) {
@@ -1740,17 +2005,23 @@ function updateMonthlyTrendsKPIs() {
         msPhdSplit = `${msPercent}%/${phdPercent}%`;
     }
 
-    // Calculate average salary trend
+    // Calculate average salary trend (use exportData for toggle accuracy)
     let salaryTrend = '--';
-    const salaries = [];
-    Object.values(disciplines).forEach(discipline => {
-        if (discipline.salary_stats && discipline.salary_stats.mean) {
-            salaries.push(discipline.salary_stats.mean);
+    if (Array.isArray(exportData) && exportData.length) {
+        const vals = exportData.map(p => getAnnualSalaryAdjusted(p, useLincolnAdjustment)).filter(v => v > 0);
+        if (vals.length) {
+            const avgSalary = Math.round(vals.reduce((a,b)=>a+b,0)/vals.length);
+            salaryTrend = '$' + avgSalary.toLocaleString();
         }
-    });
-    if (salaries.length > 0) {
-        const avgSalary = salaries.reduce((a, b) => a + b, 0) / salaries.length;
-        salaryTrend = '$' + (avgSalary / 1000).toFixed(0) + 'k';
+    } else {
+        const salaries = [];
+        Object.values(disciplines).forEach(discipline => {
+            if (discipline.salary_stats && discipline.salary_stats.mean) salaries.push(discipline.salary_stats.mean);
+        });
+        if (salaries.length > 0) {
+            const avgSalary = Math.round(salaries.reduce((a, b) => a + b, 0) / salaries.length);
+            salaryTrend = '$' + avgSalary.toLocaleString();
+        }
     }
 
     // Update the DOM elements
@@ -1884,7 +2155,15 @@ function addExportButtons() {
             const exportBtn = document.createElement('button');
             exportBtn.className = 'btn btn-outline-secondary btn-sm chart-export-btn';
             exportBtn.innerHTML = '<i class="fas fa-download me-1"></i>Export';
-            exportBtn.style.cssText = 'position: absolute; top: 10px; right: 10px; z-index: 10;';
+            // Prefer top-right when custom legend is present; otherwise avoid timeframe controls
+            const hasCustomLegend = container.classList.contains('has-custom-legend');
+            const hasTimeControls = !!container.querySelector('.btn-group');
+            const posStyle = hasCustomLegend
+                ? 'position: absolute; top: 10px; right: 10px; z-index: 20;'
+                : (hasTimeControls
+                    ? 'position: absolute; bottom: 10px; right: 10px; z-index: 20;'
+                    : 'position: absolute; top: 10px; right: 10px; z-index: 20;');
+            exportBtn.style.cssText = posStyle;
 
             // Add relative positioning to container if not present
             if (getComputedStyle(container).position === 'static') {
@@ -1904,16 +2183,109 @@ function addExportButtons() {
     });
 }
 
+/**
+ * Render a custom HTML legend with top-N items, expandable.
+ * - chart: Chart.js instance
+ * - container: chart container element
+ * - options: { topN: number }
+ */
+function renderCustomLegend(chart, container, options = {}) {
+    const topN = options.topN ?? 5;
+    // Remove any existing legend first
+    const old = container.querySelector('.custom-legend');
+    if (old) old.remove();
+
+    const legendEl = document.createElement('div');
+    legendEl.className = 'custom-legend';
+    legendEl.style.marginTop = '8px';
+    legendEl.style.display = 'grid';
+    legendEl.style.gridTemplateColumns = 'repeat(auto-fit, minmax(160px, 1fr))';
+    legendEl.style.gap = '6px 12px';
+
+    if (!chart || !chart.data || !Array.isArray(chart.data.datasets) || chart.data.datasets.length === 0) {
+        return; // nothing to render
+    }
+
+    const items = chart.data.datasets.map((ds, idx) => ({
+        text: ds.label || `Series ${idx+1}`,
+        color: (Array.isArray(ds.borderColor) ? ds.borderColor[0] : ds.borderColor) || '#999',
+        index: idx
+    }));
+
+    const renderItems = (expanded) => {
+        legendEl.innerHTML = '';
+        const show = expanded ? items : items.slice(0, topN);
+        show.forEach(({ text, color, index }) => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'custom-legend__item btn btn-sm btn-light';
+            btn.style.display = 'flex';
+            btn.style.alignItems = 'center';
+            btn.style.justifyContent = 'flex-start';
+            btn.style.gap = '8px';
+            btn.style.border = '1px solid #e5e7eb';
+            btn.style.borderRadius = '8px';
+            btn.style.padding = '6px 10px';
+
+            const swatch = document.createElement('span');
+            swatch.style.width = '10px';
+            swatch.style.height = '10px';
+            swatch.style.borderRadius = '50%';
+            swatch.style.background = color;
+
+            const label = document.createElement('span');
+            label.textContent = text;
+            label.style.fontSize = '12px';
+
+            const meta = chart.getDatasetMeta(index);
+            const visible = meta ? meta.hidden !== true : true;
+            btn.style.opacity = visible ? '1' : '0.5';
+            btn.title = visible ? 'Hide series' : 'Show series';
+
+            btn.addEventListener('click', () => {
+                const m = chart.getDatasetMeta(index);
+                if (!m) return;
+                // Toggle visibility: true hides, null/undefined shows
+                m.hidden = (m.hidden === true) ? null : true;
+                chart.update('none');
+                // Re-render to reflect visibility state
+                renderItems(expanded);
+            });
+
+            btn.appendChild(swatch);
+            btn.appendChild(label);
+            legendEl.appendChild(btn);
+        });
+
+        if (items.length > topN) {
+            const toggle = document.createElement('button');
+            toggle.type = 'button';
+            toggle.className = 'btn btn-outline-secondary btn-sm';
+            toggle.textContent = expanded ? 'Show less' : `Show ${items.length - topN} more`;
+            toggle.style.gridColumn = '1 / -1';
+            toggle.style.justifySelf = 'end';
+            toggle.addEventListener('click', () => {
+                renderItems(!expanded);
+            });
+            legendEl.appendChild(toggle);
+        }
+    };
+
+    renderItems(false);
+    container.appendChild(legendEl);
+    container.classList.add('has-custom-legend');
+}
+
 // Initialize dashboard when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('=== DOM CONTENT LOADED (supabase-dashboard.js) ===');
-    console.log('Supabase library available:', typeof supabase !== 'undefined');
-    console.log('Chart.js available:', typeof Chart !== 'undefined');
+    dlog('=== DOM CONTENT LOADED (supabase-dashboard.js) ===');
+    dlog('Supabase library available:', typeof supabase !== 'undefined');
+    dlog('Chart.js available:', typeof Chart !== 'undefined');
 
     // Wait a bit for Supabase client to be initialized by the HTML script
     setTimeout(() => {
-        console.log('Starting dashboard initialization after delay...');
-        console.log('supabaseClient available:', typeof supabaseClient !== 'undefined');
+        dlog('Starting dashboard initialization after delay...');
+        dlog('supabaseClient available:', typeof supabaseClient !== 'undefined');
         initDashboard();
     }, 100);
 });
@@ -1922,7 +2294,7 @@ document.addEventListener('DOMContentLoaded', function() {
  * Create monthly trends chart with growth indicators
  */
 function createMonthlyTrendsChart() {
-    console.log('=== createMonthlyTrendsChart called ===');
+    dlog('=== createMonthlyTrendsChart called ===');
     const ctx = document.getElementById('monthlyTrendsChart');
     if (!ctx) {
         console.warn('monthlyTrendsChart canvas element not found');
@@ -1930,14 +2302,13 @@ function createMonthlyTrendsChart() {
     }
 
     const chartCtx = ctx.getContext('2d');
-    console.log('dashboardData available:', !!dashboardData);
-    console.log('dashboardData structure:', dashboardData);
+    dlog('dashboardData available:', !!dashboardData);
+    dlog('dashboardData structure:', dashboardData);
 
     // Get time series data for the selected period
-    const timeframe = currentTimeframe || '12months';
-    const timeSeriesData = dashboardData?.time_series?.[timeframe.replace('months', '_month')] ||
-                          dashboardData?.time_series?.['1_year'] ||
-                          dashboardData?.time_series?.all_time;
+    const timeSeriesData = dashboardData?.time_series?.[currentTimeframe] ||
+                           dashboardData?.time_series?.['1_year'] ||
+                           dashboardData?.time_series?.all_time;
 
     let labels = [];
     let data = [];
@@ -1958,9 +2329,9 @@ function createMonthlyTrendsChart() {
     }
 
     // If no data, create sample data for demonstration
-    console.log('Monthly trends data found:', data.length, 'data points');
+    dlog('Monthly trends data found:', data.length, 'data points');
     if (data.length === 0) {
-        console.log('No monthly trends data, creating sample data');
+        dlog('No monthly trends data, creating sample data');
         const now = new Date();
         for (let i = 11; i >= 0; i--) {
             const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
@@ -1968,9 +2339,9 @@ function createMonthlyTrendsChart() {
             data.push(Math.floor(Math.random() * 3) + 1); // 1-3 positions per month
         }
     }
-    console.log('Final chart data:', { labels, data });
+    dlog('Final chart data:', { labels, data });
 
-    new Chart(chartCtx, {
+    const monthlyChart = new Chart(chartCtx, {
         type: 'line',
         data: {
             labels: labels,
@@ -1993,10 +2364,7 @@ function createMonthlyTrendsChart() {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                legend: {
-                    display: true,
-                    position: 'top'
-                },
+                legend: { display: false },
                 tooltip: {
                     mode: 'index',
                     intersect: false,
@@ -2036,16 +2404,22 @@ function createMonthlyTrendsChart() {
             }
         }
     });
+
+    // Custom legend with show more
+    const container = ctx.closest('.chart-container');
+    if (container) {
+        renderCustomLegend(monthlyChart, container, { topN: 5 });
+    }
 }
 
 /**
  * Create degree type distribution chart
  */
 function createDegreeTypeChart() {
-    console.log('=== createDegreeTypeChart called ===');
+    dlog('=== createDegreeTypeChart called ===');
     const ctx = document.getElementById('degreeTypeChart');
     if (!ctx) {
-        console.warn('degreeTypeChart canvas element not found');
+        dwarn('degreeTypeChart canvas element not found');
         return;
     }
 
@@ -2053,9 +2427,34 @@ function createDegreeTypeChart() {
 
     // Get degree type data from dashboard data
     const analytics = dashboardData?.analytics || {};
-    const msCount = analytics.masters_positions || 0;
-    const phdCount = analytics.phd_positions || 0;
-    const unknownCount = Math.max(0, (analytics.total_positions || 0) - msCount - phdCount);
+    let msCount = analytics.masters_positions || 0;
+    let phdCount = analytics.phd_positions || 0;
+    let total = analytics.total_positions || 0;
+
+    // Derive from exportData if analytics missing
+    if ((msCount + phdCount) === 0 && Array.isArray(exportData) && exportData.length > 0) {
+        const isPhD = (txt) => /ph\.?d|doctoral|doctorate/i.test(txt || '');
+        const isMS = (txt) => /\b(masters?|m\.?s\.?|msc)\b/i.test(txt || '');
+
+        msCount = 0;
+        phdCount = 0;
+        total = exportData.length;
+        exportData.forEach(pos => {
+            const t = (pos.position_type || '').toLowerCase();
+            const title = pos.title || '';
+            const desc = pos.description || '';
+            const tags = Array.isArray(pos.tags) ? pos.tags.join(' ') : (pos.tags || '');
+
+            if (t.includes('phd') || t.includes('doctoral') || isPhD(title) || isPhD(desc) || isPhD(tags)) {
+                phdCount += 1;
+            } else if (t.includes('master') || isMS(title) || isMS(desc) || isMS(tags)) {
+                msCount += 1;
+            }
+        });
+        dlog('Derived degree type counts from exportData:', { msCount, phdCount, total });
+    }
+
+    const unknownCount = Math.max(0, total - msCount - phdCount);
 
     // If no real data, create sample data
     let labels = ['Master\'s Programs', 'PhD Programs'];
@@ -2069,13 +2468,8 @@ function createDegreeTypeChart() {
     }
 
     // If no data at all, show sample
-    console.log('Degree type data:', { msCount, phdCount, unknownCount });
-    console.log('Chart data before sample check:', data);
-    if (data.every(val => val === 0)) {
-        console.log('No degree type data, using sample data');
-        data = [8, 5]; // Sample: 8 MS, 5 PhD
-    }
-    console.log('Final degree type data:', data);
+    dlog('Degree type data:', { msCount, phdCount, unknownCount });
+    dlog('Final degree type data:', data);
 
     new Chart(chartCtx, {
         type: 'doughnut',
@@ -2097,11 +2491,9 @@ function createDegreeTypeChart() {
                 legend: {
                     position: 'bottom',
                     labels: {
-                        padding: 20,
+                        padding: 16,
                         usePointStyle: true,
-                        font: {
-                            size: 12
-                        }
+                        boxWidth: 10
                     }
                 },
                 tooltip: {
@@ -2164,7 +2556,7 @@ function createSeasonalPatternsChart() {
 
     const labels = Object.keys(seasonalData);
     const data = Object.values(seasonalData);
-    const colors = ['#10b981', '#f59e0b', '#ef4444', '#3b82f6']; // Green, Amber, Red, Blue
+    const colors = ['#10b981', '#f59e0b', '#ef4444', '#0ea5e9']; // Green, Amber, Red, Blue
 
     new Chart(chartCtx, {
         type: 'polarArea',
@@ -2184,11 +2576,9 @@ function createSeasonalPatternsChart() {
                 legend: {
                     position: 'bottom',
                     labels: {
-                        padding: 15,
+                        padding: 16,
                         usePointStyle: true,
-                        font: {
-                            size: 12
-                        }
+                        boxWidth: 10
                     }
                 },
                 tooltip: {
@@ -2237,23 +2627,32 @@ function createSalaryDistributionChart() {
         '$60k+': 0
     };
 
-    // Analyze salary data from disciplines
-    Object.values(disciplines).forEach(discipline => {
-        if (discipline.salary_stats && discipline.salary_stats.mean) {
-            const avgSalary = discipline.salary_stats.mean;
-            if (avgSalary < 30000) {
-                salaryRanges['$20k-30k']++;
-            } else if (avgSalary < 40000) {
-                salaryRanges['$30k-40k']++;
-            } else if (avgSalary < 50000) {
-                salaryRanges['$40k-50k']++;
-            } else if (avgSalary < 60000) {
-                salaryRanges['$50k-60k']++;
-            } else {
-                salaryRanges['$60k+']++;
+    // Prefer distribution from exportData for toggle accuracy
+    const positions = Array.isArray(exportData) ? exportData : [];
+    if (positions.length) {
+        positions.forEach(p => {
+            const s = getAnnualSalaryAdjusted(p, useLincolnAdjustment);
+            if (s > 0) {
+                if (s < 30000) salaryRanges['$20k-30k']++;
+                else if (s < 40000) salaryRanges['$30k-40k']++;
+                else if (s < 50000) salaryRanges['$40k-50k']++;
+                else if (s < 60000) salaryRanges['$50k-60k']++;
+                else salaryRanges['$60k+']++;
             }
-        }
-    });
+        });
+    } else {
+        // Fallback: use discipline means
+        Object.values(disciplines).forEach(discipline => {
+            if (discipline.salary_stats && discipline.salary_stats.mean) {
+                const avgSalary = discipline.salary_stats.mean;
+                if (avgSalary < 30000) salaryRanges['$20k-30k']++;
+                else if (avgSalary < 40000) salaryRanges['$30k-40k']++;
+                else if (avgSalary < 50000) salaryRanges['$40k-50k']++;
+                else if (avgSalary < 60000) salaryRanges['$50k-60k']++;
+                else salaryRanges['$60k+']++;
+            }
+        });
+    }
 
     // If no real salary data, create realistic distribution
     if (Object.values(salaryRanges).every(val => val === 0)) {
@@ -2266,9 +2665,10 @@ function createSalaryDistributionChart() {
 
     const labels = Object.keys(salaryRanges);
     const data = Object.values(salaryRanges);
-    const colors = ['#ef4444', '#f59e0b', '#10b981', '#3b82f6', '#8b5cf6'];
+    const colors = ['#ef4444', '#f59e0b', '#10b981', '#0ea5e9', '#8b5cf6'];
 
-    new Chart(chartCtx, {
+    if (currentSalaryDistributionChart) { try { currentSalaryDistributionChart.destroy(); } catch (_) {} }
+    currentSalaryDistributionChart = new Chart(chartCtx, {
         type: 'bar',
         data: {
             labels: labels,
@@ -2329,3 +2729,17 @@ function createSalaryDistributionChart() {
         }
     });
 }
+    // NE adjustment toggle (modern layout)
+    const neToggle = document.getElementById('toggle-ne-adjust');
+    if (neToggle) {
+        neToggle.checked = useLincolnAdjustment;
+        neToggle.addEventListener('change', () => {
+            useLincolnAdjustment = !!neToggle.checked;
+            try { localStorage.setItem('NE_ADJUST', useLincolnAdjustment ? '1' : '0'); } catch (_) {}
+            // Re-render salary-related visuals
+            if (typeof createSalaryChart === 'function') createSalaryChart();
+            if (typeof createSalaryDistributionChart === 'function') createSalaryDistributionChart();
+            // Update KPI if present
+            updateMonthlyTrendsKPIs();
+        });
+    }
