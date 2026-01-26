@@ -1,17 +1,9 @@
 {
   "metadata": {
-    "generated_at": "2026-01-26T13:19:57.263506",
+    "generated_at": "2026-01-26T19:51:10.444250",
     "total_positions": 224,
     "source": "merged (historical + latest + enhanced)",
-    "discipline_mapping": "consolidated to 6 categories",
-    "disciplines": [
-      "Environmental Science",
-      "Wildlife",
-      "Fisheries",
-      "Human Dimensions",
-      "Forestry",
-      "Other"
-    ]
+    "discipline_mapping": "consolidated to 6 categories"
   },
   "summary_stats": {
     "total_positions": 224,
@@ -243,5 +235,5 @@
       }
     }
   },
-  "last_updated": "2026-01-26 13:19:57"
+  "last_updated": "2026-01-26 19:51:10"
 }
