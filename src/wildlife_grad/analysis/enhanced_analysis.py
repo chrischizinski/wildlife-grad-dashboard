@@ -282,9 +282,10 @@ class DisciplineClassifier:
 
     def __init__(self):
         # Consolidated discipline categories - exactly 5 categories as requested
+        # Consolidated to 6 main disciplines for clarity
         self.discipline_keywords = {
-            "Fisheries Management and Conservation": [
-                # Core fisheries terms
+            "Fisheries": [
+                # Core fisheries and aquatic terms
                 "fisheries",
                 "fish",
                 "aquatic",
@@ -320,9 +321,12 @@ class DisciplineClassifier:
                 "aquatic systems",
                 "fish communities",
                 "fish assessment",
+                "marine science",
+                "oceanography",
+                "coastal",
             ],
-            "Wildlife Management and Conservation": [
-                # Core wildlife and conservation terms
+            "Wildlife": [
+                # Wildlife, conservation, and natural resources
                 "wildlife",
                 "mammal",
                 "bird",
@@ -492,6 +496,39 @@ class DisciplineClassifier:
                 "heavy metal",
                 "pesticide",
                 "bioaccumulation",
+            ],
+            "Forestry": [
+                # Forestry and silviculture terms
+                "forestry",
+                "forest",
+                "silviculture",
+                "timber",
+                "logging",
+                "tree",
+                "wood",
+                "lumber",
+                "forest management",
+                "forest ecology",
+                "forest fire",
+                "wildfire",
+                "prescribed burn",
+                "forest health",
+                "forest stand",
+                "canopy",
+                "understory",
+                "regeneration",
+                "plantation",
+                "agroforestry",
+                "urban forestry",
+                "arborist",
+                "dendrology",
+                "forest carbon",
+                "forest products",
+                "sustainable forestry",
+                "forest policy",
+                "forest economics",
+                "forest inventory",
+                "forest restoration",
             ],
         }
 

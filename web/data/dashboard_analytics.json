@@ -1,13 +1,17 @@
 {
   "metadata": {
-    "generated_at": "2026-01-26T13:15:38.122237",
+    "generated_at": "2026-01-26T13:19:57.263506",
     "total_positions": 224,
     "source": "merged (historical + latest + enhanced)",
-    "data_sources": {
-      "historical_positions": true,
-      "latest_scrape": true,
-      "enhanced_data": true
-    }
+    "discipline_mapping": "consolidated to 6 categories",
+    "disciplines": [
+      "Environmental Science",
+      "Wildlife",
+      "Fisheries",
+      "Human Dimensions",
+      "Forestry",
+      "Other"
+    ]
   },
   "summary_stats": {
     "total_positions": 224,
@@ -16,44 +20,33 @@
   },
   "top_disciplines": {
     "Environmental Science": {
-      "total_positions": 59,
-      "grad_positions": 59,
+      "total_positions": 69,
+      "grad_positions": 69,
       "salary_stats": {
-        "count": 40,
-        "mean": 28790.9,
-        "median": 23500.0,
+        "count": 47,
+        "mean": 29938.38,
+        "median": 26159.0,
         "min": 18000.0,
-        "max": 48000.0
+        "max": 61008.0
       }
     },
-    "Other": {
-      "total_positions": 42,
-      "grad_positions": 42,
+    "Wildlife": {
+      "total_positions": 44,
+      "grad_positions": 44,
       "salary_stats": {
-        "count": 27,
-        "mean": 33203.7,
-        "median": 31000.0,
-        "min": 20000.0,
+        "count": 19,
+        "mean": 29657.89,
+        "median": 28000.0,
+        "min": 24700.0,
         "max": 60000.0
       }
     },
-    "Wildlife Management and Conservation": {
-      "total_positions": 34,
-      "grad_positions": 34,
+    "Fisheries": {
+      "total_positions": 40,
+      "grad_positions": 40,
       "salary_stats": {
-        "count": 15,
-        "mean": 28053.33,
-        "median": 28000.0,
-        "min": 24700.0,
-        "max": 30000.0
-      }
-    },
-    "Fisheries Management and Conservation": {
-      "total_positions": 27,
-      "grad_positions": 27,
-      "salary_stats": {
-        "count": 19,
-        "mean": 38098.32,
+        "count": 28,
+        "mean": 37390.14,
         "median": 29000.0,
         "min": 22000.0,
         "max": 61000.0
@@ -70,105 +63,6 @@
         "max": 61008.0
       }
     },
-    "Unknown": {
-      "total_positions": 12,
-      "grad_positions": 12,
-      "salary_stats": {
-        "count": 4,
-        "mean": 43125.0,
-        "median": 40000.0,
-        "min": 27500.0,
-        "max": 65000.0
-      }
-    },
-    "Ecology": {
-      "total_positions": 7,
-      "grad_positions": 7,
-      "salary_stats": {
-        "count": 6,
-        "mean": 37001.33,
-        "median": 36500.0,
-        "min": 18000.0,
-        "max": 61008.0
-      }
-    },
-    "Fisheries": {
-      "total_positions": 6,
-      "grad_positions": 6,
-      "salary_stats": {
-        "count": 6,
-        "mean": 38342.67,
-        "median": 30850.0,
-        "min": 22000.0,
-        "max": 61000.0
-      }
-    },
-    "Marine Science": {
-      "total_positions": 6,
-      "grad_positions": 6,
-      "salary_stats": {
-        "count": 3,
-        "mean": 31000.0,
-        "median": 23500.0,
-        "min": 22000.0,
-        "max": 47500.0
-      }
-    },
-    "Conservation": {
-      "total_positions": 6,
-      "grad_positions": 6,
-      "salary_stats": {
-        "count": 1,
-        "mean": 24700.0,
-        "median": 24700.0,
-        "min": 24700.0,
-        "max": 24700.0
-      }
-    },
-    "Natural Resource Management": {
-      "total_positions": 3,
-      "grad_positions": 3,
-      "salary_stats": {
-        "count": 1,
-        "mean": 33460.0,
-        "median": 33460.0,
-        "min": 33460.0,
-        "max": 33460.0
-      }
-    },
-    "Wildlife Management": {
-      "total_positions": 3,
-      "grad_positions": 3,
-      "salary_stats": {
-        "count": 3,
-        "mean": 39333.33,
-        "median": 30000.0,
-        "min": 28000.0,
-        "max": 60000.0
-      }
-    },
-    "Fisheries & Aquatic Science": {
-      "total_positions": 1,
-      "grad_positions": 1,
-      "salary_stats": {
-        "count": 0,
-        "mean": 0,
-        "median": 0,
-        "min": 0,
-        "max": 0
-      }
-    },
-    "Wildlife & Natural Resources": {
-      "total_positions": 1,
-      "grad_positions": 1,
-      "salary_stats": {
-        "count": 0,
-        "mean": 0,
-        "median": 0,
-        "min": 0,
-        "max": 0
-      }
-    },
     "Forestry": {
       "total_positions": 1,
       "grad_positions": 1,
@@ -178,6 +72,17 @@
         "median": 21000.0,
         "min": 21000.0,
         "max": 21000.0
+      }
+    },
+    "Other": {
+      "total_positions": 54,
+      "grad_positions": 54,
+      "salary_stats": {
+        "count": 31,
+        "mean": 34483.87,
+        "median": 31000.0,
+        "min": 20000.0,
+        "max": 65000.0
       }
     }
   },
@@ -220,46 +125,21 @@
           "2025-07": 16
         },
         "Other": {
-          "2025-07": 42
-        },
-        "Environmental Science": {
-          "2025-07": 59
-        },
-        "Wildlife Management and Conservation": {
-          "2025-07": 34
-        },
-        "Fisheries Management and Conservation": {
-          "2025-07": 25,
-          "2025-06": 2
-        },
-        "Unknown": {
+          "2025-07": 42,
           "2026-01": 12
         },
-        "Fisheries & Aquatic Science": {
-          "2026-01": 1
-        },
-        "Natural Resource Management": {
+        "Environmental Science": {
+          "2025-07": 66,
           "2026-01": 3
         },
-        "Wildlife & Natural Resources": {
+        "Wildlife": {
+          "2025-07": 43,
           "2026-01": 1
         },
-        "Ecology": {
-          "2025-07": 7
-        },
         "Fisheries": {
-          "2025-07": 5,
-          "2025-06": 1
-        },
-        "Marine Science": {
-          "2025-07": 5,
-          "2025-06": 1
-        },
-        "Wildlife Management": {
-          "2025-07": 3
-        },
-        "Conservation": {
-          "2025-07": 6
+          "2025-07": 35,
+          "2025-06": 4,
+          "2026-01": 1
         },
         "Forestry": {
           "2025-07": 1
@@ -277,46 +157,21 @@
           "2025-07": 16
         },
         "Other": {
-          "2025-07": 42
-        },
-        "Environmental Science": {
-          "2025-07": 59
-        },
-        "Wildlife Management and Conservation": {
-          "2025-07": 34
-        },
-        "Fisheries Management and Conservation": {
-          "2025-07": 25,
-          "2025-06": 2
-        },
-        "Unknown": {
+          "2025-07": 42,
           "2026-01": 12
         },
-        "Fisheries & Aquatic Science": {
-          "2026-01": 1
-        },
-        "Natural Resource Management": {
+        "Environmental Science": {
+          "2025-07": 66,
           "2026-01": 3
         },
-        "Wildlife & Natural Resources": {
+        "Wildlife": {
+          "2025-07": 43,
           "2026-01": 1
         },
-        "Ecology": {
-          "2025-07": 7
-        },
         "Fisheries": {
-          "2025-07": 5,
-          "2025-06": 1
-        },
-        "Marine Science": {
-          "2025-07": 5,
-          "2025-06": 1
-        },
-        "Wildlife Management": {
-          "2025-07": 3
-        },
-        "Conservation": {
-          "2025-07": 6
+          "2025-07": 35,
+          "2025-06": 4,
+          "2026-01": 1
         },
         "Forestry": {
           "2025-07": 1
@@ -334,46 +189,21 @@
           "2025-07": 16
         },
         "Other": {
-          "2025-07": 42
-        },
-        "Environmental Science": {
-          "2025-07": 59
-        },
-        "Wildlife Management and Conservation": {
-          "2025-07": 34
-        },
-        "Fisheries Management and Conservation": {
-          "2025-07": 25,
-          "2025-06": 2
-        },
-        "Unknown": {
+          "2025-07": 42,
           "2026-01": 12
         },
-        "Fisheries & Aquatic Science": {
-          "2026-01": 1
-        },
-        "Natural Resource Management": {
+        "Environmental Science": {
+          "2025-07": 66,
           "2026-01": 3
         },
-        "Wildlife & Natural Resources": {
+        "Wildlife": {
+          "2025-07": 43,
           "2026-01": 1
         },
-        "Ecology": {
-          "2025-07": 7
-        },
         "Fisheries": {
-          "2025-07": 5,
-          "2025-06": 1
-        },
-        "Marine Science": {
-          "2025-07": 5,
-          "2025-06": 1
-        },
-        "Wildlife Management": {
-          "2025-07": 3
-        },
-        "Conservation": {
-          "2025-07": 6
+          "2025-07": 35,
+          "2025-06": 4,
+          "2026-01": 1
         },
         "Forestry": {
           "2025-07": 1
@@ -391,46 +221,21 @@
           "2025-07": 16
         },
         "Other": {
-          "2025-07": 42
-        },
-        "Environmental Science": {
-          "2025-07": 59
-        },
-        "Wildlife Management and Conservation": {
-          "2025-07": 34
-        },
-        "Fisheries Management and Conservation": {
-          "2025-07": 25,
-          "2025-06": 2
-        },
-        "Unknown": {
+          "2025-07": 42,
           "2026-01": 12
         },
-        "Fisheries & Aquatic Science": {
-          "2026-01": 1
-        },
-        "Natural Resource Management": {
+        "Environmental Science": {
+          "2025-07": 66,
           "2026-01": 3
         },
-        "Wildlife & Natural Resources": {
+        "Wildlife": {
+          "2025-07": 43,
           "2026-01": 1
         },
-        "Ecology": {
-          "2025-07": 7
-        },
         "Fisheries": {
-          "2025-07": 5,
-          "2025-06": 1
-        },
-        "Marine Science": {
-          "2025-07": 5,
-          "2025-06": 1
-        },
-        "Wildlife Management": {
-          "2025-07": 3
-        },
-        "Conservation": {
-          "2025-07": 6
+          "2025-07": 35,
+          "2025-06": 4,
+          "2026-01": 1
         },
         "Forestry": {
           "2025-07": 1
@@ -438,5 +243,5 @@
       }
     }
   },
-  "last_updated": "2026-01-26 13:15:38"
+  "last_updated": "2026-01-26 13:19:57"
 }
