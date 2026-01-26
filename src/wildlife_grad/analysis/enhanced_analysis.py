@@ -240,9 +240,35 @@ class GraduatePositionDetector:
         total_score = grad_score - exclusion_score
         confidence = min(max(total_score / 10.0, 0.0), 1.0)  # Normalize to 0-1
 
-        # Decision logic
+        # Enhanced decision logic - prioritize confidence and explicit patterns
+        # Check for explicit graduate patterns that should always classify as graduate
+        explicit_graduate_patterns = [
+            r"graduate\s+research\s+assistantship",
+            r"(ms|m\.s\.|masters?)\s+(research\s+)?assistantship",
+            r"(phd|ph\.d\.)\s+(research\s+)?assistantship",
+            r"graduate\s+research\s+associate",
+            r"doctoral\s+(student|candidate|research|assistantship)",
+            r"(phd|ph\.d\.)\s+(student|candidate|position)",
+            r"(ms|m\.s\.)\s+(student|candidate|position)",
+            r"thesis\s+research",
+            r"dissertation\s+research",
+        ]
+
+        has_explicit_pattern = any(
+            re.search(pattern, text_content, re.IGNORECASE)
+            for pattern in explicit_graduate_patterns
+        )
+
+        # Decision logic: prioritize high confidence and explicit patterns
         is_graduate = (
-            total_score > 0 and grad_score >= 2 and exclusion_score <= grad_score
+            # High confidence threshold (covers most legitimate cases)
+            confidence >= 0.7
+            or
+            # OR has explicit graduate language
+            has_explicit_pattern
+            or
+            # OR traditional scoring with more lenient threshold
+            (total_score > 0 and grad_score >= 2 and exclusion_score < grad_score * 2)
         )
 
         if not is_graduate and classification_type == "unknown":

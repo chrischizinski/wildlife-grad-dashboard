@@ -85,8 +85,15 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git fetch origin
+
+          # Stage only data directories (scripts generate these)
           git add data/
+          git add dashboard/data/
           git add web/data/
+
+          # Reset any other modified files (shouldn't happen in CI, but be defensive)
+          git checkout -- . || true
+
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else

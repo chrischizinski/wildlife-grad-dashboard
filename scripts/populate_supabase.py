@@ -11,6 +11,7 @@ import sys
 from datetime import date, datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
+from urllib.parse import urlparse, urlunparse, parse_qsl, urlencode, unquote
 
 # Install required packages: pip install supabase python-dotenv
 try:
@@ -39,6 +40,50 @@ class SupabasePopulator:
         self.supabase: Client = create_client(self.supabase_url, self.supabase_key)
         print(f"Connected to Supabase: {self.supabase_url}")
 
+    def normalize_url(self, url: Optional[str]) -> str:
+        """Normalize URLs for robust duplicate detection.
+
+        - Lowercase scheme and host
+        - Strip common tracking params (utm_*, gclid, fbclid, ref)
+        - Remove fragments and default ports
+        - Decode and normalize path; remove trailing slash (except root)
+        - Sort query params for stable ordering
+        """
+        if not url:
+            return ""
+        try:
+            p = urlparse(url.strip())
+            scheme = (p.scheme or "http").lower()
+            netloc = (p.netloc or "").lower()
+            # drop leading www.
+            if netloc.startswith("www."):
+                netloc = netloc[4:]
+            # remove default ports
+            if netloc.endswith(":80") and scheme == "http":
+                netloc = netloc[:-3]
+            if netloc.endswith(":443") and scheme == "https":
+                netloc = netloc[:-4]
+
+            # clean path
+            path = unquote(p.path or "/")
+            # collapse multiple slashes
+            while "//" in path:
+                path = path.replace("//", "/")
+            # remove trailing slash except root
+            if path != "/" and path.endswith("/"):
+                path = path[:-1]
+
+            # filter and sort query params
+            drop_keys = {"utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "gclid", "fbclid", "ref"}
+            q = [(k, v) for k, v in parse_qsl(p.query, keep_blank_values=True) if k not in drop_keys]
+            q.sort()
+            query = urlencode(q, doseq=True)
+
+            return urlunparse((scheme, netloc, path, "", query, ""))
+        except Exception:
+            # if anything goes wrong, fallback to stripped URL
+            return url.strip()
+
     def load_json_data(self) -> List[Dict[str, Any]]:
         """Load job data from JSON files."""
         # Prioritize the complete datasets over the smaller export files
@@ -59,18 +104,23 @@ class SupabasePopulator:
                         data = json.load(f)
                     print(f"Loaded {len(data)} job records")
 
-                    # Remove duplicates if they exist (based on title + organization + location)
+                    # Remove duplicates if they exist (prefer URL-based key)
                     if len(data) > 1:
                         seen = set()
                         unique_data = []
                         for job in data:
-                            # Create a key for deduplication
-                            key = (
-                                job.get("title", "").strip(),
-                                job.get("organization", "").strip(),
-                                job.get("location", "").strip(),
-                                job.get("published_date", "").strip(),
-                            )
+                            norm_url = self.normalize_url(job.get("url"))
+                            if norm_url:
+                                key = ("url", norm_url)
+                            else:
+                                # Fallback to a conservative composite key
+                                key = (
+                                    "meta",
+                                    job.get("title", "").strip(),
+                                    job.get("organization", "").strip(),
+                                    job.get("location", "").strip(),
+                                    job.get("published_date", "").strip(),
+                                )
                             if key not in seen:
                                 seen.add(key)
                                 unique_data.append(job)
@@ -176,11 +226,7 @@ class SupabasePopulator:
         """Get existing job keys to avoid duplicates."""
         print("Fetching existing job keys for duplicate detection...")
         try:
-            result = (
-                self.supabase.table("jobs")
-                .select("title,organization,location,published_date")
-                .execute()
-            )
+            result = self.supabase.table("jobs").select("title,organization,location,published_date").execute()
             existing_keys = set()
             for job in result.data:
                 key = (
@@ -196,25 +242,55 @@ class SupabasePopulator:
             print(f"Error fetching existing jobs: {e}")
             return set()
 
+    def get_existing_normalized_urls(self) -> set:
+        """Fetch and normalize existing URLs for duplicate detection."""
+        print("Fetching existing job URLs for duplicate detection...")
+        try:
+            result = self.supabase.table("jobs").select("url").execute()
+            urls = set()
+            for row in result.data:
+                norm = self.normalize_url(row.get("url"))
+                if norm:
+                    urls.add(norm)
+            print(f"Found {len(urls)} existing URLs")
+            return urls
+        except Exception as e:
+            print(f"Error fetching existing URLs: {e}")
+            return set()
+
     def filter_new_jobs(self, jobs: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Filter out jobs that already exist in the database."""
+        """Filter out jobs that already exist in the database.
+
+        Prefer URL-based duplicate detection (normalized), with a fallback
+        composite key for records missing a URL.
+        """
+        existing_urls = self.get_existing_normalized_urls()
         existing_keys = self.get_existing_job_keys()
-        new_jobs = []
+        new_jobs: List[Dict[str, Any]] = []
         duplicates_found = 0
+        seen_new_urls: set[str] = set()
 
         for job in jobs:
-            # Create the same key used for deduplication
-            key = (
-                job.get("title", "").strip(),
-                job.get("organization", "").strip(),
-                job.get("location", "").strip(),
-                str(job.get("published_date", "")).strip(),
-            )
-
-            if key not in existing_keys:
+            norm_url = self.normalize_url(job.get("url"))
+            if norm_url:
+                # Skip if already in DB or already queued in this run
+                if norm_url in existing_urls or norm_url in seen_new_urls:
+                    duplicates_found += 1
+                    continue
+                seen_new_urls.add(norm_url)
                 new_jobs.append(job)
             else:
-                duplicates_found += 1
+                # Fallback to composite key when URL missing
+                key = (
+                    job.get("title", "").strip(),
+                    job.get("organization", "").strip(),
+                    job.get("location", "").strip(),
+                    str(job.get("published_date", "")).strip(),
+                )
+                if key in existing_keys:
+                    duplicates_found += 1
+                    continue
+                new_jobs.append(job)
 
         print(f"Filtered out {duplicates_found} duplicate jobs")
         print(f"Will insert {len(new_jobs)} new jobs")
