@@ -1,13 +1,17 @@
 #!/usr/bin/env python3
 """
-Generate lightweight analytics summary for the dashboard.
-This creates a small JSON file with only the essential aggregated data needed for visualization.
+Generate dashboard analytics with historical data merging.
 
-The script processes the full archived data to generate a compact analytics file suitable for
-GitHub Pages deployment while keeping the full dataset archived for long-term trend analysis.
+This script:
+1. Loads data from multiple sources (historical + latest scrape)
+2. Merges and deduplicates positions by URL
+3. Consolidates disciplines into 6 main categories
+4. Generates comprehensive analytics
+5. Saves to dashboard locations
 """
 
 import json
+import re
 import statistics
 import sys
 from collections import Counter, defaultdict
@@ -15,264 +19,293 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List
 
+# Discipline consolidation mapping
+DISCIPLINE_MAPPING = {
+    # Environmental Science
+    "Environmental Science": "Environmental Science",
+    "Ecology": "Environmental Science",
+    "Natural Resource Management": "Environmental Science",
 
-def load_data() -> List[Dict[str, Any]]:
-    """Load the export data from various possible locations."""
-    possible_paths = [
-        Path(
-            "data/processed/dev_verified_graduate_assistantships.json"
-        ),  # Development data first
-        Path("data/processed/verified_graduate_assistantships.json"),  # Production data
-        Path("dashboard/data/export_data.json"),
-        Path("data/export_data.json"),
-        Path("export_data.json"),
+    # Wildlife
+    "Wildlife Management and Conservation": "Wildlife",
+    "Wildlife Management": "Wildlife",
+    "Wildlife & Natural Resources": "Wildlife",
+    "Conservation": "Wildlife",
+
+    # Fisheries
+    "Fisheries": "Fisheries",
+    "Fisheries & Aquatic Science": "Fisheries",
+    "Fisheries Management and Conservation": "Fisheries",
+    "Marine Science": "Fisheries",
+
+    # Human Dimensions
+    "Human Dimensions": "Human Dimensions",
+
+    # Forestry
+    "Forestry": "Forestry",
+
+    # Other
+    "Other": "Other",
+    "Unknown": "Other",
+}
+
+
+def normalize_discipline(disc: str) -> str:
+    """Map a discipline to one of the 6 main categories."""
+    if not disc or disc == '':
+        return "Other"
+    return DISCIPLINE_MAPPING.get(disc, "Other")
+
+
+def load_and_merge_data() -> List[Dict[str, Any]]:
+    """Load data from multiple sources and merge, deduplicating by URL."""
+    all_positions = []
+
+    print("Loading data from multiple sources...")
+
+    # Source 1: Historical positions (if exists)
+    hist_path = Path("data/raw/historical_positions.json")
+    if hist_path.exists():
+        try:
+            with open(hist_path, 'r', encoding='utf-8') as f:
+                hist = json.load(f)
+                grad_hist = [p for p in hist if p.get('is_graduate_position')]
+                all_positions.extend(grad_hist)
+                print(f"  ✓ Historical data: {len(grad_hist)} graduate positions")
+        except Exception as e:
+            print(f"  ✗ Historical data error: {e}")
+
+    # Source 2: Latest scrape
+    latest_paths = [
+        Path("data/processed/verified_graduate_assistantships.json"),
+        Path("data/processed/dev_verified_graduate_assistantships.json"),
     ]
 
-    for path in possible_paths:
+    for path in latest_paths:
         if path.exists():
-            print(f"Loading data from: {path}")
-            with open(path, "r", encoding="utf-8") as f:
-                return json.load(f)
+            try:
+                with open(path, 'r', encoding='utf-8') as f:
+                    latest = json.load(f)
+                    all_positions.extend(latest)
+                    print(f"  ✓ Latest scrape ({path.name}): {len(latest)} positions")
+                break
+            except Exception as e:
+                print(f"  ✗ Latest scrape error: {e}")
 
-    raise FileNotFoundError("Could not find export_data.json in any expected location")
+    # Source 3: Enhanced data (if exists)
+    enhanced_path = Path("web/data/enhanced_data.json")
+    if enhanced_path.exists():
+        try:
+            with open(enhanced_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+                enhanced = data.get('positions', data) if isinstance(data, dict) else data
+                grad_enhanced = [p for p in enhanced if p.get('is_graduate_position')]
+
+                # Only add if not already present (check by URL)
+                existing_urls = {p.get('url') for p in all_positions if p.get('url')}
+                new_enhanced = [p for p in grad_enhanced if p.get('url') not in existing_urls]
+                all_positions.extend(new_enhanced)
+                print(f"  ✓ Enhanced data: {len(new_enhanced)} new positions")
+        except Exception as e:
+            print(f"  ✗ Enhanced data error: {e}")
+
+    # Deduplicate by URL (keep most recent version)
+    unique_positions = {}
+    for p in all_positions:
+        url = p.get('url')
+        if url:
+            unique_positions[url] = p  # Last one wins (most recent)
+        else:
+            # No URL, keep all
+            unique_positions[str(id(p))] = p
+
+    positions = list(unique_positions.values())
+    print(f"\n📊 Merged dataset: {len(positions)} unique graduate positions\n")
+
+    return positions
 
 
-def archive_data(
-    data: List[Dict[str, Any]], analytics: Dict[str, Any]
-) -> tuple[Path, Path]:
-    """Archive the full dataset with timestamp for long-term analysis."""
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+def extract_salary_number(salary_str: Any) -> float | None:
+    """Extract numeric salary from string."""
+    if not salary_str or salary_str in ['', 'N/A', 'Unknown', 'None']:
+        return None
 
-    # Create archive directory
-    archive_dir = Path("data/archive")
-    archive_dir.mkdir(parents=True, exist_ok=True)
+    salary_str = str(salary_str).lower()
+    salary_str = re.sub(r'[,$]', '', salary_str)
 
-    # Archive full export data
-    export_archive_path = archive_dir / f"export_data_{timestamp}.json"
-    with open(export_archive_path, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
-
-    # Archive analytics summary
-    analytics_archive_path = archive_dir / f"analytics_{timestamp}.json"
-    with open(analytics_archive_path, "w", encoding="utf-8") as f:
-        json.dump(analytics, f, indent=2, ensure_ascii=False)
-
-    print(f"Archived full data: {export_archive_path}")
-    print(f"Archived analytics: {analytics_archive_path}")
-
-    return export_archive_path, analytics_archive_path
+    match = re.search(r'(\d+\.?\d*)', salary_str)
+    if match:
+        num = float(match.group(1))
+        # Convert hourly to annual
+        if 'hour' in salary_str or 'hr' in salary_str:
+            num = num * 2000
+        # Reasonable annual salary range
+        if 15000 < num < 200000:
+            return num
+    return None
 
 
 def calculate_analytics(data: List[Dict[str, Any]]) -> Dict[str, Any]:
-    """Calculate analytics from the raw job data."""
+    """Calculate comprehensive analytics with consolidated disciplines."""
 
-    # Initialize counters
     total_positions = len(data)
-    grad_positions = 0
-    salary_positions = 0
-    disciplines: Dict[str, Dict[str, Any]] = defaultdict(
-        lambda: {"total_positions": 0, "grad_positions": 0, "salaries": []}
-    )
 
-    geographic_dist: Counter[str] = Counter()
-    monthly_counts: Dict[str, int] = defaultdict(int)
-    discipline_monthly: Dict[str, Dict[str, int]] = defaultdict(
-        lambda: defaultdict(int)
-    )
+    # Discipline analysis with consolidation
+    discipline_data = defaultdict(lambda: {'count': 0, 'salaries': []})
+    for p in data:
+        # Get original discipline
+        original_disc = (p.get('discipline') or p.get('discipline_primary') or
+                        p.get('discipline_secondary') or 'Unknown')
 
-    # Process each job
-    for job in data:
-        # Count graduate positions
-        if job.get("is_graduate_position", False):
-            grad_positions += 1
+        # Normalize to one of 6 categories
+        normalized_disc = normalize_discipline(original_disc)
+        discipline_data[normalized_disc]['count'] += 1
 
-        # Count positions with salaries
-        salary = job.get("salary", "").strip().lower()
-        if salary and salary != "none" and salary != "n/a" and "$" in salary:
-            salary_positions += 1
+        salary = extract_salary_number(p.get('salary'))
+        if salary:
+            discipline_data[normalized_disc]['salaries'].append(salary)
 
-            # Extract numeric salary if possible
+    # Build top disciplines (should only be 6)
+    top_disciplines = {}
+    for discipline in ["Environmental Science", "Wildlife", "Fisheries",
+                       "Human Dimensions", "Forestry", "Other"]:
+        if discipline in discipline_data:
+            data_dict = discipline_data[discipline]
+            count = data_dict['count']
+            salaries = data_dict['salaries']
+
+            salary_stats = {
+                "count": len(salaries),
+                "mean": round(statistics.mean(salaries), 2) if salaries else 0,
+                "median": round(statistics.median(salaries), 2) if salaries else 0,
+                "min": round(min(salaries), 2) if salaries else 0,
+                "max": round(max(salaries), 2) if salaries else 0
+            }
+
+            top_disciplines[discipline] = {
+                "total_positions": count,
+                "grad_positions": count,
+                "salary_stats": salary_stats
+            }
+
+    positions_with_salary = sum(1 for p in data if extract_salary_number(p.get('salary')))
+
+    # Geographic summary
+    location_counts = Counter()
+    for p in data:
+        loc = p.get('location', '')
+        if loc:
+            parts = [part.strip() for part in loc.split(',')]
+            if parts:
+                location = parts[-1] if len(parts[-1]) < 20 else parts[0]
+                location_counts[location] += 1
+
+    # Time series with normalized disciplines
+    monthly_counts = defaultdict(int)
+    monthly_by_discipline = defaultdict(lambda: defaultdict(int))
+
+    for p in data:
+        date_fields = ['scraped_at', 'last_updated', 'first_seen', 'published_date']
+        date_str = None
+        for field in date_fields:
+            if p.get(field):
+                date_str = p[field]
+                break
+
+        if date_str:
             try:
-                # Simple salary extraction - look for numbers after $
-                salary_nums = []
-                parts = salary.replace(",", "").split()
-                for part in parts:
-                    if "$" in part:
-                        num_str = part.replace("$", "").replace(",", "")
-                        # Handle ranges like "$25,000 to $30,000"
-                        if "to" in salary or "-" in salary:
-                            # Take average of range
-                            nums = [
-                                float(x.replace("$", "").replace(",", ""))
-                                for x in salary.replace(" to ", "-")
-                                .replace("$", "")
-                                .replace(",", "")
-                                .split("-")
-                                if x.replace(".", "").isdigit()
-                            ]
-                            if nums:
-                                salary_nums.append(sum(nums) / len(nums))
-                        elif num_str.replace(".", "").isdigit():
-                            salary_nums.append(float(num_str))
-
-                if salary_nums:
-                    avg_salary = sum(salary_nums) / len(salary_nums)
-                    discipline = job.get("discipline", "Unknown")
-                    disciplines[discipline]["salaries"].append(avg_salary)
-            except (ValueError, TypeError):
-                pass
-
-        # Count by discipline
-        discipline = job.get("discipline", "Unknown")
-        disciplines[discipline]["total_positions"] += 1
-        if job.get("is_graduate_position", False):
-            disciplines[discipline]["grad_positions"] += 1
-
-        # Geographic distribution
-        location = job.get("location", "")
-        if location:
-            # Extract state/country from location
-            location_parts = location.split(",")
-            if len(location_parts) >= 2:
-                state = location_parts[-1].strip()
-                geographic_dist[state] += 1
-
-        # Time series data
-        published_date = job.get("published_date", "")
-        if published_date:
-            try:
-                # Handle different date formats
-                if "/" in published_date:
-                    date_obj = datetime.strptime(published_date, "%m/%d/%Y")
+                if 'T' in str(date_str):
+                    month = str(date_str).split('T')[0][:7]
+                elif '/' in str(date_str):
+                    parts = str(date_str).split('/')
+                    if len(parts) >= 3:
+                        year = parts[2] if len(parts[2]) == 4 else f"20{parts[2]}"
+                        month = f"{year}-{parts[0].zfill(2)}"
+                    else:
+                        continue
                 else:
-                    date_obj = datetime.strptime(published_date, "%Y-%m-%d")
+                    month = str(date_str)[:7]
 
-                month_key = date_obj.strftime("%Y-%m")
-                monthly_counts[month_key] += 1
-                discipline_monthly[discipline][month_key] += 1
-            except (ValueError, TypeError):
+                monthly_counts[month] += 1
+
+                # Normalize discipline for time series
+                original_disc = p.get('discipline') or p.get('discipline_primary') or 'Unknown'
+                normalized_disc = normalize_discipline(original_disc)
+                monthly_by_discipline[normalized_disc][month] += 1
+            except:
                 pass
 
-    # Calculate salary statistics for each discipline
-    discipline_stats = {}
-    for discipline, info in disciplines.items():
-        if info["salaries"]:
-            discipline_stats[discipline] = {
-                "total_positions": info["total_positions"],
-                "grad_positions": info["grad_positions"],
-                "salary_stats": {
-                    "count": len(info["salaries"]),
-                    "mean": statistics.mean(info["salaries"]),
-                    "median": statistics.median(info["salaries"]),
-                    "min": min(info["salaries"]),
-                    "max": max(info["salaries"]),
-                },
-            }
-        else:
-            discipline_stats[discipline] = {
-                "total_positions": info["total_positions"],
-                "grad_positions": info["grad_positions"],
-                "salary_stats": None,
-            }
+    sorted_months = sorted(monthly_counts.keys())
 
-    # Prepare time series data for different periods
-    time_series = {
-        "1_month": {
-            "total_monthly": dict(sorted(monthly_counts.items())[-1:]),
-            "discipline_monthly": {
-                disc: dict(sorted(months.items())[-1:])
-                for disc, months in discipline_monthly.items()
-            },
-        },
-        "3_month": {
-            "total_monthly": dict(sorted(monthly_counts.items())[-3:]),
-            "discipline_monthly": {
-                disc: dict(sorted(months.items())[-3:])
-                for disc, months in discipline_monthly.items()
-            },
-        },
-        "6_month": {
-            "total_monthly": dict(sorted(monthly_counts.items())[-6:]),
-            "discipline_monthly": {
-                disc: dict(sorted(months.items())[-6:])
-                for disc, months in discipline_monthly.items()
-            },
-        },
-        "1_year": {
-            "total_monthly": dict(sorted(monthly_counts.items())[-12:]),
-            "discipline_monthly": {
-                disc: dict(sorted(months.items())[-12:])
-                for disc, months in discipline_monthly.items()
-            },
-        },
-        "all_time": {
-            "total_monthly": dict(sorted(monthly_counts.items())),
-            "discipline_monthly": {
-                disc: dict(sorted(months.items()))
-                for disc, months in discipline_monthly.items()
-            },
-        },
-    }
-
-    # Get top 10 geographic locations
-    top_geographic = dict(geographic_dist.most_common(10))
+    time_series = {}
+    for timeframe in ['1_month', '3_month', '6_month', '12_month']:
+        time_series[timeframe] = {
+            'total_monthly': {month: monthly_counts[month] for month in sorted_months},
+            'discipline_monthly': {disc: dict(monthly_by_discipline[disc])
+                                  for disc in monthly_by_discipline}
+        }
 
     return {
         "metadata": {
             "generated_at": datetime.now().isoformat(),
             "total_positions": total_positions,
+            "source": "merged (historical + latest + enhanced)",
+            "discipline_mapping": "consolidated to 6 categories"
         },
         "summary_stats": {
             "total_positions": total_positions,
-            "graduate_positions": grad_positions,
-            "positions_with_salary": salary_positions,
+            "graduate_positions": total_positions,
+            "positions_with_salary": positions_with_salary
         },
-        "top_disciplines": {
-            k: v
-            for k, v in sorted(
-                discipline_stats.items(),
-                key=lambda x: x[1]["grad_positions"],
-                reverse=True,
-            )[:10]
-        },
-        "geographic_summary": top_geographic,
+        "top_disciplines": top_disciplines,
+        "geographic_summary": dict(location_counts.most_common(25)),
         "time_series": time_series,
-        "last_updated": datetime.now().isoformat(),
+        "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     }
 
 
-def main() -> None:
-    """Main function to generate analytics."""
+def main():
+    """Main execution."""
     try:
-        # Load data
-        data = load_data()
-        print(f"Loaded {len(data)} job records")
+        # Load and merge data
+        data = load_and_merge_data()
+
+        if not data:
+            print("❌ No data found!")
+            sys.exit(1)
 
         # Calculate analytics
+        print("Calculating analytics...")
         analytics = calculate_analytics(data)
 
-        # Determine output path
+        # Save to multiple locations
         output_paths = [
             Path("dashboard/data/dashboard_analytics.json"),
-            Path("data/dashboard_analytics.json"),
-            Path("dashboard_analytics.json"),
+            Path("web/data/dashboard_analytics.json"),
         ]
 
-        output_path = output_paths[0]  # Default to dashboard/data/
-        output_path.parent.mkdir(parents=True, exist_ok=True)
+        for path in output_paths:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            with open(path, 'w', encoding='utf-8') as f:
+                json.dump(analytics, f, indent=2, ensure_ascii=False)
+            print(f"✅ Saved: {path} ({path.stat().st_size / 1024:.1f} KB)")
 
-        # Write analytics
-        with open(output_path, "w", encoding="utf-8") as f:
-            json.dump(analytics, f, indent=2, ensure_ascii=False)
+        # Print summary
+        print(f"\n📊 Analytics Summary:")
+        print(f"  Total positions: {analytics['summary_stats']['total_positions']}")
+        print(f"  With salary: {analytics['summary_stats']['positions_with_salary']}")
+        print(f"  Disciplines:")
+        for disc, data in analytics['top_disciplines'].items():
+            avg = data['salary_stats']['mean']
+            salary_str = f"${avg:,.0f}" if avg > 0 else "N/A"
+            print(f"    {disc:25s} {data['total_positions']:3d} positions (avg: {salary_str})")
 
-        print(f"Generated analytics summary: {output_path}")
-        print(f"File size: {output_path.stat().st_size / 1024:.1f} KB")
-        print(f"Total positions: {analytics['summary_stats']['total_positions']}")
-        print(f"Graduate positions: {analytics['summary_stats']['graduate_positions']}")
-        print(f"Top disciplines: {list(analytics['top_disciplines'].keys())[:5]}")
+        print(f"\n✅ Dashboard analytics generated successfully!")
 
     except Exception as e:
-        print(f"Error generating analytics: {e}", file=sys.stderr)
+        print(f"\n❌ Error: {e}")
+        import traceback
+        traceback.print_exc()
         sys.exit(1)
 
 
