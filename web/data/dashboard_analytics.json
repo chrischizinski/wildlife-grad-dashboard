@@ -1,275 +1,161 @@
 {
   "metadata": {
-    "generated_at": "2026-01-16T12:05:07.262204",
-    "total_positions": 159
+    "generated_at": "2026-01-26T19:04:04.581232",
+    "total_positions": 17
   },
   "summary_stats": {
-    "total_positions": 159,
-    "graduate_positions": 159,
-    "positions_with_salary": 75
+    "total_positions": 17,
+    "graduate_positions": 17,
+    "positions_with_salary": 6
   },
   "top_disciplines": {
     "Unknown": {
-      "total_positions": 106,
-      "grad_positions": 106,
+      "total_positions": 12,
+      "grad_positions": 12,
       "salary_stats": {
-        "count": 36,
-        "mean": 17442.410555555554,
-        "median": 12500.0,
-        "min": 17.41,
-        "max": 69073.0
-      }
-    },
-    "Fisheries & Aquatic Science": {
-      "total_positions": 16,
-      "grad_positions": 16,
-      "salary_stats": {
-        "count": 9,
-        "mean": 26238.423333333332,
-        "median": 30000.0,
-        "min": 20.81,
-        "max": 60000.0
-      }
-    },
-    "Wildlife & Natural Resources": {
-      "total_positions": 14,
-      "grad_positions": 14,
-      "salary_stats": {
-        "count": 11,
-        "mean": 18076.282727272726,
-        "median": 5500.0,
-        "min": 19.11,
-        "max": 70000.0
+        "count": 4,
+        "mean": 33130.0,
+        "median": 33750.0,
+        "min": 20.0,
+        "max": 65000.0
       }
     },
     "Natural Resource Management": {
-      "total_positions": 14,
-      "grad_positions": 14,
+      "total_positions": 3,
+      "grad_positions": 3,
       "salary_stats": {
-        "count": 9,
-        "mean": 21241.333333333332,
-        "median": 7960.0,
-        "min": 14.0,
-        "max": 75600.0
+        "count": 1,
+        "mean": 16.73,
+        "median": 16.73,
+        "min": 16.73,
+        "max": 16.73
       }
     },
-    "Environmental Science": {
-      "total_positions": 9,
-      "grad_positions": 9,
+    "Fisheries & Aquatic Science": {
+      "total_positions": 1,
+      "grad_positions": 1,
       "salary_stats": {
-        "count": 7,
-        "mean": 24947.64285714286,
-        "median": 5500.0,
-        "min": 2551.5,
-        "max": 79350.0
+        "count": 1,
+        "mean": 800.0,
+        "median": 800.0,
+        "min": 800.0,
+        "max": 800.0
       }
+    },
+    "Wildlife & Natural Resources": {
+      "total_positions": 1,
+      "grad_positions": 1,
+      "salary_stats": null
     }
   },
   "geographic_summary": {
-    "China)": 9,
-    "Kansas": 7,
-    "Wisconsin)": 6,
-    "Louisiana": 5,
-    "California": 5,
-    "Alabama)": 5,
-    "Wisconsin": 5,
-    "Florida": 5,
-    "Washington)": 4,
-    "Georgia)": 4
+    "California": 2,
+    "California)": 2,
+    "D.C.": 1,
+    "Iowa": 1,
+    "Louisiana": 1,
+    "New York": 1,
+    "North Dakota": 1,
+    "Arizona": 1,
+    "Utah)": 1,
+    "Texas)": 1
   },
   "time_series": {
     "1_month": {
       "total_monthly": {
-        "2026-01": 70
+        "2026-01": 17
       },
       "discipline_monthly": {
-        "Wildlife & Natural Resources": {
-          "2026-01": 4
-        },
-        "Environmental Science": {
-          "2026-01": 2
-        },
-        "Natural Resource Management": {
-          "2026-01": 6
-        },
         "Unknown": {
-          "2026-01": 51
+          "2026-01": 12
         },
         "Fisheries & Aquatic Science": {
-          "2026-01": 7
+          "2026-01": 1
+        },
+        "Natural Resource Management": {
+          "2026-01": 3
+        },
+        "Wildlife & Natural Resources": {
+          "2026-01": 1
         }
       }
     },
     "3_month": {
       "total_monthly": {
-        "2025-11": 24,
-        "2025-12": 44,
-        "2026-01": 70
+        "2026-01": 17
       },
       "discipline_monthly": {
-        "Wildlife & Natural Resources": {
-          "2025-11": 2,
-          "2025-12": 7,
-          "2026-01": 4
-        },
-        "Environmental Science": {
-          "2025-11": 1,
-          "2025-12": 4,
-          "2026-01": 2
-        },
-        "Natural Resource Management": {
-          "2025-11": 3,
-          "2025-12": 5,
-          "2026-01": 6
-        },
         "Unknown": {
-          "2025-11": 17,
-          "2025-12": 21,
-          "2026-01": 51
+          "2026-01": 12
         },
         "Fisheries & Aquatic Science": {
-          "2025-11": 1,
-          "2025-12": 7,
-          "2026-01": 7
+          "2026-01": 1
+        },
+        "Natural Resource Management": {
+          "2026-01": 3
+        },
+        "Wildlife & Natural Resources": {
+          "2026-01": 1
         }
       }
     },
     "6_month": {
       "total_monthly": {
-        "2025-08": 1,
-        "2025-09": 4,
-        "2025-10": 15,
-        "2025-11": 24,
-        "2025-12": 44,
-        "2026-01": 70
+        "2026-01": 17
       },
       "discipline_monthly": {
-        "Wildlife & Natural Resources": {
-          "2025-10": 1,
-          "2025-11": 2,
-          "2025-12": 7,
-          "2026-01": 4
-        },
-        "Environmental Science": {
-          "2025-09": 1,
-          "2025-10": 1,
-          "2025-11": 1,
-          "2025-12": 4,
-          "2026-01": 2
-        },
-        "Natural Resource Management": {
-          "2025-11": 3,
-          "2025-12": 5,
-          "2026-01": 6
-        },
         "Unknown": {
-          "2025-08": 1,
-          "2025-09": 3,
-          "2025-10": 12,
-          "2025-11": 17,
-          "2025-12": 21,
-          "2026-01": 51
+          "2026-01": 12
         },
         "Fisheries & Aquatic Science": {
-          "2025-10": 1,
-          "2025-11": 1,
-          "2025-12": 7,
-          "2026-01": 7
+          "2026-01": 1
+        },
+        "Natural Resource Management": {
+          "2026-01": 3
+        },
+        "Wildlife & Natural Resources": {
+          "2026-01": 1
         }
       }
     },
     "1_year": {
       "total_monthly": {
-        "2025-06": 1,
-        "2025-08": 1,
-        "2025-09": 4,
-        "2025-10": 15,
-        "2025-11": 24,
-        "2025-12": 44,
-        "2026-01": 70
+        "2026-01": 17
       },
       "discipline_monthly": {
-        "Wildlife & Natural Resources": {
-          "2025-10": 1,
-          "2025-11": 2,
-          "2025-12": 7,
-          "2026-01": 4
-        },
-        "Environmental Science": {
-          "2025-09": 1,
-          "2025-10": 1,
-          "2025-11": 1,
-          "2025-12": 4,
-          "2026-01": 2
-        },
-        "Natural Resource Management": {
-          "2025-11": 3,
-          "2025-12": 5,
-          "2026-01": 6
-        },
         "Unknown": {
-          "2025-06": 1,
-          "2025-08": 1,
-          "2025-09": 3,
-          "2025-10": 12,
-          "2025-11": 17,
-          "2025-12": 21,
-          "2026-01": 51
+          "2026-01": 12
         },
         "Fisheries & Aquatic Science": {
-          "2025-10": 1,
-          "2025-11": 1,
-          "2025-12": 7,
-          "2026-01": 7
+          "2026-01": 1
+        },
+        "Natural Resource Management": {
+          "2026-01": 3
+        },
+        "Wildlife & Natural Resources": {
+          "2026-01": 1
         }
       }
     },
     "all_time": {
       "total_monthly": {
-        "2025-06": 1,
-        "2025-08": 1,
-        "2025-09": 4,
-        "2025-10": 15,
-        "2025-11": 24,
-        "2025-12": 44,
-        "2026-01": 70
+        "2026-01": 17
       },
       "discipline_monthly": {
-        "Wildlife & Natural Resources": {
-          "2025-10": 1,
-          "2025-11": 2,
-          "2025-12": 7,
-          "2026-01": 4
-        },
-        "Environmental Science": {
-          "2025-09": 1,
-          "2025-10": 1,
-          "2025-11": 1,
-          "2025-12": 4,
-          "2026-01": 2
-        },
-        "Natural Resource Management": {
-          "2025-11": 3,
-          "2025-12": 5,
-          "2026-01": 6
-        },
         "Unknown": {
-          "2025-06": 1,
-          "2025-08": 1,
-          "2025-09": 3,
-          "2025-10": 12,
-          "2025-11": 17,
-          "2025-12": 21,
-          "2026-01": 51
+          "2026-01": 12
         },
         "Fisheries & Aquatic Science": {
-          "2025-10": 1,
-          "2025-11": 1,
-          "2025-12": 7,
-          "2026-01": 7
+          "2026-01": 1
+        },
+        "Natural Resource Management": {
+          "2026-01": 3
+        },
+        "Wildlife & Natural Resources": {
+          "2026-01": 1
         }
       }
     }
   },
-  "last_updated": "2026-01-16T12:05:07.262214"
+  "last_updated": "2026-01-26T19:04:04.581243"
 }
