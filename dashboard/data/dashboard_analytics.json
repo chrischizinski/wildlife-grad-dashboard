@@ -1,0 +1,239 @@
+{
+  "metadata": {
+    "generated_at": "2026-02-15T05:19:25.831501",
+    "total_positions": 229,
+    "source": "merged (historical + latest + enhanced)",
+    "discipline_mapping": "consolidated to 6 categories"
+  },
+  "summary_stats": {
+    "total_positions": 229,
+    "graduate_positions": 229,
+    "positions_with_salary": 138
+  },
+  "top_disciplines": {
+    "Environmental Science": {
+      "total_positions": 69,
+      "grad_positions": 69,
+      "salary_stats": {
+        "count": 47,
+        "mean": 30396.68,
+        "median": 26159.0,
+        "min": 18000.0,
+        "max": 61008.0
+      }
+    },
+    "Wildlife": {
+      "total_positions": 45,
+      "grad_positions": 45,
+      "salary_stats": {
+        "count": 21,
+        "mean": 31955.24,
+        "median": 30000.0,
+        "min": 24700.0,
+        "max": 70000.0
+      }
+    },
+    "Fisheries": {
+      "total_positions": 40,
+      "grad_positions": 40,
+      "salary_stats": {
+        "count": 29,
+        "mean": 36824.97,
+        "median": 29000.0,
+        "min": 21000.0,
+        "max": 61000.0
+      }
+    },
+    "Human Dimensions": {
+      "total_positions": 16,
+      "grad_positions": 16,
+      "salary_stats": {
+        "count": 10,
+        "mean": 45102.4,
+        "median": 60000.0,
+        "min": 22000.0,
+        "max": 61008.0
+      }
+    },
+    "Forestry": {
+      "total_positions": 1,
+      "grad_positions": 1,
+      "salary_stats": {
+        "count": 1,
+        "mean": 21000.0,
+        "median": 21000.0,
+        "min": 21000.0,
+        "max": 21000.0
+      }
+    },
+    "Other": {
+      "total_positions": 58,
+      "grad_positions": 58,
+      "salary_stats": {
+        "count": 30,
+        "mean": 34468.67,
+        "median": 31000.0,
+        "min": 20000.0,
+        "max": 70000.0
+      }
+    }
+  },
+  "geographic_summary": {
+    "Texas)": 22,
+    "Texas": 15,
+    "remote work allowed": 13,
+    "multiple": 12,
+    "Massachusetts": 10,
+    "Maryland)": 9,
+    "Idaho": 9,
+    "Arkansas)": 9,
+    "Alabama)": 8,
+    "Florida)": 8,
+    "Washington": 6,
+    "South Dakota)": 5,
+    "Minnesota": 5,
+    "Tennessee)": 5,
+    "Rhode Island)": 5,
+    "Georgia)": 5,
+    "North Dakota)": 5,
+    "Georgia": 5,
+    "Ohio)": 5,
+    "New Mexico)": 4,
+    "South Carolina": 4,
+    "Montana": 4,
+    "Oregon)": 4,
+    "Canada)": 4,
+    "Wyoming": 4
+  },
+  "time_series": {
+    "1_month": {
+      "total_monthly": {
+        "2025-06": 4,
+        "2025-07": 203,
+        "2026-02": 22
+      },
+      "discipline_monthly": {
+        "Human Dimensions": {
+          "2025-07": 16
+        },
+        "Other": {
+          "2025-07": 42,
+          "2026-02": 16
+        },
+        "Environmental Science": {
+          "2025-07": 66,
+          "2026-02": 3
+        },
+        "Wildlife": {
+          "2025-07": 43,
+          "2026-02": 2
+        },
+        "Fisheries": {
+          "2025-07": 35,
+          "2025-06": 4,
+          "2026-02": 1
+        },
+        "Forestry": {
+          "2025-07": 1
+        }
+      }
+    },
+    "3_month": {
+      "total_monthly": {
+        "2025-06": 4,
+        "2025-07": 203,
+        "2026-02": 22
+      },
+      "discipline_monthly": {
+        "Human Dimensions": {
+          "2025-07": 16
+        },
+        "Other": {
+          "2025-07": 42,
+          "2026-02": 16
+        },
+        "Environmental Science": {
+          "2025-07": 66,
+          "2026-02": 3
+        },
+        "Wildlife": {
+          "2025-07": 43,
+          "2026-02": 2
+        },
+        "Fisheries": {
+          "2025-07": 35,
+          "2025-06": 4,
+          "2026-02": 1
+        },
+        "Forestry": {
+          "2025-07": 1
+        }
+      }
+    },
+    "6_month": {
+      "total_monthly": {
+        "2025-06": 4,
+        "2025-07": 203,
+        "2026-02": 22
+      },
+      "discipline_monthly": {
+        "Human Dimensions": {
+          "2025-07": 16
+        },
+        "Other": {
+          "2025-07": 42,
+          "2026-02": 16
+        },
+        "Environmental Science": {
+          "2025-07": 66,
+          "2026-02": 3
+        },
+        "Wildlife": {
+          "2025-07": 43,
+          "2026-02": 2
+        },
+        "Fisheries": {
+          "2025-07": 35,
+          "2025-06": 4,
+          "2026-02": 1
+        },
+        "Forestry": {
+          "2025-07": 1
+        }
+      }
+    },
+    "12_month": {
+      "total_monthly": {
+        "2025-06": 4,
+        "2025-07": 203,
+        "2026-02": 22
+      },
+      "discipline_monthly": {
+        "Human Dimensions": {
+          "2025-07": 16
+        },
+        "Other": {
+          "2025-07": 42,
+          "2026-02": 16
+        },
+        "Environmental Science": {
+          "2025-07": 66,
+          "2026-02": 3
+        },
+        "Wildlife": {
+          "2025-07": 43,
+          "2026-02": 2
+        },
+        "Fisheries": {
+          "2025-07": 35,
+          "2025-06": 4,
+          "2026-02": 1
+        },
+        "Forestry": {
+          "2025-07": 1
+        }
+      }
+    }
+  },
+  "last_updated": "2026-02-15 05:19:25"
+}

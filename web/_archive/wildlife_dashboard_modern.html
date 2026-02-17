@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wildlife Graduate Dashboard — Modern</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/supabase-config.js"></script>
+  <script src="assets/js/region-mapper.js"></script>
+  <style>
+    :root {
+      --primary-color: #0ea5e9;   /* sky-500 */
+      --success-color: #22c55e;   /* green-500 */
+      --warning-color: #f59e0b;   /* amber-500 */
+      --info-color: #2563eb;      /* blue-600 */
+      --neutral-50: #f8fafc;
+      --neutral-100: #f1f5f9;
+      --neutral-200: #e2e8f0;
+      --neutral-300: #cbd5e1;
+      --neutral-600: #475569;
+      --neutral-700: #334155;
+    }
+    body { background: var(--neutral-50); color: var(--neutral-700); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .app-shell { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; }
+    .app-sidebar { background: #fff; border-right: 1px solid var(--neutral-200); padding: 20px 16px; }
+    .app-brand { font-weight: 700; display: flex; align-items: center; gap: 10px; color: var(--neutral-700); }
+    .app-nav a { display: block; padding: 10px 12px; margin: 4px 0; color: var(--neutral-700); border-radius: 8px; text-decoration: none; }
+    .app-nav a:hover, .app-nav a.active { background: var(--neutral-100); }
+    .app-main { padding: 20px; }
+    .status-banner { background: #fff; border: 1px solid var(--neutral-200); border-radius: 10px; padding: 10px 14px; margin-bottom: 16px; }
+    .kpi-card { background: #fff; border: 1px solid var(--neutral-200); border-radius: 12px; padding: 16px; }
+    .kpi-value { font-size: 28px; font-weight: 800; }
+    .chart-card { background: #fff; border: 1px solid var(--neutral-200); border-radius: 12px; padding: 16px; position: relative; overflow: visible; margin-bottom: 24px; }
+    .chart-card h5 { margin-bottom: 10px; }
+    /* Let legend expand naturally; keep canvas height fixed */
+    .chart-container { position: relative; overflow: visible; }
+    .chart-container canvas { max-height: 360px !important; height: 360px !important; width: 100% !important; }
+    .chart-export-btn { position: absolute; top: 10px; right: 10px; z-index: 20; }
+    .controls-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .timeframe .btn { --bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; }
+    /* Custom legend sits below canvas in flow */
+    .custom-legend { margin-top: 8px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 6px 10px; }
+    .custom-legend__item.btn { font-size: 12px; line-height: 1.2; }
+    /* Loading / Error */
+    .placeholder-card { height: 120px; background: var(--neutral-100); border-radius: 12px; border: 1px solid var(--neutral-200); }
+    @media (max-width: 992px) {
+      .chart-container canvas { max-height: 320px !important; height: 320px !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Sidebar -->
+    <aside class="app-sidebar">
+      <div class="app-brand mb-3"><i class="fas fa-leaf"></i> Wildlife Grad Dashboard</div>
+      <nav class="app-nav">
+        <a class="active" href="#overview"><i class="fas fa-gauge-high me-2"></i>Overview</a>
+        <a href="#trends"><i class="fas fa-chart-line me-2"></i>Trends</a>
+        <a href="#disciplines"><i class="fas fa-graduation-cap me-2"></i>Disciplines</a>
+        <a href="#universities"><i class="fas fa-university me-2"></i>Universities</a>
+        <a href="#advanced"><i class="fas fa-chart-area me-2"></i>Advanced</a>
+      </nav>
+      <hr />
+      <small class="text-muted">Source: Supabase • JSON fallback</small>
+    </aside>
+
+    <!-- Main -->
+    <main class="app-main">
+      <!-- Status -->
+      <div id="status-banner" class="status-banner d-none">
+        <div class="d-flex justify-content-between align-items-center">
+          <div id="connection-status" class="d-flex align-items-center">
+            <i id="status-icon" class="fas fa-circle me-2"></i>
+            <span id="status-text" class="fw-semibold"></span>
+          </div>
+          <div class="text-muted small">Last Updated: <span id="last-updated-date" class="fw-semibold">—</span></div>
+        </div>
+      </div>
+
+      <!-- Loading / Error -->
+      <div id="loading" class="d-none">
+        <div class="row g-3">
+          <div class="col-md-3"><div class="placeholder-card"></div></div>
+          <div class="col-md-3"><div class="placeholder-card"></div></div>
+          <div class="col-md-3"><div class="placeholder-card"></div></div>
+          <div class="col-md-3"><div class="placeholder-card"></div></div>
+        </div>
+      </div>
+      <div id="error" class="alert alert-danger d-none" role="alert">
+        <span id="error-message">Unable to load dashboard data.</span>
+      </div>
+
+      <!-- Content -->
+      <div id="main-content" class="container-fluid">
+        <!-- Overview KPIs -->
+        <section id="overview" class="mb-4">
+          <div class="row g-3">
+            <div class="col-md-4">
+              <div class="kpi-card">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div>
+                    <div class="text-muted">Total Scraped</div>
+                    <div id="total-positions" class="kpi-value">—</div>
+                  </div>
+                  <div class="stats-icon"><i class="fas fa-database"></i></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="kpi-card">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div>
+                    <div class="text-muted">Graduate Positions</div>
+                    <div id="grad-positions" class="kpi-value">—</div>
+                  </div>
+                  <div class="stats-icon"><i class="fas fa-graduation-cap"></i></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="kpi-card">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div>
+                    <div class="text-muted">Disciplines</div>
+                    <div id="disciplines-count" class="kpi-value">—</div>
+                  </div>
+                  <div class="stats-icon"><i class="fas fa-chart-pie"></i></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Trends -->
+        <section id="trends" class="mb-4">
+          <div class="row g-3">
+            <div class="col-lg-8">
+              <div class="chart-card">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i>Monthly Posting Trends</h5>
+                  <div class="controls-row timeframe" role="group" aria-label="Timeframe">
+                    <input type="radio" class="btn-check" name="timeframe" id="time-1month" value="1_month" />
+                    <label class="btn btn-outline-secondary btn-sm" for="time-1month">1M</label>
+                    <input type="radio" class="btn-check" name="timeframe" id="time-6months" value="6_month" />
+                    <label class="btn btn-outline-secondary btn-sm" for="time-6months">6M</label>
+                    <input type="radio" class="btn-check" name="timeframe" id="time-1year" value="1_year" checked />
+                    <label class="btn btn-outline-secondary btn-sm" for="time-1year">1Y</label>
+                    <input type="radio" class="btn-check" name="timeframe" id="time-all" value="all_time" />
+                    <label class="btn btn-outline-secondary btn-sm" for="time-all">ALL</label>
+                  </div>
+                </div>
+                <div class="chart-container">
+                  <canvas id="trend-chart"></canvas>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="chart-card">
+                <h5><i class="fas fa-graduation-cap me-2"></i>Top Disciplines</h5>
+                <div class="chart-container">
+                  <canvas id="discipline-chart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Discipline & Salary -->
+        <section id="disciplines" class="mb-4">
+          <div class="row g-3">
+            <div class="col-lg-6">
+              <div class="chart-card">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <h5 class="mb-0"><i class="fas fa-dollar-sign me-2"></i>Salary by Discipline</h5>
+                  <div class="form-check form-switch small d-flex align-items-center gap-2">
+                    <input class="form-check-input" type="checkbox" id="toggle-ne-adjust" checked>
+                    <label class="form-check-label" for="toggle-ne-adjust">NE Adjusted</label>
+                    <i class="fas fa-circle-info text-muted"
+                       data-bs-toggle="tooltip"
+                       data-bs-placement="left"
+                       title="Toggles cost-of-living to Lincoln, NE baseline. Uses state-level indices; falls back to regional averages when needed."></i>
+                  </div>
+                </div>
+                <div class="chart-container">
+                  <canvas id="salary-chart"></canvas>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="chart-card">
+                <h5><i class="fas fa-map-marker-alt me-2"></i>Regional Distribution</h5>
+                <div class="chart-container">
+                  <canvas id="location-chart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Universities & Advanced -->
+        <section id="universities" class="mb-4">
+          <div class="row g-3">
+            <div class="col-lg-8">
+              <div class="chart-card">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i>Monthly Trends & KPIs</h5>
+                  <div class="controls-row">
+                    <select id="time-period-filter" class="form-select form-select-sm" style="width:auto;">
+                      <option value="1month">Last Month</option>
+                      <option value="6months">Last 6 Months</option>
+                      <option value="12months" selected>Last 12 Months</option>
+                      <option value="24months">Last 24 Months</option>
+                      <option value="all">Lifetime</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="chart-container">
+                  <canvas id="monthlyTrendsChart"></canvas>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="chart-card">
+                <h5><i class="fas fa-graduation-cap me-2"></i>Degree Type Distribution</h5>
+                <div class="chart-container"><canvas id="degreeTypeChart"></canvas></div>
+              </div>
+              <div class="chart-card mt-3">
+                <h6 class="text-muted mb-2">KPIs</h6>
+                <div class="row g-3 small">
+                  <div class="col-6">
+                    <div class="border rounded p-2">
+                      <div class="text-muted">Growth Rate</div>
+                      <div id="posting-growth-rate" class="fw-bold">—</div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="border rounded p-2">
+                      <div class="text-muted">Top Discipline</div>
+                      <div id="top-discipline" class="fw-bold">—</div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="border rounded p-2">
+                      <div class="text-muted">MS/PhD Split</div>
+                      <div id="ms-phd-split" class="fw-bold">—</div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="border rounded p-2">
+                      <div class="text-muted">Avg Salary</div>
+                      <div id="salary-trend" class="fw-bold">—</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="chart-card mt-3">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <h5 class="mb-0"><i class="fas fa-trophy me-2"></i>Big Ten vs Others</h5>
+                  <span class="small text-muted">Universities</span>
+                </div>
+                <div class="row g-2 mb-2 small">
+                  <div class="col-6">
+                    <div class="border rounded p-2 d-flex justify-content-between align-items-center">
+                      <span class="text-muted">Big Ten</span>
+                      <strong id="big10-positions">—</strong>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="border rounded p-2 d-flex justify-content-between align-items-center">
+                      <span class="text-muted">Others</span>
+                      <strong id="non-big10-positions">—</strong>
+                    </div>
+                  </div>
+                </div>
+                <div class="chart-container">
+                  <canvas id="big10-salary-chart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="advanced" class="mb-4">
+          <div class="row g-3">
+            <div class="col-lg-6">
+              <div class="chart-card">
+                <h5><i class="fas fa-clock me-2"></i>Seasonal Patterns</h5>
+                <div class="chart-container"><canvas id="seasonalPatternsChart"></canvas></div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="chart-card">
+                <h5><i class="fas fa-money-bill-wave me-2"></i>Salary Distribution</h5>
+                <div class="chart-container"><canvas id="salaryDistributionChart"></canvas></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <footer class="mt-4 small text-muted">
+          <div class="d-flex justify-content-between">
+            <div>
+              Total Analyzed: <span id="footer-total-analyzed">—</span> • Graduate: <span id="footer-graduate-positions">—</span> • Classification: <span id="footer-classification-rate">—</span>
+            </div>
+            <div>
+              Last Updated: <span id="footer-last-updated">—</span>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('=== MODERN HTML DOM LOADED ===');
+      if (typeof supabase !== 'undefined') {
+        const ok = initializeSupabase();
+        console.log('Supabase initialized:', ok);
+      }
+      console.log('=== MODERN HTML DOM INIT COMPLETE ===');
+    });
+  </script>
+  <script src="assets/js/supabase-dashboard.js?v=1.5"></script>
+</body>
+</html>

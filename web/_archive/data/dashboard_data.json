@@ -1,0 +1,36 @@
+{
+  "summary": {
+    "total_positions": 65,
+    "graduate_positions": 20,
+    "last_updated": "2025-10-14T10:41:20.939673",
+    "data_source": "local_processing"
+  },
+  "disciplines": {
+    "Unknown": 12,
+    "Wildlife & Natural Resources": 7,
+    "Fisheries & Aquatic Science": 1
+  },
+  "geographic": {
+    "Stillwater, Oklahoma": 1,
+    "Foundational Sciences Building , 1600 Ashland Ave (Muncie, Indiana)": 1,
+    "Auburn University (Auburn, Alabama)": 1,
+    "TH Morgan Biological Sciences (Lexington, Kentucky)": 1,
+    "Gainesville, Florida": 1,
+    "1140 E. South Campus Dr. (Tucson, Arizona)": 1,
+    "600 Clinic Drive (Mobile, Alabama)": 1,
+    "Columbia, Missouri": 1,
+    "remote work allowed": 1,
+    "multiple": 2,
+    "Russellville, Arkansas": 1,
+    "509 Westinghouse Road (Pandleton, South Carolina)": 1,
+    "Box 9690 (Mississippi State, Mississippi)": 2,
+    "1606 Throckmorton Plant Sciences Center (Manhattan, Kansas)": 1,
+    "orlando, Florida": 1,
+    "Clemson, South Carolina": 1,
+    "Michigan State University (East Lansing, Michigan)": 1,
+    "St. Paul, Minnesota": 1
+  },
+  "salary_stats": {
+    "count": 0
+  }
+}

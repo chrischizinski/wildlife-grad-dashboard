@@ -1,0 +1,144 @@
+{
+  "metadata": {
+    "generated_at": "2025-08-03T04:52:21.572616",
+    "total_positions": 7
+  },
+  "summary_stats": {
+    "total_positions": 7,
+    "graduate_positions": 7,
+    "positions_with_salary": 3
+  },
+  "top_disciplines": {
+    "Wildlife & Natural Resources": {
+      "total_positions": 3,
+      "grad_positions": 3,
+      "salary_stats": {
+        "count": 1,
+        "mean": 22000.0,
+        "median": 22000.0,
+        "min": 22000.0,
+        "max": 22000.0
+      }
+    },
+    "Unknown": {
+      "total_positions": 2,
+      "grad_positions": 2,
+      "salary_stats": {
+        "count": 1,
+        "mean": 24200.0,
+        "median": 24200.0,
+        "min": 24200.0,
+        "max": 24200.0
+      }
+    },
+    "Natural Resource Management": {
+      "total_positions": 2,
+      "grad_positions": 2,
+      "salary_stats": {
+        "count": 1,
+        "mean": 34.0,
+        "median": 34.0,
+        "min": 34.0,
+        "max": 34.0
+      }
+    }
+  },
+  "geographic_summary": {
+    "Texas": 2,
+    "Idaho": 1,
+    "Washington": 1,
+    "South Africa": 1,
+    "Oregon": 1
+  },
+  "time_series": {
+    "1_month": {
+      "total_monthly": {
+        "2025-08": 1
+      },
+      "discipline_monthly": {
+        "Wildlife & Natural Resources": {
+          "2025-07": 3
+        },
+        "Unknown": {
+          "2025-08": 1
+        },
+        "Natural Resource Management": {
+          "2025-07": 2
+        }
+      }
+    },
+    "3_month": {
+      "total_monthly": {
+        "2025-07": 6,
+        "2025-08": 1
+      },
+      "discipline_monthly": {
+        "Wildlife & Natural Resources": {
+          "2025-07": 3
+        },
+        "Unknown": {
+          "2025-07": 1,
+          "2025-08": 1
+        },
+        "Natural Resource Management": {
+          "2025-07": 2
+        }
+      }
+    },
+    "6_month": {
+      "total_monthly": {
+        "2025-07": 6,
+        "2025-08": 1
+      },
+      "discipline_monthly": {
+        "Wildlife & Natural Resources": {
+          "2025-07": 3
+        },
+        "Unknown": {
+          "2025-07": 1,
+          "2025-08": 1
+        },
+        "Natural Resource Management": {
+          "2025-07": 2
+        }
+      }
+    },
+    "1_year": {
+      "total_monthly": {
+        "2025-07": 6,
+        "2025-08": 1
+      },
+      "discipline_monthly": {
+        "Wildlife & Natural Resources": {
+          "2025-07": 3
+        },
+        "Unknown": {
+          "2025-07": 1,
+          "2025-08": 1
+        },
+        "Natural Resource Management": {
+          "2025-07": 2
+        }
+      }
+    },
+    "all_time": {
+      "total_monthly": {
+        "2025-07": 6,
+        "2025-08": 1
+      },
+      "discipline_monthly": {
+        "Wildlife & Natural Resources": {
+          "2025-07": 3
+        },
+        "Unknown": {
+          "2025-07": 1,
+          "2025-08": 1
+        },
+        "Natural Resource Management": {
+          "2025-07": 2
+        }
+      }
+    }
+  },
+  "last_updated": "2025-08-03T04:52:21.572627"
+}

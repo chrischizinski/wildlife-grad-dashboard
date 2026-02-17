@@ -1,0 +1,453 @@
+/* Analytics Dashboard Styles - Refactored without !important */
+
+:root {
+    --primary-color: #059669;
+    --primary-dark: #047857;
+    --success-color: #22c55e;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+    --info-color: #0ea5e9;
+    --wildlife-blue: #1e40af;
+    --forest-green: #166534;
+    --earth-brown: #92400e;
+    --light-color: #f0fdf4;
+    --dark-color: #111827;
+    --border-radius: 0.75rem;
+    --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --box-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --transition: all 0.3s ease;
+}
+
+/* Base Styles */
+body.analytics-dashboard {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, var(--light-color) 0%, #ecfdf5 100%);
+    color: #111827;
+    line-height: 1.6;
+}
+
+/* Header Hierarchy with Proper Specificity */
+.analytics-dashboard h1,
+.analytics-dashboard h2,
+.analytics-dashboard h3,
+.analytics-dashboard h4,
+.analytics-dashboard h5,
+.analytics-dashboard h6 {
+    color: #111827;
+    font-weight: 600;
+}
+
+/* Main Header Card - Dark Background with White Text */
+.analytics-dashboard .analytics-header-card h1,
+.analytics-dashboard .analytics-header-card h2,
+.analytics-dashboard .analytics-header-card h3,
+.analytics-dashboard .analytics-header-card h4,
+.analytics-dashboard .analytics-header-card h5,
+.analytics-dashboard .analytics-header-card h6 {
+    color: white;
+}
+
+/* Navigation */
+.analytics-dashboard .navbar {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    transition: var(--transition);
+}
+
+.analytics-dashboard .navbar-brand {
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.analytics-dashboard .nav-link {
+    color: #6b7280;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.analytics-dashboard .nav-link:hover,
+.analytics-dashboard .nav-link.active {
+    color: var(--primary-color);
+}
+
+/* Header Card Styling */
+.analytics-dashboard .analytics-header-card {
+    background: linear-gradient(135deg, var(--forest-green) 0%, var(--primary-color) 100%);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow-lg);
+    border: none;
+    color: white;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.analytics-dashboard .analytics-header-card .lead {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0;
+}
+
+/* Cards */
+.analytics-dashboard .analytics-card {
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    background: white;
+}
+
+.analytics-dashboard .analytics-card:hover {
+    box-shadow: var(--box-shadow-lg);
+    transform: translateY(-2px);
+}
+
+.analytics-dashboard .analytics-card .card-header {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-bottom: 1px solid #e2e8f0;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    padding: 1.25rem;
+}
+
+.analytics-dashboard .analytics-card .card-body {
+    padding: 1.5rem;
+}
+
+/* Discipline Cards */
+.analytics-dashboard .discipline-card {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    overflow: hidden;
+    position: relative;
+}
+
+.analytics-dashboard .discipline-card:hover {
+    box-shadow: var(--box-shadow-lg);
+    transform: translateY(-3px);
+}
+
+.analytics-dashboard .discipline-card .card-body {
+    padding: 1.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.analytics-dashboard .discipline-card.overall-card {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: white;
+}
+
+.analytics-dashboard .discipline-card.overall-card .discipline-header h6,
+.analytics-dashboard .discipline-card.overall-card .stat-value,
+.analytics-dashboard .discipline-card.overall-card .stat-label {
+    color: white;
+}
+
+.analytics-dashboard .discipline-header h6 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #1f2937;
+}
+
+.analytics-dashboard .discipline-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.analytics-dashboard .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.analytics-dashboard .stat-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.25rem;
+}
+
+.analytics-dashboard .stat-label {
+    font-size: 0.875rem;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+/* Sparkline Container */
+.analytics-dashboard .sparkline-container {
+    height: 40px;
+    margin-top: 0.5rem;
+    position: relative;
+}
+
+/* Trend Indicators */
+.analytics-dashboard .trend-up {
+    color: var(--success-color);
+}
+
+.analytics-dashboard .trend-down {
+    color: var(--danger-color);
+}
+
+.analytics-dashboard .trend-stable {
+    color: #6b7280;
+}
+
+/* Filter Controls */
+.analytics-dashboard .filter-controls {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.analytics-dashboard .btn-outline-primary {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    transition: var(--transition);
+}
+
+.analytics-dashboard .btn-outline-primary:hover,
+.analytics-dashboard .btn-outline-primary.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+/* Charts */
+.analytics-dashboard .chart-container {
+    position: relative;
+    height: 400px;
+    margin: 1rem 0;
+}
+
+.analytics-dashboard .chart-container canvas {
+    border-radius: var(--border-radius);
+}
+
+/* Insights and Patterns */
+.analytics-dashboard .insight-item {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    transition: var(--transition);
+}
+
+.analytics-dashboard .insight-item:hover {
+    box-shadow: var(--box-shadow-lg);
+}
+
+.analytics-dashboard .insight-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+
+.analytics-dashboard .insight-content h6 {
+    color: #1f2937;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.analytics-dashboard .insight-content p {
+    color: #6b7280;
+    margin-bottom: 0;
+    font-size: 0.95rem;
+}
+
+/* Seasonal Patterns */
+.analytics-dashboard .seasonal-pattern {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    transition: var(--transition);
+}
+
+.analytics-dashboard .seasonal-pattern:hover {
+    box-shadow: var(--box-shadow-lg);
+}
+
+.analytics-dashboard .season-name {
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.analytics-dashboard .season-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.analytics-dashboard .season-count {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.analytics-dashboard .season-trend {
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+}
+
+/* Regional Analysis */
+.analytics-dashboard .regional-item {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 1rem;
+    transition: var(--transition);
+}
+
+.analytics-dashboard .regional-item:hover {
+    box-shadow: var(--box-shadow-lg);
+}
+
+.analytics-dashboard .region-name {
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.analytics-dashboard .region-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.analytics-dashboard .region-count {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.analytics-dashboard .region-percentage {
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+/* Cost of Living Analysis */
+.analytics-dashboard .cost-analysis {
+    background: linear-gradient(135deg, #fef3c7 0%, #fbbf24 100%);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.analytics-dashboard .cost-analysis h6 {
+    color: #92400e;
+    font-weight: 600;
+}
+
+.analytics-dashboard .cost-analysis p {
+    color: #78350f;
+    margin-bottom: 0;
+}
+
+/* Loading States */
+.analytics-dashboard .loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}
+
+.analytics-dashboard .spinner-border {
+    color: var(--primary-color);
+}
+
+/* Footer */
+.analytics-dashboard .footer {
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+    padding: 2rem 0;
+    margin-top: 3rem;
+}
+
+.analytics-dashboard .footer .text-muted {
+    color: #6b7280;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .analytics-dashboard .analytics-header-card {
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .analytics-dashboard .discipline-stats {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .analytics-dashboard .chart-container {
+        height: 300px;
+    }
+
+    .analytics-dashboard .filter-controls {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .analytics-dashboard .analytics-header-card {
+        padding: 1rem;
+    }
+
+    .analytics-dashboard .analytics-card .card-body,
+    .analytics-dashboard .filter-controls {
+        padding: 1rem;
+    }
+
+    .analytics-dashboard .chart-container {
+        height: 250px;
+    }
+}
+
+/* Accessibility Improvements */
+.analytics-dashboard .btn:focus,
+.analytics-dashboard .btn-outline-primary:focus {
+    box-shadow: 0 0 0 0.2rem rgba(5, 150, 105, 0.25);
+}
+
+.analytics-dashboard .insight-item:focus-within,
+.analytics-dashboard .discipline-card:focus-within {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    .analytics-dashboard {
+        --primary-color: #047857;
+        --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .analytics-dashboard .analytics-card,
+    .analytics-dashboard .insight-item {
+        border: 1px solid #374151;
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    .analytics-dashboard * {
+        transition: none;
+    }
+}

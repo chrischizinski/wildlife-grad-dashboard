@@ -1,0 +1,117 @@
+name: Scrape Jobs and Update Dashboard
+
+on:
+  schedule:
+    # Run every Sunday at 4 AM UTC for weekly scrape
+    - cron: "0 4 * * 0"
+  workflow_dispatch: # Allow manual trigger
+  push:
+    branches: [main]
+    paths:
+      - "src/wildlife_grad/scraper/wildlife_job_scraper.py"
+      - "scripts/generate_dashboard_analytics.py"
+
+permissions:
+  contents: write
+
+jobs:
+  scrape-and-update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Install Chrome dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget gnupg unzip
+          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Check for existing data (determines scrape mode)
+        id: check_data
+        run: |
+          if [ -f "data/processed/verified_graduate_assistantships.json" ] || [ -f "data/historical_positions.json" ]; then
+            echo "mode=incremental" >> $GITHUB_OUTPUT
+            echo "Existing data found - will run INCREMENTAL scrape (Last 7 days)"
+          else
+            echo "mode=comprehensive" >> $GITHUB_OUTPUT
+            echo "No existing data - will run COMPREHENSIVE scrape (All positions)"
+          fi
+
+      - name: Scrape wildlife jobs
+        run: |
+          echo "Starting job scraping in ${{ steps.check_data.outputs.mode }} mode..."
+          python3 -m src.wildlife_grad.scraper.wildlife_job_scraper
+
+      - name: Generate dashboard data
+        run: |
+          echo "Generating dashboard analytics..."
+          python3 scripts/generate_dashboard_analytics.py
+
+      - name: Copy data files to web dashboard directory
+        run: |
+          echo "Copying data files for GitHub Pages deployment..."
+          mkdir -p web/data
+          cp data/processed/verified_graduate_assistantships.json web/data/
+          [ -f data/enhanced_data.json ] && cp data/enhanced_data.json web/data/ || echo "enhanced_data.json not found, skipping"
+          [ -f data/historical_positions.json ] && cp data/historical_positions.json web/data/ || echo "historical_positions.json not found, skipping"
+          [ -f dashboard/data/dashboard_analytics.json ] && cp dashboard/data/dashboard_analytics.json web/data/ || echo "dashboard_analytics.json not in dashboard/data/, checking other locations"
+          [ -f data/dashboard_analytics.json ] && cp data/dashboard_analytics.json web/data/ || echo "dashboard_analytics.json not found in data/"
+          echo "Data files copied successfully"
+
+      - name: Archive data
+        run: |
+          timestamp=$(date +%Y%m%d_%H%M%S)
+          mkdir -p data/archive
+          [ -f data/enhanced_data.json ] && cp data/enhanced_data.json "data/archive/enhanced_${timestamp}.json"
+          [ -f data/historical_positions.json ] && cp data/historical_positions.json "data/archive/historical_${timestamp}.json"
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git fetch origin
+
+          # Stage only data directories (scripts generate these)
+          git add data/
+          git add dashboard/data/
+          git add web/data/
+
+          # Reset any other modified files (shouldn't happen in CI, but be defensive)
+          git checkout -- . || true
+
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Automated job data update $(date '+%Y-%m-%d %H:%M:%S')"
+            git pull --rebase --strategy-option=theirs origin main
+            git push origin main
+          fi
+
+      - name: Workflow summary
+        run: |
+          echo "## Scraping Summary" >> $GITHUB_STEP_SUMMARY
+          if [ -f "data/processed/verified_graduate_assistantships.json" ]; then
+            total_jobs=$(jq 'length' data/processed/verified_graduate_assistantships.json 2>/dev/null || echo "0")
+            echo "- **Graduate positions**: $total_jobs" >> $GITHUB_STEP_SUMMARY
+          fi
+          if [ -f "data/enhanced_data.json" ]; then
+            total_all=$(jq '.positions | length' data/enhanced_data.json 2>/dev/null || echo "0")
+            echo "- **Total positions scraped**: $total_all" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "- **Dashboard refreshed**: Yes" >> $GITHUB_STEP_SUMMARY
+          echo "- **Mode**: ${{ steps.check_data.outputs.mode }}" >> $GITHUB_STEP_SUMMARY
