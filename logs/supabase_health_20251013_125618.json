@@ -1,0 +1,22 @@
+{
+  "timestamp": "2025-10-13T12:56:18.834811",
+  "connection": {
+    "status": "healthy",
+    "message": "Connection successful - 638 total records",
+    "total_records": 638,
+    "project_url": "https://mqbkzveymkehgkbcjgba.supabase.co"
+  },
+  "activity": {
+    "status": "analyzed",
+    "risk_level": "high",
+    "records_last_7_days": 0,
+    "records_last_3_days": 0,
+    "recommendations": [
+      "\ud83d\udea8 HIGH RISK: No activity in 7+ days",
+      "Run scraper immediately: python -m src.wildlife_grad.scraper.wildlife_job_scraper",
+      "Set up keepalive: python scripts/supabase_keepalive.py",
+      "Consider upgrading to Pro plan to avoid auto-pause"
+    ]
+  },
+  "overall_health": "needs_attention"
+}

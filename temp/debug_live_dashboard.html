@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Wildlife Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        #debug-output {
+            background: #f4f4f4;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 20px 0;
+            height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+        .error { color: red; }
+        .success { color: green; }
+        .warning { color: orange; }
+    </style>
+</head>
+<body>
+    <h1>Debug Wildlife Dashboard Loading</h1>
+    <div id="status">Initializing...</div>
+    <div id="debug-output"></div>
+
+    <!-- Load external dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Load dashboard config -->
+    <script src="./assets/js/supabase-config.js"></script>
+
+    <script>
+        const debugOutput = document.getElementById('debug-output');
+        const status = document.getElementById('status');
+
+        // Override console.log to show on page
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+
+        function addToDebug(message, type = 'log') {
+            const timestamp = new Date().toLocaleTimeString();
+            const className = type === 'error' ? 'error' : type === 'warn' ? 'warning' : type === 'success' ? 'success' : '';
+            debugOutput.innerHTML += `<span class="${className}">[${timestamp}] ${message}</span>\n`;
+            debugOutput.scrollTop = debugOutput.scrollHeight;
+        }
+
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            addToDebug(args.join(' '), 'log');
+        };
+
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            addToDebug('ERROR: ' + args.join(' '), 'error');
+        };
+
+        console.warn = function(...args) {
+            originalWarn.apply(console, args);
+            addToDebug('WARN: ' + args.join(' '), 'warn');
+        };
+
+        // Test basic functionality step by step
+        async function debugDashboardLoading() {
+            try {
+                addToDebug('=== STARTING DEBUG ===');
+
+                // Check library loading
+                addToDebug('Supabase library: ' + (typeof supabase !== 'undefined' ? 'LOADED' : 'MISSING'),
+                          typeof supabase !== 'undefined' ? 'success' : 'error');
+                addToDebug('Chart.js library: ' + (typeof Chart !== 'undefined' ? 'LOADED' : 'MISSING'),
+                          typeof Chart !== 'undefined' ? 'success' : 'error');
+
+                // Check if supabase config is available
+                addToDebug('supabaseClient variable: ' + (typeof supabaseClient !== 'undefined' ? 'AVAILABLE' : 'MISSING'),
+                          typeof supabaseClient !== 'undefined' ? 'success' : 'error');
+                addToDebug('isSupabaseConfigured function: ' + (typeof isSupabaseConfigured === 'function' ? 'AVAILABLE' : 'MISSING'),
+                          typeof isSupabaseConfigured === 'function' ? 'success' : 'error');
+
+                if (typeof supabaseClient !== 'undefined' && typeof isSupabaseConfigured === 'function') {
+                    addToDebug('Supabase configured: ' + (isSupabaseConfigured() ? 'YES' : 'NO'),
+                              isSupabaseConfigured() ? 'success' : 'error');
+                }
+
+                // Try to create DataFetcher
+                addToDebug('Attempting to create DataFetcher...');
+
+                // Load the dashboard JavaScript file dynamically to see errors
+                const script = document.createElement('script');
+                script.src = './assets/js/supabase-dashboard.js';
+                script.onload = function() {
+                    addToDebug('Dashboard JavaScript loaded successfully', 'success');
+
+                    // Try to run initialization
+                    setTimeout(() => {
+                        addToDebug('Attempting manual initialization...');
+                        status.textContent = 'JavaScript loaded - check debug output for details';
+                    }, 1000);
+                };
+                script.onerror = function() {
+                    addToDebug('Failed to load dashboard JavaScript', 'error');
+                    status.textContent = 'Failed to load dashboard JavaScript';
+                };
+                document.head.appendChild(script);
+
+            } catch (error) {
+                addToDebug('DEBUG ERROR: ' + error.message, 'error');
+                addToDebug('Stack: ' + error.stack, 'error');
+                status.textContent = 'Debug failed: ' + error.message;
+            }
+        }
+
+        // Start debug when page loads
+        window.addEventListener('load', debugDashboardLoading);
+    </script>
+</body>
+</html>

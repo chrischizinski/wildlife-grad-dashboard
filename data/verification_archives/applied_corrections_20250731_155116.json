@@ -1,0 +1,145 @@
+{
+  "session_date": "2025-07-31T15:51:01.728618",
+  "total_corrections": 9,
+  "corrections": [
+    {
+      "position_id": null,
+      "action": "corrected",
+      "original": {
+        "is_graduate_position": true,
+        "position_type": "Graduate",
+        "discipline": "Natural Resource Management",
+        "is_big10_university": false,
+        "university_name": ""
+      },
+      "corrections": {
+        "is_graduate_position": false,
+        "position_type": "Professional",
+        "discipline": "Other"
+      },
+      "reasoning": {
+        "is_graduate_position": "Crew lead",
+        "position_type": "This is a crew lead position, no assistantship",
+        "discipline": "It is a Archaeology"
+      },
+      "verified_at": "2025-07-31T13:56:49.771351",
+      "notes": "Not a graduate assistant position"
+    },
+    {
+      "position_id": null,
+      "action": "corrected",
+      "original": {
+        "is_graduate_position": true,
+        "position_type": "Graduate",
+        "discipline": "Unknown",
+        "is_big10_university": false,
+        "university_name": ""
+      },
+      "corrections": {
+        "is_graduate_position": false,
+        "position_type": "Professional",
+        "discipline": "Environmental Science"
+      },
+      "reasoning": {
+        "is_graduate_position": "This is close but it is a post doctoral position which is not considered a graduate position",
+        "position_type": "postdoc"
+      },
+      "verified_at": "2025-07-31T13:59:02.428251"
+    },
+    {
+      "position_id": null,
+      "action": "corrected",
+      "original": {
+        "is_graduate_position": true,
+        "position_type": "Graduate",
+        "discipline": "Natural Resource Management",
+        "is_big10_university": false,
+        "university_name": ""
+      },
+      "corrections": {
+        "is_graduate_position": false,
+        "position_type": "Professional"
+      },
+      "reasoning": {
+        "is_graduate_position": "This is a fellowship but it is not graduate school",
+        "position_type": "there is no mention of school"
+      },
+      "verified_at": "2025-07-31T14:01:43.926522"
+    },
+    {
+      "position_id": null,
+      "action": "corrected",
+      "original": {
+        "is_graduate_position": true,
+        "position_type": "Graduate",
+        "discipline": "Wildlife & Natural Resources",
+        "is_big10_university": false,
+        "university_name": ""
+      },
+      "corrections": {
+        "is_graduate_position": false
+      },
+      "reasoning": {
+        "is_graduate_position": "Not affiliated with a university"
+      },
+      "verified_at": "2025-07-31T15:46:22.142229"
+    },
+    {
+      "position_id": null,
+      "action": "approved",
+      "verified_at": "2025-07-31T15:46:59.608009"
+    },
+    {
+      "position_id": null,
+      "action": "corrected",
+      "original": {
+        "is_graduate_position": true,
+        "position_type": "Graduate",
+        "discipline": "Unknown",
+        "is_big10_university": false,
+        "university_name": ""
+      },
+      "corrections": {
+        "is_graduate_position": false,
+        "position_type": "Professional",
+        "discipline": "Natural Resource Management"
+      },
+      "reasoning": {
+        "is_graduate_position": "Postdoctor",
+        "position_type": "Postdoctoral position - academic but not graduate"
+      },
+      "verified_at": "2025-07-31T15:47:20.068163"
+    },
+    {
+      "position_id": null,
+      "action": "corrected",
+      "original": {
+        "is_graduate_position": true,
+        "position_type": "Graduate",
+        "discipline": "Natural Resource Management",
+        "is_big10_university": false,
+        "university_name": ""
+      },
+      "corrections": {
+        "is_graduate_position": false,
+        "position_type": "Professional",
+        "discipline": "Conservation Biology"
+      },
+      "reasoning": {
+        "is_graduate_position": "Fellowship but not associated with a graduate degree",
+        "position_type": "fellowship but not affiliated with a graduate degree"
+      },
+      "verified_at": "2025-07-31T15:49:31.585240"
+    },
+    {
+      "position_id": null,
+      "action": "approved",
+      "verified_at": "2025-07-31T15:50:50.020223"
+    },
+    {
+      "position_id": null,
+      "action": "approved",
+      "verified_at": "2025-07-31T15:51:01.728398"
+    }
+  ]
+}

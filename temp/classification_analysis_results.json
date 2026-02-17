@@ -1,0 +1,488 @@
+{
+  "total_jobs": 265,
+  "classified_graduate": 52,
+  "classified_not_graduate": 213,
+  "graduate_analysis": {
+    "title_patterns": {
+      "assistantship_type": 12,
+      "other": 21,
+      "explicit_student": 18,
+      "research_associate": 1
+    },
+    "confidence_dist": {
+      "0.9": 49,
+      "0.8": 3
+    },
+    "edge_cases": [
+      {
+        "title": "Student Service Contractor, USGS, Wetland and Aquatic Research Center",
+        "organization": "USGS (Federal)",
+        "confidence": 0.95,
+        "reason": "Low confidence or ambiguous title"
+      }
+    ]
+  },
+  "missed_analysis": [
+    {
+      "title": "M.S. (Biology) Graduate Research Assistantship Positions in Herpetology, Spatial Ecology, and Behavioral Ecology",
+      "organization": "West Texas A&M University (State)",
+      "potential_score": 13,
+      "matched_indicators": [
+        "\\b(ms|m\\.s\\.|master'?s?)\\s+(student|candidate|program|degree)",
+        "\\b(graduate|grad)\\s+(student|research|assistant|associate)",
+        "\\b(research|teaching)\\s+(assistantship|fellowship)",
+        "stipend",
+        "graduate\\s+(level|program|school)",
+        "\\bresearch\\s+(associate|assistant)\\b",
+        "\\$[12]\\d,?\\d{3}",
+        "semester"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "Continuing Education - Master's degrees for Natural Resources Professionals",
+      "organization": "Frostburg State University (State)",
+      "potential_score": 9,
+      "matched_indicators": [
+        "\\b(ms|m\\.s\\.|master'?s?)\\s+(student|candidate|program|degree)",
+        "\\b(graduate|grad)\\s+(student|research|assistant|associate)",
+        "\\b(thesis|dissertation)\\s+(research|project|work)",
+        "graduate\\s+(level|program|school)",
+        "semester"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "Ph.D. Position - Moose and Parasites in the Wasatch Mountains, Utah",
+      "organization": "T.J. Clark-Wolf (State)",
+      "potential_score": 9,
+      "matched_indicators": [
+        "\\b(phd|ph\\.d\\.|doctoral|doctorate)\\s+(student|candidate|program|position)",
+        "\\b(graduate|grad)\\s+(student|research|assistant|associate)",
+        "\\b(research|teaching)\\s+(assistantship|fellowship)",
+        "stipend",
+        "\\b(undergraduate|undergrad)\\s+.{0,20}(graduate|grad)"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "Master's Level Graduate Research Assistantship: Virtual Monitoring/Herding \u2013 Sheep",
+      "organization": "University of Idaho (State)",
+      "potential_score": 9,
+      "matched_indicators": [
+        "\\b(graduate|grad)\\s+(student|research|assistant|associate)",
+        "\\b(research|teaching)\\s+(assistantship|fellowship)",
+        "\\b(thesis|dissertation)\\s+(research|project|work)",
+        "stipend",
+        "\\$[12]\\d,?\\d{3}"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "Ph.D. or M.S. Graduate Research Assistantship \u2013 Physical, Ecological, and Social Dynamics of South Carolina Tidal Trunks",
+      "organization": "Clemson University (State)",
+      "potential_score": 9,
+      "matched_indicators": [
+        "\\b(ms|m\\.s\\.|master'?s?)\\s+(student|candidate|program|degree)",
+        "\\b(graduate|grad)\\s+(student|research|assistant|associate)",
+        "\\b(research|teaching)\\s+(assistantship|fellowship)",
+        "stipend",
+        "\\$[12]\\d,?\\d{3}"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "MS position - impacts of global change drivers on dryland plant communities - Marshall U, Palmquist lab",
+      "organization": "Marshall University (State)",
+      "potential_score": 9,
+      "matched_indicators": [
+        "\\b(ms|m\\.s\\.|master'?s?)\\s+(student|candidate|program|degree)",
+        "\\b(research|teaching)\\s+(assistantship|fellowship)",
+        "stipend",
+        "graduate\\s+(level|program|school)",
+        "\\$[12]\\d,?\\d{3}"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "PhD Graduate Research Assistantship: Virtual Fence \u2013 Range Cattle",
+      "organization": "University of Idaho (State)",
+      "potential_score": 8,
+      "matched_indicators": [
+        "\\b(graduate|grad)\\s+(student|research|assistant|associate)",
+        "\\b(research|teaching)\\s+(assistantship|fellowship)",
+        "\\b(thesis|dissertation)\\s+(research|project|work)",
+        "stipend"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "Ph.D. and M.S. GRAs: Aquatic Ecology and Harmful Algal Blooms",
+      "organization": "Auburn University (State)",
+      "potential_score": 8,
+      "matched_indicators": [
+        "\\b(phd|ph\\.d\\.|doctoral|doctorate)\\s+(student|candidate|program|position)",
+        "\\b(graduate|grad)\\s+(student|research|assistant|associate)",
+        "\\b(research|teaching)\\s+(assistantship|fellowship)",
+        "stipend"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "Boone and Crockett Endowed Chair of Wildlife Conservation University of Montana",
+      "organization": "University of Montana/Wildlife Biology (State)",
+      "potential_score": 8,
+      "matched_indicators": [
+        "\\b(phd|ph\\.d\\.|doctoral|doctorate)\\s+(student|candidate|program|position)",
+        "\\b(graduate|grad)\\s+(student|research|assistant|associate)",
+        "graduate\\s+(level|program|school)",
+        "academic\\s+year",
+        "semester"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "MS Graduate Research Assistant",
+      "organization": "Texas Tech University (State)",
+      "potential_score": 6,
+      "matched_indicators": [
+        "\\b(graduate|grad)\\s+(student|research|assistant|associate)",
+        "stipend",
+        "\\bresearch\\s+(associate|assistant)\\b",
+        "\\$[12]\\d,?\\d{3}"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "Largemouth bass genomics MS assistantship",
+      "organization": "New Mexico State University (State)",
+      "potential_score": 6,
+      "matched_indicators": [
+        "\\b(research|teaching)\\s+(assistantship|fellowship)",
+        "graduate\\s+(level|program|school)",
+        "\\$[12]\\d,?\\d{3}",
+        "semester"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "Graduate Research Assistant/Ant Colony Impacts on Ecosystems",
+      "organization": "University of Texas at Tyler (State)",
+      "potential_score": 6,
+      "matched_indicators": [
+        "\\b(graduate|grad)\\s+(student|research|assistant|associate)",
+        "\\bresearch\\s+(associate|assistant)\\b",
+        "\\bfull.time\\s+(research|student)",
+        "\\$[12]\\d,?\\d{3}",
+        "semester"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "USDA-FS Quantitative Landscape Ecology Research Fellowship",
+      "organization": "Oak Ridge Associated Universities (ORAU) (Private)",
+      "potential_score": 6,
+      "matched_indicators": [
+        "\\b(ms|m\\.s\\.|master'?s?)\\s+(student|candidate|program|degree)",
+        "\\b(research|teaching)\\s+(assistantship|fellowship)",
+        "stipend"
+      ],
+      "current_confidence": 0.6
+    },
+    {
+      "title": "Masters Position: Correcting biases associated with thermal roadside surveys",
+      "organization": "Mississippi State University (State)",
+      "potential_score": 5,
+      "matched_indicators": [
+        "\\b(graduate|grad)\\s+(student|research|assistant|associate)",
+        "graduate\\s+(level|program|school)",
+        "\\$[12]\\d,?\\d{3}"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "Professional Certificate: Applied Quantitative Ecology",
+      "organization": "Center for Wildlife Studies (Private)",
+      "potential_score": 5,
+      "matched_indicators": [
+        "\\b(graduate|grad)\\s+(student|research|assistant|associate)",
+        "graduate\\s+(level|program|school)",
+        "\\bfull.time\\s+(research|student)"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "APPLIED PROJECTS THROUGH CWS",
+      "organization": "Center for Wildlife Studies (Private)",
+      "potential_score": 5,
+      "matched_indicators": [
+        "\\b(graduate|grad)\\s+(student|research|assistant|associate)",
+        "graduate\\s+(level|program|school)",
+        "\\bfull.time\\s+(research|student)"
+      ],
+      "current_confidence": 0.8
+    },
+    {
+      "title": "USDA-FS Fellow: Ecosystem Vulnerability for the Eastern Region",
+      "organization": "Oak Ridge Associated Universities (ORAU) (Private)",
+      "potential_score": 4,
+      "matched_indicators": [
+        "\\b(ms|m\\.s\\.|master'?s?)\\s+(student|candidate|program|degree)",
+        "stipend"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "Field Technician on Madagascar Fruit Bat Project",
+      "organization": "Association Ekipa Fanihy (Private)",
+      "potential_score": 4,
+      "matched_indicators": [
+        "\\b(phd|ph\\.d\\.|doctoral|doctorate)\\s+(student|candidate|program|position)",
+        "graduate\\s+(level|program|school)"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "USDA-FS Preparation and Analysis of Environmental Samples at the Grand Rapids Forestry Sciences Laboratory",
+      "organization": "Oak Ridge Associated Universities (ORAU) (Private)",
+      "potential_score": 4,
+      "matched_indicators": [
+        "stipend",
+        "academic\\s+year",
+        "semester"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "USDA-ARS Postdoctoral Research Fellowship in Remote Sensing",
+      "organization": "Oak Ridge Associated Universities (ORAU) (Private)",
+      "potential_score": 4,
+      "matched_indicators": [
+        "\\b(research|teaching)\\s+(assistantship|fellowship)",
+        "stipend"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "USDA Forest Service Social Science Research Fellowships for Landscape-Scale Restoration",
+      "organization": "Oak Ridge Associated Universities (ORAU) (Private)",
+      "potential_score": 4,
+      "matched_indicators": [
+        "\\b(research|teaching)\\s+(assistantship|fellowship)",
+        "stipend"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "NOAA Harmful Algal Bloom Laboratory and Field Support Research Fellowship",
+      "organization": "Oak Ridge Associated Universities (ORAU) (Private)",
+      "potential_score": 4,
+      "matched_indicators": [
+        "\\b(research|teaching)\\s+(assistantship|fellowship)",
+        "stipend"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "Wildlife Veterinarian (Assistant/Associate Professor)",
+      "organization": "Caesar Kleberg Wildlife Research Institute (State)",
+      "potential_score": 4,
+      "matched_indicators": [
+        "\\b(phd|ph\\.d\\.|doctoral|doctorate)\\s+(student|candidate|program|position)",
+        "\\b(graduate|grad)\\s+(student|research|assistant|associate)"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "M.S. Assistantship in Wildlife Ecology and Management \u2013 Ecology of wild turkeys in the Piedmont of Georgia",
+      "organization": "University of Georgia (State)",
+      "potential_score": 4,
+      "matched_indicators": [
+        "\\b(ms|m\\.s\\.|master'?s?)\\s+(student|candidate|program|degree)",
+        "\\b(graduate|grad)\\s+(student|research|assistant|associate)"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "USDA-FS Inventory and Analysis to Improve Management of Subtropical and Other Forests of the U.S.",
+      "organization": "Oak Ridge Associated Universities (ORAU) (Private)",
+      "potential_score": 4,
+      "matched_indicators": [
+        "\\b(ms|m\\.s\\.|master'?s?)\\s+(student|candidate|program|degree)",
+        "stipend"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "USDA-FS Full-stack Development in Wildland Fire and Smoke Science Software Applications",
+      "organization": "Oak Ridge Associated Universities (ORAU) (Private)",
+      "potential_score": 4,
+      "matched_indicators": [
+        "\\b(graduate|grad)\\s+(student|research|assistant|associate)",
+        "stipend"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "Postdoctoral Research Associate - Evaluating the impacts of multiple global change drivers on dryland plant communities - Marshall U, Palmquist lab",
+      "organization": "Marshall University (State)",
+      "potential_score": 4,
+      "matched_indicators": [
+        "\\b(graduate|grad)\\s+(student|research|assistant|associate)",
+        "\\bresearch\\s+(associate|assistant)\\b",
+        "\\b(undergraduate|undergrad)\\s+.{0,20}(graduate|grad)"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "USDA-ARS Interdisciplinary Experience in Plant Pathology, Microbiology and Chemistry",
+      "organization": "Oak Ridge Associated Universities (ORAU) (Private)",
+      "potential_score": 4,
+      "matched_indicators": [
+        "\\b(ms|m\\.s\\.|master'?s?)\\s+(student|candidate|program|degree)",
+        "stipend"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "Ph.D. : The effects of invasive guineagrass on the ecology of Northern Bobwhite",
+      "organization": "Caesar Kleberg Wildlife Research Institute - Texas A&M -Kingsville (State)",
+      "potential_score": 4,
+      "matched_indicators": [
+        "\\b(phd|ph\\.d\\.|doctoral|doctorate)\\s+(student|candidate|program|position)",
+        "stipend"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "Energy Program Coordinator",
+      "organization": "Oregon Department of Fish and Wildlife (State)",
+      "potential_score": 3,
+      "matched_indicators": [
+        "\\b(ms|m\\.s\\.|master'?s?)\\s+(student|candidate|program|degree)",
+        "semester"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "Freshwater Fisheries Biologist",
+      "organization": "Florida Fish and Wildlife Conservation Commission (State)",
+      "potential_score": 3,
+      "matched_indicators": [
+        "\\b(ms|m\\.s\\.|master'?s?)\\s+(student|candidate|program|degree)",
+        "\\$[12]\\d,?\\d{3}"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "Supervisor Fish and Wildlife Biologist",
+      "organization": "Oregon Department of Fish and Wildlife (State)",
+      "potential_score": 3,
+      "matched_indicators": [
+        "\\b(ms|m\\.s\\.|master'?s?)\\s+(student|candidate|program|degree)",
+        "semester"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "Tropical Agriculture Techniques Internship; Belize",
+      "organization": "Toucan Ridge Ecology and Education Society (Private)",
+      "potential_score": 3,
+      "matched_indicators": [
+        "\\b(graduate|grad)\\s+(student|research|assistant|associate)",
+        "\\b(undergraduate|undergrad)\\s+.{0,20}(graduate|grad)"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "2 MS Assistantships: Bison-Environment Interactions AND Bison-Stakeholder Engagement",
+      "organization": "South Dakota State University (State)",
+      "potential_score": 3,
+      "matched_indicators": [
+        "\\b(graduate|grad)\\s+(student|research|assistant|associate)",
+        "academic\\s+year"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "Natural Resource Specialist 3 (Commercial Crab Project Leader)",
+      "organization": "Oregon Department of Fish and Wildlife (State)",
+      "potential_score": 3,
+      "matched_indicators": [
+        "\\b(ms|m\\.s\\.|master'?s?)\\s+(student|candidate|program|degree)",
+        "semester"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "Senior Water Advisor (Natural Resource Specialist 5)",
+      "organization": "Oregon Water Resource Department (State)",
+      "potential_score": 3,
+      "matched_indicators": [
+        "\\b(ms|m\\.s\\.|master'?s?)\\s+(student|candidate|program|degree)",
+        "\\$[12]\\d,?\\d{3}"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "Research Associate Specialist--Production and Monitoring of Giant Salvinia Weevils",
+      "organization": "Louisiana State University (State)",
+      "potential_score": 3,
+      "matched_indicators": [
+        "\\b(graduate|grad)\\s+(student|research|assistant|associate)",
+        "\\bresearch\\s+(associate|assistant)\\b"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "Research Associate (Researcher I)",
+      "organization": "Utah Forest Restoration Institute (State)",
+      "potential_score": 3,
+      "matched_indicators": [
+        "\\b(ms|m\\.s\\.|master'?s?)\\s+(student|candidate|program|degree)",
+        "\\bresearch\\s+(associate|assistant)\\b"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "Prairie Grouse Conservation Internship - TEXAS",
+      "organization": "Fossil Rim Wildlife Center (Private)",
+      "potential_score": 3,
+      "matched_indicators": [
+        "stipend",
+        "semester"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "Visiting Professor/Research Scientist - Big Game Ecology",
+      "organization": "Sul Ross State University (State)",
+      "potential_score": 3,
+      "matched_indicators": [
+        "\\b(graduate|grad)\\s+(student|research|assistant|associate)",
+        "\\b(undergraduate|undergrad)\\s+.{0,20}(graduate|grad)"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "Research Assistant/Associate",
+      "organization": "Auburn University (State)",
+      "potential_score": 3,
+      "matched_indicators": [
+        "(ms|phd)\\s+(required|preferred)",
+        "\\bresearch\\s+(associate|assistant)\\b"
+      ],
+      "current_confidence": 0.9
+    },
+    {
+      "title": "Visiting Professor/Research Scientist - Carnivore Ecology",
+      "organization": "Sul Ross State University (State)",
+      "potential_score": 3,
+      "matched_indicators": [
+        "\\b(graduate|grad)\\s+(student|research|assistant|associate)",
+        "\\b(undergraduate|undergrad)\\s+.{0,20}(graduate|grad)"
+      ],
+      "current_confidence": 0.9
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+2026-02-12 14:42:58,422 - INFO - ✅ Supabase connection successful
+2026-02-12 14:42:58,437 - INFO - ✅ Supabase connection successful
+2026-02-12 14:42:58,443 - INFO - 📊 Loaded 1 positions from data/raw/test.json
+2026-02-12 14:42:58,447 - INFO - ✅ Processed data saved: /Users/cchizinski2/Dev/wildlife-grad-dashboard/data/processed/enhanced_positions_20240101.json
+2026-02-12 14:43:28,691 - INFO - ✅ Supabase connection successful
+2026-02-12 14:43:28,736 - INFO - ✅ Supabase connection successful
+2026-02-12 14:43:28,750 - INFO - 📊 Loaded 1 positions from data/raw/test.json
+2026-02-12 14:43:28,756 - INFO - ✅ Processed data saved: /Users/cchizinski2/Dev/wildlife-grad-dashboard/data/processed/enhanced_positions_20240101.json
+2026-02-12 14:44:00,437 - INFO - ✅ Supabase connection successful
+2026-02-12 14:44:00,462 - INFO - ✅ Supabase connection successful
+2026-02-12 14:44:00,472 - INFO - 📊 Loaded 1 positions from data/raw/test.json
+2026-02-12 14:44:00,474 - INFO - ✅ Processed data saved: /Users/cchizinski2/Dev/wildlife-grad-dashboard/data/processed/enhanced_positions_20240101.json
+2026-02-12 14:44:36,205 - INFO - ✅ Supabase connection successful
+2026-02-12 14:44:36,222 - INFO - ✅ Supabase connection successful
+2026-02-12 14:44:36,254 - INFO - 📊 Loaded 1 positions from data/raw/test.json
+2026-02-12 14:44:36,255 - INFO - ✅ Processed data saved: /Users/cchizinski2/Dev/wildlife-grad-dashboard/data/processed/enhanced_positions_20240101.json
+2026-02-12 14:45:19,531 - INFO - ✅ Supabase connection successful
+2026-02-12 14:45:19,564 - INFO - ✅ Supabase connection successful
+2026-02-12 14:45:19,589 - INFO - 📊 Loaded 1 positions from data/raw/test.json
+2026-02-12 14:45:19,592 - INFO - ✅ Processed data saved: /Users/cchizinski2/Dev/wildlife-grad-dashboard/data/processed/enhanced_positions_20240101.json
+2026-02-12 14:45:29,824 - INFO - ✅ Supabase connection successful
+2026-02-12 14:45:29,838 - INFO - ✅ Supabase connection successful
+2026-02-12 14:45:29,848 - INFO - 📊 Loaded 1 positions from data/raw/test.json
+2026-02-12 14:45:29,850 - INFO - ✅ Processed data saved: /Users/cchizinski2/Dev/wildlife-grad-dashboard/data/processed/enhanced_positions_20240101.json
+2026-02-12 14:46:02,204 - INFO - ✅ Supabase connection successful
+2026-02-12 14:46:02,207 - ERROR - DEBUG: pos type: <class 'unittest.mock.MagicMock'>
+2026-02-12 14:46:02,208 - ERROR - DEBUG: pos.to_dict(): <MagicMock name='mock.JobPosition().to_dict()' id='4495183248'>
+2026-02-12 14:46:02,212 - ERROR - DEBUG: Enhanced data: [{'title': 'Graduate Research Assistant', 'organization': 'Test University', 'location': 'Lincoln, NE', 'description': 'PhD position in wildlife ecology.', 'tags': 'research', 'processed_at': '2026-02-12T14:46:02.212249', 'processor_version': '2.0'}]
+2026-02-12 14:46:02,225 - INFO - ✅ Supabase connection successful
+2026-02-12 14:46:02,231 - INFO - 📊 Loaded 1 positions from data/raw/test.json
+2026-02-12 14:46:02,232 - INFO - ✅ Processed data saved: /Users/cchizinski2/Dev/wildlife-grad-dashboard/data/processed/enhanced_positions_20240101.json

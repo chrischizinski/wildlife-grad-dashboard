@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test JSON Only Loading</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .log { background: #f4f4f4; padding: 10px; margin: 10px 0; white-space: pre-wrap; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <h1>Test JSON Only Loading</h1>
+    <div id="status">Loading...</div>
+    <div id="log" class="log"></div>
+
+    <script>
+        const log = document.getElementById('log');
+        const status = document.getElementById('status');
+
+        function addLog(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const className = type === 'error' ? 'error' : type === 'success' ? 'success' : '';
+            log.innerHTML += `<span class="${className}">[${timestamp}] ${message}</span>\n`;
+        }
+
+        async function testJSONLoading() {
+            try {
+                addLog('Testing JSON data loading (simulating dashboard fallback)...');
+
+                // Test the same paths that the dashboard uses
+                const paths = [
+                    './dashboard/data/dashboard_analytics.json',
+                    './data/dashboard_analytics.json',
+                    'dashboard/data/dashboard_analytics.json'
+                ];
+
+                let dashboardData = null;
+                let exportData = null;
+
+                // Try dashboard analytics
+                for (const path of paths) {
+                    try {
+                        addLog(`Trying path: ${path}`);
+                        const response = await fetch(path);
+                        if (response.ok) {
+                            dashboardData = await response.json();
+                            addLog(`✅ Dashboard data loaded from ${path}`, 'success');
+                            addLog(`Sample: ${JSON.stringify(dashboardData.summary_stats || {}, null, 2)}`);
+                            break;
+                        } else {
+                            addLog(`❌ Path ${path} failed: ${response.status}`);
+                        }
+                    } catch (error) {
+                        addLog(`❌ Path ${path} error: ${error.message}`);
+                    }
+                }
+
+                // Try export data
+                const exportPaths = [
+                    './dashboard/data/export_data.json',
+                    './data/export_data.json',
+                    'dashboard/data/export_data.json'
+                ];
+
+                for (const path of exportPaths) {
+                    try {
+                        addLog(`Trying export path: ${path}`);
+                        const response = await fetch(path);
+                        if (response.ok) {
+                            exportData = await response.json();
+                            addLog(`✅ Export data loaded from ${path} (${exportData.length} records)`, 'success');
+                            break;
+                        } else {
+                            addLog(`❌ Export path ${path} failed: ${response.status}`);
+                        }
+                    } catch (error) {
+                        addLog(`❌ Export path ${path} error: ${error.message}`);
+                    }
+                }
+
+                if (dashboardData) {
+                    status.innerHTML = '<span class="success">✅ JSON loading successful - dashboard should work!</span>';
+                    addLog('JSON loading test passed - the dashboard should be able to load data', 'success');
+                } else {
+                    status.innerHTML = '<span class="error">❌ JSON loading failed</span>';
+                    addLog('JSON loading test failed - this is the root cause', 'error');
+                }
+
+            } catch (error) {
+                addLog(`Critical error: ${error.message}`, 'error');
+                status.innerHTML = `<span class="error">❌ Critical error: ${error.message}</span>`;
+            }
+        }
+
+        testJSONLoading();
+    </script>
+</body>
+</html>

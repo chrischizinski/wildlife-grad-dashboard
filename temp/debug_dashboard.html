@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Dashboard Loading</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .log {
+            background: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 10px 0;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .error { color: red; }
+        .success { color: green; }
+        .info { color: blue; }
+    </style>
+</head>
+<body>
+    <h1>Dashboard Loading Debug</h1>
+    <div id="status">Initializing...</div>
+    <div id="log" class="log"></div>
+
+    <!-- Load Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+        const log = document.getElementById('log');
+        const status = document.getElementById('status');
+
+        function addLog(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const className = type === 'error' ? 'error' : type === 'success' ? 'success' : 'info';
+            log.innerHTML += `<span class="${className}">[${timestamp}] ${message}</span>\n`;
+            log.scrollTop = log.scrollHeight;
+        }
+
+        // Supabase config from the actual dashboard
+        const SUPABASE_CONFIG = {
+            url: 'https://mqbkzveymkehgkbcjgba.supabase.co',
+            anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1xYmt6dmV5bWtlaGdrYmNqZ2JhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgzNjM0MzYsImV4cCI6MjA2MzkzOTQzNn0.ojHZfb5ydVEVKQShv3pmW8bqXPksBc0jmJOfPz0lqCw'
+        };
+
+        async function testSupabase() {
+            addLog('Testing Supabase connection...');
+
+            try {
+                if (typeof supabase === 'undefined') {
+                    throw new Error('Supabase library not loaded');
+                }
+
+                const supabaseClient = supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
+                addLog('Supabase client created successfully', 'success');
+
+                // Test a simple query with timeout
+                addLog('Testing database query...');
+                const { data, error } = await Promise.race([
+                    supabaseClient.from('job_analytics').select('*').single(),
+                    new Promise((_, reject) => setTimeout(() => reject(new Error('Query timeout after 10 seconds')), 10000))
+                ]);
+
+                if (error) {
+                    addLog(`Supabase query error: ${error.message}`, 'error');
+                } else {
+                    addLog('Supabase query successful!', 'success');
+                    addLog(`Data: ${JSON.stringify(data, null, 2)}`);
+                }
+
+            } catch (error) {
+                addLog(`Supabase test failed: ${error.message}`, 'error');
+                return false;
+            }
+            return true;
+        }
+
+        async function testJSONFallback() {
+            addLog('Testing JSON file fallback...');
+
+            try {
+                // Test different paths like the dashboard does
+                const paths = [
+                    './data/dashboard_analytics.json',
+                    '../data/dashboard_analytics.json',
+                    'data/dashboard_analytics.json'
+                ];
+
+                for (const path of paths) {
+                    try {
+                        addLog(`Trying path: ${path}`);
+                        const response = await fetch(path);
+                        if (response.ok) {
+                            const data = await response.json();
+                            addLog(`JSON loaded successfully from ${path}`, 'success');
+                            addLog(`Sample data: ${JSON.stringify(data.summary_stats || {}, null, 2)}`);
+                            return true;
+                        } else {
+                            addLog(`Path ${path} failed: ${response.status} ${response.statusText}`, 'error');
+                        }
+                    } catch (error) {
+                        addLog(`Path ${path} failed: ${error.message}`, 'error');
+                    }
+                }
+
+            } catch (error) {
+                addLog(`JSON fallback test failed: ${error.message}`, 'error');
+            }
+            return false;
+        }
+
+        async function runTests() {
+            status.textContent = 'Running tests...';
+
+            const supabaseWorking = await testSupabase();
+            const jsonWorking = await testJSONFallback();
+
+            if (supabaseWorking) {
+                status.textContent = 'Supabase connection working - dashboard should load from database';
+                status.className = 'success';
+            } else if (jsonWorking) {
+                status.textContent = 'Supabase failed but JSON fallback working - dashboard should load from JSON';
+                status.className = 'info';
+            } else {
+                status.textContent = 'Both Supabase and JSON fallback failed - dashboard will not load';
+                status.className = 'error';
+            }
+        }
+
+        // Start tests when page loads
+        window.addEventListener('load', runTests);
+    </script>
+</body>
+</html>
