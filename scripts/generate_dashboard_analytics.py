@@ -39,6 +39,7 @@ DISCIPLINE_MAPPING = {
     "Ecology": "Environmental Sciences",
     # Fisheries and Aquatic
     "Fisheries": "Fisheries and Aquatic",
+    "Fisheries and Aquatic": "Fisheries and Aquatic",
     "Fisheries & Aquatic Science": "Fisheries and Aquatic",
     "Fisheries Management and Conservation": "Fisheries and Aquatic",
     "Marine Science": "Fisheries and Aquatic",
@@ -68,12 +69,48 @@ DISCIPLINE_MAPPING = {
     "Non-Graduate": "Other",
 }
 
+DISCIPLINE_DISPLAY_ORDER = [
+    "Environmental Sciences",
+    "Fisheries and Aquatic",
+    "Wildlife",
+    "Entomology",
+    "Forestry and Habitat",
+    "Agriculture",
+    "Human Dimensions",
+    "Other",
+]
+DISCIPLINE_ORDER_INDEX = {name: idx for idx, name in enumerate(DISCIPLINE_DISPLAY_ORDER)}
+
 
 def normalize_discipline(disc: str) -> str:
     """Map a discipline to one of the 8 canonical categories."""
     if not disc or disc == "":
         return "Other"
     return DISCIPLINE_MAPPING.get(disc, "Other")
+
+
+def discipline_sort_key(discipline: str) -> tuple[int, int, str]:
+    """
+    Stable discipline sort key for dashboard/report consistency.
+
+    - Canonical categories follow DISCIPLINE_DISPLAY_ORDER
+    - Non-canonical categories come after canonical categories
+    - "Other" is always last
+    """
+    normalized = normalize_discipline(discipline)
+    if normalized == "Other":
+        return (2, 0, "Other")
+
+    order_idx = DISCIPLINE_ORDER_INDEX.get(normalized)
+    if order_idx is not None:
+        return (0, order_idx, normalized)
+
+    return (1, 0, normalized)
+
+
+def sort_disciplines(disciplines: List[str]) -> List[str]:
+    """Sort discipline names with canonical order and Other-last rule."""
+    return sorted(disciplines, key=discipline_sort_key)
 
 
 def _build_row_key(row: Dict[str, Any]) -> str:
@@ -315,16 +352,7 @@ def calculate_analytics(data: List[Dict[str, Any]]) -> Dict[str, Any]:
 
     # Build top disciplines in canonical display order.
     top_disciplines = {}
-    for discipline in [
-        "Environmental Sciences",
-        "Fisheries and Aquatic",
-        "Wildlife",
-        "Entomology",
-        "Forestry and Habitat",
-        "Agriculture",
-        "Human Dimensions",
-        "Other",
-    ]:
+    for discipline in DISCIPLINE_DISPLAY_ORDER:
         if discipline in discipline_data:
             data_dict = discipline_data[discipline]
             count = data_dict["count"]
@@ -405,7 +433,7 @@ def calculate_analytics(data: List[Dict[str, Any]]) -> Dict[str, Any]:
             "total_monthly": {month: monthly_counts[month] for month in sorted_months},
             "discipline_monthly": {
                 disc: dict(monthly_by_discipline[disc])
-                for disc in monthly_by_discipline
+                for disc in sort_disciplines(list(monthly_by_discipline.keys()))
             },
         }
 
@@ -526,7 +554,8 @@ def _graduate_discipline_breakdown(rows: List[Dict[str, Any]]) -> Dict[str, int]
             or "Unknown"
         )
         counts[normalize_discipline(original_disc)] += 1
-    return dict(sorted(counts.items(), key=lambda x: (-x[1], x[0])))
+    ordered_keys = sort_disciplines(list(counts.keys()))
+    return {name: counts[name] for name in ordered_keys}
 
 
 def calculate_snapshot_availability() -> Dict[str, Any]:
