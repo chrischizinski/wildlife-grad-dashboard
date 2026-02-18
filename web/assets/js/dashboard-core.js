@@ -301,7 +301,7 @@
 
     const topLocations = Object.entries(geography)
       .sort((a, b) => asNumber(b[1]) - asNumber(a[1]))
-      .slice(0, 10);
+      .slice(0, 5);
 
     return {
       meta: {
@@ -530,7 +530,7 @@
         refs.topLocations.innerHTML = '<li>No data for current filters</li>';
       } else {
         refs.topLocations.innerHTML = topLocations
-          .slice(0, 10)
+          .slice(0, 5)
           .map(([name, count]) => `<li>${escapeHtml(String(name))}: ${asNumber(count).toLocaleString()}</li>`)
           .join('');
       }
