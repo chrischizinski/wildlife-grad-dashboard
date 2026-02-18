@@ -584,16 +584,26 @@ def calculate_snapshot_availability() -> Dict[str, Any]:
         return {
             "source": "none",
             "run_count": 0,
+            "daily_avg_active_grad_positions": {},
+            "daily_run_count": {},
             "monthly_avg_active_grad_positions": {},
             "monthly_relative_to_peak_pct": {},
             "monthly_run_count": {},
         }
 
+    daily_values: Dict[str, List[int]] = defaultdict(list)
     monthly_values: Dict[str, List[int]] = defaultdict(list)
     for point in snapshot_points:
         run_dt = point["run_dt"]
         grad_count = point["grad_count"]
+        daily_values[run_dt.strftime("%Y-%m-%d")].append(grad_count)
         monthly_values[run_dt.strftime("%Y-%m")].append(grad_count)
+
+    daily_avg = {
+        day: round(statistics.mean(values), 2)
+        for day, values in sorted(daily_values.items())
+    }
+    daily_runs = {day: len(values) for day, values in sorted(daily_values.items())}
 
     monthly_avg = {
         month: round(statistics.mean(values), 2)
@@ -612,6 +622,8 @@ def calculate_snapshot_availability() -> Dict[str, Any]:
     return {
         "source": selected_source,
         "run_count": len(snapshot_points),
+        "daily_avg_active_grad_positions": daily_avg,
+        "daily_run_count": daily_runs,
         "monthly_avg_active_grad_positions": monthly_avg,
         "monthly_relative_to_peak_pct": monthly_relative,
         "monthly_run_count": monthly_runs,
