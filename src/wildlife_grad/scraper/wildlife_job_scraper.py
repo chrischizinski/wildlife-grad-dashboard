@@ -1537,6 +1537,31 @@ class WildlifeJobScraper:
         self.logger.info(f"Saved {len(jobs)} jobs to {output_path}")
         return output_path
 
+    def save_scrape_snapshot_backup(self, jobs: List[JobListing]) -> Path:
+        """
+        Save a timestamped full-scrape snapshot for trend reconstruction.
+
+        This file is the canonical monthly snapshot source used by dashboard
+        analytics for "active positions at scrape time" trends.
+        """
+        archive_dir = Path("data/archive")
+        archive_dir.mkdir(parents=True, exist_ok=True)
+        timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+        output_path = archive_dir / f"scraped_backup_{timestamp}.json"
+
+        jobs_data = [job.dict() for job in jobs]
+        with open(output_path, "w", encoding="utf-8") as f:
+            json.dump(jobs_data, f, indent=2, ensure_ascii=False)
+
+        self.logger.info(f"Saved scrape snapshot backup: {output_path} ({len(jobs)} rows)")
+        return output_path
+
+    def update_historical_graduate_positions(self, graduate_jobs: List[JobListing]) -> None:
+        """
+        Backward-compatible wrapper for historical graduate upsert.
+        """
+        self._update_historical_graduate_dataset(graduate_jobs)
+
     def save_graduate_positions_only(
         self, jobs: List[JobListing], min_confidence: float = 0.5
     ) -> tuple[Path, Path]:
@@ -1603,7 +1628,6 @@ class WildlifeJobScraper:
         # Update cumulative historical graduate dataset so incremental weekly runs
         # preserve history over time instead of replacing it.
         self._update_historical_graduate_dataset(graduate_jobs)
-
         self.logger.info(f"Saved classification report to {report_path}")
 
         return json_path, csv_path
@@ -1740,6 +1764,7 @@ def main() -> None:
             # Save all jobs (for analysis/debugging)
             scraper.save_jobs_json(jobs, "all_positions_detailed.json")
             scraper.save_jobs_csv(jobs, "all_positions_detailed.csv")
+            scraper.save_scrape_snapshot_backup(jobs)
 
             # Save only verified graduate assistantships
             grad_json, grad_csv = scraper.save_graduate_positions_only(
