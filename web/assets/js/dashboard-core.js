@@ -1188,11 +1188,17 @@
             datasets: [{
               label: 'Nominal Avg Salary',
               data: salaryRows.map((r) => r.avgNominal),
-              backgroundColor: '#0284c7'
+              backgroundColor: '#0284c7',
+              borderColor: '#000000',
+              borderWidth: 1,
+              borderSkipped: false
             }, {
               label: 'COL-Adjusted Avg Salary',
               data: salaryRows.map((r) => r.avgAdjusted),
-              backgroundColor: '#0f766e'
+              backgroundColor: '#0f766e',
+              borderColor: '#000000',
+              borderWidth: 1,
+              borderSkipped: false
             }]
           },
           options: {
@@ -1227,7 +1233,10 @@
             datasets: [{
               label: `Avg Posted Positions / Month (${seasonality.yearsCount} years)`,
               data: seasonality.avgByMonth,
-              backgroundColor: '#0f766e'
+              backgroundColor: '#0f766e',
+              borderColor: '#000000',
+              borderWidth: 1,
+              borderSkipped: false
             }]
           },
           options: {
