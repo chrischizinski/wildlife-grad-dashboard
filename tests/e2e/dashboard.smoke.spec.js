@@ -4,6 +4,7 @@ test('dashboard loads and exits loading state', async ({ page }) => {
   await page.goto('/wildlife_dashboard.html');
 
   await expect(page.locator('#overview')).toBeVisible();
+  await expect(page.locator('#temporal-trends')).toBeVisible();
   await expect(page.locator('#disciplines')).toBeVisible();
   await expect(page.locator('#compensation')).toBeVisible();
   await expect(page.locator('#geography')).toBeVisible();
@@ -130,6 +131,9 @@ test('shows explicit no-data states when dataset is empty', async ({ page }) => 
   await expect(page.locator('#kpi-salary-median-reason')).toContainText('No rows after filters');
   await expect(page.locator('#jobs-table')).toContainText('No data for current filters');
   await expect(page.locator('#trend-panel')).toContainText('No data for current filters');
+  await expect(page.locator('#seasonality-panel')).toContainText('No data for current filters');
+  await expect(page.locator('#discipline-latest-panel')).toContainText('No data for current filters');
+  await expect(page.locator('#discipline-overall-panel')).toContainText('No data for current filters');
   await expect(page.locator('#salary-panel')).toContainText('No data for current filters');
   await expect(page.locator('#map-panel')).toContainText('No data for current filters');
 });

@@ -28,8 +28,10 @@
 
   const chartState = {
     trend: null,
-    discipline: null,
-    salary: null
+    disciplineLatest: null,
+    disciplineOverall: null,
+    salary: null,
+    seasonality: null
   };
 
   const SOURCE_PATHS = {
@@ -295,6 +297,7 @@
       disciplines: {
         topDisciplines,
         timeSeries: analytics?.time_series || {},
+        snapshotAvailability: analytics?.snapshot_availability || {},
         availableTimeframes: Object.keys(analytics?.time_series || {})
       },
       compensation: {
@@ -686,35 +689,232 @@
       });
   }
 
+  function filterMonthLabels(labels, selected) {
+    if (selected !== '1_year') return labels;
+    return labels.slice(-12);
+  }
+
+  function parseMonthKey(key) {
+    const text = String(key || '').trim();
+    const m = text.match(/^(\d{4})-(\d{2})$/);
+    if (!m) return null;
+    const year = Number(m[1]);
+    const month = Number(m[2]);
+    if (!Number.isFinite(year) || !Number.isFinite(month) || month < 1 || month > 12) return null;
+    return { year, month };
+  }
+
+  function monthKeyToIndex(key) {
+    const parsed = parseMonthKey(key);
+    if (!parsed) return null;
+    return parsed.year * 12 + (parsed.month - 1);
+  }
+
+  function indexToMonthKey(index) {
+    if (!Number.isFinite(index)) return null;
+    const year = Math.floor(index / 12);
+    const month = (index % 12) + 1;
+    return `${String(year).padStart(4, '0')}-${String(month).padStart(2, '0')}`;
+  }
+
+  function buildContinuousMonthKeys(keys) {
+    const indices = keys
+      .map((k) => monthKeyToIndex(k))
+      .filter((n) => Number.isFinite(n))
+      .sort((a, b) => a - b);
+    if (!indices.length) return [];
+
+    const out = [];
+    for (let idx = indices[0]; idx <= indices[indices.length - 1]; idx += 1) {
+      const key = indexToMonthKey(idx);
+      if (key) out.push(key);
+    }
+    return out;
+  }
+
+  function normalizeDisciplineLabel(value) {
+    const raw = String(value || '').trim();
+    if (!raw) return 'Other';
+
+    const disciplineMap = {
+      'Environmental Science': 'Environmental Science',
+      Ecology: 'Environmental Science',
+      'Natural Resource Management': 'Environmental Science',
+      'Wildlife Management and Conservation': 'Wildlife',
+      'Wildlife Management': 'Wildlife',
+      'Wildlife & Natural Resources': 'Wildlife',
+      Conservation: 'Wildlife',
+      Fisheries: 'Fisheries',
+      'Fisheries & Aquatic Science': 'Fisheries',
+      'Fisheries Management and Conservation': 'Fisheries',
+      'Marine Science': 'Fisheries',
+      'Human Dimensions': 'Human Dimensions',
+      Forestry: 'Forestry',
+      Other: 'Other',
+      Unknown: 'Other'
+    };
+
+    return disciplineMap[raw] || raw;
+  }
+
+  function buildDisciplineRowsFromMap(countMap) {
+    return Object.entries(countMap || {})
+      .map(([name, count]) => [name, asNumber(count)])
+      .filter(([, count]) => count > 0)
+      .sort((a, b) => b[1] - a[1]);
+  }
+
+  function buildLatestCaptureDisciplineMap(jobs, snapshotAvailability) {
+    const fromAnalytics = snapshotAvailability?.latest_run_discipline_breakdown;
+    if (fromAnalytics && typeof fromAnalytics === 'object' && Object.keys(fromAnalytics).length) {
+      return fromAnalytics;
+    }
+
+    const withRunId = jobs.filter((job) => String(job?.scrape_run_id || '').trim());
+    if (withRunId.length) {
+      const latestByRun = new Map();
+      withRunId.forEach((job) => {
+        const runId = String(job?.scrape_run_id || '').trim();
+        const dt = parseFlexibleDate(job?.scraped_at)
+          || parseFlexibleDate(job?.last_updated)
+          || parseFlexibleDate(job?.first_seen)
+          || parseFlexibleDate(job?.published_date);
+        const current = latestByRun.get(runId);
+        if (!current || (dt && dt > current)) {
+          latestByRun.set(runId, dt || new Date(0));
+        }
+      });
+
+      let latestRunId = null;
+      let latestRunTime = new Date(0);
+      latestByRun.forEach((dt, runId) => {
+        if (!latestRunId || dt > latestRunTime) {
+          latestRunId = runId;
+          latestRunTime = dt;
+        }
+      });
+
+      if (latestRunId) {
+        const counts = {};
+        withRunId
+          .filter((job) => String(job?.scrape_run_id || '').trim() === latestRunId)
+          .forEach((job) => {
+            const key = normalizeDisciplineLabel(
+              job?.discipline_primary || job?.discipline || job?.discipline_secondary || 'Other'
+            );
+            counts[key] = (counts[key] || 0) + 1;
+          });
+        return counts;
+      }
+    }
+
+    const withScrapedAt = jobs.filter((job) => parseFlexibleDate(job?.scraped_at));
+    if (!withScrapedAt.length) return {};
+
+    let latestDate = null;
+    withScrapedAt.forEach((job) => {
+      const dt = parseFlexibleDate(job?.scraped_at);
+      if (!latestDate || dt > latestDate) latestDate = dt;
+    });
+    if (!latestDate) return {};
+
+    const latestDay = `${latestDate.getFullYear()}-${String(latestDate.getMonth() + 1).padStart(2, '0')}-${String(latestDate.getDate()).padStart(2, '0')}`;
+    const counts = {};
+    withScrapedAt.forEach((job) => {
+      const dt = parseFlexibleDate(job?.scraped_at);
+      if (!dt) return;
+      const day = `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, '0')}-${String(dt.getDate()).padStart(2, '0')}`;
+      if (day !== latestDay) return;
+      const key = normalizeDisciplineLabel(
+        job?.discipline_primary || job?.discipline || job?.discipline_secondary || 'Other'
+      );
+      counts[key] = (counts[key] || 0) + 1;
+    });
+    return counts;
+  }
+
+  function buildPostingSeasonality(jobs) {
+    const monthLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const totalsByMonth = new Array(12).fill(0);
+    const yearSet = new Set();
+
+    jobs.forEach((job) => {
+      const dt = parseFlexibleDate(job?.published_date) || parseFlexibleDate(job?.first_seen);
+      if (!dt) return;
+      totalsByMonth[dt.getMonth()] += 1;
+      yearSet.add(dt.getFullYear());
+    });
+
+    const totalPosted = totalsByMonth.reduce((sum, n) => sum + n, 0);
+    const yearsCount = yearSet.size || 0;
+    const avgByMonth = yearsCount
+      ? totalsByMonth.map((n) => Number((n / yearsCount).toFixed(2)))
+      : totalsByMonth.map(() => 0);
+    const relativePct = totalPosted
+      ? totalsByMonth.map((n) => Number(((n / totalPosted) * 100).toFixed(1)))
+      : totalsByMonth.map(() => 0);
+
+    return {
+      monthLabels,
+      totalsByMonth,
+      avgByMonth,
+      relativePct,
+      totalPosted,
+      yearsCount
+    };
+  }
+
   function renderCharts(adapter) {
     const jobs = Array.isArray(adapter?.jobs) ? adapter.jobs : [];
     const topDisciplines = adapter?.disciplines?.topDisciplines || {};
     const timeSeries = adapter?.disciplines?.timeSeries || {};
+    const snapshotAvailability = adapter?.disciplines?.snapshotAvailability || {};
     const geographySummary = adapter?.geography?.summary || {};
 
     if (!jobs.length) {
       destroyChart('trend');
-      destroyChart('discipline');
+      destroyChart('disciplineLatest');
+      destroyChart('disciplineOverall');
       destroyChart('salary');
+      destroyChart('seasonality');
       setPanelEmpty('trend-panel', 'No data for current filters');
-      setPanelEmpty('discipline-panel', 'No data for current filters');
+      setPanelEmpty('discipline-latest-panel', 'No data for current filters');
+      setPanelEmpty('discipline-overall-panel', 'No data for current filters');
       setPanelEmpty('salary-panel', 'No data for current filters');
+      setPanelEmpty('seasonality-panel', 'No data for current filters');
       setPanelEmpty('map-panel', 'No data for current filters');
       return;
     }
 
     if (!ensureChartJs()) {
       setPanelEmpty('trend-panel', 'Chart library unavailable');
-      setPanelEmpty('discipline-panel', 'Chart library unavailable');
+      setPanelEmpty('discipline-latest-panel', 'Chart library unavailable');
+      setPanelEmpty('discipline-overall-panel', 'Chart library unavailable');
       setPanelEmpty('salary-panel', 'Chart library unavailable');
+      setPanelEmpty('seasonality-panel', 'Chart library unavailable');
       return;
     }
 
     const selected = document.querySelector('input[name="timeframe"]:checked')?.value || '1_year';
-    const key = resolveTimeframeKey(timeSeries, selected);
-    const monthly = key ? (timeSeries[key]?.total_monthly || {}) : {};
-    const monthLabels = Object.keys(monthly).sort();
-    const monthValues = monthLabels.map((k) => asNumber(monthly[k]));
+    const snapshotMonthly = snapshotAvailability?.monthly_avg_active_grad_positions || {};
+    const snapshotRelative = snapshotAvailability?.monthly_relative_to_peak_pct || {};
+    const snapshotSource = String(snapshotAvailability?.source || '');
+
+    let monthMap = snapshotMonthly;
+    if (!Object.keys(monthMap).length) {
+      const key = resolveTimeframeKey(timeSeries, selected);
+      monthMap = key ? (timeSeries[key]?.total_monthly || {}) : {};
+    }
+
+    const allMonthLabels = buildContinuousMonthKeys(Object.keys(monthMap));
+    const monthLabels = filterMonthLabels(allMonthLabels, selected);
+    const monthValues = monthLabels.map((k) => (
+      Object.prototype.hasOwnProperty.call(monthMap, k) ? asNumber(monthMap[k]) : null
+    ));
+    const relativeValues = monthLabels.map((k) => (
+      Object.prototype.hasOwnProperty.call(snapshotRelative, k) ? asNumber(snapshotRelative[k]) : null
+    ));
+    const hasRelative = relativeValues.some((n) => n > 0);
 
     if (!monthLabels.length) {
       destroyChart('trend');
@@ -730,12 +930,84 @@
           data: {
             labels: monthLabels,
             datasets: [{
-              label: 'Postings',
+              label: snapshotSource
+                ? 'Unique Graduate Positions Captured by Scraping Date'
+                : 'Postings',
               data: monthValues,
               borderColor: '#0f766e',
               backgroundColor: 'rgba(15, 118, 110, 0.2)',
               tension: 0.25,
+              spanGaps: true,
               fill: true
+            },
+            ...(hasRelative ? [{
+              label: 'Relative to Peak (%)',
+              data: relativeValues,
+              type: 'line',
+              borderColor: '#0284c7',
+              backgroundColor: '#0284c7',
+              yAxisID: 'y1',
+              borderDash: [4, 4],
+              tension: 0.2,
+              spanGaps: true,
+              fill: false
+            }] : [])]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                title: {
+                  display: true,
+                  text: snapshotSource
+                    ? 'Unique Graduate Positions Captured by Scraping Date'
+                    : 'Postings'
+                }
+              },
+              ...(hasRelative ? {
+                y1: {
+                  position: 'right',
+                  min: 0,
+                  max: 100,
+                  grid: { drawOnChartArea: false },
+                  ticks: { callback: (value) => `${Number(value).toFixed(0)}%` }
+                }
+              } : {})
+            }
+          }
+        });
+      }
+    }
+
+    const overallDisciplineMap = Object.fromEntries(
+      Object.entries(topDisciplines).map(([name, stats]) => [
+        name,
+        asNumber(stats?.grad_positions || stats?.total_positions)
+      ])
+    );
+    const overallDisciplineRows = buildDisciplineRowsFromMap(overallDisciplineMap);
+    const latestDisciplineRows = buildDisciplineRowsFromMap(
+      buildLatestCaptureDisciplineMap(jobs, snapshotAvailability)
+    );
+    const disciplineColors = ['#0f766e', '#0284c7', '#f59e0b', '#16a34a', '#8b5cf6', '#ef4444'];
+
+    if (!latestDisciplineRows.length) {
+      destroyChart('disciplineLatest');
+      setPanelEmpty('discipline-latest-panel', 'No last-capture snapshot available');
+    } else {
+      const panel = document.getElementById('discipline-latest-panel');
+      if (panel) panel.innerHTML = '<canvas id="discipline-latest-chart"></canvas>';
+      destroyChart('disciplineLatest');
+      const ctx = document.getElementById('discipline-latest-chart');
+      if (ctx) {
+        chartState.disciplineLatest = new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            labels: latestDisciplineRows.map((r) => r[0]),
+            datasets: [{
+              data: latestDisciplineRows.map((r) => r[1]),
+              backgroundColor: disciplineColors
             }]
           },
           options: { responsive: true, maintainAspectRatio: false }
@@ -743,27 +1015,22 @@
       }
     }
 
-    const disciplineRows = Object.entries(topDisciplines)
-      .map(([name, stats]) => [name, asNumber(stats?.grad_positions || stats?.total_positions)])
-      .filter(([, n]) => n > 0)
-      .sort((a, b) => b[1] - a[1]);
-
-    if (!disciplineRows.length) {
-      destroyChart('discipline');
-      setPanelEmpty('discipline-panel', 'No data for current filters');
+    if (!overallDisciplineRows.length) {
+      destroyChart('disciplineOverall');
+      setPanelEmpty('discipline-overall-panel', 'No data for current filters');
     } else {
-      const panel = document.getElementById('discipline-panel');
-      if (panel) panel.innerHTML = '<canvas id="discipline-chart"></canvas>';
-      destroyChart('discipline');
-      const ctx = document.getElementById('discipline-chart');
+      const panel = document.getElementById('discipline-overall-panel');
+      if (panel) panel.innerHTML = '<canvas id="discipline-overall-chart"></canvas>';
+      destroyChart('disciplineOverall');
+      const ctx = document.getElementById('discipline-overall-chart');
       if (ctx) {
-        chartState.discipline = new Chart(ctx, {
+        chartState.disciplineOverall = new Chart(ctx, {
           type: 'doughnut',
           data: {
-            labels: disciplineRows.map((r) => r[0]),
+            labels: overallDisciplineRows.map((r) => r[0]),
             datasets: [{
-              data: disciplineRows.map((r) => r[1]),
-              backgroundColor: ['#0f766e', '#0284c7', '#f59e0b', '#16a34a', '#8b5cf6', '#ef4444']
+              data: overallDisciplineRows.map((r) => r[1]),
+              backgroundColor: disciplineColors
             }]
           },
           options: { responsive: true, maintainAspectRatio: false }
@@ -803,6 +1070,56 @@
                 ticks: {
                   callback: (value) => `$${Number(value).toLocaleString()}`
                 }
+              }
+            }
+          }
+        });
+      }
+    }
+
+    const seasonality = buildPostingSeasonality(jobs);
+    if (!seasonality.totalPosted || !seasonality.yearsCount) {
+      destroyChart('seasonality');
+      setPanelEmpty('seasonality-panel', 'No publish-date data for current dataset');
+    } else {
+      const panel = document.getElementById('seasonality-panel');
+      if (panel) panel.innerHTML = '<canvas id="seasonality-chart"></canvas>';
+      destroyChart('seasonality');
+      const ctx = document.getElementById('seasonality-chart');
+      if (ctx) {
+        chartState.seasonality = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: seasonality.monthLabels,
+            datasets: [{
+              label: `Avg Posted Positions / Month (${seasonality.yearsCount} years)`,
+              data: seasonality.avgByMonth,
+              backgroundColor: '#0f766e'
+            }, {
+              label: 'Relative Share of Posted Positions (%)',
+              data: seasonality.relativePct,
+              type: 'line',
+              borderColor: '#0284c7',
+              backgroundColor: '#0284c7',
+              yAxisID: 'y1',
+              tension: 0.2
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                beginAtZero: true,
+                title: { display: true, text: 'Average Posted Positions' }
+              },
+              y1: {
+                position: 'right',
+                beginAtZero: true,
+                max: 100,
+                grid: { drawOnChartArea: false },
+                ticks: { callback: (value) => `${Number(value).toFixed(0)}%` },
+                title: { display: true, text: 'Relative Share' }
               }
             }
           }
