@@ -73,8 +73,11 @@ test('suppresses salary median when salary sample is less than 5', async ({ page
   await page.route(/\/data\/dashboard_analytics\.json$/, async (route) => {
     await route.fulfill({ json: mockAnalytics });
   });
-  await page.route(/\/data\/verified_graduate_assistantships\.json$/, async (route) => {
+  await page.route(/\/data\/dashboard_positions\.json$/, async (route) => {
     await route.fulfill({ json: mockVerified });
+  });
+  await page.route(/\/data\/verified_graduate_assistantships\.json$/, async (route) => {
+    await route.fulfill({ json: [] });
   });
   await page.route(/\/data\/enhanced_data\.json$/, async (route) => {
     await route.fulfill({ json: [] });
@@ -103,6 +106,9 @@ test('shows explicit no-data states when dataset is empty', async ({ page }) => 
 
   await page.route(/\/data\/dashboard_analytics\.json$/, async (route) => {
     await route.fulfill({ json: mockAnalytics });
+  });
+  await page.route(/\/data\/dashboard_positions\.json$/, async (route) => {
+    await route.fulfill({ json: [] });
   });
   await page.route(/\/data\/verified_graduate_assistantships\.json$/, async (route) => {
     await route.fulfill({ json: [] });
