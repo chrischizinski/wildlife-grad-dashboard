@@ -293,16 +293,29 @@ def main():
         print("Calculating analytics...")
         analytics = calculate_analytics(data)
 
-        # Save to multiple locations
-        output_paths = [
+        # Save analytics to multiple locations
+        analytics_output_paths = [
             Path("dashboard/data/dashboard_analytics.json"),
             Path("web/data/dashboard_analytics.json"),
         ]
 
-        for path in output_paths:
+        for path in analytics_output_paths:
             path.parent.mkdir(parents=True, exist_ok=True)
             with open(path, "w", encoding="utf-8") as f:
                 json.dump(analytics, f, indent=2, ensure_ascii=False)
+            print(f"✅ Saved: {path} ({path.stat().st_size / 1024:.1f} KB)")
+
+        # Save the exact merged graduate dataset used for analytics so the
+        # frontend can use one consistent source for listings/KPI calculations.
+        positions_output_paths = [
+            Path("dashboard/data/dashboard_positions.json"),
+            Path("web/data/dashboard_positions.json"),
+        ]
+
+        for path in positions_output_paths:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            with open(path, "w", encoding="utf-8") as f:
+                json.dump(data, f, indent=2, ensure_ascii=False)
             print(f"✅ Saved: {path} ({path.stat().st_size / 1024:.1f} KB)")
 
         # Print summary
