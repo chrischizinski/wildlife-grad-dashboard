@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-02-18T13:34:10.657060",
+    "generated_at": "2026-02-18T19:40:11.202796",
     "total_positions": 40,
     "source": "merged (historical + latest + enhanced)",
     "discipline_mapping": "consolidated to 8 categories"
@@ -313,7 +313,7 @@
   },
   "snapshot_availability": {
     "source": "scraped_backup",
-    "run_count": 2,
+    "run_count": 3,
     "monthly_avg_active_grad_positions": {
       "2025-10": 19,
       "2026-02": 8
@@ -324,9 +324,9 @@
     },
     "monthly_run_count": {
       "2025-10": 1,
-      "2026-02": 1
+      "2026-02": 2
     },
-    "latest_run_timestamp": "2026-02-18T19:12:48",
+    "latest_run_timestamp": "2026-02-18T19:40:09",
     "latest_run_grad_positions": 8,
     "latest_run_discipline_breakdown": {
       "Other": 5,
@@ -335,5 +335,5 @@
       "Wildlife": 1
     }
   },
-  "last_updated": "2026-02-18 13:34:10"
+  "last_updated": "2026-02-18 19:40:11"
 }
