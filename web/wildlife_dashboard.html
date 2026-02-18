@@ -1,207 +1,241 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wildlife Graduate Assistantships | Dashboard</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wildlife Graduate Assistantships Dashboard</title>
 
-    <!-- CSS Dependencies -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet" />
-    <link href="assets/css/enhanced-styles.css" rel="stylesheet">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="assets/css/enhanced-styles.css" />
 
-    <!-- JS Libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script defer src="assets/js/dashboard-core.js?v=10"></script>
 </head>
 
 <body>
-    <div class="app-shell">
-        <!-- Sidebar -->
-        <aside class="app-sidebar">
-            <div class="brand">
-                <i class="fas fa-seedling"></i>
-                <span>Wildlife Grad</span>
+  <div class="app">
+    <aside class="app__sidebar">
+      <div class="brand">
+        <i class="fas fa-seedling" aria-hidden="true"></i>
+        <span>Wildlife Grad</span>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Dashboard sections">
+        <a class="sidebar-nav__link is-active" href="#overview">Overview</a>
+        <a class="sidebar-nav__link" href="#disciplines">Disciplines</a>
+        <a class="sidebar-nav__link" href="#compensation">Compensation</a>
+        <a class="sidebar-nav__link" href="#geography">Geography</a>
+        <a class="sidebar-nav__link" href="#quality">Data Quality</a>
+        <a class="sidebar-nav__link" href="#listings">Listings</a>
+      </nav>
+
+      <div class="sidebar-status" id="status-banner">
+        <i id="status-icon" class="fas fa-circle"></i>
+        <span id="status-text">Loading...</span>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="hero">
+        <div>
+          <h1>Graduate Assistantship Market Dashboard</h1>
+          <p>U.S. wildlife and natural resources opportunities by trend, discipline, salary, geography, and data quality.</p>
+        </div>
+        <div class="hero__meta">
+          <span class="pill">Last Updated: <strong id="last-updated-date">—</strong></span>
+        </div>
+      </header>
+
+      <div id="loading" class="state state--loading">
+        <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
+        <span>Loading dashboard data...</span>
+      </div>
+
+      <div id="error" class="state state--error is-hidden" role="alert">
+        <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+        <span id="error-message">Dashboard failed to load.</span>
+      </div>
+
+      <div id="main-content" class="is-hidden">
+        <div id="no-data-banner" class="banner is-hidden">No data for current filters</div>
+
+        <section class="section" id="overview">
+          <div class="section__head">
+            <h2>Overview</h2>
+            <p>Topline counts and current market composition.</p>
+          </div>
+          <div class="kpi-grid">
+            <article class="kpi-card">
+              <h3>Graduate Positions</h3>
+              <p class="kpi-card__value" id="kpi-grad-positions">—</p>
+              <p class="kpi-card__reason" id="kpi-grad-positions-reason">No rows after filters</p>
+            </article>
+            <article class="kpi-card">
+              <h3>Total Analyzed</h3>
+              <p class="kpi-card__value" id="kpi-total-positions">—</p>
+              <p class="kpi-card__reason" id="kpi-total-positions-reason">No rows after filters</p>
+            </article>
+            <article class="kpi-card">
+              <h3>Active Disciplines</h3>
+              <p class="kpi-card__value" id="kpi-disciplines">—</p>
+              <p class="kpi-card__reason" id="kpi-disciplines-reason">No rows after filters</p>
+            </article>
+            <article class="kpi-card">
+              <h3>Top Discipline</h3>
+              <p class="kpi-card__value" id="kpi-top-discipline">—</p>
+              <p class="kpi-card__reason" id="kpi-top-discipline-reason">No rows after filters</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="disciplines">
+          <div class="section__head section__head--split">
+            <div>
+              <h2>Disciplines</h2>
+              <p>Monthly posting volume and discipline mix.</p>
             </div>
+            <fieldset class="time-toggle" aria-label="Timeframe">
+              <label><input type="radio" name="timeframe" value="1_year" checked> 1Y</label>
+              <label><input type="radio" name="timeframe" value="all_time"> All</label>
+            </fieldset>
+          </div>
+          <div class="chart-grid">
+            <article class="panel panel--wide">
+              <h3>Monthly Posting Trend</h3>
+              <div class="panel__body" id="trend-panel">
+                <canvas id="trend-chart"></canvas>
+              </div>
+            </article>
+            <article class="panel">
+              <h3>Discipline Breakdown</h3>
+              <div class="panel__body" id="discipline-panel">
+                <canvas id="discipline-chart"></canvas>
+              </div>
+            </article>
+          </div>
+        </section>
 
-            <nav class="nav-menu">
-                <a href="#overview" class="nav-link active">
-                    <i class="fas fa-chart-pie"></i>
-                    <span>Overview</span>
-                </a>
-                <a href="#trends" class="nav-link">
-                    <i class="fas fa-chart-line"></i>
-                    <span>Trends</span>
-                </a>
-                <a href="#map" class="nav-link">
-                    <i class="fas fa-map-marked-alt"></i>
-                    <span>Map data</span>
-                </a>
-                <a href="#jobs" class="nav-link">
-                    <i class="fas fa-list-ul"></i>
-                    <span>Job Listings</span>
-                </a>
-            </nav>
-
-            <div class="sidebar-footer">
-                <div id="status-banner" class="d-none">
-                    <i id="status-icon" class="fas fa-circle text-muted"></i>
-                    <span id="status-text">Checking...</span>
-                </div>
-                <!-- <div style="margin-top: 8px; font-size: 0.75rem;">
-                    Last updated: <span id="last-updated-date">--</span>
-                </div> -->
+        <section class="section" id="compensation">
+          <div class="section__head">
+            <h2>Compensation</h2>
+            <p>Salary metrics calculated on salary-parsed postings only.</p>
+          </div>
+          <div class="kpi-grid kpi-grid--three">
+            <article class="kpi-card">
+              <h3>Salary Parsed %</h3>
+              <p class="kpi-card__value" id="kpi-salary-parsed-pct">—</p>
+              <p class="kpi-card__reason" id="kpi-salary-parsed-pct-reason">No rows after filters</p>
+            </article>
+            <article class="kpi-card">
+              <h3>Salary Sample (N)</h3>
+              <p class="kpi-card__value" id="kpi-salary-n">—</p>
+              <p class="kpi-card__reason" id="kpi-salary-n-reason">No rows after filters</p>
+            </article>
+            <article class="kpi-card">
+              <h3>Median Salary</h3>
+              <p class="kpi-card__value" id="kpi-salary-median">—</p>
+              <p class="kpi-card__reason" id="kpi-salary-median-reason">Suppressed when N &lt; 5</p>
+            </article>
+          </div>
+          <article class="panel">
+            <h3>Average Salary by Discipline</h3>
+            <div class="panel__body" id="salary-panel">
+              <canvas id="salary-chart"></canvas>
             </div>
-        </aside>
+          </article>
+        </section>
 
-        <!-- Main Content -->
-        <main class="app-main">
-            <!-- Loading Overlay -->
-            <div id="loading" class="text-center" style="padding: 50px;">
-                <i class="fas fa-spinner fa-spin fa-2x text-primary"></i>
-                <p class="mt-3 text-muted">Loading graduate opportunities...</p>
+        <section class="section" id="geography">
+          <div class="section__head">
+            <h2>Geography</h2>
+            <p>Location concentration and map view.</p>
+          </div>
+          <div class="kpi-grid kpi-grid--three">
+            <article class="kpi-card">
+              <h3>Location Parsed %</h3>
+              <p class="kpi-card__value" id="kpi-location-parsed-pct">—</p>
+              <p class="kpi-card__reason" id="kpi-location-parsed-pct-reason">No rows after filters</p>
+            </article>
+            <article class="kpi-card">
+              <h3>Top Location</h3>
+              <p class="kpi-card__value" id="kpi-top-location">—</p>
+              <p class="kpi-card__reason" id="kpi-top-location-reason">No rows after filters</p>
+            </article>
+            <article class="kpi-card">
+              <h3>Distinct Locations</h3>
+              <p class="kpi-card__value" id="kpi-location-count">—</p>
+              <p class="kpi-card__reason" id="kpi-location-count-reason">No rows after filters</p>
+            </article>
+          </div>
+          <div class="chart-grid">
+            <article class="panel panel--wide">
+              <h3>Geographic Distribution</h3>
+              <div class="panel__body panel__body--map" id="map-panel"></div>
+            </article>
+            <article class="panel">
+              <h3>Top Locations</h3>
+              <div class="panel__body panel__body--list">
+                <ul id="top-locations-list" class="rank-list"></ul>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="quality">
+          <div class="section__head">
+            <h2>Data Quality</h2>
+            <p>Coverage and recency indicators.</p>
+          </div>
+          <div class="kpi-grid kpi-grid--three">
+            <article class="kpi-card">
+              <h3>Salary Parsed %</h3>
+              <p class="kpi-card__value" id="kpi-quality-salary">—</p>
+              <p class="kpi-card__reason" id="kpi-quality-salary-reason">No rows after filters</p>
+            </article>
+            <article class="kpi-card">
+              <h3>Location Parsed %</h3>
+              <p class="kpi-card__value" id="kpi-quality-location">—</p>
+              <p class="kpi-card__reason" id="kpi-quality-location-reason">No rows after filters</p>
+            </article>
+            <article class="kpi-card">
+              <h3>Analytics Timestamp</h3>
+              <p class="kpi-card__value" id="kpi-quality-updated">—</p>
+              <p class="kpi-card__reason" id="kpi-quality-updated-reason">No timestamp available</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="listings">
+          <div class="section__head">
+            <h2>Listings</h2>
+            <p>Recent opportunities from the current dataset.</p>
+          </div>
+          <article class="panel">
+            <h3>Recent Opportunities</h3>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Position / Organization</th>
+                    <th>Discipline</th>
+                    <th>Location</th>
+                    <th>Salary</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="jobs-table"></tbody>
+              </table>
             </div>
-
-            <!-- Error Overlay -->
-            <div id="error" class="d-none text-center p-4 border rounded bg-light text-danger">
-                <i class="fas fa-exclamation-triangle fa-2x"></i>
-                <p id="error-message" class="mt-2"></p>
-            </div>
-
-            <div id="main-content" class="d-none">
-                <!-- Header -->
-                <header class="page-header">
-                    <div class="page-title">
-                        <h1>Dashboard Overview</h1>
-                        <p class="page-subtitle">Analysis of Graduate Assistantship Opportunities in Wildlife Sciences
-                        </p>
-                    </div>
-                    <div class="header-actions">
-                        <!-- Date Filter or other controls could go here -->
-                        <span class="badge bg-light text-muted">Last Updated: <span
-                                id="last-updated-date">--</span></span>
-                    </div>
-                </header>
-
-                <!-- KPI Grid -->
-                <section class="kpi-grid" id="overview">
-                    <div class="kpi-card">
-                        <div class="kpi-label">Graduate Positions</div>
-                        <div class="kpi-value" id="grad-positions">--</div>
-                        <div class="kpi-trend trend-up">
-                            <i class="fas fa-arrow-up"></i>
-                            <span>Verified Opportunities</span>
-                        </div>
-                    </div>
-                    <div class="kpi-card">
-                        <div class="kpi-label">Total Analyzed</div>
-                        <div class="kpi-value" id="total-positions">--</div>
-                        <div class="kpi-trend trend-neutral">
-                            <span>Scraped Posts</span>
-                        </div>
-                    </div>
-                    <div class="kpi-card">
-                        <div class="kpi-label">Active Disciplines</div>
-                        <div class="kpi-value" id="disciplines-count">--</div>
-                        <div class="kpi-trend trend-neutral">
-                            <span>Primary Fields</span>
-                        </div>
-                    </div>
-                    <div class="kpi-card">
-                        <div class="kpi-label">Top Discipline</div>
-                        <div class="kpi-value" id="top-discipline" style="font-size: 1.5rem;">--</div>
-                    </div>
-                </section>
-
-                <!-- Charts Row 1: Trends & Discipline Breakdown -->
-                <section id="trends" class="dashboard-grid">
-                    <div class="col-span-8">
-                        <div class="chart-card">
-                            <div class="chart-header">
-                                <h3 class="chart-title"><i class="fas fa-chart-area"></i> Monthly Posting Trends</h3>
-                                <div class="chart-controls">
-                                    <!-- Use span/labels for radio buttons instead of default styling -->
-                                    <div style="font-size: 0.875rem; display: flex; gap: 10px;">
-                                        <label><input type="radio" name="timeframe" value="1_year" checked> 1Y</label>
-                                        <label><input type="radio" name="timeframe" value="all_time"> All</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="chart-body">
-                                <canvas id="trend-chart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-span-4">
-                        <div class="chart-card">
-                            <div class="chart-header">
-                                <h3 class="chart-title"><i class="fas fa-chart-pie"></i> By Discipline</h3>
-                            </div>
-                            <div class="chart-body">
-                                <canvas id="discipline-chart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Charts Row 2: Map & Salary -->
-                <section id="map" class="dashboard-grid">
-                    <div class="col-span-8">
-                        <div class="chart-card">
-                            <div class="chart-header">
-                                <h3 class="chart-title"><i class="fas fa-map"></i> Geographic Distribution</h3>
-                            </div>
-                            <div class="chart-body" id="location-chart" style="min-height: 400px; padding: 0;">
-                                <!-- Map renders here -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-span-4">
-                        <div class="chart-card">
-                            <div class="chart-header">
-                                <h3 class="chart-title"><i class="fas fa-dollar-sign"></i> Salary Insights</h3>
-                            </div>
-                            <div class="chart-body">
-                                <canvas id="salary-chart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Job List -->
-                <section id="jobs" class="mt-4">
-                    <div class="data-table-container">
-                        <div class="table-header">
-                            <h3 style="margin:0; font-size:1.1rem; font-weight:600;">Recent Opportunities</h3>
-                            <button class="btn btn-outline-primary btn-sm">View All</button>
-                        </div>
-                        <div class="table-responsive">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Position / Organization</th>
-                                        <th>Discipline</th>
-                                        <th>Location</th>
-                                        <th>Salary</th>
-                                        <th class="text-end">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="job-table-body">
-                                    <!-- Populated by JS -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </section>
-
-            </div>
-        </main>
-    </div>
-
-    <!-- Application Scripts -->
-    <script src="assets/js/map-component.js"></script>
-    <script src="assets/js/dashboard-core.js"></script>
+          </article>
+        </section>
+      </div>
+    </main>
+  </div>
 </body>
 
 </html>
