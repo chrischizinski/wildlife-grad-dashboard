@@ -21,6 +21,8 @@
     statusText: document.getElementById('status-text'),
     statusIcon: document.getElementById('status-icon'),
     updatedDate: document.getElementById('last-updated-date'),
+    dataPeriod: document.getElementById('data-period-range'),
+    geographyDiscipline: document.getElementById('geography-discipline-filter'),
     noDataBanner: document.getElementById('no-data-banner'),
     jobsTable: document.getElementById('jobs-table'),
     topLocations: document.getElementById('top-locations-list')
@@ -62,6 +64,72 @@
     'Human Dimensions',
     'Other'
   ];
+  const GEOGRAPHY_DISCIPLINE_ALL = '__all__';
+  const US_STATE_COORDS = {
+    Alabama: [32.806671, -86.791130],
+    Alaska: [61.370716, -152.404419],
+    Arizona: [33.729759, -111.431221],
+    Arkansas: [34.969704, -92.373123],
+    California: [36.116203, -119.681564],
+    Colorado: [39.059811, -105.311104],
+    Connecticut: [41.597782, -72.755371],
+    Delaware: [39.318523, -75.507141],
+    Florida: [27.766279, -81.686783],
+    Georgia: [33.040619, -83.643074],
+    Hawaii: [21.094318, -157.498337],
+    Idaho: [44.240459, -114.478828],
+    Illinois: [40.349457, -88.986137],
+    Indiana: [39.849426, -86.258278],
+    Iowa: [42.011539, -93.210526],
+    Kansas: [38.526600, -96.726486],
+    Kentucky: [37.668140, -84.670067],
+    Louisiana: [31.169546, -91.867805],
+    Maine: [44.693947, -69.381927],
+    Maryland: [39.063946, -76.802101],
+    Massachusetts: [42.230171, -71.530106],
+    Michigan: [43.326618, -84.536095],
+    Minnesota: [45.694454, -93.900192],
+    Mississippi: [32.741646, -89.678696],
+    Missouri: [38.456085, -92.288368],
+    Montana: [46.921925, -110.454353],
+    Nebraska: [41.125370, -98.268082],
+    Nevada: [38.313515, -117.055374],
+    'New Hampshire': [43.452492, -71.563896],
+    'New Jersey': [40.298904, -74.521011],
+    'New Mexico': [34.840515, -106.248482],
+    'New York': [42.165726, -74.948051],
+    'North Carolina': [35.630066, -79.806419],
+    'North Dakota': [47.528912, -99.784012],
+    Ohio: [40.388783, -82.764915],
+    Oklahoma: [35.565342, -96.928917],
+    Oregon: [44.572021, -122.070938],
+    Pennsylvania: [40.590752, -77.209755],
+    'Rhode Island': [41.680893, -71.511780],
+    'South Carolina': [33.856892, -80.945007],
+    'South Dakota': [44.299782, -99.438828],
+    Tennessee: [35.747845, -86.692345],
+    Texas: [31.054487, -97.563461],
+    Utah: [40.150032, -111.862434],
+    Vermont: [44.045876, -72.710686],
+    Virginia: [37.769337, -78.169968],
+    Washington: [47.400902, -121.490494],
+    'West Virginia': [38.491226, -80.954453],
+    Wisconsin: [44.268543, -89.616508],
+    Wyoming: [42.755966, -107.302490]
+  };
+  const US_STATE_ABBREV = {
+    AL: 'Alabama', AK: 'Alaska', AZ: 'Arizona', AR: 'Arkansas', CA: 'California',
+    CO: 'Colorado', CT: 'Connecticut', DE: 'Delaware', FL: 'Florida', GA: 'Georgia',
+    HI: 'Hawaii', ID: 'Idaho', IL: 'Illinois', IN: 'Indiana', IA: 'Iowa',
+    KS: 'Kansas', KY: 'Kentucky', LA: 'Louisiana', ME: 'Maine', MD: 'Maryland',
+    MA: 'Massachusetts', MI: 'Michigan', MN: 'Minnesota', MS: 'Mississippi', MO: 'Missouri',
+    MT: 'Montana', NE: 'Nebraska', NV: 'Nevada', NH: 'New Hampshire', NJ: 'New Jersey',
+    NM: 'New Mexico', NY: 'New York', NC: 'North Carolina', ND: 'North Dakota', OH: 'Ohio',
+    OK: 'Oklahoma', OR: 'Oregon', PA: 'Pennsylvania', RI: 'Rhode Island', SC: 'South Carolina',
+    SD: 'South Dakota', TN: 'Tennessee', TX: 'Texas', UT: 'Utah', VT: 'Vermont',
+    VA: 'Virginia', WA: 'Washington', WV: 'West Virginia', WI: 'Wisconsin', WY: 'Wyoming'
+  };
+  const US_STATES_BY_LENGTH = Object.keys(US_STATE_COORDS).sort((a, b) => b.length - a.length);
   const DOUGHNUT_PCT_PLUGIN = {
     id: 'doughnutPctLabels',
     afterDatasetsDraw(chart) {
@@ -481,6 +549,160 @@
     }).format(parsed);
   }
 
+  function formatDateOnly(value) {
+    if (!(value instanceof Date) || Number.isNaN(value.getTime())) return EMPTY_VALUE;
+    return new Intl.DateTimeFormat('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    }).format(value);
+  }
+
+  function getJobPeriodDate(job) {
+    return (
+      parseFlexibleDate(job?.published_date)
+      || parseFlexibleDate(job?.first_seen)
+      || parseFlexibleDate(job?.scraped_at)
+      || parseFlexibleDate(job?.last_updated)
+    );
+  }
+
+  function computeDataPeriodRange(jobs) {
+    const dates = (Array.isArray(jobs) ? jobs : [])
+      .map((job) => getJobPeriodDate(job))
+      .filter((dt) => dt instanceof Date && !Number.isNaN(dt.getTime()))
+      .sort((a, b) => a.getTime() - b.getTime());
+
+    if (!dates.length) return null;
+    return { start: dates[0], end: dates[dates.length - 1] };
+  }
+
+  function escapeRegExp(value) {
+    return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  function extractUsStateFromText(rawText) {
+    if (typeof rawText !== 'string') return null;
+    const text = rawText
+      .replace(/[)\]]+$/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    if (!text) return null;
+
+    const lowered = text.toLowerCase();
+    if (lowered.includes('remote work allowed') || lowered.includes('multiple')) return null;
+
+    for (const state of US_STATES_BY_LENGTH) {
+      const rx = new RegExp(`\\b${escapeRegExp(state)}\\b`, 'i');
+      if (rx.test(text)) return state;
+    }
+
+    const abbrevs = text.toUpperCase().match(/\b[A-Z]{2}\b/g) || [];
+    for (const abbr of abbrevs) {
+      const state = US_STATE_ABBREV[abbr];
+      if (state) return state;
+    }
+
+    return null;
+  }
+
+  function buildUsStateCounts(geographicData, jobs) {
+    const counts = {};
+
+    const rows = Array.isArray(jobs) ? jobs : [];
+    rows.forEach((job) => {
+      const state = extractUsStateFromText(String(job?.location || ''));
+      if (!state) return;
+      counts[state] = (counts[state] || 0) + 1;
+    });
+    if (Object.keys(counts).length) return counts;
+
+    Object.entries(geographicData || {}).forEach(([rawLocation, rawCount]) => {
+      const state = extractUsStateFromText(String(rawLocation || ''));
+      if (!state) return;
+      counts[state] = (counts[state] || 0) + asNumber(rawCount);
+    });
+    return counts;
+  }
+
+  function getDisciplineCounts(jobs) {
+    const counts = {};
+    (Array.isArray(jobs) ? jobs : []).forEach((job) => {
+      const discipline = normalizeDisciplineLabel(
+        String(job?.discipline_primary || job?.discipline || 'Other')
+      );
+      counts[discipline] = (counts[discipline] || 0) + 1;
+    });
+    return counts;
+  }
+
+  function populateGeographyDisciplineFilter(adapter) {
+    const select = refs.geographyDiscipline;
+    if (!select) return;
+
+    const jobs = Array.isArray(adapter?.jobs) ? adapter.jobs : [];
+    const counts = getDisciplineCounts(jobs);
+    const extras = Object.keys(counts)
+      .filter((name) => !DISCIPLINE_LEGEND_ORDER.includes(name))
+      .sort((a, b) => compareDisciplines(a, b));
+    const orderedDisciplines = [...DISCIPLINE_LEGEND_ORDER, ...extras];
+
+    const prior = select.value || GEOGRAPHY_DISCIPLINE_ALL;
+    select.innerHTML = '';
+
+    const overallOpt = document.createElement('option');
+    overallOpt.value = GEOGRAPHY_DISCIPLINE_ALL;
+    overallOpt.textContent = `Overall (${jobs.length.toLocaleString()})`;
+    select.appendChild(overallOpt);
+
+    orderedDisciplines.forEach((discipline) => {
+      const opt = document.createElement('option');
+      opt.value = discipline;
+      opt.textContent = `${discipline} (${asNumber(counts[discipline]).toLocaleString()})`;
+      select.appendChild(opt);
+    });
+
+    const hasPrior = Array.from(select.options).some((opt) => opt.value === prior);
+    select.value = hasPrior ? prior : GEOGRAPHY_DISCIPLINE_ALL;
+  }
+
+  function getSelectedGeographyDiscipline() {
+    const value = String(refs.geographyDiscipline?.value || GEOGRAPHY_DISCIPLINE_ALL);
+    return value || GEOGRAPHY_DISCIPLINE_ALL;
+  }
+
+  function filterJobsByDiscipline(jobs, selectedDiscipline) {
+    const rows = Array.isArray(jobs) ? jobs : [];
+    if (!selectedDiscipline || selectedDiscipline === GEOGRAPHY_DISCIPLINE_ALL) return rows;
+    return rows.filter((job) => (
+      normalizeDisciplineLabel(
+        String(job?.discipline_primary || job?.discipline || 'Other')
+      ) === selectedDiscipline
+    ));
+  }
+
+  function computeGeographyStats(jobs) {
+    const rows = Array.isArray(jobs) ? jobs : [];
+    const totalJobs = rows.length;
+    const locationParsedCount = rows.filter((job) => isLocationParsed(job.location)).length;
+    const locationParsedPct = totalJobs
+      ? Number(((locationParsedCount / totalJobs) * 100).toFixed(1))
+      : 0;
+    const stateCounts = buildUsStateCounts({}, rows);
+    const topLocations = Object.entries(stateCounts)
+      .sort((a, b) => asNumber(b[1]) - asNumber(a[1]))
+      .slice(0, 5);
+
+    return {
+      totalJobs,
+      locationParsedCount,
+      locationParsedPct,
+      distinctLocationCount: Object.keys(stateCounts).length,
+      topLocations,
+      stateCounts
+    };
+  }
+
   function renderOverviewCards(adapter) {
     const overview = adapter?.overview || {};
     const total = asNumber(adapter?.compensation?.totalJobs || overview.totalPositions);
@@ -575,45 +797,53 @@
   }
 
   function renderGeographyCards(adapter) {
-    const geo = adapter?.geography || {};
+    const allJobs = Array.isArray(adapter?.jobs) ? adapter.jobs : [];
+    const selectedDiscipline = getSelectedGeographyDiscipline();
+    const filteredJobs = filterJobsByDiscipline(allJobs, selectedDiscipline);
+    const geo = computeGeographyStats(filteredJobs);
+
     const totalJobs = asNumber(geo.totalJobs);
     const locationPct = asNumber(geo.locationParsedPct);
     const locationParsedCount = asNumber(geo.locationParsedCount);
     const distinctCount = asNumber(geo.distinctLocationCount);
     const topLocations = Array.isArray(geo.topLocations) ? geo.topLocations : [];
     const top = topLocations[0] || null;
+    const selectionLabel = selectedDiscipline === GEOGRAPHY_DISCIPLINE_ALL
+      ? 'overall dataset'
+      : `${selectedDiscipline} rows`;
 
     setCardValue(
       'kpi-location-parsed-pct',
       totalJobs > 0 ? formatRatio(locationParsedCount, totalJobs) : EMPTY_VALUE,
       'kpi-location-parsed-pct-reason',
-      totalJobs > 0 ? `${formatPercent(locationPct)} of unified dataset has parseable location` : 'No rows after filters'
+      totalJobs > 0 ? `${formatPercent(locationPct)} of ${selectionLabel} have parseable location` : 'No rows for selected discipline'
     );
 
     setCardValue(
       'kpi-top-location',
       top ? String(top[0]) : EMPTY_VALUE,
       'kpi-top-location-reason',
-      top ? `${asNumber(top[1]).toLocaleString()} rows in unified dataset` : 'No rows after filters'
+      top ? `${asNumber(top[1]).toLocaleString()} rows in selected discipline` : 'No rows for selected discipline'
     );
 
     setCardValue(
       'kpi-location-count',
       distinctCount > 0 ? distinctCount.toLocaleString() : EMPTY_VALUE,
       'kpi-location-count-reason',
-      distinctCount > 0 ? 'Distinct cleaned location keys in unified dataset' : 'No rows after filters'
+      distinctCount > 0 ? 'Distinct U.S. states in map view' : 'No rows for selected discipline'
     );
 
     if (refs.topLocations) {
       if (!topLocations.length) {
-        refs.topLocations.innerHTML = '<li>No data for current filters</li>';
+        refs.topLocations.innerHTML = '<li>No data for selected discipline</li>';
       } else {
         refs.topLocations.innerHTML = topLocations
-          .slice(0, 5)
           .map(([name, count]) => `<li>${escapeHtml(String(name))}: ${asNumber(count).toLocaleString()}</li>`)
           .join('');
       }
     }
+
+    renderMap(geo.stateCounts, selectedDiscipline);
   }
 
   function renderQualityCards(adapter) {
@@ -1045,7 +1275,6 @@
     const topDisciplines = adapter?.disciplines?.topDisciplines || {};
     const timeSeries = adapter?.disciplines?.timeSeries || {};
     const snapshotAvailability = adapter?.disciplines?.snapshotAvailability || {};
-    const geographySummary = adapter?.geography?.summary || {};
 
     if (!jobs.length) {
       destroyChart('trend');
@@ -1334,15 +1563,14 @@
       }
     }
 
-    renderMap(geographySummary);
   }
 
-  function renderMap(geographicData) {
+  function renderMap(stateCounts, selectedDiscipline) {
     const mapPanel = document.getElementById('map-panel');
     if (!mapPanel) return;
-    const entries = Object.entries(geographicData || {}).filter(([, count]) => asNumber(count) > 0);
+    const entries = Object.entries(stateCounts || {}).filter(([, count]) => asNumber(count) > 0);
     if (!entries.length) {
-      mapPanel.innerHTML = '<div class="panel-empty">No data for current filters</div>';
+      mapPanel.innerHTML = '<div class="panel-empty">No mappable U.S. locations for current filters</div>';
       return;
     }
 
@@ -1353,49 +1581,25 @@
 
     mapPanel.innerHTML = '<div id="leaflet-map" style="height: 100%; width: 100%; border-radius: 8px;"></div>';
     const map = L.map('leaflet-map').setView([37.8, -96], 4);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; OpenStreetMap &copy; CARTO',
-      subdomains: 'abcd',
+    const markerColor = selectedDiscipline && selectedDiscipline !== GEOGRAPHY_DISCIPLINE_ALL
+      ? getDisciplineColor(selectedDiscipline)
+      : '#0f766e';
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors',
       maxZoom: 19
     }).addTo(map);
 
-    const stateCoords = {
-      Alabama: [32.806671, -86.791130], Alaska: [61.370716, -152.404419], Arizona: [33.729759, -111.431221],
-      Arkansas: [34.969704, -92.373123], California: [36.116203, -119.681564], Colorado: [39.059811, -105.311104],
-      Connecticut: [41.597782, -72.755371], Delaware: [39.318523, -75.507141], Florida: [27.766279, -81.686783],
-      Georgia: [33.040619, -83.643074], Hawaii: [21.094318, -157.498337], Idaho: [44.240459, -114.478828],
-      Illinois: [40.349457, -88.986137], Indiana: [39.849426, -86.258278], Iowa: [42.011539, -93.210526],
-      Kansas: [38.526600, -96.726486], Kentucky: [37.668140, -84.670067], Louisiana: [31.169546, -91.867805],
-      Maine: [44.693947, -69.381927], Maryland: [39.063946, -76.802101], Massachusetts: [42.230171, -71.530106],
-      Michigan: [43.326618, -84.536095], Minnesota: [45.694454, -93.900192], Mississippi: [32.741646, -89.678696],
-      Missouri: [38.456085, -92.288368], Montana: [46.921925, -110.454353], Nebraska: [41.125370, -98.268082],
-      Nevada: [38.313515, -117.055374], NewHampshire: [43.452492, -71.563896], NewJersey: [40.298904, -74.521011],
-      NewMexico: [34.840515, -106.248482], NewYork: [42.165726, -74.948051], NorthCarolina: [35.630066, -79.806419],
-      NorthDakota: [47.528912, -99.784012], Ohio: [40.388783, -82.764915], Oklahoma: [35.565342, -96.928917],
-      Oregon: [44.572021, -122.070938], Pennsylvania: [40.590752, -77.209755], RhodeIsland: [41.680893, -71.511780],
-      SouthCarolina: [33.856892, -80.945007], SouthDakota: [44.299782, -99.438828], Tennessee: [35.747845, -86.692345],
-      Texas: [31.054487, -97.563461], Utah: [40.150032, -111.862434], Vermont: [44.045876, -72.710686],
-      Virginia: [37.769337, -78.169968], Washington: [47.400902, -121.490494], WestVirginia: [38.491226, -80.954453],
-      Wisconsin: [44.268543, -89.616508], Wyoming: [42.755966, -107.302490]
-    };
-
-    entries.forEach(([rawLocation, count]) => {
-      const location = String(rawLocation).replace(/[)\]]+$/g, '').trim();
-      const compact = location.replace(/\s+/g, '');
-      let coords = stateCoords[location] || stateCoords[compact];
-      if (!coords) {
-        const foundKey = Object.keys(stateCoords).find((k) => location.includes(k) || location.includes(k.replace(/([A-Z])/g, ' $1').trim()));
-        if (foundKey) coords = stateCoords[foundKey];
-      }
+    entries.forEach(([state, count]) => {
+      const coords = US_STATE_COORDS[state];
       if (!coords) return;
       L.circleMarker(coords, {
         radius: Math.max(5, Math.min(16, Math.sqrt(asNumber(count)) * 2.8)),
-        fillColor: '#0f766e',
-        color: '#ffffff',
+        fillColor: markerColor,
+        color: '#000000',
         weight: 1,
         opacity: 1,
-        fillOpacity: 0.75
-      }).bindPopup(`<strong>${escapeHtml(location)}</strong><br>${asNumber(count)} postings`).addTo(map);
+        fillOpacity: 0.8
+      }).bindPopup(`<strong>${escapeHtml(state)}</strong><br>${asNumber(count)} postings`).addTo(map);
     });
   }
 
@@ -1431,7 +1635,14 @@
       if (refs.updatedDate) {
         refs.updatedDate.textContent = formatDisplayTimestamp(normalized.meta.lastUpdated) || EMPTY_VALUE;
       }
+      if (refs.dataPeriod) {
+        const period = computeDataPeriodRange(normalized.jobs);
+        refs.dataPeriod.textContent = period
+          ? `${formatDateOnly(period.start)} to ${formatDateOnly(period.end)}`
+          : EMPTY_VALUE;
+      }
 
+      populateGeographyDisciplineFilter(normalized);
       renderOverviewCards(normalized);
       renderCompensationCards(normalized);
       renderGeographyCards(normalized);
@@ -1440,6 +1651,7 @@
       renderCharts(normalized);
       showNoDataBanner(!jobs.length);
       bindTimeframeToggle(normalized);
+      bindGeographyDisciplineToggle(normalized);
 
       setState('ok', `Adapter ready (${jobs.length} jobs)`);
     } catch (err) {
@@ -1459,6 +1671,14 @@
     const toggles = Array.from(document.querySelectorAll('input[name="timeframe"]'));
     toggles.forEach((input) => {
       input.addEventListener('change', () => renderCharts(adapter));
+    });
+  }
+
+  function bindGeographyDisciplineToggle(adapter) {
+    const select = refs.geographyDiscipline;
+    if (!select) return;
+    select.addEventListener('change', () => {
+      renderGeographyCards(adapter);
     });
   }
 })();

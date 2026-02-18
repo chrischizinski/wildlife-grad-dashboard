@@ -14,7 +14,7 @@
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script defer src="assets/js/dashboard-core.js?v=10"></script>
+  <script defer src="assets/js/dashboard-core.js?v=11"></script>
 </head>
 
 <body>
@@ -49,6 +49,7 @@
         </div>
         <div class="hero__meta">
           <span class="pill">Last Updated: <strong id="last-updated-date">—</strong></span>
+          <span class="pill">Data Period: <strong id="data-period-range">—</strong></span>
         </div>
       </header>
 
@@ -174,9 +175,17 @@
         </section>
 
         <section class="section" id="geography">
-          <div class="section__head">
-            <h2>Geography</h2>
-            <p>Location concentration and map view.</p>
+          <div class="section__head section__head--split">
+            <div>
+              <h2>Geography</h2>
+              <p>Location concentration and map view.</p>
+            </div>
+            <label class="discipline-control" for="geography-discipline-filter">
+              <span>Discipline</span>
+              <select id="geography-discipline-filter" class="discipline-control__select">
+                <option value="__all__">Overall</option>
+              </select>
+            </label>
           </div>
           <div class="kpi-grid kpi-grid--three">
             <article class="kpi-card">
