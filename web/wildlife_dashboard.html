@@ -27,6 +27,7 @@
 
       <nav class="sidebar-nav" aria-label="Dashboard sections">
         <a class="sidebar-nav__link is-active" href="#overview">Overview</a>
+        <a class="sidebar-nav__link" href="#temporal-trends">Temporal Trends</a>
         <a class="sidebar-nav__link" href="#disciplines">Disciplines</a>
         <a class="sidebar-nav__link" href="#compensation">Compensation</a>
         <a class="sidebar-nav__link" href="#geography">Geography</a>
@@ -93,11 +94,11 @@
           </div>
         </section>
 
-        <section class="section" id="disciplines">
+        <section class="section" id="temporal-trends">
           <div class="section__head section__head--split">
             <div>
-              <h2>Disciplines</h2>
-              <p>Monthly posting volume and discipline mix.</p>
+              <h2>Temporal Trends</h2>
+              <p>Scrape snapshot counts and posting seasonality over time.</p>
             </div>
             <fieldset class="time-toggle" aria-label="Timeframe">
               <label><input type="radio" name="timeframe" value="1_year" checked> 1Y</label>
@@ -106,15 +107,36 @@
           </div>
           <div class="chart-grid">
             <article class="panel panel--wide">
-              <h3>Monthly Posting Trend</h3>
+              <h3>Unique Graduate Positions Captured by Scraping Date</h3>
               <div class="panel__body" id="trend-panel">
                 <canvas id="trend-chart"></canvas>
               </div>
             </article>
+          </div>
+          <article class="panel">
+            <h3>Posted Position Seasonality (Calendar Month)</h3>
+            <div class="panel__body" id="seasonality-panel">
+              <canvas id="seasonality-chart"></canvas>
+            </div>
+          </article>
+        </section>
+
+        <section class="section" id="disciplines">
+          <div class="section__head">
+            <h2>Disciplines</h2>
+            <p>Last-capture composition and overall graduate-dataset composition.</p>
+          </div>
+          <div class="chart-grid">
             <article class="panel">
-              <h3>Discipline Breakdown</h3>
-              <div class="panel__body" id="discipline-panel">
-                <canvas id="discipline-chart"></canvas>
+              <h3>Breakdown During Last Capture</h3>
+              <div class="panel__body" id="discipline-latest-panel">
+                <canvas id="discipline-latest-chart"></canvas>
+              </div>
+            </article>
+            <article class="panel">
+              <h3>Overall Breakdown</h3>
+              <div class="panel__body" id="discipline-overall-panel">
+                <canvas id="discipline-overall-chart"></canvas>
               </div>
             </article>
           </div>

@@ -271,6 +271,8 @@ def calculate_analytics(data: List[Dict[str, Any]]) -> Dict[str, Any]:
             },
         }
 
+    snapshot_availability = calculate_snapshot_availability()
+
     return {
         "metadata": {
             "generated_at": datetime.now().isoformat(),
@@ -286,7 +288,198 @@ def calculate_analytics(data: List[Dict[str, Any]]) -> Dict[str, Any]:
         "top_disciplines": top_disciplines,
         "geographic_summary": dict(location_counts.most_common(25)),
         "time_series": time_series,
+        "snapshot_availability": snapshot_availability,
         "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+    }
+
+
+def _extract_rows(obj: Any) -> List[Dict[str, Any]]:
+    """Extract row lists from either list JSON or dict-wrapped payloads."""
+    if isinstance(obj, list):
+        return obj
+    if isinstance(obj, dict):
+        if isinstance(obj.get("positions"), list):
+            return obj["positions"]
+        if isinstance(obj.get("jobs"), list):
+            return obj["jobs"]
+    return []
+
+
+def _parse_run_datetime(path: Path) -> Optional[datetime]:
+    """Parse run timestamp from filenames like *_YYYYMMDD_HHMMSS.json."""
+    match = re.search(r"_(\d{8})_(\d{6})", path.stem)
+    if not match:
+        return None
+    try:
+        return datetime.strptime(f"{match.group(1)}_{match.group(2)}", "%Y%m%d_%H%M%S")
+    except ValueError:
+        return None
+
+
+def _parse_flexible_datetime(value: Any) -> Optional[datetime]:
+    """Parse common datetime/date formats found in scraper artifacts."""
+    if value is None:
+        return None
+
+    text = str(value).strip()
+    if not text:
+        return None
+
+    # ISO forms, including timezone-suffixed strings.
+    try:
+        return datetime.fromisoformat(text.replace("Z", "+00:00"))
+    except ValueError:
+        pass
+
+    # mm/dd/yyyy
+    try:
+        return datetime.strptime(text, "%m/%d/%Y")
+    except ValueError:
+        pass
+
+    # yyyy-mm-dd
+    try:
+        return datetime.strptime(text[:10], "%Y-%m-%d")
+    except ValueError:
+        return None
+
+
+def _is_run_aligned(rows: List[Dict[str, Any]], run_dt: datetime, max_day_delta: int = 14) -> bool:
+    """
+    Validate that snapshot content aligns with run timestamp.
+
+    Some archived files are re-saves of older static datasets. For scrape-snapshot
+    trends, keep only files where row-level scraped_at dates are near run date.
+    """
+    parsed_dates: List[datetime] = []
+    for row in rows:
+        raw = row.get("scraped_at")
+        if not raw:
+            continue
+        dt = _parse_flexible_datetime(raw)
+        if dt:
+            parsed_dates.append(dt)
+
+    if not parsed_dates:
+        return False
+
+    # Use the median row timestamp as representative run timestamp.
+    parsed_dates.sort()
+    anchor = parsed_dates[len(parsed_dates) // 2]
+    delta_days = abs((anchor.date() - run_dt.date()).days)
+    return delta_days <= max_day_delta
+
+
+def _count_graduate_rows(rows: List[Dict[str, Any]]) -> int:
+    """Count rows marked as graduate in each snapshot."""
+    return sum(1 for row in rows if row.get("is_graduate_position"))
+
+
+def _graduate_discipline_breakdown(rows: List[Dict[str, Any]]) -> Dict[str, int]:
+    """Build normalized discipline counts for graduate rows in a snapshot."""
+    counts: Counter[str] = Counter()
+    for row in rows:
+        if not row.get("is_graduate_position"):
+            continue
+        original_disc = (
+            row.get("discipline")
+            or row.get("discipline_primary")
+            or row.get("discipline_secondary")
+            or "Unknown"
+        )
+        counts[normalize_discipline(original_disc)] += 1
+    return dict(sorted(counts.items(), key=lambda x: (-x[1], x[0])))
+
+
+def calculate_snapshot_availability() -> Dict[str, Any]:
+    """
+    Build monthly active-position availability from scrape snapshots.
+
+    Priority:
+    1. data/archive/scraped_backup_*.json (raw run snapshots)
+    2. data/archive/enhanced_*.json (legacy run snapshots)
+    """
+    source_candidates = [
+        ("scraped_backup", sorted(Path("data/archive").glob("scraped_backup_*.json"))),
+        ("enhanced_archive", sorted(Path("data/archive").glob("enhanced_*.json"))),
+    ]
+
+    selected_source = "none"
+    snapshot_points: List[Dict[str, Any]] = []
+    best_month_count = 0
+    best_run_count = 0
+
+    for source_name, files in source_candidates:
+        points: List[Dict[str, Any]] = []
+        for path in files:
+            run_dt = _parse_run_datetime(path)
+            if not run_dt:
+                continue
+            try:
+                with open(path, "r", encoding="utf-8") as f:
+                    obj = json.load(f)
+                rows = _extract_rows(obj)
+                if not _is_run_aligned(rows, run_dt):
+                    continue
+                grad_count = _count_graduate_rows(rows)
+                points.append(
+                    {
+                        "run_dt": run_dt,
+                        "grad_count": grad_count,
+                        "discipline_breakdown": _graduate_discipline_breakdown(rows),
+                    }
+                )
+            except Exception:
+                continue
+        if not points:
+            continue
+
+        month_count = len({p["run_dt"].strftime("%Y-%m") for p in points})
+        run_count = len(points)
+        if (month_count, run_count) > (best_month_count, best_run_count):
+            selected_source = source_name
+            snapshot_points = points
+            best_month_count = month_count
+            best_run_count = run_count
+
+    if not snapshot_points:
+        return {
+            "source": "none",
+            "run_count": 0,
+            "monthly_avg_active_grad_positions": {},
+            "monthly_relative_to_peak_pct": {},
+            "monthly_run_count": {},
+        }
+
+    monthly_values: Dict[str, List[int]] = defaultdict(list)
+    for point in snapshot_points:
+        run_dt = point["run_dt"]
+        grad_count = point["grad_count"]
+        monthly_values[run_dt.strftime("%Y-%m")].append(grad_count)
+
+    monthly_avg = {
+        month: round(statistics.mean(values), 2)
+        for month, values in sorted(monthly_values.items())
+    }
+    monthly_runs = {month: len(values) for month, values in sorted(monthly_values.items())}
+
+    peak = max(monthly_avg.values()) if monthly_avg else 0
+    monthly_relative = {
+        month: round((value / peak) * 100, 1) if peak > 0 else 0
+        for month, value in monthly_avg.items()
+    }
+
+    latest_point = max(snapshot_points, key=lambda p: p["run_dt"])
+
+    return {
+        "source": selected_source,
+        "run_count": len(snapshot_points),
+        "monthly_avg_active_grad_positions": monthly_avg,
+        "monthly_relative_to_peak_pct": monthly_relative,
+        "monthly_run_count": monthly_runs,
+        "latest_run_timestamp": latest_point["run_dt"].isoformat(),
+        "latest_run_grad_positions": latest_point["grad_count"],
+        "latest_run_discipline_breakdown": latest_point["discipline_breakdown"],
     }
 
 
