@@ -301,6 +301,7 @@
         positionsWithSalary,
         totalJobs: jobs.length,
         salaryParsedPct,
+        salaryParsedCount: salaries.length,
         salarySampleSize: salaries.length,
         salaryValues: salaries
       },
@@ -314,6 +315,8 @@
       },
       quality: {
         totalJobs: jobs.length,
+        salaryParsedCount: salaries.length,
+        locationParsedCount,
         salaryParsedPct,
         locationParsedPct,
         lastUpdated: analytics?.last_updated || analytics?.metadata?.last_updated || null
@@ -347,39 +350,69 @@
     if (reasonEl) reasonEl.textContent = reason;
   }
 
+  function formatRatio(numerator, denominator) {
+    if (!Number.isFinite(denominator) || denominator <= 0) return EMPTY_VALUE;
+    const n = Number.isFinite(numerator) ? Math.max(0, Math.round(numerator)) : 0;
+    const d = Math.max(0, Math.round(denominator));
+    return `${n.toLocaleString()} / ${d.toLocaleString()}`;
+  }
+
+  function formatPercent(value) {
+    const n = asNumber(value);
+    return `${n.toFixed(1)}%`;
+  }
+
+  function formatDisplayTimestamp(value) {
+    if (!value) return null;
+    const raw = String(value).trim();
+    if (!raw) return null;
+    const parsed = parseFlexibleDate(raw) || new Date(raw.replace(' ', 'T'));
+    if (!parsed || Number.isNaN(parsed.getTime())) return raw;
+    return new Intl.DateTimeFormat('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    }).format(parsed);
+  }
+
   function renderOverviewCards(adapter) {
     const overview = adapter?.overview || {};
-    const total = asNumber(overview.totalPositions);
+    const total = asNumber(adapter?.compensation?.totalJobs || overview.totalPositions);
     const grad = asNumber(overview.graduatePositions);
     const discCount = asNumber(overview.disciplineCount);
     const topDisc = overview.topDiscipline;
+    const salaryParsedN = asNumber(adapter?.compensation?.salaryParsedCount);
+    const salaryParsedPct = asNumber(adapter?.compensation?.salaryParsedPct);
 
     setCardValue(
       'kpi-grad-positions',
       grad > 0 ? grad.toLocaleString() : EMPTY_VALUE,
       'kpi-grad-positions-reason',
-      grad > 0 ? 'Graduate postings in current dataset' : 'No rows after filters'
+      grad > 0 ? 'Graduate rows in unified dashboard dataset' : 'No rows after filters'
     );
 
     setCardValue(
-      'kpi-total-positions',
-      total > 0 ? total.toLocaleString() : EMPTY_VALUE,
-      'kpi-total-positions-reason',
-      total > 0 ? 'All analyzed postings in current dataset' : 'No rows after filters'
+      'kpi-salary-coverage',
+      total > 0 ? formatRatio(salaryParsedN, total) : EMPTY_VALUE,
+      'kpi-salary-coverage-reason',
+      total > 0 ? `${formatPercent(salaryParsedPct)} of unified dataset has parseable salary` : 'No rows after filters'
     );
 
     setCardValue(
       'kpi-disciplines',
       discCount > 0 ? discCount.toLocaleString() : EMPTY_VALUE,
       'kpi-disciplines-reason',
-      discCount > 0 ? 'Distinct disciplines represented' : 'No rows after filters'
+      discCount > 0 ? 'Distinct discipline categories in unified dataset' : 'No rows after filters'
     );
 
     setCardValue(
       'kpi-top-discipline',
       topDisc ? topDisc : EMPTY_VALUE,
       'kpi-top-discipline-reason',
-      topDisc ? 'Highest posting share' : 'No rows after filters'
+      topDisc ? 'Largest discipline by posting count in unified dataset' : 'No rows after filters'
     );
   }
 
@@ -399,22 +432,23 @@
     const comp = adapter?.compensation || {};
     const totalJobs = asNumber(comp.totalJobs);
     const pct = asNumber(comp.salaryParsedPct);
+    const parsedCount = asNumber(comp.salaryParsedCount || comp.salarySampleSize);
     const sampleN = asNumber(comp.salarySampleSize);
     const salaryValues = Array.isArray(comp.salaryValues) ? comp.salaryValues : [];
     const med = median(salaryValues);
 
     setCardValue(
       'kpi-salary-parsed-pct',
-      totalJobs > 0 ? `${pct}%` : EMPTY_VALUE,
+      totalJobs > 0 ? formatRatio(parsedCount, totalJobs) : EMPTY_VALUE,
       'kpi-salary-parsed-pct-reason',
-      totalJobs > 0 ? 'Share of postings with parseable salary' : 'No rows after filters'
+      totalJobs > 0 ? `${formatPercent(pct)} of unified dataset has parseable salary` : 'No rows after filters'
     );
 
     setCardValue(
       'kpi-salary-n',
       totalJobs > 0 ? sampleN.toLocaleString() : EMPTY_VALUE,
       'kpi-salary-n-reason',
-      totalJobs > 0 ? 'Salary-parsed subset size' : 'No rows after filters'
+      totalJobs > 0 ? 'Rows in salary-parsed subset from unified dataset' : 'No rows after filters'
     );
 
     if (sampleN < 5 || med === null) {
@@ -433,7 +467,7 @@
       'kpi-salary-median',
       formatCurrency(med),
       'kpi-salary-median-reason',
-      `Median from salary-parsed subset (N=${sampleN})`
+      `Median annualized salary from salary-parsed subset (N=${sampleN})`
     );
   }
 
@@ -441,29 +475,30 @@
     const geo = adapter?.geography || {};
     const totalJobs = asNumber(geo.totalJobs);
     const locationPct = asNumber(geo.locationParsedPct);
+    const locationParsedCount = asNumber(geo.locationParsedCount);
     const distinctCount = asNumber(geo.distinctLocationCount);
     const topLocations = Array.isArray(geo.topLocations) ? geo.topLocations : [];
     const top = topLocations[0] || null;
 
     setCardValue(
       'kpi-location-parsed-pct',
-      totalJobs > 0 ? `${locationPct}%` : EMPTY_VALUE,
+      totalJobs > 0 ? formatRatio(locationParsedCount, totalJobs) : EMPTY_VALUE,
       'kpi-location-parsed-pct-reason',
-      totalJobs > 0 ? 'Share of postings with usable location' : 'No rows after filters'
+      totalJobs > 0 ? `${formatPercent(locationPct)} of unified dataset has parseable location` : 'No rows after filters'
     );
 
     setCardValue(
       'kpi-top-location',
       top ? String(top[0]) : EMPTY_VALUE,
       'kpi-top-location-reason',
-      top ? `${asNumber(top[1]).toLocaleString()} postings` : 'No rows after filters'
+      top ? `${asNumber(top[1]).toLocaleString()} rows in unified dataset` : 'No rows after filters'
     );
 
     setCardValue(
       'kpi-location-count',
       distinctCount > 0 ? distinctCount.toLocaleString() : EMPTY_VALUE,
       'kpi-location-count-reason',
-      distinctCount > 0 ? 'Distinct cleaned location keys' : 'No rows after filters'
+      distinctCount > 0 ? 'Distinct cleaned location keys in unified dataset' : 'No rows after filters'
     );
 
     if (refs.topLocations) {
@@ -481,29 +516,31 @@
   function renderQualityCards(adapter) {
     const quality = adapter?.quality || {};
     const totalJobs = asNumber(quality.totalJobs);
+    const salaryParsedCount = asNumber(quality.salaryParsedCount);
+    const locationParsedCount = asNumber(quality.locationParsedCount);
     const salaryPct = asNumber(quality.salaryParsedPct);
     const locationPct = asNumber(quality.locationParsedPct);
     const updated = quality.lastUpdated;
 
     setCardValue(
       'kpi-quality-salary',
-      totalJobs > 0 ? `${salaryPct}%` : EMPTY_VALUE,
+      totalJobs > 0 ? formatRatio(salaryParsedCount, totalJobs) : EMPTY_VALUE,
       'kpi-quality-salary-reason',
-      totalJobs > 0 ? 'Share of postings with parseable salary' : 'No rows after filters'
+      totalJobs > 0 ? `${formatPercent(salaryPct)} parseable salary in unified dataset` : 'No rows after filters'
     );
 
     setCardValue(
       'kpi-quality-location',
-      totalJobs > 0 ? `${locationPct}%` : EMPTY_VALUE,
+      totalJobs > 0 ? formatRatio(locationParsedCount, totalJobs) : EMPTY_VALUE,
       'kpi-quality-location-reason',
-      totalJobs > 0 ? 'Share of postings with parseable location' : 'No rows after filters'
+      totalJobs > 0 ? `${formatPercent(locationPct)} parseable location in unified dataset` : 'No rows after filters'
     );
 
     setCardValue(
       'kpi-quality-updated',
-      updated ? String(updated) : EMPTY_VALUE,
+      updated ? formatDisplayTimestamp(updated) : EMPTY_VALUE,
       'kpi-quality-updated-reason',
-      updated ? 'From analytics output' : 'No timestamp available'
+      updated ? 'From analytics output (dashboard_analytics.json)' : 'No timestamp available'
     );
   }
 
@@ -868,7 +905,7 @@
       window.WGD_ADAPTER = normalized;
 
       if (refs.updatedDate) {
-        refs.updatedDate.textContent = normalized.meta.lastUpdated || EMPTY_VALUE;
+        refs.updatedDate.textContent = formatDisplayTimestamp(normalized.meta.lastUpdated) || EMPTY_VALUE;
       }
 
       renderOverviewCards(normalized);
