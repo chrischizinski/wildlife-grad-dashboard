@@ -1193,7 +1193,7 @@
               borderWidth: 1,
               borderSkipped: false
             }, {
-              label: 'COL-Adjusted Avg Salary',
+              label: 'COL-Adjusted Avg Salary (Nebraska baseline)',
               data: salaryRows.map((r) => r.avgAdjusted),
               backgroundColor: '#0f766e',
               borderColor: '#000000',
