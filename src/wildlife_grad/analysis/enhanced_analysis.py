@@ -187,6 +187,30 @@ class GraduatePositionDetector:
             ],
         }
 
+        # Hard exclusions for roles that should not be treated as graduate positions
+        # unless assistantship language is explicit.
+        self.hard_exclusion_patterns = [
+            r"\bpostdoc(toral)?\b",
+            r"\bveterinarian\b",
+            r"\barchaeologist\b",
+            r"\bfield\s+technician\b",
+            r"\btechnician\b",
+            r"\benvironmental\s+specialist\b",
+            r"\bspecialist\s*\(rapid\s+responder\)\b",
+            r"\bstudent\s+contractor\b",
+            r"\bbiologist\s+i{1,2}\b",
+            r"\bprofessional\s+certificate\b",
+            r"\bcertificate\s+program\b",
+        ]
+        self.explicit_assistantship_patterns = [
+            r"\bgraduate\s+assistantship\b",
+            r"\bresearch\s+assistantship\b",
+            r"\bteaching\s+assistantship\b",
+            r"\bgraduate\s+research\s+assistant(ship)?\b",
+            r"\bph\.?d\.?\s+assistantship\b",
+            r"\bms\b.*\bassistantship\b",
+        ]
+
     def is_graduate_position(self, position: "JobPosition") -> Tuple[bool, str, float]:
         """
         Determine if position is a graduate assistantship/fellowship.
@@ -196,6 +220,19 @@ class GraduatePositionDetector:
         """
         # Combine all text fields for analysis, including description
         text_content = f"{position.title} {position.tags} {position.organization} {position.description}".lower()
+
+        has_hard_exclusion = any(
+            re.search(pattern, text_content, re.IGNORECASE)
+            for pattern in self.hard_exclusion_patterns
+        )
+        has_explicit_assistantship = any(
+            re.search(pattern, text_content, re.IGNORECASE)
+            for pattern in self.explicit_assistantship_patterns
+        )
+
+        # Hard exclusion wins unless assistantship intent is explicit.
+        if has_hard_exclusion and not has_explicit_assistantship:
+            return False, "Professional/Other", 0.1
 
         # Calculate scores
         grad_score = 0
@@ -536,6 +573,28 @@ class DisciplineClassifier:
             self.vectorizer = TfidfVectorizer(max_features=1000, stop_words="english")
             self.is_trained = False
 
+        self.hard_non_grad_patterns = [
+            r"\bveterinarian\b",
+            r"\barchaeologist\b",
+            r"\bfield\s+technician\b",
+            r"\btechnician\b",
+            r"\benvironmental\s+specialist\b",
+            r"\bspecialist\s*\(rapid\s+responder\)\b",
+            r"\bbiologist\s+i{1,2}\b",
+            r"\bprofessional\s+certificate\b",
+            r"\bcertificate\s+program\b",
+            r"\bpostdoc(toral)?\b",
+            r"\bstudent\s+contractor\b",
+        ]
+        self.explicit_assistantship_patterns = [
+            r"\bgraduate\s+assistantship\b",
+            r"\bresearch\s+assistantship\b",
+            r"\bteaching\s+assistantship\b",
+            r"\bgraduate\s+research\s+assistant(ship)?\b",
+            r"\bph\.?d\.?\s+assistantship\b",
+            r"\bms\b.*\bassistantship\b",
+        ]
+
     def classify_position(self, position: JobPosition) -> Tuple[str, str]:
         """
         Classify a position into primary and secondary disciplines.
@@ -548,6 +607,17 @@ class DisciplineClassifier:
         """
         # Combine title, tags, organization, and description for comprehensive analysis
         text_content = f"{position.title} {position.tags} {position.organization} {position.description}".lower()
+
+        has_hard_non_grad = any(
+            re.search(pattern, text_content, re.IGNORECASE)
+            for pattern in self.hard_non_grad_patterns
+        )
+        has_explicit_assistantship = any(
+            re.search(pattern, text_content, re.IGNORECASE)
+            for pattern in self.explicit_assistantship_patterns
+        )
+        if has_hard_non_grad and not has_explicit_assistantship:
+            return "Other", ""
 
         # Always use ML classification when available, regardless of text length
         if HAS_SKLEARN:
