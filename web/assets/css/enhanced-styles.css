@@ -199,6 +199,10 @@ body {
   gap: 10px;
 }
 
+.chart-grid--single {
+  grid-template-columns: 1fr;
+}
+
 .panel {
   background: var(--panel);
   border: 1px solid var(--border);
