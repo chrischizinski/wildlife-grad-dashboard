@@ -190,11 +190,19 @@ class GraduatePositionDetector:
         # Hard exclusions for roles that should not be treated as graduate positions
         # unless assistantship language is explicit.
         self.hard_exclusion_patterns = [
-            r"\bpostdoc(toral)?\b",
+            r"\bpost[-\s]?doc(toral)?\b",
             r"\bveterinarian\b",
             r"\barchaeologist\b",
+            r"\bassistant\s+professor\b",
+            r"\bassociate\s+professor\b",
+            r"\bprofessor\b",
+            r"\bprincipal\s+investigator\b",
+            r"\bvisiting\s+assistant\s+professor\b",
+            r"\breu\b",
+            r"\bintern(ship)?\b",
             r"\bfield\s+technician\b",
             r"\btechnician\b",
+            r"\becologist\b",
             r"\benvironmental\s+specialist\b",
             r"\bspecialist\s*\(rapid\s+responder\)\b",
             r"\bstudent\s+contractor\b",
@@ -318,11 +326,42 @@ class DisciplineClassifier:
     """Smart discipline classification using your specific categories."""
 
     def __init__(self):
-        # Consolidated discipline categories - exactly 5 categories as requested
-        # Consolidated to 6 main disciplines for clarity
+        # Canonical taxonomy:
+        # - Environmental Sciences (soil/water/abiotic focus)
+        # - Fisheries and Aquatic (aquatic organisms/fishes)
+        # - Wildlife (terrestrial organisms)
+        # - Entomology (insects/arthropods)
+        # - Forestry and Habitat (trees/habitat/forest systems)
+        # - Agriculture (cattle/livestock/ag systems)
+        # - Human Dimensions (people-focused)
+        # - Other (fallback)
         self.discipline_keywords = {
-            "Fisheries": [
-                # Core fisheries and aquatic terms
+            "Environmental Sciences": [
+                "environmental science",
+                "environmental sciences",
+                "water quality",
+                "water chemistry",
+                "groundwater",
+                "surface water",
+                "hydrology",
+                "watershed",
+                "soil",
+                "soil science",
+                "soil chemistry",
+                "biogeochemistry",
+                "geochemistry",
+                "contaminant",
+                "pollution",
+                "toxicology",
+                "air quality",
+                "climate",
+                "climate change",
+                "atmospheric",
+                "remote sensing",
+                "gis",
+                "spatial analysis",
+            ],
+            "Fisheries and Aquatic": [
                 "fisheries",
                 "fish",
                 "aquatic",
@@ -336,105 +375,123 @@ class DisciplineClassifier:
                 "trout",
                 "bass",
                 "sturgeon",
-                "fishing",
                 "aquaculture",
                 "hatchery",
                 "spawning",
-                "fish population",
-                "angling",
-                "fisheries management",
-                "fish conservation",
-                "fish habitat",
-                "fish ecology",
-                "commercial fishing",
-                "recreational fishing",
-                "fish stock",
-                "fishery science",
-                "aquatic ecology",
-                "fish biology",
+                "fish passage",
+                "aquatic organism",
                 "ichthyology",
-                "fisheries biology",
-                "water quality",
-                "aquatic systems",
-                "fish communities",
-                "fish assessment",
                 "marine science",
-                "oceanography",
-                "coastal",
             ],
             "Wildlife": [
-                # Wildlife, conservation, and natural resources
                 "wildlife",
                 "mammal",
                 "bird",
                 "avian",
+                "terrestrial",
+                "vertebrate",
+                "fauna",
                 "carnivore",
                 "ungulate",
                 "deer",
                 "elk",
                 "bear",
                 "wolf",
+                "bat",
+                "reptile",
+                "amphibian",
+                "herpetology",
                 "predator",
-                "prey",
-                "habitat",
                 "migration",
                 "behavior",
-                "population dynamics",
-                "demography",
-                "survival",
-                "mortality",
-                "recruitment",
                 "wildlife management",
                 "wildlife conservation",
                 "conservation biology",
                 "endangered",
                 "threatened",
-                "recovery",
-                "restoration",
-                "protected areas",
-                "reserve",
-                "biodiversity",
-                "extinction",
-                "reintroduction",
-                "captive breeding",
-                "translocation",
-                "corridor",
-                "fragmentation",
-                "species conservation",
-                "habitat management",
                 "wildlife ecology",
-                "animal behavior",
                 "ornithology",
                 "mammalogy",
-                "herpetology",
-                "entomology",
-                "taxonomy",
-                "wildlife biology",
-                # Include old categories that should map to wildlife/conservation
                 "conservation",
                 "species",
                 "animal",
-                "vertebrate",
-                "fauna",
+            ],
+            "Entomology": [
+                "entomology",
+                "insect",
+                "insects",
+                "arthropod",
+                "arthropods",
+                "pollinator",
+                "pollinators",
+                "bee",
+                "bees",
+                "butterfly",
+                "beetle",
+                "mosquito",
+                "tick",
+                "lepidoptera",
+                "coleoptera",
+            ],
+            "Forestry and Habitat": [
+                "forestry",
+                "forest",
+                "silviculture",
+                "timber",
+                "tree",
+                "trees",
+                "woodland",
+                "canopy",
+                "understory",
+                "forest stand",
+                "forest management",
+                "forest restoration",
+                "rangeland",
+                "habitat",
+                "habitat restoration",
+                "habitat management",
+                "vegetation",
+                "land management",
+                "fuel treatment",
+                "prescribed burn",
+                "wildfire",
+            ],
+            "Agriculture": [
+                "agriculture",
+                "agricultural",
+                "agronomy",
+                "crop",
+                "cropping",
+                "livestock",
+                "cattle",
+                "beef",
+                "dairy",
+                "ranch",
+                "ranching",
+                "pasture",
+                "grazing",
+                "animal science",
+                "husbandry",
+                "range cattle",
+                "food security",
             ],
             "Human Dimensions": [
-                # Social science and human aspects
                 "human dimensions",
-                "social",
                 "stakeholder",
-                "public",
                 "attitude",
                 "perception",
-                "conflict",
+                "social science",
+                "survey",
+                "interview",
+                "focus group",
+                "questionnaire",
                 "coexistence",
                 "hunting",
                 "recreation",
                 "tourism",
                 "economics",
                 "policy",
-                "management",
                 "governance",
-                "participation",
                 "sociology",
                 "anthropology",
                 "psychology",
@@ -442,130 +499,15 @@ class DisciplineClassifier:
                 "human behavior",
                 "community engagement",
                 "public participation",
-                "social science",
                 "environmental justice",
                 "traditional knowledge",
                 "cultural values",
                 "stakeholder engagement",
                 "environmental communication",
-                "outreach",
-                "education",
                 "interpretation",
                 "visitor studies",
                 "recreation management",
-                "survey",
-                "interview",
-                "focus group",
-                "questionnaire",
                 "public opinion",
-            ],
-            "Environmental Science": [
-                # Broad environmental and ecological science
-                "environmental science",
-                "ecosystem",
-                "ecological",
-                "community",
-                "food web",
-                "trophic",
-                "nutrient",
-                "carbon",
-                "nitrogen",
-                "primary productivity",
-                "succession",
-                "disturbance",
-                "climate change",
-                "global warming",
-                "phenology",
-                "environmental",
-                "ecology",
-                "ecosystem services",
-                "landscape ecology",
-                "restoration ecology",
-                "pollution",
-                "contamination",
-                "toxicology",
-                "environmental chemistry",
-                "environmental monitoring",
-                "air quality",
-                "soil science",
-                "hydrology",
-                "watershed",
-                "wetlands",
-                "forest ecology",
-                "grassland ecology",
-                "desert ecology",
-                "alpine ecology",
-                "urban ecology",
-                "fire ecology",
-                "invasive species",
-                "plant ecology",
-                "vegetation",
-                "remote sensing",
-                "gis",
-                "spatial analysis",
-                "modeling",
-                "statistics",
-                # Include quantitative and analytical terms
-                "statistical",
-                "biometrics",
-                "population model",
-                "occupancy",
-                "abundance",
-                "density",
-                "mark-recapture",
-                "distance sampling",
-                "bayesian",
-                "machine learning",
-                # Include genetics and molecular work
-                "genetics",
-                "genomics",
-                "dna",
-                "molecular",
-                "phylogeny",
-                "population genetics",
-                "landscape genetics",
-                "conservation genetics",
-                "adaptation",
-                "gene flow",
-                # Include ecotoxicology
-                "ecotoxicology",
-                "contaminant",
-                "heavy metal",
-                "pesticide",
-                "bioaccumulation",
-            ],
-            "Forestry": [
-                # Forestry and silviculture terms
-                "forestry",
-                "forest",
-                "silviculture",
-                "timber",
-                "logging",
-                "tree",
-                "wood",
-                "lumber",
-                "forest management",
-                "forest ecology",
-                "forest fire",
-                "wildfire",
-                "prescribed burn",
-                "forest health",
-                "forest stand",
-                "canopy",
-                "understory",
-                "regeneration",
-                "plantation",
-                "agroforestry",
-                "urban forestry",
-                "arborist",
-                "dendrology",
-                "forest carbon",
-                "forest products",
-                "sustainable forestry",
-                "forest policy",
-                "forest economics",
-                "forest inventory",
-                "forest restoration",
             ],
         }
 
@@ -576,14 +518,22 @@ class DisciplineClassifier:
         self.hard_non_grad_patterns = [
             r"\bveterinarian\b",
             r"\barchaeologist\b",
+            r"\bpost[-\s]?doc(toral)?\b",
+            r"\bassistant\s+professor\b",
+            r"\bassociate\s+professor\b",
+            r"\bprofessor\b",
+            r"\bprincipal\s+investigator\b",
+            r"\bvisiting\s+assistant\s+professor\b",
+            r"\breu\b",
+            r"\bintern(ship)?\b",
             r"\bfield\s+technician\b",
             r"\btechnician\b",
+            r"\becologist\b",
             r"\benvironmental\s+specialist\b",
             r"\bspecialist\s*\(rapid\s+responder\)\b",
             r"\bbiologist\s+i{1,2}\b",
             r"\bprofessional\s+certificate\b",
             r"\bcertificate\s+program\b",
-            r"\bpostdoc(toral)?\b",
             r"\bstudent\s+contractor\b",
         ]
         self.explicit_assistantship_patterns = [
@@ -593,6 +543,22 @@ class DisciplineClassifier:
             r"\bgraduate\s+research\s+assistant(ship)?\b",
             r"\bph\.?d\.?\s+assistantship\b",
             r"\bms\b.*\bassistantship\b",
+        ]
+        self.biotic_disciplines = {
+            "Fisheries and Aquatic",
+            "Wildlife",
+            "Entomology",
+            "Forestry and Habitat",
+            "Agriculture",
+        }
+        self.discipline_priority = [
+            "Human Dimensions",
+            "Entomology",
+            "Fisheries and Aquatic",
+            "Wildlife",
+            "Forestry and Habitat",
+            "Agriculture",
+            "Environmental Sciences",
         ]
 
     def classify_position(self, position: JobPosition) -> Tuple[str, str]:
@@ -619,29 +585,54 @@ class DisciplineClassifier:
         if has_hard_non_grad and not has_explicit_assistantship:
             return "Other", ""
 
-        # Always use ML classification when available, regardless of text length
-        if HAS_SKLEARN:
-            return self._ml_classify(text_content)
-        else:
-            # Only use keyword classification when ML libraries are unavailable
-            return self._keyword_classify(text_content)
+        # Prefer deterministic keyword rules for taxonomy consistency.
+        return self._keyword_classify(text_content)
 
     def _keyword_classify(self, text: str) -> Tuple[str, str]:
         """Keyword-based classification fallback."""
         scores = {}
 
         for discipline, keywords in self.discipline_keywords.items():
-            score = sum(1 for keyword in keywords if keyword in text)
+            score = 0
+            for keyword in keywords:
+                if " " in keyword:
+                    if keyword in text:
+                        score += 2
+                    continue
+                if re.search(rf"\b{re.escape(keyword)}s?\b", text):
+                    score += 1
             if score > 0:
                 scores[discipline] = score
+
+        # Environmental Sciences should not win when biotic categories have signal.
+        if "Environmental Sciences" in scores:
+            has_biotic_signal = any(scores.get(cat, 0) > 0 for cat in self.biotic_disciplines)
+            if has_biotic_signal:
+                scores["Environmental Sciences"] = 0
+
+        # Avoid false Human Dimensions assignment from a single weak keyword hit.
+        if scores.get("Human Dimensions", 0) == 1:
+            has_non_human_signal = any(
+                scores.get(cat, 0) > 0 for cat in scores if cat != "Human Dimensions"
+            )
+            if has_non_human_signal:
+                scores["Human Dimensions"] = 0
 
         if not scores:
             return "Other", ""
 
-        # Sort by score and return top 2
-        sorted_disciplines = sorted(scores.items(), key=lambda x: x[1], reverse=True)
+        priority_rank = {name: i for i, name in enumerate(self.discipline_priority[::-1], start=1)}
+        sorted_disciplines = sorted(
+            scores.items(),
+            key=lambda x: (x[1], priority_rank.get(x[0], 0)),
+            reverse=True,
+        )
         primary = sorted_disciplines[0][0]
-        secondary = sorted_disciplines[1][0] if len(sorted_disciplines) > 1 else ""
+        secondary = (
+            sorted_disciplines[1][0]
+            if len(sorted_disciplines) > 1 and sorted_disciplines[1][1] > 0
+            else ""
+        )
 
         return primary, secondary
 

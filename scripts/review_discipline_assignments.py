@@ -20,15 +20,17 @@ from pathlib import Path
 from typing import Any, Dict, List, Tuple
 
 DISCIPLINES = [
-    "Fisheries",
+    "Fisheries and Aquatic",
     "Wildlife",
+    "Entomology",
     "Human Dimensions",
-    "Environmental Science",
-    "Forestry",
+    "Environmental Sciences",
+    "Forestry and Habitat",
+    "Agriculture",
 ]
 
 DISCIPLINE_SIGNALS: Dict[str, List[str]] = {
-    "Fisheries": [
+    "Fisheries and Aquatic": [
         r"\bfisher(y|ies)\b",
         r"\baquatic\b",
         r"\bmarine\b",
@@ -49,20 +51,40 @@ DISCIPLINE_SIGNALS: Dict[str, List[str]] = {
         r"\b(questionnaire|survey|interview|focus\s+group)\b",
         r"\bhuman[-\s]?wildlife\s+conflict\b",
     ],
-    "Environmental Science": [
-        r"\benvironmental\s+science\b",
-        r"\becolog(y|ical)\b",
-        r"\becosystem\b",
+    "Entomology": [
+        r"\bentomolog(y|ical)\b",
+        r"\binsect(s)?\b",
+        r"\barthropod(s)?\b",
+        r"\bpollinator(s)?\b",
+        r"\b(bee|bees|beetle|mosquito|tick)\b",
+    ],
+    "Environmental Sciences": [
+        r"\benvironmental\s+sciences?\b",
+        r"\bsoil\b",
+        r"\bwater\s+(quality|chemistry)\b",
+        r"\bhydrolog(y|ical)\b",
+        r"\bwatershed\b",
         r"\bclimate\s+change\b",
         r"\bremote\s+sensing\b",
         r"\bgis\b",
     ],
-    "Forestry": [
+    "Forestry and Habitat": [
         r"\bforestry\b",
         r"\bforest\b",
         r"\bsilviculture\b",
         r"\btimber\b",
+        r"\bhabitat\b",
         r"\bdendrolog(y|ical)\b",
+    ],
+    "Agriculture": [
+        r"\bagricultur(e|al)\b",
+        r"\bagronom(y|ic)\b",
+        r"\blivestock\b",
+        r"\bcattle\b",
+        r"\b(beef|dairy)\b",
+        r"\branch(ing)?\b",
+        r"\b(grazing|pasture)\b",
+        r"\banimal\s+science\b",
     ],
 }
 
