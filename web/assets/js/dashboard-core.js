@@ -63,6 +63,22 @@
     'Other'
   ];
 
+  function disciplineSortKey(label) {
+    const normalized = normalizeDisciplineLabel(label);
+    if (normalized === 'Other') return [2, 0, 'Other'];
+    const idx = DISCIPLINE_LEGEND_ORDER.indexOf(normalized);
+    if (idx >= 0) return [0, idx, normalized];
+    return [1, 0, normalized];
+  }
+
+  function compareDisciplines(a, b) {
+    const ak = disciplineSortKey(a);
+    const bk = disciplineSortKey(b);
+    if (ak[0] !== bk[0]) return ak[0] - bk[0];
+    if (ak[1] !== bk[1]) return ak[1] - bk[1];
+    return String(ak[2]).localeCompare(String(bk[2]));
+  }
+
   function setState(kind, message) {
     if (refs.loading) refs.loading.classList.add('is-hidden');
     if (refs.error) refs.error.classList.add('is-hidden');
@@ -687,7 +703,9 @@
   function buildSalaryByDiscipline(jobs) {
     const groups = new Map();
     jobs.forEach((job) => {
-      const discipline = String(job?.discipline_primary || job?.discipline || 'Other').trim() || 'Other';
+      const discipline = normalizeDisciplineLabel(
+        String(job?.discipline_primary || job?.discipline || 'Other').trim() || 'Other'
+      );
       const nominal = parseSalaryValue(job?.salary ?? job?.salary_min);
       const adjusted = parseSalaryValue(job?.salary_lincoln_adjusted);
       const row = groups.get(discipline) || { nominal: [], adjusted: [] };
@@ -707,11 +725,7 @@
         return { discipline, avgNominal, avgAdjusted };
       })
       .filter((row) => row.avgNominal !== null || row.avgAdjusted !== null)
-      .sort((a, b) => {
-        const av = a.avgAdjusted ?? a.avgNominal ?? 0;
-        const bv = b.avgAdjusted ?? b.avgNominal ?? 0;
-        return bv - av;
-      });
+      .sort((a, b) => compareDisciplines(a.discipline, b.discipline));
   }
 
   function filterMonthLabels(labels, selected) {
@@ -828,7 +842,7 @@
     return Object.entries(countMap || {})
       .map(([name, count]) => [name, asNumber(count)])
       .filter(([, count]) => count > 0)
-      .sort((a, b) => b[1] - a[1]);
+      .sort((a, b) => compareDisciplines(a[0], b[0]));
   }
 
   function getDisciplineColor(label) {
@@ -847,12 +861,7 @@
     });
 
     const ordered = Array.from(names).sort((a, b) => {
-      const ai = DISCIPLINE_LEGEND_ORDER.indexOf(a);
-      const bi = DISCIPLINE_LEGEND_ORDER.indexOf(b);
-      if (ai === -1 && bi === -1) return a.localeCompare(b);
-      if (ai === -1) return 1;
-      if (bi === -1) return -1;
-      return ai - bi;
+      return compareDisciplines(a, b);
     });
 
     if (!ordered.length) {
