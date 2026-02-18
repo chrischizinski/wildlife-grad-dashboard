@@ -90,6 +90,13 @@ body {
   color: var(--muted);
 }
 
+.hero__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+}
+
 .pill {
   display: inline-block;
   padding: 6px 10px;
@@ -154,6 +161,23 @@ body {
   display: flex;
   gap: 10px;
   font-size: 0.9rem;
+}
+
+.discipline-control {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.discipline-control__select {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 8px;
+  background: #fff;
+  color: var(--text);
+  min-width: 220px;
 }
 
 .kpi-grid {
@@ -311,6 +335,8 @@ th, td {
     overflow-x: auto;
   }
   .main { padding: 12px; }
+  .hero__meta { align-items: flex-start; }
+  .discipline-control__select { min-width: 0; width: 100%; }
   .kpi-grid,
   .kpi-grid--three { grid-template-columns: 1fr; }
 }
