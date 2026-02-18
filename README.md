@@ -2,6 +2,8 @@
 
 [![Scrape and Update](https://github.com/chrischizinski/wildlife-grad-dashboard/actions/workflows/scrape-and-update-dashboard.yml/badge.svg)](https://github.com/chrischizinski/wildlife-grad-dashboard/actions/workflows/scrape-and-update-dashboard.yml) [![Deploy Pages](https://github.com/chrischizinski/wildlife-grad-dashboard/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/chrischizinski/wildlife-grad-dashboard/actions/workflows/deploy-pages.yml) [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-brightgreen?logo=github)](https://chrischizinski.github.io/wildlife-grad-dashboard/) [![Last Commit](https://img.shields.io/github/last-commit/chrischizinski/wildlife-grad-dashboard)](https://github.com/chrischizinski/wildlife-grad-dashboard/commits/main) [![Issues](https://img.shields.io/github/issues/chrischizinski/wildlife-grad-dashboard)](https://github.com/chrischizinski/wildlife-grad-dashboard/issues) [![Pull Requests](https://img.shields.io/github/issues-pr/chrischizinski/wildlife-grad-dashboard)](https://github.com/chrischizinski/wildlife-grad-dashboard/pulls)
 
+Live dashboard: [https://chrischizinski.github.io/wildlife-grad-dashboard/](https://chrischizinski.github.io/wildlife-grad-dashboard/)
+
 ## Project Summary
 This project tracks U.S. wildlife and natural resources graduate assistantship postings and turns raw listings into a public-facing trends dashboard.
 
