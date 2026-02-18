@@ -130,6 +130,11 @@
     VA: 'Virginia', WA: 'Washington', WV: 'West Virginia', WI: 'Wisconsin', WY: 'Wyoming'
   };
   const US_STATES_BY_LENGTH = Object.keys(US_STATE_COORDS).sort((a, b) => b.length - a.length);
+  const US_NON_CONTIGUOUS_STATES = new Set(['Alaska', 'Hawaii']);
+  const US_INSET_COORDS = {
+    Alaska: [26.2, -124.8],
+    Hawaii: [24.0, -117.8]
+  };
   const DOUGHNUT_PCT_PLUGIN = {
     id: 'doughnutPctLabels',
     afterDatasetsDraw(chart) {
@@ -684,11 +689,11 @@
   function computeGeographyStats(jobs) {
     const rows = Array.isArray(jobs) ? jobs : [];
     const totalJobs = rows.length;
-    const locationParsedCount = rows.filter((job) => isLocationParsed(job.location)).length;
+    const stateCounts = buildUsStateCounts({}, rows);
+    const locationParsedCount = Object.values(stateCounts).reduce((sum, n) => sum + asNumber(n), 0);
     const locationParsedPct = totalJobs
       ? Number(((locationParsedCount / totalJobs) * 100).toFixed(1))
       : 0;
-    const stateCounts = buildUsStateCounts({}, rows);
     const topLocations = Object.entries(stateCounts)
       .sort((a, b) => asNumber(b[1]) - asNumber(a[1]))
       .slice(0, 5);
@@ -816,7 +821,7 @@
       'kpi-location-parsed-pct',
       totalJobs > 0 ? formatRatio(locationParsedCount, totalJobs) : EMPTY_VALUE,
       'kpi-location-parsed-pct-reason',
-      totalJobs > 0 ? `${formatPercent(locationPct)} of ${selectionLabel} have parseable location` : 'No rows for selected discipline'
+      totalJobs > 0 ? `${formatPercent(locationPct)} of ${selectionLabel} mapped to U.S. states` : 'No rows for selected discipline'
     );
 
     setCardValue(
@@ -1590,7 +1595,7 @@
     }).addTo(map);
 
     entries.forEach(([state, count]) => {
-      const coords = US_STATE_COORDS[state];
+      const coords = US_INSET_COORDS[state] || US_STATE_COORDS[state];
       if (!coords) return;
       L.circleMarker(coords, {
         radius: Math.max(5, Math.min(16, Math.sqrt(asNumber(count)) * 2.8)),
@@ -1599,7 +1604,9 @@
         weight: 1,
         opacity: 1,
         fillOpacity: 0.8
-      }).bindPopup(`<strong>${escapeHtml(state)}</strong><br>${asNumber(count)} postings`).addTo(map);
+      }).bindPopup(
+        `<strong>${escapeHtml(state)}${US_NON_CONTIGUOUS_STATES.has(state) ? ' (inset)' : ''}</strong><br>${asNumber(count)} postings`
+      ).addTo(map);
     });
   }
 
