@@ -62,6 +62,69 @@
     'Human Dimensions',
     'Other'
   ];
+  const DOUGHNUT_PCT_PLUGIN = {
+    id: 'doughnutPctLabels',
+    afterDatasetsDraw(chart) {
+      const dataset = chart?.data?.datasets?.[0];
+      const arcs = chart?.getDatasetMeta?.(0)?.data || [];
+      if (!dataset || !arcs.length) return;
+
+      const values = (dataset.data || []).map((v) => asNumber(v));
+      const total = values.reduce((sum, v) => sum + v, 0);
+      if (!total) return;
+
+      const ctx = chart.ctx;
+      ctx.save();
+      ctx.font = '600 11px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+
+      arcs.forEach((arc, idx) => {
+        const value = values[idx];
+        if (value <= 0) return;
+        const pct = (value / total) * 100;
+        const label = pct < 1 ? '<1%' : `${pct >= 10 ? pct.toFixed(0) : pct.toFixed(1)}%`;
+
+        const props = arc.getProps(
+          ['x', 'y', 'startAngle', 'endAngle', 'innerRadius', 'outerRadius'],
+          true
+        );
+        const angle = (props.startAngle + props.endAngle) / 2;
+        const isLargeSlice = pct >= 8;
+
+        if (isLargeSlice) {
+          const r = props.innerRadius + ((props.outerRadius - props.innerRadius) * 0.55);
+          const x = props.x + (Math.cos(angle) * r);
+          const y = props.y + (Math.sin(angle) * r);
+          ctx.fillStyle = '#ffffff';
+          ctx.fillText(label, x, y);
+          return;
+        }
+
+        const lineStartR = props.outerRadius + 2;
+        const lineEndR = props.outerRadius + 12;
+        const labelR = props.outerRadius + 18;
+        const x0 = props.x + (Math.cos(angle) * lineStartR);
+        const y0 = props.y + (Math.sin(angle) * lineStartR);
+        const x1 = props.x + (Math.cos(angle) * lineEndR);
+        const y1 = props.y + (Math.sin(angle) * lineEndR);
+        const x = props.x + (Math.cos(angle) * labelR);
+        const y = props.y + (Math.sin(angle) * labelR);
+
+        ctx.strokeStyle = '#111111';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(x0, y0);
+        ctx.lineTo(x1, y1);
+        ctx.stroke();
+
+        ctx.fillStyle = '#111111';
+        ctx.fillText(label, x, y);
+      });
+
+      ctx.restore();
+    }
+  };
 
   function disciplineSortKey(label) {
     const normalized = normalizeDisciplineLabel(label);
@@ -860,9 +923,12 @@
       if (normalized) names.add(normalized);
     });
 
-    const ordered = Array.from(names).sort((a, b) => {
-      return compareDisciplines(a, b);
-    });
+    const ordered = [
+      ...DISCIPLINE_LEGEND_ORDER,
+      ...Array.from(names)
+        .filter((name) => !DISCIPLINE_LEGEND_ORDER.includes(name))
+        .sort((a, b) => compareDisciplines(a, b))
+    ];
 
     if (!ordered.length) {
       el.innerHTML = '';
@@ -1137,6 +1203,7 @@
       if (ctx) {
         chartState.disciplineLatest = new Chart(ctx, {
           type: 'doughnut',
+          plugins: [DOUGHNUT_PCT_PLUGIN],
           data: {
             labels: latestDisciplineRows.map((r) => r[0]),
             datasets: [{
@@ -1166,6 +1233,7 @@
       if (ctx) {
         chartState.disciplineOverall = new Chart(ctx, {
           type: 'doughnut',
+          plugins: [DOUGHNUT_PCT_PLUGIN],
           data: {
             labels: overallDisciplineRows.map((r) => r[0]),
             datasets: [{
