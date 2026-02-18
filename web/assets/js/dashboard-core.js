@@ -864,15 +864,11 @@
     const avgByMonth = yearsCount
       ? totalsByMonth.map((n) => Number((n / yearsCount).toFixed(2)))
       : totalsByMonth.map(() => 0);
-    const relativePct = totalPosted
-      ? totalsByMonth.map((n) => Number(((n / totalPosted) * 100).toFixed(1)))
-      : totalsByMonth.map(() => 0);
 
     return {
       monthLabels,
       totalsByMonth,
       avgByMonth,
-      relativePct,
       totalPosted,
       yearsCount
     };
@@ -911,7 +907,6 @@
 
     const selected = document.querySelector('input[name="timeframe"]:checked')?.value || '1_year';
     const snapshotMonthly = snapshotAvailability?.monthly_avg_active_grad_positions || {};
-    const snapshotRelative = snapshotAvailability?.monthly_relative_to_peak_pct || {};
     const snapshotSource = String(snapshotAvailability?.source || '');
 
     let monthMap = snapshotMonthly;
@@ -925,10 +920,6 @@
     const monthValues = monthLabels.map((k) => (
       Object.prototype.hasOwnProperty.call(monthMap, k) ? asNumber(monthMap[k]) : null
     ));
-    const relativeValues = monthLabels.map((k) => (
-      Object.prototype.hasOwnProperty.call(snapshotRelative, k) ? asNumber(snapshotRelative[k]) : null
-    ));
-    const hasRelative = relativeValues.some((n) => n > 0);
 
     if (!monthLabels.length) {
       destroyChart('trend');
@@ -953,41 +944,23 @@
               tension: 0.25,
               spanGaps: true,
               fill: true
-            },
-            ...(hasRelative ? [{
-              label: 'Relative to Peak (%)',
-              data: relativeValues,
-              type: 'line',
-              borderColor: '#0284c7',
-              backgroundColor: '#0284c7',
-              yAxisID: 'y1',
-              borderDash: [4, 4],
-              tension: 0.2,
-              spanGaps: true,
-              fill: false
-            }] : [])]
+            }]
           },
           options: {
             responsive: true,
             maintainAspectRatio: false,
+            layout: {
+              padding: { left: 10, right: 6 }
+            },
             scales: {
               y: {
                 title: {
                   display: true,
                   text: snapshotSource
-                    ? 'Unique Graduate Positions Captured by Scraping Date'
-                    : 'Postings'
+                    ? 'Unique Graduate Positions (count)'
+                    : 'Postings (count)'
                 }
-              },
-              ...(hasRelative ? {
-                y1: {
-                  position: 'right',
-                  min: 0,
-                  max: 100,
-                  grid: { drawOnChartArea: false },
-                  ticks: { callback: (value) => `${Number(value).toFixed(0)}%` }
-                }
-              } : {})
+              }
             }
           }
         });
@@ -1109,14 +1082,6 @@
               label: `Avg Posted Positions / Month (${seasonality.yearsCount} years)`,
               data: seasonality.avgByMonth,
               backgroundColor: '#0f766e'
-            }, {
-              label: 'Relative Share of Posted Positions (%)',
-              data: seasonality.relativePct,
-              type: 'line',
-              borderColor: '#0284c7',
-              backgroundColor: '#0284c7',
-              yAxisID: 'y1',
-              tension: 0.2
             }]
           },
           options: {
@@ -1126,14 +1091,6 @@
               y: {
                 beginAtZero: true,
                 title: { display: true, text: 'Average Posted Positions' }
-              },
-              y1: {
-                position: 'right',
-                beginAtZero: true,
-                max: 100,
-                grid: { drawOnChartArea: false },
-                ticks: { callback: (value) => `${Number(value).toFixed(0)}%` },
-                title: { display: true, text: 'Relative Share' }
               }
             }
           }
