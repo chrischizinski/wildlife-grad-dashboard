@@ -1562,8 +1562,7 @@ class WildlifeJobScraper:
             f"  Graduate positions (confidence >= {min_confidence}): {len(graduate_jobs)}"
         )
 
-        # Save graduate positions
-        # Save to processed directory
+        # Save current graduate positions snapshot to processed directory.
         processed_dir = Path("data/processed")
         processed_dir.mkdir(exist_ok=True)
         json_path = processed_dir / "verified_graduate_assistantships.json"
@@ -1601,9 +1600,91 @@ class WildlifeJobScraper:
         with open(report_path, "w", encoding="utf-8") as f:
             json.dump(report, f, indent=2, ensure_ascii=False)
 
+        # Update cumulative historical graduate dataset so incremental weekly runs
+        # preserve history over time instead of replacing it.
+        self._update_historical_graduate_dataset(graduate_jobs)
+
         self.logger.info(f"Saved classification report to {report_path}")
 
         return json_path, csv_path
+
+    def _update_historical_graduate_dataset(self, graduate_jobs: List[JobListing]) -> None:
+        """Merge current run graduate jobs into cumulative historical file(s)."""
+        historical_paths = [
+            Path("data/raw/historical_positions.json"),
+            Path("data/historical_positions.json"),
+        ]
+
+        now_iso = datetime.now(timezone.utc).isoformat()
+
+        def load_rows(path: Path) -> List[Dict[str, Any]]:
+            if not path.exists():
+                return []
+            try:
+                with open(path, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                return data if isinstance(data, list) else []
+            except Exception as e:
+                self.logger.warning(f"Could not load historical data from {path}: {e}")
+                return []
+
+        existing_rows: List[Dict[str, Any]] = []
+        for path in historical_paths:
+            existing_rows.extend(load_rows(path))
+
+        # Keep only graduate rows in history.
+        existing_rows = [row for row in existing_rows if row.get("is_graduate_position", True)]
+
+        def get_key(row: Dict[str, Any]) -> str:
+            url = str(row.get("url") or "").strip().lower()
+            if url:
+                return f"url::{url}"
+            title = str(row.get("title") or "").strip().lower()
+            org = str(row.get("organization") or "").strip().lower()
+            return f"title_org::{title}::{org}"
+
+        merged: Dict[str, Dict[str, Any]] = {}
+        for row in existing_rows:
+            key = get_key(row)
+            if key:
+                merged[key] = row
+
+        for job in graduate_jobs:
+            new_row = job.dict()
+            key = get_key(new_row)
+            if not key:
+                continue
+
+            existing = merged.get(key)
+            if existing:
+                first_seen = existing.get("first_seen") or existing.get("scraped_at")
+                combined = {**existing, **new_row}
+                combined["first_seen"] = first_seen or new_row.get("scraped_at") or now_iso
+                combined["last_updated"] = new_row.get("scraped_at") or now_iso
+                merged[key] = combined
+            else:
+                combined = dict(new_row)
+                combined["first_seen"] = combined.get("first_seen") or combined.get("scraped_at") or now_iso
+                combined["last_updated"] = combined.get("last_updated") or combined.get("scraped_at") or now_iso
+                merged[key] = combined
+
+        merged_rows = list(merged.values())
+        merged_rows.sort(
+            key=lambda row: str(
+                row.get("published_date")
+                or row.get("first_seen")
+                or row.get("scraped_at")
+                or row.get("last_updated")
+                or ""
+            ),
+            reverse=True,
+        )
+
+        for path in historical_paths:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            with open(path, "w", encoding="utf-8") as f:
+                json.dump(merged_rows, f, indent=2, ensure_ascii=False)
+            self.logger.info(f"Updated historical graduate dataset: {path} ({len(merged_rows)} rows)")
 
 
 def main() -> None:

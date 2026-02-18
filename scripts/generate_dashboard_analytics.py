@@ -58,17 +58,26 @@ def load_and_merge_data() -> List[Dict[str, Any]]:
 
     print("Loading data from multiple sources...")
 
-    # Source 1: Historical positions (if exists)
-    hist_path = Path("data/raw/historical_positions.json")
-    if hist_path.exists():
+    # Source 1: Historical positions (support both legacy and raw locations).
+    historical_paths = [
+        Path("data/raw/historical_positions.json"),
+        Path("data/historical_positions.json"),
+    ]
+    historical_loaded = 0
+    for hist_path in historical_paths:
+        if not hist_path.exists():
+            continue
         try:
             with open(hist_path, "r", encoding="utf-8") as f:
                 hist = json.load(f)
-                grad_hist = [p for p in hist if p.get("is_graduate_position")]
-                all_positions.extend(grad_hist)
-                print(f"  ✓ Historical data: {len(grad_hist)} graduate positions")
+            grad_hist = [p for p in hist if p.get("is_graduate_position")]
+            all_positions.extend(grad_hist)
+            historical_loaded += len(grad_hist)
+            print(f"  ✓ Historical data ({hist_path.name}): {len(grad_hist)} graduate positions")
         except Exception as e:
-            print(f"  ✗ Historical data error: {e}")
+            print(f"  ✗ Historical data error ({hist_path.name}): {e}")
+    if historical_loaded == 0:
+        print("  - Historical data: none found")
 
     # Source 2: Latest scrape
     latest_paths = [
@@ -216,7 +225,9 @@ def calculate_analytics(data: List[Dict[str, Any]]) -> Dict[str, Any]:
     monthly_by_discipline = defaultdict(lambda: defaultdict(int))
 
     for p in data:
-        date_fields = ["scraped_at", "last_updated", "first_seen", "published_date"]
+        # Prefer publication/first-seen timestamps so long-term trends reflect
+        # posting chronology, not the most recent scrape timestamp.
+        date_fields = ["published_date", "first_seen", "scraped_at", "last_updated"]
         date_str = None
         for field in date_fields:
             if p.get(field):
