@@ -22,7 +22,7 @@ def make_position(title: str, tags: str = "", description: str = "") -> JobPosit
     )
 
 
-def test_fisheries_position_maps_to_fisheries() -> None:
+def test_fisheries_position_maps_to_fisheries_and_aquatic() -> None:
     clf = DisciplineClassifier()
     pos = make_position(
         "PhD Graduate Research Assistantship in Fisheries Ecology",
@@ -30,7 +30,18 @@ def test_fisheries_position_maps_to_fisheries() -> None:
     )
 
     primary, _secondary = clf.classify_position(pos)
-    assert primary == "Fisheries"
+    assert primary == "Fisheries and Aquatic"
+
+
+def test_entomology_position_maps_to_entomology() -> None:
+    clf = DisciplineClassifier()
+    pos = make_position(
+        "MS Assistantship in Insect Ecology",
+        description="Pollinator communities, bees, and arthropod sampling.",
+    )
+
+    primary, _secondary = clf.classify_position(pos)
+    assert primary == "Entomology"
 
 
 def test_human_dimensions_requires_social_context() -> None:
@@ -42,6 +53,39 @@ def test_human_dimensions_requires_social_context() -> None:
 
     primary, _secondary = clf.classify_position(pos)
     assert primary == "Human Dimensions"
+
+
+def test_environmental_sciences_focuses_on_soil_and_water() -> None:
+    clf = DisciplineClassifier()
+    pos = make_position(
+        "MS in Watershed Biogeochemistry",
+        description="Soil chemistry, hydrology, and water quality modeling.",
+    )
+
+    primary, _secondary = clf.classify_position(pos)
+    assert primary == "Environmental Sciences"
+
+
+def test_forestry_and_habitat_maps_correctly() -> None:
+    clf = DisciplineClassifier()
+    pos = make_position(
+        "Graduate Assistantship in Forest Habitat Restoration",
+        description="Forest stand structure, tree regeneration, and habitat management.",
+    )
+
+    primary, _secondary = clf.classify_position(pos)
+    assert primary == "Forestry and Habitat"
+
+
+def test_agriculture_maps_from_cattle_and_ranching_terms() -> None:
+    clf = DisciplineClassifier()
+    pos = make_position(
+        "PhD Assistantship in Rangeland Cattle Systems",
+        description="Livestock grazing, ranch management, and pasture productivity.",
+    )
+
+    primary, _secondary = clf.classify_position(pos)
+    assert primary == "Agriculture"
 
 
 def test_humane_society_text_does_not_force_human_dimensions() -> None:

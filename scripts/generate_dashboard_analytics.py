@@ -5,7 +5,7 @@ Generate dashboard analytics with historical data merging.
 This script:
 1. Loads data from multiple sources (historical + latest scrape)
 2. Merges and deduplicates positions by URL
-3. Consolidates disciplines into 6 main categories
+3. Consolidates disciplines into 8 canonical categories
 4. Generates comprehensive analytics
 5. Saves to dashboard locations
 """
@@ -19,37 +19,168 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
+# Ensure src/ is importable when running as a script.
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+SRC_ROOT = PROJECT_ROOT / "src"
+if str(SRC_ROOT) not in sys.path:
+    sys.path.insert(0, str(SRC_ROOT))
+
+from wildlife_grad.analysis.enhanced_analysis import (
+    DisciplineClassifier,
+    GraduatePositionDetector,
+    JobPosition,
+)
+
 # Discipline consolidation mapping
 DISCIPLINE_MAPPING = {
-    # Environmental Science
-    "Environmental Science": "Environmental Science",
-    "Ecology": "Environmental Science",
-    "Natural Resource Management": "Environmental Science",
-    # Wildlife
+    # Environmental Sciences (abiotic/soil/water focus)
+    "Environmental Science": "Environmental Sciences",
+    "Environmental Sciences": "Environmental Sciences",
+    "Ecology": "Environmental Sciences",
+    # Fisheries and Aquatic
+    "Fisheries": "Fisheries and Aquatic",
+    "Fisheries & Aquatic Science": "Fisheries and Aquatic",
+    "Fisheries Management and Conservation": "Fisheries and Aquatic",
+    "Marine Science": "Fisheries and Aquatic",
+    # Wildlife (terrestrial organism focus)
+    "Wildlife": "Wildlife",
     "Wildlife Management and Conservation": "Wildlife",
     "Wildlife Management": "Wildlife",
     "Wildlife & Natural Resources": "Wildlife",
     "Conservation": "Wildlife",
-    # Fisheries
-    "Fisheries": "Fisheries",
-    "Fisheries & Aquatic Science": "Fisheries",
-    "Fisheries Management and Conservation": "Fisheries",
-    "Marine Science": "Fisheries",
+    # Entomology
+    "Entomology": "Entomology",
+    # Forestry and Habitat
+    "Forestry": "Forestry and Habitat",
+    "Forestry and Habitat": "Forestry and Habitat",
+    "Natural Resource Management": "Forestry and Habitat",
+    # Agriculture
+    "Agriculture": "Agriculture",
+    "Agricultural Science": "Agriculture",
+    "Animal Science": "Agriculture",
+    "Agronomy": "Agriculture",
+    "Range Management": "Agriculture",
     # Human Dimensions
     "Human Dimensions": "Human Dimensions",
-    # Forestry
-    "Forestry": "Forestry",
     # Other
     "Other": "Other",
     "Unknown": "Other",
+    "Non-Graduate": "Other",
 }
 
 
 def normalize_discipline(disc: str) -> str:
-    """Map a discipline to one of the 6 main categories."""
+    """Map a discipline to one of the 8 canonical categories."""
     if not disc or disc == "":
         return "Other"
     return DISCIPLINE_MAPPING.get(disc, "Other")
+
+
+def _build_row_key(row: Dict[str, Any]) -> str:
+    """Build a stable dedupe key for rows with and without URLs."""
+    title = str(row.get("title") or "").strip().lower()
+    org = str(row.get("organization") or "").strip().lower()
+    location = str(row.get("location") or "").strip().lower()
+    published = str(row.get("published_date") or "").strip().lower()
+    if title and org:
+        return f"title_org::{title}::{org}::{location}::{published}"
+
+    url = str(row.get("url") or "").strip().lower()
+    if url:
+        return f"url::{url}"
+
+    if title:
+        return f"title::{title}::{published}"
+    return ""
+
+
+def _row_quality_score(row: Dict[str, Any]) -> int:
+    """Prefer rows with richer data when dedupe keys collide."""
+    score = 0
+    if str(row.get("url") or "").strip():
+        score += 5
+    if str(row.get("description") or "").strip():
+        score += 3
+    if str(row.get("discipline_primary") or row.get("discipline") or "").strip():
+        score += 2
+    if str(row.get("salary") or "").strip():
+        score += 1
+    return score
+
+
+def _to_job_position(row: Dict[str, Any]) -> JobPosition:
+    """Convert flexible row dictionaries to JobPosition for re-screening."""
+    return JobPosition(
+        title=str(row.get("title") or ""),
+        organization=str(row.get("organization") or ""),
+        location=str(row.get("location") or ""),
+        salary=str(row.get("salary") or ""),
+        starting_date=str(row.get("starting_date") or ""),
+        published_date=str(row.get("published_date") or ""),
+        tags=str(row.get("tags") or ""),
+        description=str(row.get("description") or ""),
+        discipline_primary=str(row.get("discipline_primary") or ""),
+        discipline_secondary=str(row.get("discipline_secondary") or ""),
+        scraped_at=str(row.get("scraped_at") or ""),
+        first_seen=str(row.get("first_seen") or ""),
+        last_updated=str(row.get("last_updated") or ""),
+        scrape_run_id=str(row.get("scrape_run_id") or ""),
+        scraper_version=str(row.get("scraper_version") or ""),
+    )
+
+
+def sanitize_and_classify_positions(rows: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """
+    Apply strict graduate guardrails + canonical discipline classification.
+
+    This prevents leakage (postdocs/professional roles) and avoids Unknown-heavy
+    listings before dashboard artifacts are generated.
+    """
+    grad_detector = GraduatePositionDetector()
+    discipline_classifier = DisciplineClassifier()
+
+    cleaned_rows: List[Dict[str, Any]] = []
+    for row in rows:
+        pos = _to_job_position(row)
+        is_grad, position_type, grad_conf = grad_detector.is_graduate_position(pos)
+        if not is_grad:
+            continue
+
+        predicted_primary, predicted_secondary = discipline_classifier.classify_position(pos)
+        predicted_primary_norm = normalize_discipline(predicted_primary)
+        predicted_secondary_norm = normalize_discipline(predicted_secondary)
+        existing_primary_norm = normalize_discipline(
+            str(
+                row.get("discipline_primary")
+                or row.get("discipline")
+                or row.get("discipline_secondary")
+                or ""
+            )
+        )
+
+        # If the new classifier is uncertain (Other) but prior classification was
+        # already non-Other, retain the prior non-Other category.
+        primary_final = (
+            existing_primary_norm
+            if predicted_primary_norm == "Other" and existing_primary_norm != "Other"
+            else predicted_primary_norm
+        )
+
+        out = dict(row)
+        out["is_graduate_position"] = True
+        out["position_type"] = position_type
+        out["grad_confidence"] = grad_conf
+        out["discipline_primary"] = primary_final
+        out["discipline_secondary"] = (
+            predicted_secondary_norm
+            if predicted_secondary_norm != primary_final and predicted_secondary_norm != "Other"
+            else ""
+        )
+        # Keep legacy field in sync for downstream consumers still reading it.
+        out["discipline"] = primary_final
+        cleaned_rows.append(out)
+
+    return cleaned_rows
 
 
 def load_and_merge_data() -> List[Dict[str, Any]]:
@@ -117,20 +248,25 @@ def load_and_merge_data() -> List[Dict[str, Any]]:
         except Exception as e:
             print(f"  ✗ Enhanced data error: {e}")
 
-    # Deduplicate by URL (keep most recent version)
-    unique_positions = {}
+    # Deduplicate with a stable row key.
+    unique_positions: Dict[str, Dict[str, Any]] = {}
     for p in all_positions:
-        url = p.get("url")
-        if url:
-            unique_positions[url] = p  # Last one wins (most recent)
-        else:
-            # No URL, keep all
-            unique_positions[str(id(p))] = p
+        key = _build_row_key(p)
+        if not key:
+            continue
+        existing = unique_positions.get(key)
+        if existing is None or _row_quality_score(p) >= _row_quality_score(existing):
+            unique_positions[key] = p
 
-    positions = list(unique_positions.values())
-    print(f"\n📊 Merged dataset: {len(positions)} unique graduate positions\n")
+    deduped_positions = list(unique_positions.values())
+    sanitized_positions = sanitize_and_classify_positions(deduped_positions)
+    dropped = len(deduped_positions) - len(sanitized_positions)
+    print(
+        f"\n📊 Merged dataset: {len(sanitized_positions)} unique graduate positions "
+        f"({len(deduped_positions)} deduped; dropped {dropped} non-grad by guardrails)\n"
+    )
 
-    return positions
+    return sanitized_positions
 
 
 def extract_salary_number(salary_str: Any) -> Optional[float]:
@@ -169,7 +305,7 @@ def calculate_analytics(data: List[Dict[str, Any]]) -> Dict[str, Any]:
             or "Unknown"
         )
 
-        # Normalize to one of 6 categories
+        # Normalize to one of 8 canonical categories
         normalized_disc = normalize_discipline(original_disc)
         discipline_data[normalized_disc]["count"] += 1
 
@@ -177,14 +313,16 @@ def calculate_analytics(data: List[Dict[str, Any]]) -> Dict[str, Any]:
         if salary:
             discipline_data[normalized_disc]["salaries"].append(salary)
 
-    # Build top disciplines (should only be 6)
+    # Build top disciplines in canonical display order.
     top_disciplines = {}
     for discipline in [
-        "Environmental Science",
+        "Environmental Sciences",
+        "Fisheries and Aquatic",
         "Wildlife",
-        "Fisheries",
+        "Entomology",
+        "Forestry and Habitat",
+        "Agriculture",
         "Human Dimensions",
-        "Forestry",
         "Other",
     ]:
         if discipline in discipline_data:
@@ -278,7 +416,7 @@ def calculate_analytics(data: List[Dict[str, Any]]) -> Dict[str, Any]:
             "generated_at": datetime.now().isoformat(),
             "total_positions": total_positions,
             "source": "merged (historical + latest + enhanced)",
-            "discipline_mapping": "consolidated to 6 categories",
+            "discipline_mapping": "consolidated to 8 categories",
         },
         "summary_stats": {
             "total_positions": total_positions,

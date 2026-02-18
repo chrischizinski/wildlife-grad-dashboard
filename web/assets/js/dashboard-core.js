@@ -573,7 +573,11 @@
     const rows = sorted.slice(0, 50).map((job) => {
       const title = escapeHtml(String(job?.title || 'Untitled Position'));
       const org = escapeHtml(String(job?.organization || 'Unknown Organization'));
-      const discipline = escapeHtml(String(job?.discipline || 'Unknown'));
+      const discipline = escapeHtml(
+        normalizeDisciplineLabel(
+          String(job?.discipline_primary || job?.discipline || 'Unknown')
+        )
+      );
       const location = escapeHtml(String(job?.location || 'Unknown'));
       const salary = escapeHtml(formatSalaryDisplay(job?.salary ?? job?.salary_min));
       const url = normalizeJobUrl(String(job?.url || '').trim());
@@ -737,19 +741,29 @@
     if (!raw) return 'Other';
 
     const disciplineMap = {
-      'Environmental Science': 'Environmental Science',
-      Ecology: 'Environmental Science',
-      'Natural Resource Management': 'Environmental Science',
+      'Environmental Science': 'Environmental Sciences',
+      'Environmental Sciences': 'Environmental Sciences',
+      Ecology: 'Environmental Sciences',
       'Wildlife Management and Conservation': 'Wildlife',
       'Wildlife Management': 'Wildlife',
       'Wildlife & Natural Resources': 'Wildlife',
       Conservation: 'Wildlife',
-      Fisheries: 'Fisheries',
-      'Fisheries & Aquatic Science': 'Fisheries',
-      'Fisheries Management and Conservation': 'Fisheries',
-      'Marine Science': 'Fisheries',
+      Fisheries: 'Fisheries and Aquatic',
+      'Fisheries and Aquatic': 'Fisheries and Aquatic',
+      'Fisheries & Aquatic Science': 'Fisheries and Aquatic',
+      'Fisheries Management and Conservation': 'Fisheries and Aquatic',
+      'Marine Science': 'Fisheries and Aquatic',
+      Entomology: 'Entomology',
+      Forestry: 'Forestry and Habitat',
+      'Forestry and Habitat': 'Forestry and Habitat',
+      'Natural Resource Management': 'Forestry and Habitat',
+      Agriculture: 'Agriculture',
+      'Agricultural Science': 'Agriculture',
+      'Animal Science': 'Agriculture',
+      Agronomy: 'Agriculture',
+      'Range Management': 'Agriculture',
       'Human Dimensions': 'Human Dimensions',
-      Forestry: 'Forestry',
+      'Non-Graduate': 'Other',
       Other: 'Other',
       Unknown: 'Other'
     };
@@ -990,7 +1004,7 @@
     const latestDisciplineRows = buildDisciplineRowsFromMap(
       buildLatestCaptureDisciplineMap(jobs, snapshotAvailability)
     );
-    const disciplineColors = ['#0f766e', '#0284c7', '#f59e0b', '#16a34a', '#8b5cf6', '#ef4444'];
+    const disciplineColors = ['#0f766e', '#0284c7', '#f59e0b', '#16a34a', '#8b5cf6', '#ef4444', '#a16207', '#475569'];
 
     if (!latestDisciplineRows.length) {
       destroyChart('disciplineLatest');
