@@ -1132,7 +1132,9 @@
             labels: latestDisciplineRows.map((r) => r[0]),
             datasets: [{
               data: latestDisciplineRows.map((r) => r[1]),
-              backgroundColor: latestDisciplineRows.map((r) => getDisciplineColor(r[0]))
+              backgroundColor: latestDisciplineRows.map((r) => getDisciplineColor(r[0])),
+              borderColor: '#000000',
+              borderWidth: 1
             }]
           },
           options: {
@@ -1159,7 +1161,9 @@
             labels: overallDisciplineRows.map((r) => r[0]),
             datasets: [{
               data: overallDisciplineRows.map((r) => r[1]),
-              backgroundColor: overallDisciplineRows.map((r) => getDisciplineColor(r[0]))
+              backgroundColor: overallDisciplineRows.map((r) => getDisciplineColor(r[0])),
+              borderColor: '#000000',
+              borderWidth: 1
             }]
           },
           options: {
