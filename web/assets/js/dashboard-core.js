@@ -736,6 +736,38 @@
     return out;
   }
 
+  function parseDayKey(key) {
+    const text = String(key || '').trim();
+    const m = text.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (!m) return null;
+    const year = Number(m[1]);
+    const month = Number(m[2]);
+    const day = Number(m[3]);
+    if (!Number.isFinite(year) || !Number.isFinite(month) || !Number.isFinite(day)) return null;
+    if (month < 1 || month > 12 || day < 1 || day > 31) return null;
+    return { year, month, day };
+  }
+
+  function dayKeyToTimestamp(key) {
+    const parsed = parseDayKey(key);
+    if (!parsed) return null;
+    return new Date(parsed.year, parsed.month - 1, parsed.day).getTime();
+  }
+
+  function filterDayKeys(keys, selected) {
+    if (selected !== '1_year') return keys;
+    if (!keys.length) return keys;
+
+    const latestTs = dayKeyToTimestamp(keys[keys.length - 1]);
+    if (!Number.isFinite(latestTs)) return keys;
+    const oneYearMs = 365 * 24 * 60 * 60 * 1000;
+    const cutoffTs = latestTs - oneYearMs;
+    return keys.filter((k) => {
+      const ts = dayKeyToTimestamp(k);
+      return Number.isFinite(ts) && ts >= cutoffTs;
+    });
+  }
+
   function normalizeDisciplineLabel(value) {
     const raw = String(value || '').trim();
     if (!raw) return 'Other';
@@ -906,22 +938,43 @@
     }
 
     const selected = document.querySelector('input[name="timeframe"]:checked')?.value || '1_year';
+    const snapshotDaily = snapshotAvailability?.daily_avg_active_grad_positions || {};
     const snapshotMonthly = snapshotAvailability?.monthly_avg_active_grad_positions || {};
     const snapshotSource = String(snapshotAvailability?.source || '');
 
+    let trendMode = 'daily';
+    let dateKeys = Object.keys(snapshotDaily)
+      .filter((k) => dayKeyToTimestamp(k) !== null)
+      .sort();
+    dateKeys = filterDayKeys(dateKeys, selected);
+
     let monthMap = snapshotMonthly;
-    if (!Object.keys(monthMap).length) {
+    if (!dateKeys.length && !Object.keys(monthMap).length) {
       const key = resolveTimeframeKey(timeSeries, selected);
       monthMap = key ? (timeSeries[key]?.total_monthly || {}) : {};
     }
 
-    const allMonthLabels = buildContinuousMonthKeys(Object.keys(monthMap));
-    const monthLabels = filterMonthLabels(allMonthLabels, selected);
-    const monthValues = monthLabels.map((k) => (
-      Object.prototype.hasOwnProperty.call(monthMap, k) ? asNumber(monthMap[k]) : null
-    ));
+    let trendValues = [];
+    if (dateKeys.length) {
+      trendValues = dateKeys.map((k) => ({
+        x: dayKeyToTimestamp(k),
+        y: Object.prototype.hasOwnProperty.call(snapshotDaily, k) ? asNumber(snapshotDaily[k]) : null
+      }));
+    } else {
+      trendMode = 'monthly';
+      const allMonthLabels = buildContinuousMonthKeys(Object.keys(monthMap));
+      const monthLabels = filterMonthLabels(allMonthLabels, selected);
+      trendValues = monthLabels.map((k) => {
+        const parsed = parseMonthKey(k);
+        if (!parsed) return null;
+        return {
+          x: new Date(parsed.year, parsed.month - 1, 1).getTime(),
+          y: Object.prototype.hasOwnProperty.call(monthMap, k) ? asNumber(monthMap[k]) : null
+        };
+      }).filter(Boolean);
+    }
 
-    if (!monthLabels.length) {
+    if (!trendValues.length) {
       destroyChart('trend');
       setPanelEmpty('trend-panel', 'No data for current filters');
     } else {
@@ -930,15 +983,18 @@
       destroyChart('trend');
       const trendCtx = document.getElementById('trend-chart');
       if (trendCtx) {
+        const xDateFormatter = new Intl.DateTimeFormat('en-US', trendMode === 'daily'
+          ? { month: 'short', day: 'numeric', year: 'numeric' }
+          : { month: 'short', year: 'numeric' });
         chartState.trend = new Chart(trendCtx, {
           type: 'line',
           data: {
-            labels: monthLabels,
             datasets: [{
               label: snapshotSource
                 ? 'Unique Graduate Positions Captured by Scraping Date'
                 : 'Postings',
-              data: monthValues,
+              data: trendValues,
+              parsing: false,
               borderColor: '#0f766e',
               backgroundColor: 'rgba(15, 118, 110, 0.2)',
               tension: 0.25,
@@ -953,12 +1009,32 @@
               padding: { left: 10, right: 6 }
             },
             scales: {
+              x: {
+                type: 'linear',
+                title: { display: true, text: trendMode === 'daily' ? 'Scrape Date' : 'Month' },
+                ticks: {
+                  maxRotation: 0,
+                  autoSkip: true,
+                  maxTicksLimit: 8,
+                  callback: (value) => xDateFormatter.format(new Date(Number(value)))
+                }
+              },
               y: {
                 title: {
                   display: true,
                   text: snapshotSource
                     ? 'Unique Graduate Positions (count)'
                     : 'Postings (count)'
+                }
+              }
+            },
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  title: (items) => {
+                    const ts = items?.[0]?.parsed?.x;
+                    return Number.isFinite(ts) ? xDateFormatter.format(new Date(ts)) : '';
+                  }
                 }
               }
             }
