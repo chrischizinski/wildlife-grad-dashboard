@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-02-18T14:01:56.542945",
+    "generated_at": "2026-02-18T20:05:33.200338",
     "total_positions": 40,
     "source": "merged (historical + latest + enhanced)",
     "discipline_mapping": "consolidated to 8 categories"
@@ -336,14 +336,14 @@
   },
   "snapshot_availability": {
     "source": "scraped_backup",
-    "run_count": 4,
+    "run_count": 5,
     "daily_avg_active_grad_positions": {
       "2025-10-14": 19,
       "2026-02-18": 8
     },
     "daily_run_count": {
       "2025-10-14": 1,
-      "2026-02-18": 3
+      "2026-02-18": 4
     },
     "monthly_avg_active_grad_positions": {
       "2025-10": 19,
@@ -355,9 +355,9 @@
     },
     "monthly_run_count": {
       "2025-10": 1,
-      "2026-02": 3
+      "2026-02": 4
     },
-    "latest_run_timestamp": "2026-02-18T19:48:36",
+    "latest_run_timestamp": "2026-02-18T20:05:31",
     "latest_run_grad_positions": 8,
     "latest_run_discipline_breakdown": {
       "Fisheries and Aquatic": 1,
@@ -366,5 +366,5 @@
       "Other": 5
     }
   },
-  "last_updated": "2026-02-18 14:01:56"
+  "last_updated": "2026-02-18 20:05:33"
 }
