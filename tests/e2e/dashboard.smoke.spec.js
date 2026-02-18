@@ -47,8 +47,8 @@ test('dashboard uses relative data paths and shows data quality labels', async (
   await expect(page.locator('#kpi-quality-location-reason')).toContainText('parseable location');
   await expect(page.locator('#kpi-quality-updated-reason')).toContainText('analytics output');
   await expect(page.locator('#kpi-quality-updated')).not.toHaveText('—');
-  await expect(page.locator('#kpi-quality-salary')).toContainText('%');
-  await expect(page.locator('#kpi-quality-location')).toContainText('%');
+  await expect(page.locator('#kpi-quality-salary')).toContainText('/');
+  await expect(page.locator('#kpi-quality-location')).toContainText('/');
 });
 
 test('suppresses salary median when salary sample is less than 5', async ({ page }) => {
