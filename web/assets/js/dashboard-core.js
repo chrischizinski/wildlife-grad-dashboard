@@ -41,6 +41,27 @@
     enhanced: 'data/enhanced_data.json',
     export: 'data/export_data.json'
   };
+  const DISCIPLINE_COLOR_MAP = {
+    'Environmental Sciences': '#0f766e',
+    'Fisheries and Aquatic': '#0284c7',
+    Wildlife: '#16a34a',
+    Entomology: '#f59e0b',
+    'Forestry and Habitat': '#a16207',
+    Agriculture: '#ca8a04',
+    'Human Dimensions': '#8b5cf6',
+    Other: '#475569'
+  };
+  const DISCIPLINE_COLOR_FALLBACK = '#475569';
+  const DISCIPLINE_LEGEND_ORDER = [
+    'Environmental Sciences',
+    'Fisheries and Aquatic',
+    'Wildlife',
+    'Entomology',
+    'Forestry and Habitat',
+    'Agriculture',
+    'Human Dimensions',
+    'Other'
+  ];
 
   function setState(kind, message) {
     if (refs.loading) refs.loading.classList.add('is-hidden');
@@ -810,6 +831,44 @@
       .sort((a, b) => b[1] - a[1]);
   }
 
+  function getDisciplineColor(label) {
+    const normalized = normalizeDisciplineLabel(label);
+    return DISCIPLINE_COLOR_MAP[normalized] || DISCIPLINE_COLOR_FALLBACK;
+  }
+
+  function renderDisciplineSharedLegend(latestRows, overallRows) {
+    const el = document.getElementById('discipline-shared-legend');
+    if (!el) return;
+
+    const names = new Set();
+    [...latestRows, ...overallRows].forEach(([name]) => {
+      const normalized = normalizeDisciplineLabel(name);
+      if (normalized) names.add(normalized);
+    });
+
+    const ordered = Array.from(names).sort((a, b) => {
+      const ai = DISCIPLINE_LEGEND_ORDER.indexOf(a);
+      const bi = DISCIPLINE_LEGEND_ORDER.indexOf(b);
+      if (ai === -1 && bi === -1) return a.localeCompare(b);
+      if (ai === -1) return 1;
+      if (bi === -1) return -1;
+      return ai - bi;
+    });
+
+    if (!ordered.length) {
+      el.innerHTML = '';
+      el.classList.add('is-hidden');
+      return;
+    }
+
+    el.classList.remove('is-hidden');
+    el.innerHTML = ordered
+      .map((name) => (
+        `<span class="shared-legend__item"><span class="shared-legend__swatch" style="background:${getDisciplineColor(name)}"></span>${escapeHtml(name)}</span>`
+      ))
+      .join('');
+  }
+
   function buildLatestCaptureDisciplineMap(jobs, snapshotAvailability) {
     const fromAnalytics = snapshotAvailability?.latest_run_discipline_breakdown;
     if (fromAnalytics && typeof fromAnalytics === 'object' && Object.keys(fromAnalytics).length) {
@@ -919,6 +978,7 @@
       destroyChart('disciplineOverall');
       destroyChart('salary');
       destroyChart('seasonality');
+      renderDisciplineSharedLegend([], []);
       setPanelEmpty('trend-panel', 'No data for current filters');
       setPanelEmpty('discipline-latest-panel', 'No data for current filters');
       setPanelEmpty('discipline-overall-panel', 'No data for current filters');
@@ -929,6 +989,7 @@
     }
 
     if (!ensureChartJs()) {
+      renderDisciplineSharedLegend([], []);
       setPanelEmpty('trend-panel', 'Chart library unavailable');
       setPanelEmpty('discipline-latest-panel', 'Chart library unavailable');
       setPanelEmpty('discipline-overall-panel', 'Chart library unavailable');
@@ -1054,7 +1115,7 @@
     const latestDisciplineRows = buildDisciplineRowsFromMap(
       buildLatestCaptureDisciplineMap(jobs, snapshotAvailability)
     );
-    const disciplineColors = ['#0f766e', '#0284c7', '#f59e0b', '#16a34a', '#8b5cf6', '#ef4444', '#a16207', '#475569'];
+    renderDisciplineSharedLegend(latestDisciplineRows, overallDisciplineRows);
 
     if (!latestDisciplineRows.length) {
       destroyChart('disciplineLatest');
@@ -1071,10 +1132,14 @@
             labels: latestDisciplineRows.map((r) => r[0]),
             datasets: [{
               data: latestDisciplineRows.map((r) => r[1]),
-              backgroundColor: disciplineColors
+              backgroundColor: latestDisciplineRows.map((r) => getDisciplineColor(r[0]))
             }]
           },
-          options: { responsive: true, maintainAspectRatio: false }
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } }
+          }
         });
       }
     }
@@ -1094,10 +1159,14 @@
             labels: overallDisciplineRows.map((r) => r[0]),
             datasets: [{
               data: overallDisciplineRows.map((r) => r[1]),
-              backgroundColor: disciplineColors
+              backgroundColor: overallDisciplineRows.map((r) => getDisciplineColor(r[0]))
             }]
           },
-          options: { responsive: true, maintainAspectRatio: false }
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } }
+          }
         });
       }
     }
