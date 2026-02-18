@@ -34,6 +34,7 @@
 
   const SOURCE_PATHS = {
     analytics: 'data/dashboard_analytics.json',
+    positions: 'data/dashboard_positions.json',
     verified: 'data/verified_graduate_assistantships.json',
     enhanced: 'data/enhanced_data.json',
     export: 'data/export_data.json'
@@ -220,28 +221,39 @@
     return Array.from(map.values());
   }
 
-  function extractJobs(verifiedData, exportData, enhancedData) {
-    const verifiedRows = Array.isArray(verifiedData)
-      ? verifiedData
-      : (Array.isArray(verifiedData?.positions) ? verifiedData.positions : []);
-    const exportRows = Array.isArray(exportData) ? exportData : [];
-    const enhancedRows = Array.isArray(enhancedData)
-      ? enhancedData
-      : (Array.isArray(enhancedData?.positions) ? enhancedData.positions : (Array.isArray(enhancedData?.jobs) ? enhancedData.jobs : []));
+  function extractRows(input) {
+    if (Array.isArray(input)) return input;
+    if (Array.isArray(input?.positions)) return input.positions;
+    if (Array.isArray(input?.jobs)) return input.jobs;
+    return [];
+  }
 
-    const now = new Date();
+  function isExplicitGraduateRow(job) {
+    if (job?.is_graduate_position === false) return false;
+    const disciplinePrimary = String(job?.discipline_primary || '').trim().toLowerCase();
+    if (disciplinePrimary === 'non-graduate') return false;
+    return true;
+  }
 
-    // Verified feed is already the graduate-curated source. Use it as primary.
-    if (verifiedRows.length) {
-      const verified = dedupeJobs(verifiedRows);
-      const currentVerified = verified.filter((job) => isCurrentPosting(job, now));
-      return currentVerified.length ? currentVerified : verified;
+  function extractJobs(positionsData, verifiedData, exportData, enhancedData) {
+    const positionsRows = extractRows(positionsData).filter((job) => isExplicitGraduateRow(job));
+    if (positionsRows.length) {
+      return dedupeJobs(positionsRows);
     }
 
-    // Fallback only when verified feed is unavailable.
+    const verifiedRows = extractRows(verifiedData).filter((job) => isExplicitGraduateRow(job));
+    const exportRows = Array.isArray(exportData) ? exportData : [];
+    const enhancedRows = extractRows(enhancedData);
+
+    // Backward-compatible fallback if dashboard_positions.json is unavailable.
+    if (verifiedRows.length) {
+      return dedupeJobs(verifiedRows);
+    }
+
+    // Last fallback path only when unified/verified datasets are unavailable.
     const merged = dedupeJobs([...exportRows, ...enhancedRows]);
     const graduateOnly = merged.filter((job) => isGraduatePosting(job));
-    return graduateOnly.filter((job) => isCurrentPosting(job, now));
+    return graduateOnly;
   }
 
   function normalizeData({ analytics, enhanced, jobs }) {
@@ -836,8 +848,9 @@
       bindSidebarActive();
       renderScaffoldPlaceholders();
 
-      const [analytics, verifiedData, enhanced, exportData] = await Promise.all([
+      const [analytics, positionsData, verifiedData, enhanced, exportData] = await Promise.all([
         fetchJsonWithFallback(SOURCE_PATHS.analytics),
+        fetchJsonWithFallback(SOURCE_PATHS.positions),
         fetchJsonWithFallback(SOURCE_PATHS.verified),
         fetchJsonWithFallback(SOURCE_PATHS.enhanced),
         fetchJsonWithFallback(SOURCE_PATHS.export)
@@ -848,7 +861,7 @@
         return;
       }
 
-      const jobs = extractJobs(verifiedData, exportData, enhanced);
+      const jobs = extractJobs(positionsData, verifiedData, exportData, enhanced);
       const normalized = normalizeData({ analytics, enhanced, jobs });
 
       // Expose for inspection in dev tools.
