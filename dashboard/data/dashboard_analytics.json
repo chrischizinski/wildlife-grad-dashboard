@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-02-18T19:10:07.044069",
+    "generated_at": "2026-02-18T19:12:48.681640",
     "total_positions": 156,
     "source": "merged (historical + latest + enhanced)",
     "discipline_mapping": "consolidated to 6 categories"
@@ -360,26 +360,28 @@
     }
   },
   "snapshot_availability": {
-    "source": "enhanced_archive",
-    "run_count": 11,
+    "source": "scraped_backup",
+    "run_count": 2,
     "monthly_avg_active_grad_positions": {
-      "2025-07": 48
+      "2025-10": 19,
+      "2026-02": 8
     },
     "monthly_relative_to_peak_pct": {
-      "2025-07": 100.0
+      "2025-10": 100.0,
+      "2026-02": 42.1
     },
     "monthly_run_count": {
-      "2025-07": 11
+      "2025-10": 1,
+      "2026-02": 1
     },
-    "latest_run_timestamp": "2025-07-27T04:45:43",
-    "latest_run_grad_positions": 48,
+    "latest_run_timestamp": "2026-02-18T19:12:48",
+    "latest_run_grad_positions": 8,
     "latest_run_discipline_breakdown": {
-      "Fisheries": 15,
-      "Environmental Science": 14,
-      "Wildlife": 10,
-      "Other": 8,
-      "Forestry": 1
+      "Other": 5,
+      "Environmental Science": 1,
+      "Fisheries": 1,
+      "Wildlife": 1
     }
   },
-  "last_updated": "2026-02-18 19:10:07"
+  "last_updated": "2026-02-18 19:12:48"
 }
