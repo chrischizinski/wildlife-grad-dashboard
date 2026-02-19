@@ -182,6 +182,20 @@
       const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
       const canvasPadding = 8;
       const minShowPct = 1;
+      const area = chart.chartArea || {
+        left: 0,
+        top: 0,
+        right: chart.width,
+        bottom: chart.height
+      };
+      const minX = area.left + canvasPadding;
+      const maxX = area.right - canvasPadding;
+      const minY = area.top + 12;
+      const maxY = area.bottom - 12;
+      const minLabelGap = 14;
+
+      const leftLabels = [];
+      const rightLabels = [];
 
       arcs.forEach((arc, idx) => {
         const value = values[idx];
@@ -208,10 +222,10 @@
           const yRaw = props.y + (sin * r);
           const x = clamp(
             xRaw,
-            (labelWidth / 2) + canvasPadding,
-            chart.width - (labelWidth / 2) - canvasPadding
+            Math.max(minX, area.left + (labelWidth / 2) + canvasPadding),
+            Math.min(maxX, area.right - (labelWidth / 2) - canvasPadding)
           );
-          const y = clamp(yRaw, 12 + canvasPadding, chart.height - 12 - canvasPadding);
+          const y = clamp(yRaw, minY, maxY);
           ctx.textAlign = 'center';
           ctx.fillStyle = '#ffffff';
           ctx.fillText(label, x, y);
@@ -220,36 +234,79 @@
 
         const lineStartR = props.outerRadius + 2;
         const elbowR = props.outerRadius + 12;
-        const labelR = props.outerRadius + 24;
-        const x0 = props.x + (cos * lineStartR);
-        const y0 = props.y + (sin * lineStartR);
-        const xElbowRaw = props.x + (cos * elbowR);
-        const yElbowRaw = props.y + (sin * elbowR);
-        const yLabel = clamp(props.y + (sin * labelR), 12 + canvasPadding, chart.height - 12 - canvasPadding);
+        const labelR = props.outerRadius + 26;
 
         const isRight = cos >= 0;
-        const xLabel = isRight
-          ? clamp(props.x + (cos * labelR), canvasPadding, chart.width - labelWidth - canvasPadding)
-          : clamp(props.x + (cos * labelR), labelWidth + canvasPadding, chart.width - canvasPadding);
-        const xText = xLabel;
-        const xElbow = isRight
-          ? clamp(xElbowRaw, canvasPadding, chart.width - canvasPadding)
-          : clamp(xElbowRaw, canvasPadding, chart.width - canvasPadding);
-        const xJoin = isRight ? xText - 3 : xText + 3;
-        const yElbow = clamp(yElbowRaw, canvasPadding, chart.height - canvasPadding);
+        const x0 = clamp(props.x + (cos * lineStartR), minX, maxX);
+        const y0 = clamp(props.y + (sin * lineStartR), minY, maxY);
+        const xElbow = clamp(props.x + (cos * elbowR), minX, maxX);
+        const yElbow = clamp(props.y + (sin * elbowR), minY, maxY);
+        const yTarget = clamp(props.y + (sin * labelR), minY, maxY);
 
-        ctx.strokeStyle = '#111111';
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(x0, y0);
-        ctx.lineTo(xElbow, yElbow);
-        ctx.lineTo(xJoin, yLabel);
-        ctx.stroke();
+        const xTextRaw = props.x + (cos * labelR);
+        const xText = isRight
+          ? clamp(xTextRaw, minX, maxX - labelWidth)
+          : clamp(xTextRaw, minX + labelWidth, maxX);
 
-        ctx.fillStyle = '#111111';
-        ctx.textAlign = isRight ? 'left' : 'right';
-        ctx.fillText(label, xText, yLabel);
+        const bucket = isRight ? rightLabels : leftLabels;
+        bucket.push({
+          label,
+          x0,
+          y0,
+          xElbow,
+          yElbow,
+          xText,
+          y: yTarget,
+          isRight
+        });
       });
+
+      const spreadSideLabels = (items) => {
+        if (!items.length) return;
+        items.sort((a, b) => a.y - b.y);
+
+        let prev = minY - minLabelGap;
+        items.forEach((item) => {
+          item.y = Math.max(item.y, prev + minLabelGap);
+          prev = item.y;
+        });
+
+        if (items[items.length - 1].y > maxY) {
+          items[items.length - 1].y = maxY;
+          for (let i = items.length - 2; i >= 0; i -= 1) {
+            items[i].y = Math.min(items[i].y, items[i + 1].y - minLabelGap);
+          }
+          if (items[0].y < minY) {
+            items[0].y = minY;
+            for (let i = 1; i < items.length; i += 1) {
+              items[i].y = Math.max(items[i].y, items[i - 1].y + minLabelGap);
+            }
+          }
+        }
+      };
+
+      spreadSideLabels(leftLabels);
+      spreadSideLabels(rightLabels);
+
+      const drawExternalLabels = (items) => {
+        items.forEach((item) => {
+          const xJoin = item.isRight ? item.xText - 3 : item.xText + 3;
+          ctx.strokeStyle = '#111111';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(item.x0, item.y0);
+          ctx.lineTo(item.xElbow, item.yElbow);
+          ctx.lineTo(xJoin, item.y);
+          ctx.stroke();
+
+          ctx.fillStyle = '#111111';
+          ctx.textAlign = item.isRight ? 'left' : 'right';
+          ctx.fillText(item.label, item.xText, item.y);
+        });
+      };
+
+      drawExternalLabels(leftLabels);
+      drawExternalLabels(rightLabels);
 
       ctx.restore();
     }
