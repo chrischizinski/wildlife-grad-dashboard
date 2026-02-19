@@ -179,6 +179,8 @@
       ctx.font = '600 11px Inter, sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
+      const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+      const canvasPadding = 6;
 
       arcs.forEach((arc, idx) => {
         const value = values[idx];
@@ -195,8 +197,11 @@
 
         if (isLargeSlice) {
           const r = props.innerRadius + ((props.outerRadius - props.innerRadius) * 0.55);
-          const x = props.x + (Math.cos(angle) * r);
-          const y = props.y + (Math.sin(angle) * r);
+          const xRaw = props.x + (Math.cos(angle) * r);
+          const yRaw = props.y + (Math.sin(angle) * r);
+          const textHalf = ctx.measureText(label).width / 2;
+          const x = clamp(xRaw, textHalf + canvasPadding, chart.width - textHalf - canvasPadding);
+          const y = clamp(yRaw, 10 + canvasPadding, chart.height - 10 - canvasPadding);
           ctx.fillStyle = '#ffffff';
           ctx.fillText(label, x, y);
           return;
@@ -207,16 +212,22 @@
         const labelR = props.outerRadius + 18;
         const x0 = props.x + (Math.cos(angle) * lineStartR);
         const y0 = props.y + (Math.sin(angle) * lineStartR);
-        const x1 = props.x + (Math.cos(angle) * lineEndR);
-        const y1 = props.y + (Math.sin(angle) * lineEndR);
-        const x = props.x + (Math.cos(angle) * labelR);
-        const y = props.y + (Math.sin(angle) * labelR);
+        const x1Raw = props.x + (Math.cos(angle) * lineEndR);
+        const y1Raw = props.y + (Math.sin(angle) * lineEndR);
+        const xRaw = props.x + (Math.cos(angle) * labelR);
+        const yRaw = props.y + (Math.sin(angle) * labelR);
+        const textHalf = ctx.measureText(label).width / 2;
+        const x = clamp(xRaw, textHalf + canvasPadding, chart.width - textHalf - canvasPadding);
+        const y = clamp(yRaw, 10 + canvasPadding, chart.height - 10 - canvasPadding);
+        const x1 = clamp(x1Raw, canvasPadding, chart.width - canvasPadding);
+        const y1 = clamp(y1Raw, canvasPadding, chart.height - canvasPadding);
 
         ctx.strokeStyle = '#111111';
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(x0, y0);
         ctx.lineTo(x1, y1);
+        ctx.lineTo(x, y);
         ctx.stroke();
 
         ctx.fillStyle = '#111111';
@@ -1762,6 +1773,9 @@
           options: {
             responsive: true,
             maintainAspectRatio: false,
+            layout: {
+              padding: { top: 18, right: 26, bottom: 18, left: 26 }
+            },
             plugins: { legend: { display: false } }
           }
         });
@@ -1792,6 +1806,9 @@
           options: {
             responsive: true,
             maintainAspectRatio: false,
+            layout: {
+              padding: { top: 18, right: 26, bottom: 18, left: 26 }
+            },
             plugins: { legend: { display: false } }
           }
         });
