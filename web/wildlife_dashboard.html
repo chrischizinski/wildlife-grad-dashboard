@@ -15,7 +15,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
   <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script defer src="assets/js/dashboard-core.js?v=18"></script>
+  <script defer src="assets/js/dashboard-core.js?v=19"></script>
 </head>
 
 <body>
@@ -74,26 +74,21 @@
             <h2>Overview</h2>
             <p>Topline counts and current market composition.</p>
           </div>
-          <div class="kpi-grid">
+          <div class="kpi-grid kpi-grid--three">
             <article class="kpi-card">
               <h3>Graduate Positions</h3>
               <p class="kpi-card__value" id="kpi-grad-positions">—</p>
               <p class="kpi-card__reason" id="kpi-grad-positions-reason">No rows after filters</p>
             </article>
             <article class="kpi-card">
-              <h3>Salary Coverage</h3>
-              <p class="kpi-card__value" id="kpi-salary-coverage">—</p>
-              <p class="kpi-card__reason" id="kpi-salary-coverage-reason">No rows after filters</p>
+              <h3>Avg Postings / Day</h3>
+              <p class="kpi-card__value" id="kpi-postings-per-day">—</p>
+              <p class="kpi-card__reason" id="kpi-postings-per-day-reason">No rows after filters</p>
             </article>
             <article class="kpi-card">
-              <h3>Active Disciplines</h3>
-              <p class="kpi-card__value" id="kpi-disciplines">—</p>
-              <p class="kpi-card__reason" id="kpi-disciplines-reason">No rows after filters</p>
-            </article>
-            <article class="kpi-card">
-              <h3>Top Discipline</h3>
-              <p class="kpi-card__value" id="kpi-top-discipline">—</p>
-              <p class="kpi-card__reason" id="kpi-top-discipline-reason">No rows after filters</p>
+              <h3>6-Month Posting Momentum</h3>
+              <p class="kpi-card__value" id="kpi-posting-momentum">—</p>
+              <p class="kpi-card__reason" id="kpi-posting-momentum-reason">No rows after filters</p>
             </article>
           </div>
         </section>
