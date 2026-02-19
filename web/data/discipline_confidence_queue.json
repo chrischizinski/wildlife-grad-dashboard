@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-02-19T12:06:23.343335",
-  "count": 7,
+  "generated_at": "2026-02-19T13:21:59.745069",
+  "count": 9,
   "items": [
     {
       "severity": 3,
@@ -44,6 +44,54 @@
       "location": "La Crosse, Wisconsin",
       "url": "https://jobs.rwfm.tamu.edu/view/107411/",
       "published_date": "06/27/2025",
+      "discipline_refinement_source": "rule",
+      "review_status": "",
+      "reviewed_discipline": "",
+      "review_notes": "",
+      "reviewer": ""
+    },
+    {
+      "severity": 3,
+      "reasons": [
+        "final_other",
+        "still_other_low_signal"
+      ],
+      "position_key": "title_org::ms position - impacts of global change drivers on dryland plant communities - marshall u, palmquist lab::marshall university (state)::department of biological sciences, marshall university (huntington, west virginia)::06/30/2025",
+      "discipline_final": "Other",
+      "discipline_model_suggested": "Environmental Sciences",
+      "discipline_model_secondary": "",
+      "model_id": "20260219_113917",
+      "model_confidence": 0.2376,
+      "model_margin": 0.0444,
+      "title": "MS position - impacts of global change drivers on dryland plant communities - Marshall U, Palmquist lab",
+      "organization": "Marshall University (State)",
+      "location": "Department of Biological Sciences, Marshall University (Huntington, West Virginia)",
+      "url": "https://jobs.rwfm.tamu.edu/view/107468/",
+      "published_date": "06/30/2025",
+      "discipline_refinement_source": "rule",
+      "review_status": "",
+      "reviewed_discipline": "",
+      "review_notes": "",
+      "reviewer": ""
+    },
+    {
+      "severity": 3,
+      "reasons": [
+        "final_other",
+        "still_other_low_signal"
+      ],
+      "position_key": "title_org::ph.d. position - crustnet::university of texas at el paso (state)::500 w. university ave. (el paso, texas)::09/03/2025",
+      "discipline_final": "Other",
+      "discipline_model_suggested": "Environmental Sciences",
+      "discipline_model_secondary": "",
+      "model_id": "20260219_113917",
+      "model_confidence": 0.2433,
+      "model_margin": 0.0408,
+      "title": "Ph.D. position - CrustNet",
+      "organization": "University of Texas at El Paso (State)",
+      "location": "500 W. University Ave. (El Paso, Texas)",
+      "url": "https://jobs.rwfm.tamu.edu/view-job/?id=96957",
+      "published_date": "09/03/2025",
       "discipline_refinement_source": "rule",
       "review_status": "",
       "reviewed_discipline": "",
