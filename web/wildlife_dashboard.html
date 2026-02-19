@@ -10,12 +10,12 @@
   <link rel="preconnect" href="https://unpkg.com" crossorigin>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <link rel="stylesheet" href="assets/css/enhanced-styles.css?v=4" />
+  <link rel="stylesheet" href="assets/css/enhanced-styles.css?v=5" />
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
   <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script defer src="assets/js/dashboard-core.js?v=16"></script>
+  <script defer src="assets/js/dashboard-core.js?v=17"></script>
 </head>
 
 <body>
@@ -102,16 +102,24 @@
           <div class="section__head section__head--split">
             <div>
               <h2>Temporal Trends</h2>
-              <p>Capture snapshot counts and posting seasonality over time.</p>
+              <p>Capture-date vs posted-date trend views and posting seasonality over time.</p>
             </div>
-            <fieldset class="time-toggle" aria-label="Timeframe">
-              <label><input type="radio" name="timeframe" value="1_year" checked> 1Y</label>
-              <label><input type="radio" name="timeframe" value="all_time"> All</label>
-            </fieldset>
+            <div class="trend-controls">
+              <fieldset class="time-toggle" aria-label="Timeframe">
+                <legend>Window</legend>
+                <label><input type="radio" name="timeframe" value="1_year" checked> 1Y</label>
+                <label><input type="radio" name="timeframe" value="all_time"> All</label>
+              </fieldset>
+              <fieldset class="time-toggle" aria-label="Date basis">
+                <legend>Date Basis</legend>
+                <label><input type="radio" name="trend-date-basis" value="captured" checked> Capture</label>
+                <label><input type="radio" name="trend-date-basis" value="posted"> Posted</label>
+              </fieldset>
+            </div>
           </div>
           <div class="chart-grid chart-grid--single">
             <article class="panel panel--wide">
-              <h3>Unique Graduate Positions Captured by Date</h3>
+              <h3 id="trend-title">Unique Graduate Positions Captured by Date</h3>
               <div class="panel__body" id="trend-panel">
                 <canvas id="trend-chart"></canvas>
               </div>
