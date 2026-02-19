@@ -1,7 +1,7 @@
-# Test Scripts Directory
+# Scripts
 
-The scripts directory should contain:
-- scripts/populate_supabase.py
-- scripts/generate_dashboard_analytics.py
-
-This file exists to verify the GitHub Action can find the scripts.
+Core pipeline scripts:
+- `scripts/generate_dashboard_analytics.py`
+- `scripts/retrain_discipline_model.py`
+- `scripts/import_discipline_queue_reviews.py`
+- `scripts/populate_supabase.py`

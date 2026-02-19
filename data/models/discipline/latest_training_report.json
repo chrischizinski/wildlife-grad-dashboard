@@ -1,0 +1,77 @@
+{
+  "generated_at": "2026-02-19T11:43:23.483516",
+  "trained": true,
+  "promoted": false,
+  "promotion_reason": "validation_not_improved",
+  "metrics": {
+    "accuracy": 0.25,
+    "macro_f1": 0.1,
+    "weighted_f1": 0.1,
+    "evaluation_mode": "holdout",
+    "validation_samples": 4
+  },
+  "previous_metrics": {
+    "accuracy": 0.18333333333333335,
+    "macro_f1": 0.125,
+    "weighted_f1": 0.09166666666666667,
+    "evaluation_mode": "stratified_2fold_cv",
+    "validation_samples": 11
+  },
+  "candidate_model": {
+    "model_id": "20260219_114323",
+    "trained_at": "2026-02-19T11:43:23.406170",
+    "artifact_path": "data/models/discipline/models/discipline_model_20260219_114323.pkl",
+    "classes": [
+      "Agriculture",
+      "Entomology",
+      "Environmental Sciences",
+      "Fisheries and Aquatic",
+      "Forestry and Habitat",
+      "Wildlife"
+    ],
+    "metrics": {
+      "accuracy": 0.25,
+      "macro_f1": 0.1,
+      "weighted_f1": 0.1,
+      "evaluation_mode": "holdout",
+      "validation_samples": 4
+    },
+    "training_summary": {
+      "gold_total": 16,
+      "gold_class_counts": {
+        "Environmental Sciences": 3,
+        "Fisheries and Aquatic": 5,
+        "Forestry and Habitat": 2,
+        "Wildlife": 6
+      },
+      "pseudo_total": 9,
+      "pseudo_class_counts": {
+        "Environmental Sciences": 2,
+        "Wildlife": 5,
+        "Entomology": 1,
+        "Agriculture": 1
+      },
+      "pseudo_weight": 0.35,
+      "positions_file": "web/data/dashboard_positions.json"
+    }
+  },
+  "manifest_path": "data/models/discipline/manifest.json",
+  "gold_labels": 16,
+  "gold_class_counts": {
+    "Environmental Sciences": 3,
+    "Fisheries and Aquatic": 5,
+    "Forestry and Habitat": 2,
+    "Wildlife": 6
+  },
+  "dropped_rare_gold_classes": {
+    "Other": 1
+  },
+  "pseudo_labels": 9,
+  "pseudo_class_counts": {
+    "Environmental Sciences": 2,
+    "Wildlife": 5,
+    "Entomology": 1,
+    "Agriculture": 1
+  },
+  "confidence_queue_count": 1
+}

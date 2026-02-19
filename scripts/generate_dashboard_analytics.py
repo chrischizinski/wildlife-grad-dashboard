@@ -10,6 +10,7 @@ This script:
 5. Saves to dashboard locations
 """
 
+import csv
 import json
 import re
 import statistics
@@ -80,6 +81,9 @@ DISCIPLINE_DISPLAY_ORDER = [
     "Other",
 ]
 DISCIPLINE_ORDER_INDEX = {name: idx for idx, name in enumerate(DISCIPLINE_DISPLAY_ORDER)}
+DISCIPLINE_CONFIDENCE_QUEUE_JSON = Path("data/processed/discipline_confidence_queue.json")
+DISCIPLINE_CONFIDENCE_QUEUE_CSV = Path("data/processed/discipline_confidence_queue.csv")
+WEB_DISCIPLINE_CONFIDENCE_QUEUE_JSON = Path("web/data/discipline_confidence_queue.json")
 
 
 def normalize_discipline(disc: str) -> str:
@@ -166,6 +170,145 @@ def _to_job_position(row: Dict[str, Any]) -> JobPosition:
     )
 
 
+def build_discipline_confidence_queue(
+    rows: List[Dict[str, Any]],
+    classifier: DisciplineClassifier,
+) -> List[Dict[str, Any]]:
+    """Build a review queue for uncertain/Other discipline assignments."""
+    queue: List[Dict[str, Any]] = []
+    for row in rows:
+        position = _to_job_position(row)
+        final_primary = normalize_discipline(
+            str(row.get("discipline_primary") or row.get("discipline") or "Other")
+        )
+        pred = classifier.predict_with_promoted_model(position)
+        model_available = bool(pred.get("available"))
+        model_primary = normalize_discipline(str(pred.get("primary") or "Other"))
+        model_secondary = normalize_discipline(str(pred.get("secondary") or ""))
+        model_conf = float(pred.get("confidence") or 0.0)
+        model_margin = float(pred.get("margin") or 0.0)
+        model_id = str(pred.get("model_id") or "")
+
+        reasons: List[str] = []
+        if final_primary == "Other":
+            reasons.append("final_other")
+        if not model_available and final_primary == "Other":
+            reasons.append("no_promoted_model")
+        if model_available:
+            if final_primary == "Other":
+                if (
+                    model_primary != "Other"
+                    and model_conf >= 0.6
+                    and model_margin >= 0.08
+                ):
+                    reasons.append("suggested_relabel")
+                else:
+                    reasons.append("still_other_low_signal")
+            elif (
+                model_primary
+                and model_primary != "Other"
+                and model_primary != final_primary
+                and model_conf >= 0.7
+                and model_margin >= 0.1
+            ):
+                reasons.append("model_rule_disagreement")
+
+        if not reasons:
+            continue
+
+        severity = len(reasons)
+        if "model_rule_disagreement" in reasons:
+            severity += 1
+        if "final_other" in reasons:
+            severity += 1
+
+        queue.append(
+            {
+                "severity": severity,
+                "reasons": reasons,
+                "position_key": _build_row_key(row),
+                "discipline_final": final_primary,
+                "discipline_model_suggested": model_primary,
+                "discipline_model_secondary": (
+                    model_secondary
+                    if model_secondary
+                    and model_secondary != "Other"
+                    and model_secondary != model_primary
+                    else ""
+                ),
+                "model_id": model_id,
+                "model_confidence": round(model_conf, 4),
+                "model_margin": round(model_margin, 4),
+                "title": str(row.get("title") or ""),
+                "organization": str(row.get("organization") or ""),
+                "location": str(row.get("location") or ""),
+                "url": str(row.get("url") or ""),
+                "published_date": str(row.get("published_date") or ""),
+                "discipline_refinement_source": str(
+                    row.get("discipline_refinement_source") or "rule"
+                ),
+                "review_status": "",
+                "reviewed_discipline": "",
+                "review_notes": "",
+                "reviewer": "",
+            }
+        )
+
+    queue.sort(
+        key=lambda item: (
+            int(item.get("severity") or 0),
+            -float(item.get("model_confidence") or 0.0),
+            str(item.get("title") or ""),
+        ),
+        reverse=True,
+    )
+    return queue
+
+
+def write_discipline_confidence_queue(queue: List[Dict[str, Any]]) -> None:
+    """Persist uncertainty review queue in JSON and CSV formats."""
+    payload = {
+        "generated_at": datetime.now().isoformat(),
+        "count": len(queue),
+        "items": queue,
+    }
+
+    for out_path in [DISCIPLINE_CONFIDENCE_QUEUE_JSON, WEB_DISCIPLINE_CONFIDENCE_QUEUE_JSON]:
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(out_path, "w", encoding="utf-8") as f:
+            json.dump(payload, f, indent=2)
+
+    DISCIPLINE_CONFIDENCE_QUEUE_CSV.parent.mkdir(parents=True, exist_ok=True)
+    fieldnames = [
+        "severity",
+        "reasons",
+        "position_key",
+        "discipline_final",
+        "discipline_model_suggested",
+        "discipline_model_secondary",
+        "model_id",
+        "model_confidence",
+        "model_margin",
+        "discipline_refinement_source",
+        "review_status",
+        "reviewed_discipline",
+        "review_notes",
+        "reviewer",
+        "title",
+        "organization",
+        "location",
+        "published_date",
+        "url",
+    ]
+    with open(DISCIPLINE_CONFIDENCE_QUEUE_CSV, "w", encoding="utf-8", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        for row in queue:
+            row_out = dict(row)
+            row_out["reasons"] = ";".join(row.get("reasons") or [])
+            writer.writerow(row_out)
+
+
 def sanitize_and_classify_positions(rows: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     """
     Apply strict graduate guardrails + canonical discipline classification.
@@ -176,7 +319,11 @@ def sanitize_and_classify_positions(rows: List[Dict[str, Any]]) -> List[Dict[str
     grad_detector = GraduatePositionDetector()
     discipline_classifier = DisciplineClassifier()
 
-    cleaned_rows: List[Dict[str, Any]] = []
+    first_pass_rows: List[Dict[str, Any]] = []
+    first_pass_positions: List[JobPosition] = []
+    first_pass_primary: List[str] = []
+    first_pass_secondary: List[str] = []
+
     for row in rows:
         pos = _to_job_position(row)
         is_grad, position_type, grad_conf = grad_detector.is_graduate_position(pos)
@@ -186,36 +333,89 @@ def sanitize_and_classify_positions(rows: List[Dict[str, Any]]) -> List[Dict[str
         predicted_primary, predicted_secondary = discipline_classifier.classify_position(pos)
         predicted_primary_norm = normalize_discipline(predicted_primary)
         predicted_secondary_norm = normalize_discipline(predicted_secondary)
-        existing_primary_norm = normalize_discipline(
-            str(
-                row.get("discipline_primary")
-                or row.get("discipline")
-                or row.get("discipline_secondary")
-                or ""
-            )
-        )
-
-        # If the new classifier is uncertain (Other) but prior classification was
-        # already non-Other, retain the prior non-Other category.
-        primary_final = (
-            existing_primary_norm
-            if predicted_primary_norm == "Other" and existing_primary_norm != "Other"
-            else predicted_primary_norm
+        secondary_final = (
+            predicted_secondary_norm
+            if predicted_secondary_norm != predicted_primary_norm
+            and predicted_secondary_norm != "Other"
+            else ""
         )
 
         out = dict(row)
         out["is_graduate_position"] = True
         out["position_type"] = position_type
         out["grad_confidence"] = grad_conf
-        out["discipline_primary"] = primary_final
-        out["discipline_secondary"] = (
-            predicted_secondary_norm
-            if predicted_secondary_norm != primary_final and predicted_secondary_norm != "Other"
+        first_pass_rows.append(out)
+        first_pass_positions.append(pos)
+        first_pass_primary.append(predicted_primary_norm)
+        first_pass_secondary.append(secondary_final)
+
+    if not first_pass_rows:
+        return []
+
+    refined_primary, refined_secondary = discipline_classifier.refine_other_labels_with_secondary_ml(
+        first_pass_positions,
+        first_pass_primary,
+        first_pass_secondary,
+    )
+
+    relabeled = sum(
+        1 for before, after in zip(first_pass_primary, refined_primary) if before != after
+    )
+    if relabeled:
+        print(
+            f"  ↳ Secondary ML relabeled {relabeled} first-pass 'Other' postings"
+        )
+
+    promoted_primary, promoted_secondary = (
+        discipline_classifier.refine_other_labels_with_promoted_model(
+            first_pass_positions,
+            refined_primary,
+            refined_secondary,
+        )
+    )
+    promoted_relabeled = sum(
+        1 for before, after in zip(refined_primary, promoted_primary) if before != after
+    )
+    if promoted_relabeled:
+        print(
+            f"  ↳ Promoted model relabeled {promoted_relabeled} additional 'Other' postings"
+        )
+
+    cleaned_rows: List[Dict[str, Any]] = []
+    for idx, (out, primary, secondary) in enumerate(
+        zip(first_pass_rows, promoted_primary, promoted_secondary)
+    ):
+        primary_final = normalize_discipline(primary)
+        secondary_norm = normalize_discipline(secondary)
+        secondary_final = (
+            secondary_norm
+            if secondary_norm != primary_final and secondary_norm != "Other"
             else ""
         )
+
+        first_primary = first_pass_primary[idx]
+        after_secondary = refined_primary[idx]
+        if primary_final == first_primary:
+            refinement_source = "rule"
+        elif after_secondary != first_primary and primary_final == after_secondary:
+            refinement_source = "secondary_ml"
+        elif primary_final != after_secondary:
+            refinement_source = "promoted_model"
+        else:
+            refinement_source = "rule"
+
+        out["discipline_primary"] = primary_final
+        out["discipline_secondary"] = secondary_final
         # Keep legacy field in sync for downstream consumers still reading it.
         out["discipline"] = primary_final
+        out["discipline_refinement_source"] = refinement_source
         cleaned_rows.append(out)
+
+    confidence_queue = build_discipline_confidence_queue(
+        cleaned_rows, discipline_classifier
+    )
+    write_discipline_confidence_queue(confidence_queue)
+    print(f"  ↳ Wrote discipline confidence queue: {len(confidence_queue)} items")
 
     return cleaned_rows
 
@@ -297,10 +497,10 @@ def load_and_merge_data() -> List[Dict[str, Any]]:
 
     deduped_positions = list(unique_positions.values())
     sanitized_positions = sanitize_and_classify_positions(deduped_positions)
-    dropped = len(deduped_positions) - len(sanitized_positions)
+    dropped_guardrail = len(deduped_positions) - len(sanitized_positions)
     print(
         f"\n📊 Merged dataset: {len(sanitized_positions)} unique graduate positions "
-        f"({len(deduped_positions)} deduped; dropped {dropped} non-grad by guardrails)\n"
+        f"({len(deduped_positions)} deduped; dropped {dropped_guardrail} non-grad by guardrails)\n"
     )
 
     return sanitized_positions
