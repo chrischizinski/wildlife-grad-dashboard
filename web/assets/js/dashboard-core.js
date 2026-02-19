@@ -177,61 +177,78 @@
       const ctx = chart.ctx;
       ctx.save();
       ctx.font = '600 11px Inter, sans-serif';
-      ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
+
       const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
-      const canvasPadding = 6;
+      const canvasPadding = 8;
+      const minShowPct = 1;
 
       arcs.forEach((arc, idx) => {
         const value = values[idx];
         if (value <= 0) return;
+
         const pct = (value / total) * 100;
+        if (pct < minShowPct) return;
+
         const label = pct < 1 ? '<1%' : `${pct >= 10 ? pct.toFixed(0) : pct.toFixed(1)}%`;
+        const labelWidth = ctx.measureText(label).width;
 
         const props = arc.getProps(
           ['x', 'y', 'startAngle', 'endAngle', 'innerRadius', 'outerRadius'],
           true
         );
         const angle = (props.startAngle + props.endAngle) / 2;
+        const cos = Math.cos(angle);
+        const sin = Math.sin(angle);
         const isLargeSlice = pct >= 8;
 
         if (isLargeSlice) {
           const r = props.innerRadius + ((props.outerRadius - props.innerRadius) * 0.55);
-          const xRaw = props.x + (Math.cos(angle) * r);
-          const yRaw = props.y + (Math.sin(angle) * r);
-          const textHalf = ctx.measureText(label).width / 2;
-          const x = clamp(xRaw, textHalf + canvasPadding, chart.width - textHalf - canvasPadding);
-          const y = clamp(yRaw, 10 + canvasPadding, chart.height - 10 - canvasPadding);
+          const xRaw = props.x + (cos * r);
+          const yRaw = props.y + (sin * r);
+          const x = clamp(
+            xRaw,
+            (labelWidth / 2) + canvasPadding,
+            chart.width - (labelWidth / 2) - canvasPadding
+          );
+          const y = clamp(yRaw, 12 + canvasPadding, chart.height - 12 - canvasPadding);
+          ctx.textAlign = 'center';
           ctx.fillStyle = '#ffffff';
           ctx.fillText(label, x, y);
           return;
         }
 
         const lineStartR = props.outerRadius + 2;
-        const lineEndR = props.outerRadius + 12;
-        const labelR = props.outerRadius + 18;
-        const x0 = props.x + (Math.cos(angle) * lineStartR);
-        const y0 = props.y + (Math.sin(angle) * lineStartR);
-        const x1Raw = props.x + (Math.cos(angle) * lineEndR);
-        const y1Raw = props.y + (Math.sin(angle) * lineEndR);
-        const xRaw = props.x + (Math.cos(angle) * labelR);
-        const yRaw = props.y + (Math.sin(angle) * labelR);
-        const textHalf = ctx.measureText(label).width / 2;
-        const x = clamp(xRaw, textHalf + canvasPadding, chart.width - textHalf - canvasPadding);
-        const y = clamp(yRaw, 10 + canvasPadding, chart.height - 10 - canvasPadding);
-        const x1 = clamp(x1Raw, canvasPadding, chart.width - canvasPadding);
-        const y1 = clamp(y1Raw, canvasPadding, chart.height - canvasPadding);
+        const elbowR = props.outerRadius + 12;
+        const labelR = props.outerRadius + 24;
+        const x0 = props.x + (cos * lineStartR);
+        const y0 = props.y + (sin * lineStartR);
+        const xElbowRaw = props.x + (cos * elbowR);
+        const yElbowRaw = props.y + (sin * elbowR);
+        const yLabel = clamp(props.y + (sin * labelR), 12 + canvasPadding, chart.height - 12 - canvasPadding);
+
+        const isRight = cos >= 0;
+        const xLabel = isRight
+          ? clamp(props.x + (cos * labelR), canvasPadding, chart.width - labelWidth - canvasPadding)
+          : clamp(props.x + (cos * labelR), labelWidth + canvasPadding, chart.width - canvasPadding);
+        const xText = xLabel;
+        const xElbow = isRight
+          ? clamp(xElbowRaw, canvasPadding, chart.width - canvasPadding)
+          : clamp(xElbowRaw, canvasPadding, chart.width - canvasPadding);
+        const xJoin = isRight ? xText - 3 : xText + 3;
+        const yElbow = clamp(yElbowRaw, canvasPadding, chart.height - canvasPadding);
 
         ctx.strokeStyle = '#111111';
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(x0, y0);
-        ctx.lineTo(x1, y1);
-        ctx.lineTo(x, y);
+        ctx.lineTo(xElbow, yElbow);
+        ctx.lineTo(xJoin, yLabel);
         ctx.stroke();
 
         ctx.fillStyle = '#111111';
-        ctx.fillText(label, x, y);
+        ctx.textAlign = isRight ? 'left' : 'right';
+        ctx.fillText(label, xText, yLabel);
       });
 
       ctx.restore();
