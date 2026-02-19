@@ -294,7 +294,9 @@
   }
 
   function parseSalaryValue(value) {
-    if (typeof value === 'number' && Number.isFinite(value)) return value;
+    if (typeof value === 'number' && Number.isFinite(value)) {
+      return value > 0 ? value : null;
+    }
     if (typeof value !== 'string' || !value.trim()) return null;
 
     const text = value.replace(/[,$]/g, '');
@@ -1349,6 +1351,17 @@
       .sort((a, b) => compareDisciplines(a.discipline, b.discipline));
   }
 
+  function formatDisciplineAxisLabel(label) {
+    const normalized = normalizeDisciplineLabel(label);
+    const wrapped = {
+      'Environmental Sciences': ['Environmental', 'Sciences'],
+      'Fisheries and Aquatic': ['Fisheries and', 'Aquatic'],
+      'Forestry and Habitat': ['Forestry and', 'Habitat'],
+      'Human Dimensions': ['Human', 'Dimensions']
+    };
+    return wrapped[normalized] || normalized;
+  }
+
   function filterMonthLabels(labels, selected) {
     if (selected !== '1_year') return labels;
     return labels.slice(-12);
@@ -1830,7 +1843,7 @@
         chartState.salary = new Chart(ctx, {
           type: 'bar',
           data: {
-            labels: salaryRows.map((r) => r.discipline),
+            labels: salaryRows.map((r) => formatDisciplineAxisLabel(r.discipline)),
             datasets: [{
               label: 'Nominal Avg Salary',
               data: salaryRows.map((r) => r.avgNominal),
@@ -1851,10 +1864,23 @@
             responsive: true,
             maintainAspectRatio: false,
             scales: {
+              x: {
+                ticks: {
+                  autoSkip: false,
+                  maxRotation: 0,
+                  minRotation: 0
+                }
+              },
               y: {
                 ticks: {
                   callback: (value) => `$${Number(value).toLocaleString()}`
                 }
+              }
+            },
+            plugins: {
+              subtitle: {
+                display: true,
+                text: 'COL-adjusted bars display only when salary and location/COL inputs are available.'
               }
             }
           }
