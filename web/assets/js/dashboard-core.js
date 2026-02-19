@@ -163,154 +163,25 @@
     Alaska: [26.2, -124.8],
     Hawaii: [24.0, -117.8]
   };
-  const DOUGHNUT_PCT_PLUGIN = {
-    id: 'doughnutPctLabels',
-    afterDatasetsDraw(chart) {
-      const dataset = chart?.data?.datasets?.[0];
-      const arcs = chart?.getDatasetMeta?.(0)?.data || [];
-      if (!dataset || !arcs.length) return;
+  const DOUGHNUT_PCT_PLUGIN =
+    typeof ChartDataLabels !== 'undefined' ? ChartDataLabels : null;
 
-      const values = (dataset.data || []).map((v) => asNumber(v));
-      const total = values.reduce((sum, v) => sum + v, 0);
-      if (!total) return;
+  function doughnutPercent(context) {
+    const data = (context?.dataset?.data || []).map((v) => asNumber(v));
+    const total = data.reduce((sum, v) => sum + v, 0);
+    if (!total) return 0;
+    return (asNumber(context?.dataset?.data?.[context.dataIndex]) / total) * 100;
+  }
 
-      const ctx = chart.ctx;
-      ctx.save();
-      ctx.font = '600 11px Inter, sans-serif';
-      ctx.textBaseline = 'middle';
+  function doughnutLabelText(value, context) {
+    const pct = doughnutPercent(context);
+    if (pct < 1) return null;
+    return pct >= 10 ? `${pct.toFixed(0)}%` : `${pct.toFixed(1)}%`;
+  }
 
-      const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
-      const canvasPadding = 8;
-      const minShowPct = 1;
-      const area = chart.chartArea || {
-        left: 0,
-        top: 0,
-        right: chart.width,
-        bottom: chart.height
-      };
-      const minX = area.left + canvasPadding;
-      const maxX = area.right - canvasPadding;
-      const minY = area.top + 12;
-      const maxY = area.bottom - 12;
-      const minLabelGap = 14;
-
-      const leftLabels = [];
-      const rightLabels = [];
-
-      arcs.forEach((arc, idx) => {
-        const value = values[idx];
-        if (value <= 0) return;
-
-        const pct = (value / total) * 100;
-        if (pct < minShowPct) return;
-
-        const label = pct < 1 ? '<1%' : `${pct >= 10 ? pct.toFixed(0) : pct.toFixed(1)}%`;
-        const labelWidth = ctx.measureText(label).width;
-
-        const props = arc.getProps(
-          ['x', 'y', 'startAngle', 'endAngle', 'innerRadius', 'outerRadius'],
-          true
-        );
-        const angle = (props.startAngle + props.endAngle) / 2;
-        const cos = Math.cos(angle);
-        const sin = Math.sin(angle);
-        const isLargeSlice = pct >= 8;
-
-        if (isLargeSlice) {
-          const r = props.innerRadius + ((props.outerRadius - props.innerRadius) * 0.55);
-          const xRaw = props.x + (cos * r);
-          const yRaw = props.y + (sin * r);
-          const x = clamp(
-            xRaw,
-            Math.max(minX, area.left + (labelWidth / 2) + canvasPadding),
-            Math.min(maxX, area.right - (labelWidth / 2) - canvasPadding)
-          );
-          const y = clamp(yRaw, minY, maxY);
-          ctx.textAlign = 'center';
-          ctx.fillStyle = '#ffffff';
-          ctx.fillText(label, x, y);
-          return;
-        }
-
-        const lineStartR = props.outerRadius + 2;
-        const elbowR = props.outerRadius + 12;
-        const labelR = props.outerRadius + 26;
-
-        const isRight = cos >= 0;
-        const x0 = clamp(props.x + (cos * lineStartR), minX, maxX);
-        const y0 = clamp(props.y + (sin * lineStartR), minY, maxY);
-        const xElbow = clamp(props.x + (cos * elbowR), minX, maxX);
-        const yElbow = clamp(props.y + (sin * elbowR), minY, maxY);
-        const yTarget = clamp(props.y + (sin * labelR), minY, maxY);
-
-        const xTextRaw = props.x + (cos * labelR);
-        const xText = isRight
-          ? clamp(xTextRaw, minX, maxX - labelWidth)
-          : clamp(xTextRaw, minX + labelWidth, maxX);
-
-        const bucket = isRight ? rightLabels : leftLabels;
-        bucket.push({
-          label,
-          x0,
-          y0,
-          xElbow,
-          yElbow,
-          xText,
-          y: yTarget,
-          isRight
-        });
-      });
-
-      const spreadSideLabels = (items) => {
-        if (!items.length) return;
-        items.sort((a, b) => a.y - b.y);
-
-        let prev = minY - minLabelGap;
-        items.forEach((item) => {
-          item.y = Math.max(item.y, prev + minLabelGap);
-          prev = item.y;
-        });
-
-        if (items[items.length - 1].y > maxY) {
-          items[items.length - 1].y = maxY;
-          for (let i = items.length - 2; i >= 0; i -= 1) {
-            items[i].y = Math.min(items[i].y, items[i + 1].y - minLabelGap);
-          }
-          if (items[0].y < minY) {
-            items[0].y = minY;
-            for (let i = 1; i < items.length; i += 1) {
-              items[i].y = Math.max(items[i].y, items[i - 1].y + minLabelGap);
-            }
-          }
-        }
-      };
-
-      spreadSideLabels(leftLabels);
-      spreadSideLabels(rightLabels);
-
-      const drawExternalLabels = (items) => {
-        items.forEach((item) => {
-          const xJoin = item.isRight ? item.xText - 3 : item.xText + 3;
-          ctx.strokeStyle = '#111111';
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.moveTo(item.x0, item.y0);
-          ctx.lineTo(item.xElbow, item.yElbow);
-          ctx.lineTo(xJoin, item.y);
-          ctx.stroke();
-
-          ctx.fillStyle = '#111111';
-          ctx.textAlign = item.isRight ? 'left' : 'right';
-          ctx.fillText(item.label, item.xText, item.y);
-        });
-      };
-
-      drawExternalLabels(leftLabels);
-      drawExternalLabels(rightLabels);
-
-      ctx.restore();
-    }
-  };
+  function doughnutLabelIsLarge(context) {
+    return doughnutPercent(context) >= 8;
+  }
 
   function disciplineSortKey(label) {
     const normalized = normalizeDisciplineLabel(label);
@@ -1847,7 +1718,7 @@
       if (ctx) {
         chartState.disciplineLatest = new Chart(ctx, {
           type: 'doughnut',
-          plugins: [DOUGHNUT_PCT_PLUGIN],
+          plugins: DOUGHNUT_PCT_PLUGIN ? [DOUGHNUT_PCT_PLUGIN] : [],
           data: {
             labels: latestDisciplineRows.map((r) => r[0]),
             datasets: [{
@@ -1863,7 +1734,23 @@
             layout: {
               padding: { top: 18, right: 26, bottom: 18, left: 26 }
             },
-            plugins: { legend: { display: false } }
+            plugins: {
+              legend: { display: false },
+              datalabels: {
+                display: 'auto',
+                formatter: doughnutLabelText,
+                anchor: (context) => (doughnutLabelIsLarge(context) ? 'center' : 'end'),
+                align: (context) => (doughnutLabelIsLarge(context) ? 'center' : 'end'),
+                offset: (context) => (doughnutLabelIsLarge(context) ? 0 : 8),
+                clamp: true,
+                clip: false,
+                color: (context) => (doughnutLabelIsLarge(context) ? '#ffffff' : '#111111'),
+                font: {
+                  weight: '600',
+                  size: 11
+                }
+              }
+            }
           }
         });
       }
@@ -1880,7 +1767,7 @@
       if (ctx) {
         chartState.disciplineOverall = new Chart(ctx, {
           type: 'doughnut',
-          plugins: [DOUGHNUT_PCT_PLUGIN],
+          plugins: DOUGHNUT_PCT_PLUGIN ? [DOUGHNUT_PCT_PLUGIN] : [],
           data: {
             labels: overallDisciplineRows.map((r) => r[0]),
             datasets: [{
@@ -1896,7 +1783,23 @@
             layout: {
               padding: { top: 18, right: 26, bottom: 18, left: 26 }
             },
-            plugins: { legend: { display: false } }
+            plugins: {
+              legend: { display: false },
+              datalabels: {
+                display: 'auto',
+                formatter: doughnutLabelText,
+                anchor: (context) => (doughnutLabelIsLarge(context) ? 'center' : 'end'),
+                align: (context) => (doughnutLabelIsLarge(context) ? 'center' : 'end'),
+                offset: (context) => (doughnutLabelIsLarge(context) ? 0 : 8),
+                clamp: true,
+                clip: false,
+                color: (context) => (doughnutLabelIsLarge(context) ? '#ffffff' : '#111111'),
+                font: {
+                  weight: '600',
+                  size: 11
+                }
+              }
+            }
           }
         });
       }
