@@ -32,7 +32,7 @@
         <a class="sidebar-nav__link" href="#compensation">Compensation</a>
         <a class="sidebar-nav__link" href="#geography">Geography</a>
         <a class="sidebar-nav__link" href="#quality">Data Quality</a>
-        <a class="sidebar-nav__link" href="#listings">Listings</a>
+        <a class="sidebar-nav__link" href="#listings">Weekly Spotlight</a>
         <a class="sidebar-nav__link" href="#about">About</a>
       </nav>
 
@@ -260,24 +260,16 @@
 
         <section class="section" id="listings">
           <div class="section__head">
-            <h2>Listings</h2>
-            <p>Recent opportunities from the current dataset.</p>
+            <h2>Weekly Spotlight</h2>
+            <p>
+              One randomly selected position each week from the most recent
+              scrape capture. Full listings remain on the source jobs board.
+            </p>
           </div>
           <article class="panel">
-            <h3>Recent Opportunities</h3>
-            <div class="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Position / Organization</th>
-                    <th>Discipline</th>
-                    <th>Location</th>
-                    <th>Salary</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody id="jobs-table"></tbody>
-              </table>
+            <h3>Random Weekly Position</h3>
+            <div class="panel__body panel__body--spotlight" id="weekly-spotlight">
+              <div class="panel-empty">No data for current filters</div>
             </div>
           </article>
         </section>

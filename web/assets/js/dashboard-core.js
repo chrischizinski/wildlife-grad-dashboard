@@ -25,7 +25,7 @@
     geographyDiscipline: document.getElementById('geography-discipline-filter'),
     compensationInstitution: document.getElementById('compensation-institution-filter'),
     noDataBanner: document.getElementById('no-data-banner'),
-    jobsTable: document.getElementById('jobs-table'),
+    weeklySpotlight: document.getElementById('weekly-spotlight'),
     topLocations: document.getElementById('top-locations-list')
   };
 
@@ -534,8 +534,8 @@
   }
 
   function renderScaffoldPlaceholders() {
-    if (refs.jobsTable) {
-      refs.jobsTable.innerHTML = '<tr><td colspan="5">No data for current filters</td></tr>';
+    if (refs.weeklySpotlight) {
+      refs.weeklySpotlight.innerHTML = '<div class="panel-empty">No data for current filters</div>';
     }
     if (refs.topLocations) {
       refs.topLocations.innerHTML = '<li>No data for current filters</li>';
@@ -1090,69 +1090,181 @@
     return EMPTY_VALUE;
   }
 
-  function renderListings(adapter) {
-    const jobs = Array.isArray(adapter?.jobs) ? adapter.jobs : [];
-    if (!refs.jobsTable) return;
+  function getIsoWeekId(now = new Date()) {
+    const dt = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
+    const weekday = dt.getUTCDay() || 7;
+    dt.setUTCDate(dt.getUTCDate() + 4 - weekday);
+    const yearStart = new Date(Date.UTC(dt.getUTCFullYear(), 0, 1));
+    const weekNo = Math.ceil((((dt - yearStart) / 86400000) + 1) / 7);
+    return `${dt.getUTCFullYear()}-W${String(weekNo).padStart(2, '0')}`;
+  }
 
-    if (!jobs.length) {
-      refs.jobsTable.innerHTML = '<tr><td colspan=\"5\">No data for current filters</td></tr>';
+  function hashString32(input) {
+    const text = String(input || '');
+    let hash = 2166136261;
+    for (let i = 0; i < text.length; i += 1) {
+      hash ^= text.charCodeAt(i);
+      hash = Math.imul(hash, 16777619);
+    }
+    return hash >>> 0;
+  }
+
+  function spotlightSortKey(job) {
+    const url = String(job?.url || '').trim().toLowerCase();
+    if (url) return `url::${url}`;
+    const title = String(job?.title || '').trim().toLowerCase();
+    const org = String(job?.organization || '').trim().toLowerCase();
+    return `title_org::${title}::${org}`;
+  }
+
+  function getMostRecentScrapePool(jobs) {
+    const rows = Array.isArray(jobs) ? jobs : [];
+    const withRunId = rows.filter((job) => String(job?.scrape_run_id || '').trim());
+    if (withRunId.length) {
+      const latestByRun = new Map();
+      withRunId.forEach((job) => {
+        const runId = String(job?.scrape_run_id || '').trim();
+        const dt = (
+          parseFlexibleDate(job?.scraped_at)
+          || parseFlexibleDate(job?.last_updated)
+          || parseFlexibleDate(job?.first_seen)
+          || parseFlexibleDate(job?.published_date)
+          || new Date(0)
+        );
+        const current = latestByRun.get(runId);
+        if (!current || dt > current) latestByRun.set(runId, dt);
+      });
+
+      let latestRunId = '';
+      let latestRunTime = new Date(0);
+      latestByRun.forEach((dt, runId) => {
+        if (!latestRunId || dt > latestRunTime) {
+          latestRunId = runId;
+          latestRunTime = dt;
+        }
+      });
+
+      const pool = withRunId.filter((job) => String(job?.scrape_run_id || '').trim() === latestRunId);
+      return {
+        pool,
+        sourceLabel: 'the most recent scrape capture',
+        sourceKey: `run:${latestRunId}`
+      };
+    }
+
+    const withScrapedAt = rows.filter((job) => parseFlexibleDate(job?.scraped_at));
+    if (withScrapedAt.length) {
+      let latest = null;
+      withScrapedAt.forEach((job) => {
+        const dt = parseFlexibleDate(job?.scraped_at);
+        if (dt && (!latest || dt > latest)) latest = dt;
+      });
+      if (latest) {
+        const latestDay = `${latest.getFullYear()}-${String(latest.getMonth() + 1).padStart(2, '0')}-${String(latest.getDate()).padStart(2, '0')}`;
+        const pool = withScrapedAt.filter((job) => {
+          const dt = parseFlexibleDate(job?.scraped_at);
+          if (!dt) return false;
+          const day = `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, '0')}-${String(dt.getDate()).padStart(2, '0')}`;
+          return day === latestDay;
+        });
+        return {
+          pool,
+          sourceLabel: 'the latest scrape day',
+          sourceKey: `day:${latestDay}`
+        };
+      }
+    }
+
+    const dated = rows
+      .map((job) => ({ job, dt: getJobPeriodDate(job) }))
+      .filter((item) => item.dt)
+      .sort((a, b) => b.dt.getTime() - a.dt.getTime());
+    if (dated.length) {
+      const latest = dated[0].dt;
+      const cutoff = new Date(latest);
+      cutoff.setDate(cutoff.getDate() - 7);
+      const pool = dated
+        .filter((item) => item.dt >= cutoff)
+        .map((item) => item.job);
+      return {
+        pool,
+        sourceLabel: 'the most recent posting week',
+        sourceKey: `week:${latest.toISOString().slice(0, 10)}`
+      };
+    }
+
+    return {
+      pool: rows,
+      sourceLabel: 'the current dataset',
+      sourceKey: 'all'
+    };
+  }
+
+  function selectWeeklySpotlight(jobs) {
+    const poolInfo = getMostRecentScrapePool(jobs);
+    const pool = Array.isArray(poolInfo.pool) ? poolInfo.pool : [];
+    if (!pool.length) return null;
+
+    const ordered = [...pool].sort((a, b) => spotlightSortKey(a).localeCompare(spotlightSortKey(b)));
+    const weekId = getIsoWeekId();
+    const seed = `${weekId}|${poolInfo.sourceKey}|${ordered.length}`;
+    const index = hashString32(seed) % ordered.length;
+
+    return {
+      job: ordered[index],
+      poolSize: ordered.length,
+      weekId,
+      sourceLabel: poolInfo.sourceLabel
+    };
+  }
+
+  function renderWeeklySpotlight(adapter) {
+    const jobs = Array.isArray(adapter?.jobs) ? adapter.jobs : [];
+    if (!refs.weeklySpotlight) return;
+
+    const selected = selectWeeklySpotlight(jobs);
+    if (!selected) {
+      refs.weeklySpotlight.innerHTML = '<div class="panel-empty">No data for current filters</div>';
       return;
     }
 
-    const sorted = [...jobs].sort((a, b) => {
-      const da = Date.parse(a?.published_date || a?.scraped_at || '') || 0;
-      const db = Date.parse(b?.published_date || b?.scraped_at || '') || 0;
-      return db - da;
-    });
+    const job = selected.job;
+    const title = escapeHtml(String(job?.title || 'Untitled Position'));
+    const org = escapeHtml(String(job?.organization || 'Unknown Organization'));
+    const discipline = escapeHtml(
+      normalizeDisciplineLabel(
+        String(job?.discipline_primary || job?.discipline || 'Unknown')
+      )
+    );
+    const location = escapeHtml(String(job?.location || 'Unknown'));
+    const salary = escapeHtml(formatSalaryDisplay(job?.salary ?? job?.salary_min));
+    const posted = formatDateOnly(
+      parseFlexibleDate(job?.published_date) || parseFlexibleDate(job?.first_seen)
+    );
+    const captured = formatDateOnly(
+      parseFlexibleDate(job?.scraped_at) || parseFlexibleDate(job?.last_updated)
+    );
+    const sourceLabel = escapeHtml(selected.sourceLabel);
 
-    const rows = sorted.slice(0, 50).map((job) => {
-      const title = escapeHtml(String(job?.title || 'Untitled Position'));
-      const org = escapeHtml(String(job?.organization || 'Unknown Organization'));
-      const discipline = escapeHtml(
-        normalizeDisciplineLabel(
-          String(job?.discipline_primary || job?.discipline || 'Unknown')
-        )
-      );
-      const location = escapeHtml(String(job?.location || 'Unknown'));
-      const salary = escapeHtml(formatSalaryDisplay(job?.salary ?? job?.salary_min));
-      const url = normalizeJobUrl(String(job?.url || '').trim());
-      const action = url
-        ? `<a href=\"${escapeHtml(url)}\" target=\"_blank\" rel=\"noopener noreferrer\">View</a>`
-        : EMPTY_VALUE;
-
-      return `<tr>\n<td><strong>${title}</strong><br><span>${org}</span></td>\n<td>${discipline}</td>\n<td>${location}</td>\n<td>${salary}</td>\n<td>${action}</td>\n</tr>`;
-    });
-
-    refs.jobsTable.innerHTML = rows.join('');
-  }
-
-  function normalizeJobUrl(rawUrl) {
-    if (!rawUrl) return '';
-    try {
-      const u = new URL(rawUrl);
-      const isRwfm = /jobs\.rwfm\.tamu\.edu$/i.test(u.hostname);
-      if (!isRwfm) return rawUrl;
-
-      // Canonicalize all RWFM posting links to:
-      // https://jobs.rwfm.tamu.edu/view-job/?id=<id>
-      // Supports:
-      // - /view-job/?id=12345
-      // - /view/12345/
-      // - /view/12345
-      const directId = (u.searchParams.get('id') || '').trim();
-      if (/^\d+$/.test(directId)) {
-        return `${u.origin}/view-job/?id=${directId}`;
-      }
-
-      const pathMatch = u.pathname.match(/^\/view\/(\d+)\/?$/);
-      if (pathMatch) {
-        return `${u.origin}/view-job/?id=${pathMatch[1]}`;
-      }
-
-      return rawUrl;
-    } catch (_) {
-      return rawUrl;
-    }
+    refs.weeklySpotlight.innerHTML = `
+      <article class="spotlight-card">
+        <p class="spotlight-card__eyebrow">Weekly Random Spotlight</p>
+        <h4 class="spotlight-card__title">${title}</h4>
+        <p class="spotlight-card__org">${org}</p>
+        <dl class="spotlight-card__meta">
+          <div><dt>Discipline</dt><dd>${discipline}</dd></div>
+          <div><dt>Location</dt><dd>${location}</dd></div>
+          <div><dt>Salary</dt><dd>${salary}</dd></div>
+          <div><dt>Posted</dt><dd>${escapeHtml(posted)}</dd></div>
+          <div><dt>Captured</dt><dd>${escapeHtml(captured)}</dd></div>
+          <div><dt>Week Key</dt><dd>${escapeHtml(selected.weekId)}</dd></div>
+        </dl>
+        <p class="spotlight-card__footnote">
+          Selected once per week from ${selected.poolSize.toLocaleString()} postings in ${sourceLabel}.
+          For complete and current opportunities, use the source jobs board.
+        </p>
+      </article>
+    `;
   }
 
   function escapeHtml(str) {
@@ -1858,7 +1970,7 @@
       renderCompensationCards(normalized);
       renderGeographyCards(normalized);
       renderQualityCards(normalized);
-      renderListings(normalized);
+      renderWeeklySpotlight(normalized);
       renderCharts(normalized);
       bindTimeframeToggle(normalized);
       bindGeographyDisciplineToggle(normalized);

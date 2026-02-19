@@ -302,6 +302,66 @@ body {
 
 .panel__body--map { height: 280px; }
 .panel__body--list { align-items: start; justify-content: stretch; padding: 8px; }
+.panel__body--spotlight {
+  height: auto;
+  min-height: 220px;
+  align-items: stretch;
+  justify-content: stretch;
+  padding: 12px;
+}
+
+.spotlight-card {
+  width: 100%;
+  display: grid;
+  gap: 8px;
+  color: var(--text);
+}
+
+.spotlight-card__eyebrow {
+  margin: 0;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.spotlight-card__title {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.spotlight-card__org {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.spotlight-card__meta {
+  margin: 2px 0 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 12px;
+}
+
+.spotlight-card__meta dt {
+  font-size: 0.74rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.spotlight-card__meta dd {
+  margin: 2px 0 0;
+  font-size: 0.88rem;
+  color: var(--text);
+}
+
+.spotlight-card__footnote {
+  margin: 4px 0 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
 
 .rank-list {
   margin: 0;
@@ -359,4 +419,5 @@ th, td {
   .discipline-control__select { min-width: 0; width: 100%; }
   .kpi-grid,
   .kpi-grid--three { grid-template-columns: 1fr; }
+  .spotlight-card__meta { grid-template-columns: 1fr; }
 }
