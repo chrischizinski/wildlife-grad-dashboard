@@ -261,6 +261,26 @@ body {
   font-size: 0.9rem;
 }
 
+.about-copy {
+  color: var(--text);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.about-copy p {
+  margin: 0 0 10px;
+}
+
+.about-list {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.about-list li {
+  margin: 0 0 7px;
+  color: var(--muted);
+}
+
 .panel__body {
   height: 220px;
   border: 1px dashed #c9d4df;
