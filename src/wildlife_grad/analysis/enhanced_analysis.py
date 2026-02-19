@@ -9,12 +9,13 @@ This module provides advanced analytical capabilities including:
 """
 
 import json
+import pickle
 import re
 from collections import Counter, defaultdict
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 # For NLP-based classification
 try:
@@ -95,8 +96,6 @@ class GraduatePositionDetector:
                 "RA position",
                 "TA position",
                 "graduate assistant",
-                "research assistant",
-                "teaching assistant",
                 "assistantship position",
             ],
             "fellowship": [
@@ -205,6 +204,17 @@ class GraduatePositionDetector:
             r"\becologist\b",
             r"\benvironmental\s+specialist\b",
             r"\bspecialist\s*\(rapid\s+responder\)\b",
+            r"\bfellowship\s+coordinator\b",
+            r"\bresearch\s+assistant\s*/\s*associate\b",
+            r"\bsenior\s+conservation\s+research\s+assistant\b",
+            r"\bseasonal\s+research\s+assistant\b",
+            r"\bsummer\s+fellowship\b",
+            r"\b(laboratory|lab)\s+and\s+field\s+support\b",
+            r"\bnoaa\b.*\bfellowship\b",
+            r"\bconduct\s+your\s+own\s+research\s+project\b",
+            r"\bwork\s+study\b",
+            r"\bcontinuing\s+education\b",
+            r"\bmaster'?s?\s+degrees?\s+for\s+.+\s+professionals?\b",
             r"\bstudent\s+contractor\b",
             r"\bbiologist\s+i{1,2}\b",
             r"\bprofessional\s+certificate\b",
@@ -218,78 +228,11 @@ class GraduatePositionDetector:
             r"\bph\.?d\.?\s+assistantship\b",
             r"\bms\b.*\bassistantship\b",
         ]
-
-    def is_graduate_position(self, position: "JobPosition") -> Tuple[bool, str, float]:
-        """
-        Determine if position is a graduate assistantship/fellowship.
-
-        Returns:
-            Tuple of (is_graduate, classification_type, confidence_score)
-        """
-        # Combine all text fields for analysis, including description
-        text_content = f"{position.title} {position.tags} {position.organization} {position.description}".lower()
-
-        has_hard_exclusion = any(
-            re.search(pattern, text_content, re.IGNORECASE)
-            for pattern in self.hard_exclusion_patterns
-        )
-        has_explicit_assistantship = any(
-            re.search(pattern, text_content, re.IGNORECASE)
-            for pattern in self.explicit_assistantship_patterns
-        )
-
-        # Hard exclusion wins unless assistantship intent is explicit.
-        if has_hard_exclusion and not has_explicit_assistantship:
-            return False, "Professional/Other", 0.1
-
-        # Calculate scores
-        grad_score = 0
-        exclusion_score = 0
-        classification_type = "unknown"
-
-        # Check for graduate indicators
-        for category, keywords in self.grad_indicators.items():
-            matches = sum(1 for keyword in keywords if keyword in text_content)
-            if matches > 0:
-                grad_score += matches * 2  # Weight graduate indicators heavily
-                if category == "assistantship":
-                    classification_type = "Graduate Assistantship"
-                elif category == "fellowship":
-                    classification_type = "Fellowship"
-                elif category == "degree_pursuit" and classification_type == "unknown":
-                    classification_type = "Graduate Position"
-
-        # Check for exclusion indicators
-        for category, keywords in self.exclusion_indicators.items():
-            matches = sum(1 for keyword in keywords if keyword in text_content)
-            if matches > 0:
-                exclusion_score += matches * 3  # Weight exclusions very heavily
-
-        # Additional context clues
-        if any(
-            term in text_content for term in ["PhD", "phd", "doctoral", "doctorate"]
-        ):
-            grad_score += 2
-            if classification_type == "unknown":
-                classification_type = "PhD Position"
-
-        if any(
-            term in text_content
-            for term in ["masters", "master's", "ms degree", "ms position"]
-        ):
-            grad_score += 2
-            if classification_type == "unknown":
-                classification_type = "Masters Position"
-
-        # Calculate confidence
-        total_score = grad_score - exclusion_score
-        confidence = min(max(total_score / 10.0, 0.0), 1.0)  # Normalize to 0-1
-
-        # Enhanced decision logic - prioritize confidence and explicit patterns
-        # Check for explicit graduate patterns that should always classify as graduate
-        explicit_graduate_patterns = [
+        self.explicit_graduate_patterns = [
             r"graduate\s+research\s+assistantship",
+            r"graduate\s+research\s+assistant\b",
             r"(ms|m\.s\.|masters?)\s+(research\s+)?assistantship",
+            r"(ms|m\.s\.|masters?)\s+research\s+assistant\b",
             r"(phd|ph\.d\.)\s+(research\s+)?assistantship",
             r"graduate\s+research\s+associate",
             r"doctoral\s+(student|candidate|research|assistantship)",
@@ -299,27 +242,143 @@ class GraduatePositionDetector:
             r"dissertation\s+research",
         ]
 
+    def _analyze_text(self, text: str) -> Dict[str, object]:
+        """Score graduate/non-graduate evidence for a text snippet."""
+        text_content = text.lower()
+        has_hard_exclusion = any(
+            re.search(pattern, text_content, re.IGNORECASE)
+            for pattern in self.hard_exclusion_patterns
+        )
+        has_explicit_assistantship = any(
+            re.search(pattern, text_content, re.IGNORECASE)
+            for pattern in self.explicit_assistantship_patterns
+        )
+
+        grad_score = 0
+        exclusion_score = 0
+        classification_type = "unknown"
+
+        for category, keywords in self.grad_indicators.items():
+            matches = sum(1 for keyword in keywords if keyword in text_content)
+            if matches > 0:
+                grad_score += matches * 2
+                if category == "assistantship":
+                    classification_type = "Graduate Assistantship"
+                elif category == "fellowship":
+                    classification_type = "Fellowship"
+                elif category == "degree_pursuit" and classification_type == "unknown":
+                    classification_type = "Graduate Position"
+
+        for _category, keywords in self.exclusion_indicators.items():
+            matches = sum(1 for keyword in keywords if keyword in text_content)
+            if matches > 0:
+                exclusion_score += matches * 3
+
+        if any(term in text_content for term in ["phd", "doctoral", "doctorate"]):
+            grad_score += 2
+            if classification_type == "unknown":
+                classification_type = "PhD Position"
+
+        if any(term in text_content for term in ["masters", "master's", "ms degree", "ms position"]):
+            grad_score += 2
+            if classification_type == "unknown":
+                classification_type = "Masters Position"
+
+        total_score = grad_score - exclusion_score
+        confidence = min(max(total_score / 10.0, 0.0), 1.0)
         has_explicit_pattern = any(
             re.search(pattern, text_content, re.IGNORECASE)
-            for pattern in explicit_graduate_patterns
+            for pattern in self.explicit_graduate_patterns
         )
 
-        # Decision logic: prioritize high confidence and explicit patterns
+        return {
+            "has_hard_exclusion": has_hard_exclusion,
+            "has_explicit_assistantship": has_explicit_assistantship,
+            "has_explicit_pattern": has_explicit_pattern,
+            "classification_type": classification_type,
+            "grad_score": grad_score,
+            "exclusion_score": exclusion_score,
+            "total_score": total_score,
+            "confidence": confidence,
+        }
+
+    def _label_for_decision(self, analysis: Dict[str, object], is_grad: bool) -> str:
+        """Resolve final position type label from analysis evidence."""
+        if not is_grad:
+            return "Professional/Other"
+
+        classification_type = str(analysis["classification_type"])
+        if classification_type != "unknown":
+            return classification_type
+        if analysis["has_explicit_assistantship"]:
+            return "Graduate Assistantship"
+        return "Graduate Position"
+
+    def _title_phase_decision(
+        self, analysis: Dict[str, object]
+    ) -> Optional[Tuple[bool, str, float]]:
+        """
+        Title-first decision.
+
+        Returns None when title evidence is ambiguous and description fallback
+        should be applied.
+        """
+        if analysis["has_hard_exclusion"] and not analysis["has_explicit_assistantship"]:
+            return False, "Professional/Other", 0.1
+
+        if analysis["has_explicit_pattern"] or analysis["has_explicit_assistantship"]:
+            return True, self._label_for_decision(analysis, True), max(float(analysis["confidence"]), 0.85)
+
+        if (
+            float(analysis["confidence"]) >= 0.8
+            and int(analysis["grad_score"]) >= 4
+            and int(analysis["exclusion_score"]) == 0
+        ):
+            return True, self._label_for_decision(analysis, True), float(analysis["confidence"])
+
+        if int(analysis["exclusion_score"]) >= 4 and int(analysis["grad_score"]) == 0:
+            return False, "Professional/Other", min(float(analysis["confidence"]), 0.2)
+
+        return None
+
+    def is_graduate_position(self, position: "JobPosition") -> Tuple[bool, str, float]:
+        """
+        Determine if position is a graduate assistantship/fellowship.
+
+        Returns:
+            Tuple of (is_graduate, classification_type, confidence_score)
+        """
+        title_text = f"{position.title} {position.tags}"
+        title_analysis = self._analyze_text(title_text)
+        title_decision = self._title_phase_decision(title_analysis)
+        if title_decision is not None:
+            return title_decision
+
+        full_text = (
+            f"{position.title} {position.tags} {position.organization} {position.description}"
+        )
+        analysis = self._analyze_text(full_text)
+        if analysis["has_hard_exclusion"] and not analysis["has_explicit_assistantship"]:
+            return False, "Professional/Other", 0.1
+
         is_graduate = (
-            # High confidence threshold (covers most legitimate cases)
-            confidence >= 0.7
-            or
-            # OR has explicit graduate language
-            has_explicit_pattern
-            or
-            # OR traditional scoring with more lenient threshold
-            (total_score > 0 and grad_score >= 2 and exclusion_score < grad_score * 2)
+            float(analysis["confidence"]) >= 0.7
+            or bool(analysis["has_explicit_pattern"])
+            or (
+                int(analysis["total_score"]) > 0
+                and int(analysis["grad_score"]) >= 2
+                and int(analysis["exclusion_score"]) < int(analysis["grad_score"]) * 2
+            )
         )
+        confidence = float(analysis["confidence"])
+        if is_graduate and (
+            analysis["has_explicit_pattern"] or analysis["has_explicit_assistantship"]
+        ):
+            confidence = max(confidence, 0.75)
+        if not is_graduate:
+            confidence = min(confidence, 0.3)
 
-        if not is_graduate and classification_type == "unknown":
-            classification_type = "Professional/Other"
-
-        return is_graduate, classification_type, confidence
+        return is_graduate, self._label_for_decision(analysis, is_graduate), confidence
 
 
 class DisciplineClassifier:
@@ -360,6 +419,13 @@ class DisciplineClassifier:
                 "remote sensing",
                 "gis",
                 "spatial analysis",
+                "water security",
+                "sustainability",
+                "microbiology",
+                "environmental microbiology",
+                "carbon",
+                "coastal",
+                "tidal",
             ],
             "Fisheries and Aquatic": [
                 "fisheries",
@@ -382,6 +448,10 @@ class DisciplineClassifier:
                 "aquatic organism",
                 "ichthyology",
                 "marine science",
+                "manta ray",
+                "bycatch",
+                "limnology",
+                "algal bloom",
             ],
             "Wildlife": [
                 "wildlife",
@@ -406,15 +476,20 @@ class DisciplineClassifier:
                 "behavior",
                 "wildlife management",
                 "wildlife conservation",
-                "conservation biology",
                 "endangered",
                 "threatened",
                 "wildlife ecology",
                 "ornithology",
                 "mammalogy",
-                "conservation",
-                "species",
-                "animal",
+                "waterfowl",
+                "mallard",
+                "duck",
+                "mountain goat",
+                "swine",
+                "bobwhite",
+                "natural resource sciences",
+                "turtle",
+                "cooter",
             ],
             "Entomology": [
                 "entomology",
@@ -432,6 +507,9 @@ class DisciplineClassifier:
                 "tick",
                 "lepidoptera",
                 "coleoptera",
+                "ant",
+                "ants",
+                "ant colony",
             ],
             "Forestry and Habitat": [
                 "forestry",
@@ -473,7 +551,6 @@ class DisciplineClassifier:
                 "animal science",
                 "husbandry",
                 "range cattle",
-                "food security",
             ],
             "Human Dimensions": [
                 "human dimensions",
@@ -508,6 +585,8 @@ class DisciplineClassifier:
                 "visitor studies",
                 "recreation management",
                 "public opinion",
+                "environmental education",
+                "science communication",
             ],
         }
 
@@ -535,6 +614,7 @@ class DisciplineClassifier:
             r"\bprofessional\s+certificate\b",
             r"\bcertificate\s+program\b",
             r"\bstudent\s+contractor\b",
+            r"\bconduct\s+your\s+own\s+research\s+project\b",
         ]
         self.explicit_assistantship_patterns = [
             r"\bgraduate\s+assistantship\b",
@@ -560,6 +640,23 @@ class DisciplineClassifier:
             "Agriculture",
             "Environmental Sciences",
         ]
+        self.ml_refine_enabled = HAS_SKLEARN
+        self.ml_min_similarity = 0.12
+        self.ml_override_similarity = 0.2
+        self.secondary_ml_enabled = HAS_SKLEARN
+        self.secondary_ml_min_train = 8
+        self.secondary_ml_min_classes = 2
+        self.secondary_ml_min_similarity = 0.3
+        self.secondary_ml_min_margin = 0.1
+        self.secondary_ml_secondary_min_similarity = 0.12
+        self.promoted_model_enabled = HAS_SKLEARN
+        self.promoted_model_min_confidence = 0.62
+        self.promoted_model_min_margin = 0.08
+        self.promoted_model_secondary_min_confidence = 0.35
+        self.promoted_model_manifest_path = Path("data/models/discipline/manifest.json")
+        self.promoted_model_id = ""
+        self._promoted_model_checked = False
+        self._promoted_model: Optional[Dict[str, Any]] = None
 
     def classify_position(self, position: JobPosition) -> Tuple[str, str]:
         """
@@ -571,8 +668,11 @@ class DisciplineClassifier:
         Returns:
             Tuple of (primary_discipline, secondary_discipline)
         """
+        title_text = f"{position.title} {position.tags}".lower()
         # Combine title, tags, organization, and description for comprehensive analysis
-        text_content = f"{position.title} {position.tags} {position.organization} {position.description}".lower()
+        text_content = (
+            f"{position.title} {position.tags} {position.organization} {position.description}".lower()
+        )
 
         has_hard_non_grad = any(
             re.search(pattern, text_content, re.IGNORECASE)
@@ -585,12 +685,62 @@ class DisciplineClassifier:
         if has_hard_non_grad and not has_explicit_assistantship:
             return "Other", ""
 
-        # Prefer deterministic keyword rules for taxonomy consistency.
-        return self._keyword_classify(text_content)
+        # Title-first: return only when title gives a confident taxonomy signal.
+        title_primary, title_secondary, title_scores = self._keyword_classify_with_scores(title_text)
+        if self._is_confident_title_match(title_scores):
+            return title_primary, title_secondary
+
+        # Fallback: use description/context when title is ambiguous.
+        full_primary, full_secondary, full_scores = self._keyword_classify_with_scores(
+            text_content
+        )
+        if not full_scores:
+            return self._maybe_refine_with_ml("Other", "", {}, text_content)
+
+        if title_scores:
+            combined_scores = dict(full_scores)
+            for discipline in title_scores:
+                combined_scores[discipline] = combined_scores.get(discipline, 0) + 1
+            primary, secondary = self._classify_from_scores(combined_scores)
+            return self._maybe_refine_with_ml(
+                primary, secondary, combined_scores, text_content
+            )
+        return self._maybe_refine_with_ml(
+            full_primary, full_secondary, full_scores, text_content
+        )
+
+    def _is_confident_title_match(self, scores: Dict[str, int]) -> bool:
+        """Determine whether title-only evidence is strong enough to finalize."""
+        if not scores:
+            return False
+        ranked = self._rank_disciplines(scores)
+        top_score = ranked[0][1]
+        second_score = ranked[1][1] if len(ranked) > 1 else 0
+        margin = top_score - second_score
+        return top_score >= 4 or (top_score >= 3 and margin >= 2) or (top_score >= 2 and margin >= 2)
 
     def _keyword_classify(self, text: str) -> Tuple[str, str]:
         """Keyword-based classification fallback."""
+        primary, secondary, _scores = self._keyword_classify_with_scores(text)
+        return primary, secondary
+
+    def _keyword_classify_with_scores(self, text: str) -> Tuple[str, str, Dict[str, int]]:
+        """Keyword classifier that also returns discipline scores for confidence gates."""
         scores = {}
+        strong_abiotic_terms = [
+            "climate action",
+            "climate change",
+            "carbon",
+            "biogeochemistry",
+            "soil",
+            "hydrology",
+            "water security",
+            "water quality",
+            "environmental microbiology",
+            "microbiology",
+            "sustainability",
+        ]
+        has_strong_abiotic_signal = any(term in text for term in strong_abiotic_terms)
 
         for discipline, keywords in self.discipline_keywords.items():
             score = 0
@@ -604,66 +754,138 @@ class DisciplineClassifier:
             if score > 0:
                 scores[discipline] = score
 
-        # Environmental Sciences should not win when biotic categories have signal.
+        # Environmental Sciences should not win when only weak abiotic signal is present
+        # and biotic categories have stronger signal.
         if "Environmental Sciences" in scores:
             has_biotic_signal = any(scores.get(cat, 0) > 0 for cat in self.biotic_disciplines)
-            if has_biotic_signal:
+            if has_biotic_signal and not has_strong_abiotic_signal:
                 scores["Environmental Sciences"] = 0
 
-        # Avoid false Human Dimensions assignment from a single weak keyword hit.
-        if scores.get("Human Dimensions", 0) == 1:
+        # Climate/carbon/ocean-process postings can mention fisheries programs,
+        # but remain abiotic/environmental in focus.
+        if scores.get("Environmental Sciences", 0) > 0 and scores.get("Fisheries and Aquatic", 0) > 0:
+            if any(
+                term in text
+                for term in ["climate action", "carbon cycle", "biogeochemical", "water security"]
+            ):
+                scores["Environmental Sciences"] += 2
+
+        # Forest-focused postings with explicit soil/biogeochemistry terms are
+        # Environmental Sciences (abiotic) rather than Forestry and Habitat.
+        if scores.get("Environmental Sciences", 0) > 0 and scores.get("Forestry and Habitat", 0) > 0:
+            if any(
+                term in text
+                for term in [
+                    "soil",
+                    "soil chemistry",
+                    "biogeochemistry",
+                    "hydrology",
+                    "water quality",
+                    "environmental microbiology",
+                ]
+            ):
+                scores["Environmental Sciences"] += 2
+
+        has_explicit_human_dimensions_signal = any(
+            term in text
+            for term in [
+                "human dimensions",
+                "stakeholder",
+                "survey",
+                "interview",
+                "social science",
+                "science communication",
+                "environmental education",
+            ]
+        )
+        # Avoid false Human Dimensions assignment from weak incidental matches.
+        if (
+            scores.get("Human Dimensions", 0) <= 2
+            and not has_explicit_human_dimensions_signal
+        ):
             has_non_human_signal = any(
                 scores.get(cat, 0) > 0 for cat in scores if cat != "Human Dimensions"
             )
             if has_non_human_signal:
                 scores["Human Dimensions"] = 0
 
+        scores = {disc: score for disc, score in scores.items() if score > 0}
         if not scores:
-            return "Other", ""
+            return "Other", "", {}
 
+        primary, secondary = self._classify_from_scores(scores)
+        return primary, secondary, scores
+
+    def _rank_disciplines(self, scores: Dict[str, int]) -> List[Tuple[str, int]]:
+        """Rank disciplines by score with deterministic priority tie-breaks."""
         priority_rank = {name: i for i, name in enumerate(self.discipline_priority[::-1], start=1)}
-        sorted_disciplines = sorted(
+        return sorted(
             scores.items(),
             key=lambda x: (x[1], priority_rank.get(x[0], 0)),
             reverse=True,
         )
+
+    def _classify_from_scores(self, scores: Dict[str, int]) -> Tuple[str, str]:
+        """Select primary/secondary disciplines from already-scored categories."""
+        if not scores:
+            return "Other", ""
+        sorted_disciplines = self._rank_disciplines(scores)
         primary = sorted_disciplines[0][0]
         secondary = (
             sorted_disciplines[1][0]
             if len(sorted_disciplines) > 1 and sorted_disciplines[1][1] > 0
             else ""
         )
-
         return primary, secondary
 
-    def _ml_classify(self, text: str) -> Tuple[str, str]:
-        """Machine learning-based classification using TF-IDF and semantic similarity."""
+    def _is_ambiguous_scores(self, scores: Dict[str, int]) -> bool:
+        """Return True when rule-based evidence is weak/tied and eligible for ML refinement."""
+        if not scores:
+            return True
+        ranked = self._rank_disciplines(scores)
+        top_score = ranked[0][1]
+        second_score = ranked[1][1] if len(ranked) > 1 else 0
+        return top_score <= 2 or (top_score - second_score) <= 1
 
-        # Create training corpus from discipline keywords
+    def _maybe_refine_with_ml(
+        self,
+        primary: str,
+        secondary: str,
+        scores: Dict[str, int],
+        text: str,
+    ) -> Tuple[str, str]:
+        """Use ML only for ambiguous cases and only with sufficient confidence."""
+        if not self.ml_refine_enabled or not self._is_ambiguous_scores(scores):
+            return primary, secondary
+
+        ml_primary, ml_secondary, ml_confidence = self._ml_classify_with_confidence(text)
+        if ml_confidence < self.ml_min_similarity or ml_primary == "Other":
+            return primary, secondary
+        if primary == "Other":
+            return ml_primary, ml_secondary
+        if ml_primary != primary and ml_confidence < self.ml_override_similarity:
+            return primary, secondary
+        return ml_primary, ml_secondary
+
+    def _ml_classify_with_confidence(self, text: str) -> Tuple[str, str, float]:
+        """ML discipline classification returning top similarity confidence."""
+        if not HAS_SKLEARN:
+            return "Other", "", 0.0
+
         discipline_texts = []
         discipline_labels = []
-
         for discipline, keywords in self.discipline_keywords.items():
-            # Create representative text for each discipline
-            discipline_text = " ".join(keywords)
-            discipline_texts.append(discipline_text)
+            discipline_texts.append(" ".join(keywords))
             discipline_labels.append(discipline)
 
-        # Add the job text
         all_texts = discipline_texts + [text]
-
-        # Vectorize using TF-IDF
         tfidf_matrix = self.vectorizer.fit_transform(all_texts)
-
-        # Calculate cosine similarity between job text and each discipline
-        job_vector = tfidf_matrix[-1]  # Last vector is the job text
-        discipline_vectors = tfidf_matrix[:-1]  # All except the last
-
+        job_vector = tfidf_matrix[-1]
+        discipline_vectors = tfidf_matrix[:-1]
         similarities = cosine_similarity(job_vector, discipline_vectors).flatten()
-
-        # Get top 2 disciplines by similarity
         top_indices = np.argsort(similarities)[::-1][:2]
 
+        top_similarity = float(similarities[top_indices[0]])
         primary_discipline = discipline_labels[top_indices[0]]
         secondary_discipline = (
             discipline_labels[top_indices[1]]
@@ -671,11 +893,365 @@ class DisciplineClassifier:
             else ""
         )
 
-        # Fallback to keyword-based only if similarity is very low
-        if similarities[top_indices[0]] < 0.05:
-            return self._keyword_classify(text)
+        if top_similarity < 0.05:
+            kw_primary, kw_secondary, _scores = self._keyword_classify_with_scores(text)
+            return kw_primary, kw_secondary, top_similarity
 
-        return primary_discipline, secondary_discipline
+        return primary_discipline, secondary_discipline, top_similarity
+
+    def _ml_classify(self, text: str) -> Tuple[str, str]:
+        """Machine learning-based classification using TF-IDF and semantic similarity."""
+        primary, secondary, _confidence = self._ml_classify_with_confidence(text)
+        return primary, secondary
+
+    @staticmethod
+    def _position_text(position: JobPosition) -> str:
+        """Build normalized free text used by discipline classification models."""
+        return (
+            f"{position.title} {position.tags} "
+            f"{position.organization} {position.description}"
+        ).lower()
+
+    def _build_secondary_ml_artifacts(
+        self, positions: List[JobPosition], primary_labels: List[str]
+    ) -> Optional[Dict[str, Any]]:
+        """Train a lightweight second-pass model from first-pass non-Other labels."""
+        if not HAS_SKLEARN:
+            return None
+
+        train_texts: List[str] = []
+        train_labels: List[str] = []
+        for position, label in zip(positions, primary_labels):
+            normalized_label = str(label or "").strip() or "Other"
+            if normalized_label == "Other":
+                continue
+            text = self._position_text(position)
+            if not text.strip():
+                continue
+            train_texts.append(text)
+            train_labels.append(normalized_label)
+
+        if len(train_texts) < self.secondary_ml_min_train:
+            return None
+
+        unique_labels = sorted(set(train_labels))
+        if len(unique_labels) < self.secondary_ml_min_classes:
+            return None
+
+        vectorizer = TfidfVectorizer(
+            max_features=4000,
+            stop_words="english",
+            ngram_range=(1, 2),
+        )
+        train_matrix = vectorizer.fit_transform(train_texts)
+
+        label_to_indices: Dict[str, List[int]] = defaultdict(list)
+        for idx, label in enumerate(train_labels):
+            label_to_indices[label].append(idx)
+
+        centroid_labels: List[str] = []
+        centroid_rows: List[np.ndarray] = []
+        for label in sorted(label_to_indices):
+            indices = label_to_indices[label]
+            if not indices:
+                continue
+            centroid_labels.append(label)
+            centroid_rows.append(np.asarray(train_matrix[indices].mean(axis=0)).ravel())
+
+        if len(centroid_labels) < self.secondary_ml_min_classes:
+            return None
+
+        centroid_matrix = np.vstack(centroid_rows)
+        return {
+            "vectorizer": vectorizer,
+            "centroid_labels": centroid_labels,
+            "centroid_matrix": centroid_matrix,
+        }
+
+    def _secondary_ml_predict(
+        self, artifacts: Dict[str, Any], position: JobPosition
+    ) -> Tuple[str, str, float, float]:
+        """Predict discipline with similarity and margin from second-pass model."""
+        vectorizer = artifacts["vectorizer"]
+        centroid_labels = artifacts["centroid_labels"]
+        centroid_matrix = artifacts["centroid_matrix"]
+
+        text = self._position_text(position)
+        if not text.strip():
+            return "Other", "", 0.0, 0.0
+
+        vec = vectorizer.transform([text])
+        similarities = cosine_similarity(vec, centroid_matrix).flatten()
+        if similarities.size == 0:
+            return "Other", "", 0.0, 0.0
+
+        ranked_indices = np.argsort(similarities)[::-1]
+        top_idx = int(ranked_indices[0])
+        top_label = str(centroid_labels[top_idx])
+        top_similarity = float(similarities[top_idx])
+
+        second_similarity = 0.0
+        secondary_label = ""
+        if len(ranked_indices) > 1:
+            second_idx = int(ranked_indices[1])
+            second_similarity = float(similarities[second_idx])
+            if second_similarity >= self.secondary_ml_secondary_min_similarity:
+                secondary_label = str(centroid_labels[second_idx])
+
+        margin = top_similarity - second_similarity
+        return top_label, secondary_label, top_similarity, margin
+
+    def refine_other_labels_with_secondary_ml(
+        self,
+        positions: List[JobPosition],
+        primary_labels: List[str],
+        secondary_labels: Optional[List[str]] = None,
+    ) -> Tuple[List[str], List[str]]:
+        """
+        Second-pass discipline refinement.
+
+        - Train on first-pass non-Other labels
+        - Relabel only first-pass Other rows
+        - Apply similarity + margin confidence gates
+        """
+        base_primary = [str(label or "").strip() or "Other" for label in primary_labels]
+        if secondary_labels is None:
+            base_secondary = ["" for _ in base_primary]
+        else:
+            base_secondary = [str(label or "").strip() for label in secondary_labels]
+
+        if len(positions) != len(base_primary) or len(base_secondary) != len(base_primary):
+            raise ValueError("Positions and label lists must be the same length")
+
+        if not self.secondary_ml_enabled or not HAS_SKLEARN:
+            return base_primary, base_secondary
+
+        artifacts = self._build_secondary_ml_artifacts(positions, base_primary)
+        if not artifacts:
+            return base_primary, base_secondary
+
+        refined_primary = list(base_primary)
+        refined_secondary = list(base_secondary)
+        for idx, (position, primary) in enumerate(zip(positions, refined_primary)):
+            if primary != "Other":
+                continue
+
+            ml_primary, ml_secondary, similarity, margin = self._secondary_ml_predict(
+                artifacts, position
+            )
+            if (
+                similarity < self.secondary_ml_min_similarity
+                or margin < self.secondary_ml_min_margin
+                or ml_primary == "Other"
+            ):
+                continue
+
+            refined_primary[idx] = ml_primary
+            refined_secondary[idx] = (
+                ml_secondary if ml_secondary and ml_secondary != ml_primary else ""
+            )
+
+        return refined_primary, refined_secondary
+
+    def _load_promoted_model_if_needed(self) -> Optional[Dict[str, Any]]:
+        """Load promoted discipline model artifact from manifest when available."""
+        if self._promoted_model_checked:
+            return self._promoted_model
+
+        self._promoted_model_checked = True
+        if not self.promoted_model_enabled or not HAS_SKLEARN:
+            return None
+
+        try:
+            if not self.promoted_model_manifest_path.exists():
+                return None
+
+            with open(self.promoted_model_manifest_path, "r", encoding="utf-8") as f:
+                manifest = json.load(f)
+
+            promoted = manifest.get("promoted") or {}
+            artifact_path_raw = promoted.get("artifact_path")
+            if not artifact_path_raw:
+                return None
+
+            artifact_path = Path(str(artifact_path_raw))
+            if not artifact_path.is_absolute():
+                artifact_path = Path.cwd() / artifact_path
+            if not artifact_path.exists():
+                fallback = self.promoted_model_manifest_path.parent / Path(
+                    str(artifact_path_raw)
+                ).name
+                if fallback.exists():
+                    artifact_path = fallback
+                else:
+                    return None
+
+            with open(artifact_path, "rb") as f:
+                artifact = pickle.load(f)
+
+            if not isinstance(artifact, dict):
+                return None
+            if "vectorizer" not in artifact or "classifier" not in artifact:
+                return None
+
+            self._promoted_model = artifact
+            self.promoted_model_id = str(
+                artifact.get("model_id") or promoted.get("model_id") or ""
+            )
+            return self._promoted_model
+        except Exception:
+            return None
+
+    def predict_with_promoted_model(self, position: JobPosition) -> Dict[str, Any]:
+        """Predict discipline from promoted model with confidence + margin diagnostics."""
+        artifact = self._load_promoted_model_if_needed()
+        if not artifact:
+            return {
+                "available": False,
+                "model_id": "",
+                "primary": "",
+                "secondary": "",
+                "confidence": 0.0,
+                "margin": 0.0,
+            }
+
+        text = self._position_text(position)
+        if not text.strip():
+            return {
+                "available": True,
+                "model_id": self.promoted_model_id,
+                "primary": "Other",
+                "secondary": "",
+                "confidence": 0.0,
+                "margin": 0.0,
+            }
+
+        try:
+            vectorizer = artifact["vectorizer"]
+            classifier = artifact["classifier"]
+            classes = list(
+                artifact.get("classes")
+                or getattr(classifier, "classes_", [])
+            )
+            if not classes:
+                return {
+                    "available": True,
+                    "model_id": self.promoted_model_id,
+                    "primary": "Other",
+                    "secondary": "",
+                    "confidence": 0.0,
+                    "margin": 0.0,
+                }
+
+            vec = vectorizer.transform([text])
+            if hasattr(classifier, "predict_proba"):
+                probabilities = classifier.predict_proba(vec)[0]
+            elif hasattr(classifier, "decision_function"):
+                decision = classifier.decision_function(vec)
+                if getattr(decision, "ndim", 1) > 1:
+                    scores = decision[0]
+                    exp_scores = np.exp(scores - np.max(scores))
+                    probabilities = exp_scores / np.sum(exp_scores)
+                elif len(classes) == 2:
+                    score = float(decision[0])
+                    p1 = 1.0 / (1.0 + np.exp(-score))
+                    probabilities = np.array([1.0 - p1, p1], dtype=float)
+                else:
+                    probabilities = np.array([1.0], dtype=float)
+            else:
+                predicted = classifier.predict(vec)[0]
+                return {
+                    "available": True,
+                    "model_id": self.promoted_model_id,
+                    "primary": str(predicted),
+                    "secondary": "",
+                    "confidence": 0.0,
+                    "margin": 0.0,
+                }
+
+            ranked = np.argsort(probabilities)[::-1]
+            top_idx = int(ranked[0])
+            top_label = str(classes[top_idx])
+            top_conf = float(probabilities[top_idx])
+
+            second_label = ""
+            second_conf = 0.0
+            if len(ranked) > 1:
+                second_idx = int(ranked[1])
+                second_label = str(classes[second_idx])
+                second_conf = float(probabilities[second_idx])
+
+            margin = top_conf - second_conf
+            if second_conf < self.promoted_model_secondary_min_confidence:
+                second_label = ""
+
+            return {
+                "available": True,
+                "model_id": self.promoted_model_id,
+                "primary": top_label,
+                "secondary": second_label,
+                "confidence": top_conf,
+                "margin": margin,
+            }
+        except Exception:
+            return {
+                "available": False,
+                "model_id": "",
+                "primary": "",
+                "secondary": "",
+                "confidence": 0.0,
+                "margin": 0.0,
+            }
+
+    def refine_other_labels_with_promoted_model(
+        self,
+        positions: List[JobPosition],
+        primary_labels: List[str],
+        secondary_labels: Optional[List[str]] = None,
+    ) -> Tuple[List[str], List[str]]:
+        """
+        Third-pass discipline refinement from persisted promoted model.
+
+        - Only refines rows still labeled Other
+        - Requires minimum model confidence and class-margin thresholds
+        """
+        base_primary = [str(label or "").strip() or "Other" for label in primary_labels]
+        if secondary_labels is None:
+            base_secondary = ["" for _ in base_primary]
+        else:
+            base_secondary = [str(label or "").strip() for label in secondary_labels]
+
+        if len(positions) != len(base_primary) or len(base_secondary) != len(base_primary):
+            raise ValueError("Positions and label lists must be the same length")
+        if not self.promoted_model_enabled:
+            return base_primary, base_secondary
+
+        refined_primary = list(base_primary)
+        refined_secondary = list(base_secondary)
+        for idx, (position, primary) in enumerate(zip(positions, refined_primary)):
+            if primary != "Other":
+                continue
+            pred = self.predict_with_promoted_model(position)
+            if not pred.get("available"):
+                continue
+            pred_primary = str(pred.get("primary") or "")
+            pred_secondary = str(pred.get("secondary") or "")
+            confidence = float(pred.get("confidence") or 0.0)
+            margin = float(pred.get("margin") or 0.0)
+
+            if not pred_primary or pred_primary == "Other":
+                continue
+            if confidence < self.promoted_model_min_confidence:
+                continue
+            if margin < self.promoted_model_min_margin:
+                continue
+
+            refined_primary[idx] = pred_primary
+            refined_secondary[idx] = (
+                pred_secondary if pred_secondary and pred_secondary != pred_primary else ""
+            )
+
+        return refined_primary, refined_secondary
 
 
 class CostOfLivingAdjuster:
@@ -746,22 +1322,22 @@ class CostOfLivingAdjuster:
         try:
             # Try to locate the config file relative to this script or project root
             current_dir = Path(__file__).parent
-            
+
             # Try multiple potential locations
             potential_paths = [
                 current_dir.parent.parent.parent / "data" / "config" / "cost_of_living.json",  # src/wildlife_grad/analysis/ -> data/config
                 Path("data/config/cost_of_living.json"),  # Relative to CWD
             ]
-            
+
             for path in potential_paths:
                 if path.exists():
-                    with open(path, 'r', encoding='utf-8') as f:
+                    with open(path, "r", encoding="utf-8") as f:
                         data = json.load(f)
                         return data.get("cost_indices", {"lincoln": 1.0})
-            
+
             print("Warning: Cost of living config not found. Using defaults.")
             return {"lincoln": 1.0}
-            
+
         except Exception as e:
             print(f"Error loading cost of living config: {e}")
             return {"lincoln": 1.0}

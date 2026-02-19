@@ -1,0 +1,78 @@
+{
+  "updated_at": "2026-02-19T11:43:23.424177",
+  "promoted": {
+    "model_id": "20260219_113917",
+    "artifact_path": "data/models/discipline/models/discipline_model_20260219_113917.pkl",
+    "metrics": {
+      "accuracy": 0.18333333333333335,
+      "macro_f1": 0.125,
+      "weighted_f1": 0.09166666666666667,
+      "evaluation_mode": "stratified_2fold_cv",
+      "validation_samples": 11
+    },
+    "training_summary": {
+      "gold_total": 11,
+      "gold_class_counts": {
+        "Environmental Sciences": 3,
+        "Fisheries and Aquatic": 3,
+        "Forestry and Habitat": 2,
+        "Wildlife": 3
+      },
+      "pseudo_total": 14,
+      "pseudo_class_counts": {
+        "Environmental Sciences": 2,
+        "Fisheries and Aquatic": 2,
+        "Wildlife": 8,
+        "Entomology": 1,
+        "Agriculture": 1
+      },
+      "pseudo_weight": 0.35,
+      "positions_file": "web/data/dashboard_positions.json"
+    },
+    "promoted_at": "2026-02-19T11:39:17.331973"
+  },
+  "history": [
+    {
+      "timestamp": "2026-02-19T11:39:17.330562",
+      "status": "promoted",
+      "reason": "first_promoted_model",
+      "model_id": "20260219_113917",
+      "artifact_path": "data/models/discipline/models/discipline_model_20260219_113917.pkl",
+      "metrics": {
+        "accuracy": 0.18333333333333335,
+        "macro_f1": 0.125,
+        "weighted_f1": 0.09166666666666667,
+        "evaluation_mode": "stratified_2fold_cv",
+        "validation_samples": 11
+      }
+    },
+    {
+      "timestamp": "2026-02-19T11:39:56.782447",
+      "status": "candidate_rejected",
+      "reason": "validation_not_improved",
+      "model_id": "20260219_113956",
+      "artifact_path": "data/models/discipline/models/discipline_model_20260219_113956.pkl",
+      "metrics": {
+        "accuracy": 0.25,
+        "macro_f1": 0.1,
+        "weighted_f1": 0.1,
+        "evaluation_mode": "holdout",
+        "validation_samples": 4
+      }
+    },
+    {
+      "timestamp": "2026-02-19T11:43:23.423795",
+      "status": "candidate_rejected",
+      "reason": "validation_not_improved",
+      "model_id": "20260219_114323",
+      "artifact_path": "data/models/discipline/models/discipline_model_20260219_114323.pkl",
+      "metrics": {
+        "accuracy": 0.25,
+        "macro_f1": 0.1,
+        "weighted_f1": 0.1,
+        "evaluation_mode": "holdout",
+        "validation_samples": 4
+      }
+    }
+  ]
+}

@@ -61,6 +61,37 @@ python -m http.server 8080
 # then open http://localhost:8080/wildlife_dashboard.html
 ```
 
+## Continual Discipline Model Refinement
+The discipline classifier now supports a versioned promoted model plus an
+uncertainty review queue.
+Detailed step-by-step guide: `docs/DISCIPLINE_REVIEW_LOOP.md`.
+
+```bash
+# 1) Rebuild analytics + refresh confidence queue
+python scripts/generate_dashboard_analytics.py
+
+# 2) Retrain candidate model and promote only if validation improves
+python scripts/retrain_discipline_model.py
+
+# 3) Seed conservative starter gold labels from stored assistantships, then retrain
+python scripts/retrain_discipline_model.py --auto-seed-from-positions
+
+# 4) After editing discipline_confidence_queue.csv with review decisions,
+#    import them into the gold label store
+python scripts/import_discipline_queue_reviews.py
+```
+
+Artifacts:
+- Gold labels: `data/processed/discipline_labels_gold.json`
+- Model manifest: `data/models/discipline/manifest.json`
+- Training report: `data/models/discipline/latest_training_report.json`
+- Confidence queue: `data/processed/discipline_confidence_queue.json`
+
+Review CSV conventions (`data/processed/discipline_confidence_queue.csv`):
+- Add `review_status` with one of: `accept_model`, `keep_final`, `override`, `skip`
+- For `override`, also set `reviewed_discipline`
+- Optional: `review_notes`, `reviewer`
+
 ## Notes
 - This README is intentionally project/status oriented.
 - Operational command details are maintained in repo docs and script help output.

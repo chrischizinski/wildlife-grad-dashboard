@@ -686,6 +686,22 @@
     ));
   }
 
+  function getFilteredJobsForActiveGeography(adapter) {
+    const allJobs = Array.isArray(adapter?.jobs) ? adapter.jobs : [];
+    const selectedDiscipline = getSelectedGeographyDiscipline();
+    const filteredJobs = filterJobsByDiscipline(allJobs, selectedDiscipline);
+    return { allJobs, selectedDiscipline, filteredJobs };
+  }
+
+  function updateNoDataBannerForFilters(adapter) {
+    const { allJobs, selectedDiscipline, filteredJobs } = getFilteredJobsForActiveGeography(adapter);
+    const hasBaseRows = allJobs.length > 0;
+    const hasFilteredRows = filteredJobs.length > 0;
+    const hasActiveDisciplineFilter =
+      selectedDiscipline && selectedDiscipline !== GEOGRAPHY_DISCIPLINE_ALL;
+    showNoDataBanner(!hasBaseRows || (hasActiveDisciplineFilter && !hasFilteredRows));
+  }
+
   function computeGeographyStats(jobs) {
     const rows = Array.isArray(jobs) ? jobs : [];
     const totalJobs = rows.length;
@@ -802,9 +818,7 @@
   }
 
   function renderGeographyCards(adapter) {
-    const allJobs = Array.isArray(adapter?.jobs) ? adapter.jobs : [];
-    const selectedDiscipline = getSelectedGeographyDiscipline();
-    const filteredJobs = filterJobsByDiscipline(allJobs, selectedDiscipline);
+    const { selectedDiscipline, filteredJobs } = getFilteredJobsForActiveGeography(adapter);
     const geo = computeGeographyStats(filteredJobs);
 
     const totalJobs = asNumber(geo.totalJobs);
@@ -1650,13 +1664,13 @@
       }
 
       populateGeographyDisciplineFilter(normalized);
+      updateNoDataBannerForFilters(normalized);
       renderOverviewCards(normalized);
       renderCompensationCards(normalized);
       renderGeographyCards(normalized);
       renderQualityCards(normalized);
       renderListings(normalized);
       renderCharts(normalized);
-      showNoDataBanner(!jobs.length);
       bindTimeframeToggle(normalized);
       bindGeographyDisciplineToggle(normalized);
 
@@ -1686,6 +1700,7 @@
     if (!select) return;
     select.addEventListener('change', () => {
       renderGeographyCards(adapter);
+      updateNoDataBannerForFilters(adapter);
     });
   }
 })();
