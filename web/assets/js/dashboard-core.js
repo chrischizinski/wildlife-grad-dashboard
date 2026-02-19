@@ -1147,7 +1147,7 @@
       const pool = withRunId.filter((job) => String(job?.scrape_run_id || '').trim() === latestRunId);
       return {
         pool,
-        sourceLabel: 'the most recent scrape capture',
+        sourceLabel: 'the most recent capture cycle',
         sourceKey: `run:${latestRunId}`
       };
     }
@@ -1169,7 +1169,7 @@
         });
         return {
           pool,
-          sourceLabel: 'the latest scrape day',
+          sourceLabel: 'the latest capture day',
           sourceKey: `day:${latestDay}`
         };
       }
@@ -1673,7 +1673,7 @@
           data: {
             datasets: [{
               label: snapshotSource
-                ? 'Unique Graduate Positions Captured by Scraping Date'
+                ? 'Unique Graduate Positions Captured by Date'
                 : 'Postings',
               data: trendValues,
               parsing: false,
@@ -1693,7 +1693,7 @@
             scales: {
               x: {
                 type: 'linear',
-                title: { display: true, text: trendMode === 'daily' ? 'Scrape Date' : 'Month' },
+                title: { display: true, text: trendMode === 'daily' ? 'Capture Date' : 'Month' },
                 ticks: {
                   maxRotation: 0,
                   autoSkip: true,
@@ -1922,6 +1922,20 @@
         `<strong>${escapeHtml(state)}${US_NON_CONTIGUOUS_STATES.has(state) ? ' (inset)' : ''}</strong><br>${asNumber(count)} postings`
       ).addTo(map);
     });
+
+    // Leaflet can render gray tiles when initialized in a hidden container.
+    // Trigger a resize pass once layout is visible.
+    const refreshMapSize = () => {
+      try {
+        map.invalidateSize(true);
+      } catch (_) {
+        // no-op
+      }
+    };
+    if (typeof requestAnimationFrame === 'function') {
+      requestAnimationFrame(refreshMapSize);
+    }
+    setTimeout(refreshMapSize, 120);
   }
 
   let bootStarted = false;
@@ -1953,6 +1967,9 @@
       // Expose for inspection in dev tools.
       window.WGD_ADAPTER = normalized;
 
+      // Make panels visible before first chart/map render.
+      setState('ok', `Adapter ready (${jobs.length} jobs)`);
+
       if (refs.updatedDate) {
         refs.updatedDate.textContent = formatDisplayTimestamp(normalized.meta.lastUpdated) || EMPTY_VALUE;
       }
@@ -1975,8 +1992,6 @@
       bindTimeframeToggle(normalized);
       bindGeographyDisciplineToggle(normalized);
       bindCompensationInstitutionToggle(normalized);
-
-      setState('ok', `Adapter ready (${jobs.length} jobs)`);
     } catch (err) {
       const msg = err && err.message ? err.message : String(err || 'Unknown error');
       console.error('Dashboard boot failed:', err);
