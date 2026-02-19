@@ -1755,6 +1755,12 @@
               parsing: false,
               borderColor: '#0f766e',
               backgroundColor: 'rgba(15, 118, 110, 0.2)',
+              pointRadius: trendMode === 'daily' ? 4 : 3,
+              pointHoverRadius: trendMode === 'daily' ? 6 : 5,
+              pointHitRadius: 10,
+              pointBackgroundColor: '#0f766e',
+              pointBorderColor: '#ffffff',
+              pointBorderWidth: 1.5,
               tension: 0.25,
               spanGaps: true,
               fill: true
