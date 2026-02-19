@@ -495,9 +495,45 @@
     if (refs.weeklySpotlight) {
       refs.weeklySpotlight.innerHTML = '<div class="panel-empty">No data for current filters</div>';
     }
-    if (refs.topLocations) {
-      refs.topLocations.innerHTML = '<li>No data for current filters</li>';
+    renderTopLocationsList([], 0, 'No data for current filters');
+  }
+
+  function renderTopLocationsList(topLocations, totalMappedRows, emptyMessage) {
+    if (!refs.topLocations) return;
+    const rows = Array.isArray(topLocations)
+      ? topLocations.filter((entry) => Array.isArray(entry) && asNumber(entry[1]) > 0)
+      : [];
+
+    if (!rows.length) {
+      refs.topLocations.innerHTML = `<li class="rank-list__empty">${escapeHtml(String(emptyMessage || 'No data for current filters'))}</li>`;
+      return;
     }
+
+    const maxCount = Math.max(...rows.map(([, count]) => asNumber(count)), 1);
+    const mappedTotal = Math.max(0, asNumber(totalMappedRows));
+
+    refs.topLocations.innerHTML = rows
+      .map(([name, count], idx) => {
+        const numericCount = asNumber(count);
+        const barWidthPct = Math.max(10, Math.round((numericCount / maxCount) * 100));
+        const sharePct = mappedTotal > 0 ? (numericCount / mappedTotal) * 100 : 0;
+        const shareText = `${formatPercent(sharePct)} of mapped postings`;
+
+        return `
+          <li class="rank-list__item">
+            <div class="rank-list__row">
+              <span class="rank-list__badge">${idx + 1}</span>
+              <span class="rank-list__state">${escapeHtml(String(name))}</span>
+              <span class="rank-list__count">${numericCount.toLocaleString()}</span>
+            </div>
+            <div class="rank-list__track" aria-hidden="true">
+              <span class="rank-list__fill" style="width: ${barWidthPct}%"></span>
+            </div>
+            <p class="rank-list__meta">${shareText}</p>
+          </li>
+        `;
+      })
+      .join('');
   }
 
   function showNoDataBanner(isVisible) {
@@ -996,15 +1032,7 @@
       distinctCount > 0 ? 'Distinct U.S. states in map view' : 'No rows for selected discipline'
     );
 
-    if (refs.topLocations) {
-      if (!topLocations.length) {
-        refs.topLocations.innerHTML = '<li>No data for selected discipline</li>';
-      } else {
-        refs.topLocations.innerHTML = topLocations
-          .map(([name, count]) => `<li>${escapeHtml(String(name))}: ${asNumber(count).toLocaleString()}</li>`)
-          .join('');
-      }
-    }
+    renderTopLocationsList(topLocations, locationParsedCount, 'No data for selected discipline');
 
     renderMap(geo.stateCounts, selectedDiscipline);
   }
