@@ -291,12 +291,38 @@ body {
 }
 
 .time-toggle {
-  border: 0;
+  border: 1px solid #d6e3ee;
+  border-radius: 10px;
   margin: 0;
-  padding: 0;
+  padding: 6px 8px 7px;
   display: flex;
-  gap: 10px;
-  font-size: 0.9rem;
+  gap: 8px;
+  font-size: 0.82rem;
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.time-toggle legend {
+  padding: 0 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.time-toggle label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #3f4d5d;
+  font-weight: 600;
+}
+
+.trend-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
 }
 
 .discipline-control {
@@ -664,6 +690,13 @@ th, td {
     min-width: 0;
     width: 100%;
     align-items: stretch;
+  }
+  .section__head--split {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .trend-controls {
+    justify-content: flex-start;
   }
   .discipline-control__select { min-width: 0; width: 100%; }
   .kpi-grid,

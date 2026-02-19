@@ -1696,45 +1696,88 @@
     }
 
     const selected = document.querySelector('input[name="timeframe"]:checked')?.value || '1_year';
-    const snapshotDaily = snapshotAvailability?.daily_avg_active_grad_positions || {};
-    const snapshotMonthly = snapshotAvailability?.monthly_avg_active_grad_positions || {};
-    const snapshotSource = String(snapshotAvailability?.source || '');
-
-    let trendMode = 'daily';
-    let dateKeys = Object.keys(snapshotDaily)
-      .filter((k) => dayKeyToTimestamp(k) !== null)
-      .sort();
-    dateKeys = filterDayKeys(dateKeys, selected);
-
-    let monthMap = snapshotMonthly;
-    if (!dateKeys.length && !Object.keys(monthMap).length) {
-      const key = resolveTimeframeKey(timeSeries, selected);
-      monthMap = key ? (timeSeries[key]?.total_monthly || {}) : {};
+    const trendBasis = document.querySelector('input[name="trend-date-basis"]:checked')?.value || 'captured';
+    const trendTitleEl = document.getElementById('trend-title');
+    if (trendTitleEl) {
+      trendTitleEl.textContent = trendBasis === 'posted'
+        ? 'Unique Graduate Positions Posted by Date'
+        : 'Unique Graduate Positions Captured by Date';
     }
 
+    let trendMode = 'daily';
     let trendValues = [];
-    if (dateKeys.length) {
-      trendValues = dateKeys.map((k) => ({
+    let trendDatasetLabel = 'Unique Graduate Positions Captured by Date';
+    let trendXAxisTitle = 'Capture Date';
+    let trendYAxisTitle = 'Unique Graduate Positions (count)';
+    let trendEmptyMessage = 'No data for current filters';
+
+    if (trendBasis === 'posted') {
+      const postedDaily = {};
+      jobs.forEach((job) => {
+        const posted = parseFlexibleDate(job?.published_date);
+        if (!posted) return;
+        const key = `${posted.getFullYear()}-${String(posted.getMonth() + 1).padStart(2, '0')}-${String(posted.getDate()).padStart(2, '0')}`;
+        postedDaily[key] = (postedDaily[key] || 0) + 1;
+      });
+
+      let dayKeys = Object.keys(postedDaily)
+        .filter((k) => dayKeyToTimestamp(k) !== null)
+        .sort();
+      dayKeys = filterDayKeys(dayKeys, selected);
+      trendValues = dayKeys.map((k) => ({
         x: dayKeyToTimestamp(k),
-        y: Object.prototype.hasOwnProperty.call(snapshotDaily, k) ? asNumber(snapshotDaily[k]) : null
+        y: asNumber(postedDaily[k])
       }));
+
+      trendDatasetLabel = 'Unique Graduate Positions Posted by Date';
+      trendXAxisTitle = 'Posted Date';
+      trendEmptyMessage = 'No posted-date data for current filters';
     } else {
-      trendMode = 'monthly';
-      const allMonthLabels = buildContinuousMonthKeys(Object.keys(monthMap));
-      const monthLabels = filterMonthLabels(allMonthLabels, selected);
-      trendValues = monthLabels.map((k) => {
-        const parsed = parseMonthKey(k);
-        if (!parsed) return null;
-        return {
-          x: new Date(parsed.year, parsed.month - 1, 1).getTime(),
-          y: Object.prototype.hasOwnProperty.call(monthMap, k) ? asNumber(monthMap[k]) : null
-        };
-      }).filter(Boolean);
+      const snapshotDaily = snapshotAvailability?.daily_avg_active_grad_positions || {};
+      const snapshotMonthly = snapshotAvailability?.monthly_avg_active_grad_positions || {};
+      const snapshotSource = String(snapshotAvailability?.source || '');
+
+      let dateKeys = Object.keys(snapshotDaily)
+        .filter((k) => dayKeyToTimestamp(k) !== null)
+        .sort();
+      dateKeys = filterDayKeys(dateKeys, selected);
+
+      let monthMap = snapshotMonthly;
+      if (!dateKeys.length && !Object.keys(monthMap).length) {
+        const key = resolveTimeframeKey(timeSeries, selected);
+        monthMap = key ? (timeSeries[key]?.total_monthly || {}) : {};
+      }
+
+      if (dateKeys.length) {
+        trendValues = dateKeys.map((k) => ({
+          x: dayKeyToTimestamp(k),
+          y: Object.prototype.hasOwnProperty.call(snapshotDaily, k) ? asNumber(snapshotDaily[k]) : null
+        }));
+      } else {
+        trendMode = 'monthly';
+        const allMonthLabels = buildContinuousMonthKeys(Object.keys(monthMap));
+        const monthLabels = filterMonthLabels(allMonthLabels, selected);
+        trendValues = monthLabels.map((k) => {
+          const parsed = parseMonthKey(k);
+          if (!parsed) return null;
+          return {
+            x: new Date(parsed.year, parsed.month - 1, 1).getTime(),
+            y: Object.prototype.hasOwnProperty.call(monthMap, k) ? asNumber(monthMap[k]) : null
+          };
+        }).filter(Boolean);
+      }
+
+      trendDatasetLabel = 'Unique Graduate Positions Captured by Date';
+      trendXAxisTitle = trendMode === 'daily' ? 'Capture Date' : 'Month';
+      trendYAxisTitle = snapshotSource
+        ? 'Unique Graduate Positions (count)'
+        : 'Postings (count)';
+      trendEmptyMessage = 'No capture-date data for current filters';
     }
 
     if (!trendValues.length) {
       destroyChart('trend');
-      setPanelEmpty('trend-panel', 'No data for current filters');
+      setPanelEmpty('trend-panel', trendEmptyMessage);
     } else {
       const trendPanel = document.getElementById('trend-panel');
       if (trendPanel) trendPanel.innerHTML = '<canvas id="trend-chart"></canvas>';
@@ -1748,9 +1791,7 @@
           type: 'line',
           data: {
             datasets: [{
-              label: snapshotSource
-                ? 'Unique Graduate Positions Captured by Date'
-                : 'Postings',
+              label: trendDatasetLabel,
               data: trendValues,
               parsing: false,
               borderColor: '#0f766e',
@@ -1775,7 +1816,7 @@
             scales: {
               x: {
                 type: 'linear',
-                title: { display: true, text: trendMode === 'daily' ? 'Capture Date' : 'Month' },
+                title: { display: true, text: trendXAxisTitle },
                 ticks: {
                   maxRotation: 0,
                   autoSkip: true,
@@ -1787,9 +1828,7 @@
                 beginAtZero: true,
                 title: {
                   display: true,
-                  text: snapshotSource
-                    ? 'Unique Graduate Positions (count)'
-                    : 'Postings (count)'
+                  text: trendYAxisTitle
                 }
               }
             },
@@ -2081,7 +2120,9 @@
   }
 
   function bindTimeframeToggle(adapter) {
-    const toggles = Array.from(document.querySelectorAll('input[name="timeframe"]'));
+    const toggles = Array.from(
+      document.querySelectorAll('input[name="timeframe"], input[name="trend-date-basis"]')
+    );
     toggles.forEach((input) => {
       input.addEventListener('change', () => renderCharts(adapter));
     });
