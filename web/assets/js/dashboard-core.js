@@ -66,6 +66,8 @@
     'Other'
   ];
   const GEOGRAPHY_DISCIPLINE_ALL = '__all__';
+  const TOP_US_STATES_LIMIT = 3;
+  const DOUGHNUT_LABEL_PADDING = { top: 36, right: 48, bottom: 36, left: 48 };
   const COMPENSATION_INSTITUTION_ALL = '__all__';
   const COMPENSATION_INSTITUTION_BIG10 = 'big10';
   const COMPENSATION_INSTITUTION_NON_BIG10 = 'non_big10';
@@ -439,7 +441,7 @@
 
     const topLocations = Object.entries(geography)
       .sort((a, b) => asNumber(b[1]) - asNumber(a[1]))
-      .slice(0, 5);
+      .slice(0, TOP_US_STATES_LIMIT);
 
     return {
       meta: {
@@ -502,6 +504,7 @@
     if (!refs.topLocations) return;
     const rows = Array.isArray(topLocations)
       ? topLocations.filter((entry) => Array.isArray(entry) && asNumber(entry[1]) > 0)
+        .slice(0, TOP_US_STATES_LIMIT)
       : [];
 
     if (!rows.length) {
@@ -861,7 +864,7 @@
       : 0;
     const topLocations = Object.entries(stateCounts)
       .sort((a, b) => asNumber(b[1]) - asNumber(a[1]))
-      .slice(0, 5);
+      .slice(0, TOP_US_STATES_LIMIT);
 
     return {
       totalJobs,
@@ -1584,6 +1587,82 @@
     };
   }
 
+  function renderSalaryChart(jobs) {
+    const rows = Array.isArray(jobs) ? jobs : [];
+    if (!rows.length) {
+      destroyChart('salary');
+      setPanelEmpty('salary-panel', 'No data for current filters');
+      return;
+    }
+
+    if (!ensureChartJs()) {
+      destroyChart('salary');
+      setPanelEmpty('salary-panel', 'Chart library unavailable');
+      return;
+    }
+
+    const selectedInstitution = getSelectedCompensationInstitution();
+    const compensationJobs = filterJobsByCompensationInstitution(rows, selectedInstitution);
+    const salaryRows = buildSalaryByDiscipline(compensationJobs);
+    if (!salaryRows.length) {
+      destroyChart('salary');
+      setPanelEmpty('salary-panel', 'No salary-parsed rows for selected institution group');
+      return;
+    }
+
+    const panel = document.getElementById('salary-panel');
+    if (panel) panel.innerHTML = '<canvas id="salary-chart"></canvas>';
+    destroyChart('salary');
+    const ctx = document.getElementById('salary-chart');
+    if (!ctx) return;
+
+    chartState.salary = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: salaryRows.map((r) => formatDisciplineAxisLabel(r.discipline)),
+        datasets: [{
+          label: 'Nominal Avg Salary',
+          data: salaryRows.map((r) => r.avgNominal),
+          backgroundColor: '#0284c7',
+          borderColor: '#000000',
+          borderWidth: 1,
+          borderSkipped: false
+        }, {
+          label: 'COL-Adjusted Avg Salary (Nebraska baseline)',
+          data: salaryRows.map((r) => r.avgAdjusted),
+          backgroundColor: '#0f766e',
+          borderColor: '#000000',
+          borderWidth: 1,
+          borderSkipped: false
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            ticks: {
+              autoSkip: false,
+              maxRotation: 0,
+              minRotation: 0
+            }
+          },
+          y: {
+            ticks: {
+              callback: (value) => `$${Number(value).toLocaleString()}`
+            }
+          }
+        },
+        plugins: {
+          subtitle: {
+            display: true,
+            text: 'COL-adjusted bars display only when salary and location/COL inputs are available.'
+          }
+        }
+      }
+    });
+  }
+
   function renderCharts(adapter) {
     const jobs = Array.isArray(adapter?.jobs) ? adapter.jobs : [];
     const topDisciplines = adapter?.disciplines?.topDisciplines || {};
@@ -1760,7 +1839,7 @@
             responsive: true,
             maintainAspectRatio: false,
             layout: {
-              padding: { top: 18, right: 26, bottom: 18, left: 26 }
+              padding: DOUGHNUT_LABEL_PADDING
             },
             plugins: {
               legend: { display: false },
@@ -1769,7 +1848,7 @@
                 formatter: doughnutLabelText,
                 anchor: (context) => (doughnutLabelIsLarge(context) ? 'center' : 'end'),
                 align: (context) => (doughnutLabelIsLarge(context) ? 'center' : 'end'),
-                offset: (context) => (doughnutLabelIsLarge(context) ? 0 : 8),
+                offset: (context) => (doughnutLabelIsLarge(context) ? 0 : 4),
                 clamp: true,
                 clip: false,
                 color: (context) => (doughnutLabelIsLarge(context) ? '#ffffff' : '#111111'),
@@ -1809,7 +1888,7 @@
             responsive: true,
             maintainAspectRatio: false,
             layout: {
-              padding: { top: 18, right: 26, bottom: 18, left: 26 }
+              padding: DOUGHNUT_LABEL_PADDING
             },
             plugins: {
               legend: { display: false },
@@ -1818,7 +1897,7 @@
                 formatter: doughnutLabelText,
                 anchor: (context) => (doughnutLabelIsLarge(context) ? 'center' : 'end'),
                 align: (context) => (doughnutLabelIsLarge(context) ? 'center' : 'end'),
-                offset: (context) => (doughnutLabelIsLarge(context) ? 0 : 8),
+                offset: (context) => (doughnutLabelIsLarge(context) ? 0 : 4),
                 clamp: true,
                 clip: false,
                 color: (context) => (doughnutLabelIsLarge(context) ? '#ffffff' : '#111111'),
@@ -1833,65 +1912,7 @@
       }
     }
 
-    const selectedInstitution = getSelectedCompensationInstitution();
-    const compensationJobs = filterJobsByCompensationInstitution(jobs, selectedInstitution);
-    const salaryRows = buildSalaryByDiscipline(compensationJobs);
-    if (!salaryRows.length) {
-      destroyChart('salary');
-      setPanelEmpty('salary-panel', 'No salary-parsed rows for selected institution group');
-    } else {
-      const panel = document.getElementById('salary-panel');
-      if (panel) panel.innerHTML = '<canvas id="salary-chart"></canvas>';
-      destroyChart('salary');
-      const ctx = document.getElementById('salary-chart');
-      if (ctx) {
-        chartState.salary = new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: salaryRows.map((r) => formatDisciplineAxisLabel(r.discipline)),
-            datasets: [{
-              label: 'Nominal Avg Salary',
-              data: salaryRows.map((r) => r.avgNominal),
-              backgroundColor: '#0284c7',
-              borderColor: '#000000',
-              borderWidth: 1,
-              borderSkipped: false
-            }, {
-              label: 'COL-Adjusted Avg Salary (Nebraska baseline)',
-              data: salaryRows.map((r) => r.avgAdjusted),
-              backgroundColor: '#0f766e',
-              borderColor: '#000000',
-              borderWidth: 1,
-              borderSkipped: false
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-              x: {
-                ticks: {
-                  autoSkip: false,
-                  maxRotation: 0,
-                  minRotation: 0
-                }
-              },
-              y: {
-                ticks: {
-                  callback: (value) => `$${Number(value).toLocaleString()}`
-                }
-              }
-            },
-            plugins: {
-              subtitle: {
-                display: true,
-                text: 'COL-adjusted bars display only when salary and location/COL inputs are available.'
-              }
-            }
-          }
-        });
-      }
-    }
+    renderSalaryChart(jobs);
 
     const seasonality = buildPostingSeasonality(jobs);
     if (!seasonality.totalPosted || !seasonality.yearsCount) {
@@ -2074,7 +2095,7 @@
     if (!select) return;
     select.addEventListener('change', () => {
       renderCompensationCards(adapter);
-      renderCharts(adapter);
+      renderSalaryChart(adapter?.jobs || []);
     });
   }
 })();

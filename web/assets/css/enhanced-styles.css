@@ -326,6 +326,11 @@ body {
   padding: 12px;
 }
 
+#discipline-latest-panel,
+#discipline-overall-panel {
+  height: 300px;
+}
+
 .spotlight-card {
   width: 100%;
   display: grid;
@@ -504,4 +509,6 @@ th, td {
   .kpi-grid,
   .kpi-grid--three { grid-template-columns: 1fr; }
   .spotlight-card__meta { grid-template-columns: 1fr; }
+  #discipline-latest-panel,
+  #discipline-overall-panel { height: 260px; }
 }
