@@ -380,16 +380,84 @@ body {
 }
 
 .rank-list {
+  width: 100%;
   margin: 0;
   padding: 0;
   list-style: none;
+  display: grid;
+  gap: 8px;
 }
 
-.rank-list li {
-  border-bottom: 1px solid var(--border);
-  padding: 6px 0;
-  font-size: 0.85rem;
+.rank-list__item {
+  border: 1px solid #d6e0ea;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #ffffff 0%, #f7fafc 100%);
+  padding: 8px 10px;
+}
+
+.rank-list__row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.rank-list__badge {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #e7f5f3;
+  color: var(--accent);
+  font-size: 0.74rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.rank-list__state {
+  min-width: 0;
+  color: var(--text);
+  font-size: 0.86rem;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rank-list__count {
   color: var(--muted);
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.rank-list__track {
+  margin-top: 7px;
+  height: 6px;
+  border-radius: 999px;
+  background: #e9eef4;
+  overflow: hidden;
+}
+
+.rank-list__fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #0f766e 0%, #22a57f 100%);
+}
+
+.rank-list__meta {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.rank-list__empty {
+  color: var(--muted);
+  text-align: center;
+  padding: 8px;
+  font-size: 0.85rem;
 }
 
 .table-wrap {
