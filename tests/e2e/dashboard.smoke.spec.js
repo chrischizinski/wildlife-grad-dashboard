@@ -51,11 +51,11 @@ test('dashboard uses relative data paths and shows data quality labels', async (
   await expect(page.locator('#kpi-quality-salary')).toContainText('/');
   await expect(page.locator('#kpi-quality-location')).toContainText('/');
 
-  await expect(page.locator('#trend-title')).toContainText('Captured by Date');
-  await page.click('input[name="trend-date-basis"][value="posted"]');
   await expect(page.locator('#trend-title')).toContainText('Posted by Date');
   await page.click('input[name="trend-date-basis"][value="captured"]');
   await expect(page.locator('#trend-title')).toContainText('Captured by Date');
+  await page.click('input[name="trend-date-basis"][value="posted"]');
+  await expect(page.locator('#trend-title')).toContainText('Posted by Date');
 });
 
 test('suppresses salary median when salary sample is less than 5', async ({ page }) => {

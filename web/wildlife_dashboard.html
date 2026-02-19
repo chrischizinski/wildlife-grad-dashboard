@@ -15,7 +15,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
   <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script defer src="assets/js/dashboard-core.js?v=17"></script>
+  <script defer src="assets/js/dashboard-core.js?v=18"></script>
 </head>
 
 <body>
@@ -112,14 +112,14 @@
               </fieldset>
               <fieldset class="time-toggle" aria-label="Date basis">
                 <legend>Date Basis</legend>
-                <label><input type="radio" name="trend-date-basis" value="captured" checked> Capture</label>
-                <label><input type="radio" name="trend-date-basis" value="posted"> Posted</label>
+                <label><input type="radio" name="trend-date-basis" value="captured"> Capture</label>
+                <label><input type="radio" name="trend-date-basis" value="posted" checked> Posted</label>
               </fieldset>
             </div>
           </div>
           <div class="chart-grid chart-grid--single">
             <article class="panel panel--wide">
-              <h3 id="trend-title">Unique Graduate Positions Captured by Date</h3>
+              <h3 id="trend-title">Unique Graduate Positions Posted by Date</h3>
               <div class="panel__body" id="trend-panel">
                 <canvas id="trend-chart"></canvas>
               </div>
