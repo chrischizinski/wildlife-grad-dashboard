@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-02-19T11:43:23.482546",
+  "generated_at": "2026-02-19T17:50:38.412228",
   "count": 1,
   "items": [
     {
@@ -8,17 +8,19 @@
         "final_other",
         "still_other_low_signal"
       ],
-      "position_key": "url::https://jobs.rwfm.tamu.edu/view/106677/",
+      "position_key": "title_org::*quebec, canada* funded msc and phd opportunities in ecology::university of sherbrooke (private)::sherbrooke, canada::05/21/2025",
       "discipline_final": "Other",
       "discipline_model_suggested": "Environmental Sciences",
       "discipline_model_secondary": "",
+      "model_id": "20260219_113917",
       "model_confidence": 0.2441,
       "model_margin": 0.0569,
       "title": "*Quebec, Canada* Funded MSc and PhD opportunities in Ecology",
       "organization": "University of Sherbrooke (Private)",
       "location": "Sherbrooke, Canada",
-      "published_date": "05/21/2025",
       "url": "https://jobs.rwfm.tamu.edu/view/106677/",
+      "published_date": "05/21/2025",
+      "discipline_refinement_source": "rule",
       "review_status": "",
       "reviewed_discipline": "",
       "review_notes": "",

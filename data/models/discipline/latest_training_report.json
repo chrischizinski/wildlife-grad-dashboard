@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-02-19T11:43:23.483516",
+  "generated_at": "2026-02-19T17:50:36.900325",
   "trained": true,
   "promoted": false,
   "promotion_reason": "validation_not_improved",
   "metrics": {
-    "accuracy": 0.25,
+    "accuracy": 0.2,
     "macro_f1": 0.1,
-    "weighted_f1": 0.1,
+    "weighted_f1": 0.08,
     "evaluation_mode": "holdout",
-    "validation_samples": 4
+    "validation_samples": 5
   },
   "previous_metrics": {
     "accuracy": 0.18333333333333335,
@@ -18,9 +18,9 @@
     "validation_samples": 11
   },
   "candidate_model": {
-    "model_id": "20260219_114323",
-    "trained_at": "2026-02-19T11:43:23.406170",
-    "artifact_path": "data/models/discipline/models/discipline_model_20260219_114323.pkl",
+    "model_id": "20260219_175036",
+    "trained_at": "2026-02-19T17:50:36.846391",
+    "artifact_path": "data/models/discipline/models/discipline_model_20260219_175036.pkl",
     "classes": [
       "Agriculture",
       "Entomology",
@@ -30,23 +30,24 @@
       "Wildlife"
     ],
     "metrics": {
-      "accuracy": 0.25,
+      "accuracy": 0.2,
       "macro_f1": 0.1,
-      "weighted_f1": 0.1,
+      "weighted_f1": 0.08,
       "evaluation_mode": "holdout",
-      "validation_samples": 4
+      "validation_samples": 5
     },
     "training_summary": {
-      "gold_total": 16,
+      "gold_total": 18,
       "gold_class_counts": {
         "Environmental Sciences": 3,
         "Fisheries and Aquatic": 5,
         "Forestry and Habitat": 2,
-        "Wildlife": 6
+        "Wildlife": 8
       },
-      "pseudo_total": 9,
+      "pseudo_total": 10,
       "pseudo_class_counts": {
         "Environmental Sciences": 2,
+        "Fisheries and Aquatic": 1,
         "Wildlife": 5,
         "Entomology": 1,
         "Agriculture": 1
@@ -56,19 +57,20 @@
     }
   },
   "manifest_path": "data/models/discipline/manifest.json",
-  "gold_labels": 16,
+  "gold_labels": 18,
   "gold_class_counts": {
     "Environmental Sciences": 3,
     "Fisheries and Aquatic": 5,
     "Forestry and Habitat": 2,
-    "Wildlife": 6
+    "Wildlife": 8
   },
   "dropped_rare_gold_classes": {
     "Other": 1
   },
-  "pseudo_labels": 9,
+  "pseudo_labels": 10,
   "pseudo_class_counts": {
     "Environmental Sciences": 2,
+    "Fisheries and Aquatic": 1,
     "Wildlife": 5,
     "Entomology": 1,
     "Agriculture": 1
