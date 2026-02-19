@@ -884,7 +884,7 @@
     );
   }
 
-  function computePostingsPerDayStats(jobs) {
+  function computePostingsPerDayStats(jobs, monthsBack = 6) {
     const rows = Array.isArray(jobs) ? jobs : [];
     const dated = rows
       .map((job) => getPostedDate(job))
@@ -901,16 +901,22 @@
       };
     }
 
-    const minTs = Math.min(...dated.map((dt) => dt.getTime()));
-    const maxTs = Math.max(...dated.map((dt) => dt.getTime()));
-    const daySpan = Math.max(1, Math.floor((maxTs - minTs) / 86400000) + 1);
-    const count = dated.length;
+    const latest = new Date(Math.max(...dated.map((dt) => dt.getTime())));
+    const windowStart = new Date(latest);
+    windowStart.setMonth(windowStart.getMonth() - monthsBack);
+    windowStart.setDate(windowStart.getDate() + 1);
+    const startDay = normalizeDayStart(windowStart);
+    const endDay = normalizeDayStart(latest);
+
+    const inWindow = dated.filter((dt) => dt >= startDay && dt <= endDay);
+    const daySpan = Math.max(1, Math.floor((endDay.getTime() - startDay.getTime()) / 86400000) + 1);
+    const count = inWindow.length;
 
     return {
       avgPerDay: count / daySpan,
       daySpan,
-      start: new Date(minTs),
-      end: new Date(maxTs),
+      start: startDay,
+      end: endDay,
       count
     };
   }
@@ -998,7 +1004,7 @@
         : EMPTY_VALUE,
       'kpi-postings-per-day-reason',
       perDay.avgPerDay !== null
-        ? `${perDay.count.toLocaleString()} posted rows across ${perDay.daySpan.toLocaleString()} days (${formatDateOnly(perDay.start)} to ${formatDateOnly(perDay.end)})`
+        ? `${perDay.count.toLocaleString()} posted rows across last ${perDay.daySpan.toLocaleString()} days (${formatDateOnly(perDay.start)} to ${formatDateOnly(perDay.end)})`
         : 'No rows after filters'
     );
 
