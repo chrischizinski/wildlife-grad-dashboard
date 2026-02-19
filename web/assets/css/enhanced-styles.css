@@ -157,37 +157,89 @@ body {
 }
 
 .hero {
+  position: relative;
+  overflow: hidden;
   display: flex;
   justify-content: space-between;
-  gap: 16px;
+  gap: 18px;
   align-items: start;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
+  padding: 16px 18px;
+  border: 1px solid #cfe0ec;
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 85% 15%, rgba(14, 165, 160, 0.18), rgba(255, 255, 255, 0) 36%),
+    linear-gradient(180deg, #ffffff 0%, #f5f9fd 100%);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.07);
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 6px;
+  height: 100%;
+  background: linear-gradient(180deg, #0f766e 0%, #0ea5a0 100%);
+}
+
+.hero__copy {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+}
+
+.hero__eyebrow {
+  margin: 0 0 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #0f766e;
 }
 
 .hero h1 {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 1.72rem;
+  line-height: 1.18;
+  letter-spacing: -0.01em;
 }
 
 .hero p {
   margin: 6px 0 0;
-  color: var(--muted);
+  color: #4f6177;
+  max-width: 65ch;
 }
 
 .hero__meta {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  align-items: flex-end;
+  align-items: stretch;
+  min-width: 230px;
 }
 
 .pill {
-  display: inline-block;
-  padding: 6px 10px;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: #fff;
-  font-size: 0.85rem;
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  padding: 8px 11px;
+  border: 1px solid #d6e2ec;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.95);
+  font-size: 0.8rem;
+  color: #5d6c7f;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+
+.pill strong {
+  color: #172331;
+  font-size: 0.83rem;
+  font-weight: 700;
+  margin-left: 2px;
 }
 
 .banner {
@@ -598,7 +650,21 @@ th, td {
     transform: none !important;
   }
   .main { padding: 12px; }
-  .hero__meta { align-items: flex-start; }
+  .hero {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 14px;
+  }
+  .hero::after {
+    width: 100%;
+    height: 4px;
+  }
+  .hero h1 { font-size: 1.45rem; }
+  .hero__meta {
+    min-width: 0;
+    width: 100%;
+    align-items: stretch;
+  }
   .discipline-control__select { min-width: 0; width: 100%; }
   .kpi-grid,
   .kpi-grid--three { grid-template-columns: 1fr; }
