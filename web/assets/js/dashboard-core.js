@@ -1696,7 +1696,7 @@
     }
 
     const selected = document.querySelector('input[name="timeframe"]:checked')?.value || '1_year';
-    const trendBasis = document.querySelector('input[name="trend-date-basis"]:checked')?.value || 'captured';
+    const trendBasis = document.querySelector('input[name="trend-date-basis"]:checked')?.value || 'posted';
     const trendTitleEl = document.getElementById('trend-title');
     if (trendTitleEl) {
       trendTitleEl.textContent = trendBasis === 'posted'
