@@ -217,6 +217,22 @@ body {
   color: var(--muted);
 }
 
+.kpi-card__action {
+  display: inline-block;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.kpi-card__action:hover {
+  background: #e7f5f3;
+}
+
 .chart-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
