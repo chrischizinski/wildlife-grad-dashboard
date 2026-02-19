@@ -1015,7 +1015,7 @@
         EMPTY_VALUE,
         'kpi-salary-median-reason',
         totalJobs === 0
-          ? 'No rows for selected institution group'
+          ? 'No rows after filters'
           : (
             sampleN === 0
               ? 'No salary-parsed rows for selected institution group'

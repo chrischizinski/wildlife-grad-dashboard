@@ -31,7 +31,7 @@ test('dashboard loads and exits loading state', async ({ page }) => {
     expect(noDataHidden).toBe(true);
   } else {
     expect(noDataHidden).toBe(false);
-    await expect(page.locator('#jobs-table')).toContainText('No data for current filters');
+    await expect(page.locator('#weekly-spotlight')).toContainText('No data for current filters');
   }
 });
 
@@ -129,7 +129,7 @@ test('shows explicit no-data states when dataset is empty', async ({ page }) => 
   await expect(page.locator('#kpi-grad-positions-reason')).toContainText('No rows after filters');
   await expect(page.locator('#kpi-salary-median')).toHaveText('—');
   await expect(page.locator('#kpi-salary-median-reason')).toContainText('No rows after filters');
-  await expect(page.locator('#jobs-table')).toContainText('No data for current filters');
+  await expect(page.locator('#weekly-spotlight')).toContainText('No data for current filters');
   await expect(page.locator('#trend-panel')).toContainText('No data for current filters');
   await expect(page.locator('#seasonality-panel')).toContainText('No data for current filters');
   await expect(page.locator('#discipline-latest-panel')).toContainText('No data for current filters');
