@@ -1,30 +1,30 @@
 {
   "metadata": {
-    "generated_at": "2026-02-19T17:50:38.591427",
-    "total_positions": 35,
+    "generated_at": "2026-02-19T12:06:23.491873",
+    "total_positions": 67,
     "source": "merged (historical + latest + enhanced)",
     "discipline_mapping": "consolidated to 8 categories"
   },
   "summary_stats": {
-    "total_positions": 35,
-    "graduate_positions": 35,
-    "positions_with_salary": 26
+    "total_positions": 67,
+    "graduate_positions": 67,
+    "positions_with_salary": 25
   },
   "top_disciplines": {
     "Environmental Sciences": {
-      "total_positions": 6,
-      "grad_positions": 6,
+      "total_positions": 10,
+      "grad_positions": 10,
       "salary_stats": {
-        "count": 4,
-        "mean": 23875.0,
-        "median": 22750.0,
+        "count": 3,
+        "mean": 24000.0,
+        "median": 22000.0,
         "min": 20000.0,
         "max": 30000.0
       }
     },
     "Fisheries and Aquatic": {
-      "total_positions": 6,
-      "grad_positions": 6,
+      "total_positions": 9,
+      "grad_positions": 9,
       "salary_stats": {
         "count": 6,
         "mean": 25297.33,
@@ -34,8 +34,8 @@
       }
     },
     "Wildlife": {
-      "total_positions": 16,
-      "grad_positions": 16,
+      "total_positions": 25,
+      "grad_positions": 25,
       "salary_stats": {
         "count": 12,
         "mean": 27388.25,
@@ -45,17 +45,6 @@
       }
     },
     "Entomology": {
-      "total_positions": 1,
-      "grad_positions": 1,
-      "salary_stats": {
-        "count": 1,
-        "mean": 21000.0,
-        "median": 21000.0,
-        "min": 21000.0,
-        "max": 21000.0
-      }
-    },
-    "Forestry and Habitat": {
       "total_positions": 3,
       "grad_positions": 3,
       "salary_stats": {
@@ -66,9 +55,20 @@
         "max": 21000.0
       }
     },
+    "Forestry and Habitat": {
+      "total_positions": 9,
+      "grad_positions": 9,
+      "salary_stats": {
+        "count": 1,
+        "mean": 21000.0,
+        "median": 21000.0,
+        "min": 21000.0,
+        "max": 21000.0
+      }
+    },
     "Agriculture": {
-      "total_positions": 1,
-      "grad_positions": 1,
+      "total_positions": 2,
+      "grad_positions": 2,
       "salary_stats": {
         "count": 1,
         "mean": 31000.0,
@@ -78,8 +78,8 @@
       }
     },
     "Human Dimensions": {
-      "total_positions": 1,
-      "grad_positions": 1,
+      "total_positions": 2,
+      "grad_positions": 2,
       "salary_stats": {
         "count": 0,
         "mean": 0,
@@ -89,8 +89,8 @@
       }
     },
     "Other": {
-      "total_positions": 1,
-      "grad_positions": 1,
+      "total_positions": 7,
+      "grad_positions": 7,
       "salary_stats": {
         "count": 1,
         "mean": 20000.0,
@@ -101,232 +101,270 @@
     }
   },
   "geographic_summary": {
-    "Texas)": 5,
-    "Texas": 3,
-    "Alabama)": 2,
+    "Texas)": 8,
+    "Texas": 6,
+    "Alabama)": 3,
+    "West Virginia)": 3,
+    "Oregon)": 3,
+    "Massachusetts": 3,
+    "Idaho": 3,
+    "remote work allowed": 3,
+    "Arkansas)": 2,
+    "Canada)": 2,
     "New Mexico)": 2,
-    "Oregon)": 2,
-    "Massachusetts": 2,
+    "Tennessee)": 2,
+    "Rhode Island)": 2,
     "Canada": 2,
-    "Idaho": 2,
-    "Minnesota": 1,
-    "South Carolina": 1,
-    "Montana": 1,
-    "Tennessee)": 1,
-    "multiple": 1,
-    "North Dakota)": 1,
-    "Rhode Island)": 1,
-    "remote work allowed": 1,
-    "Georgia)": 1,
-    "Arkansas)": 1,
-    "Canada)": 1,
-    "Colorado": 1,
-    "West Virginia)": 1,
-    "South Dakota)": 1,
-    "Maryland)": 1
+    "Maryland)": 2,
+    "Durham": 1,
+    "West Virginia": 1,
+    "Idaho)": 1,
+    "multiple | remote work allowed": 1,
+    "Hong Kong": 1,
+    "North Carolina)": 1,
+    "Wisconsin": 1,
+    "Louisiana)": 1,
+    "Puerto Rico": 1,
+    "California)": 1
   },
   "time_series": {
     "1_month": {
       "total_monthly": {
         "2024-08": 1,
-        "2025-01": 1,
+        "2025-01": 3,
         "2025-02": 2,
         "2025-03": 1,
-        "2025-04": 2,
-        "2025-05": 8,
-        "2025-06": 13,
-        "2025-07": 1,
+        "2025-04": 3,
+        "2025-05": 15,
+        "2025-06": 29,
+        "2025-07": 7,
         "2026-02": 6
       },
       "discipline_monthly": {
         "Environmental Sciences": {
           "2025-07": 1,
-          "2025-06": 2,
+          "2025-06": 5,
+          "2025-05": 1,
           "2025-04": 1,
           "2026-02": 2
         },
         "Fisheries and Aquatic": {
-          "2025-06": 3,
+          "2025-06": 6,
           "2026-02": 2,
           "2025-02": 1
         },
         "Wildlife": {
-          "2025-06": 7,
-          "2025-05": 3,
-          "2025-04": 1,
+          "2025-07": 1,
+          "2025-06": 10,
+          "2025-05": 6,
+          "2025-04": 2,
           "2025-03": 1,
           "2026-02": 2,
           "2025-02": 1,
-          "2025-01": 1
+          "2025-01": 2
         },
         "Entomology": {
-          "2024-08": 1
+          "2024-08": 1,
+          "2025-07": 1,
+          "2025-06": 1
         },
         "Forestry and Habitat": {
-          "2025-06": 1,
-          "2025-05": 2
+          "2025-07": 2,
+          "2025-06": 3,
+          "2025-05": 4
         },
         "Agriculture": {
+          "2025-07": 1,
           "2025-05": 1
         },
         "Human Dimensions": {
-          "2025-05": 1
+          "2025-05": 2
         },
         "Other": {
-          "2025-05": 1
+          "2025-07": 1,
+          "2025-06": 4,
+          "2025-05": 1,
+          "2025-01": 1
         }
       }
     },
     "3_month": {
       "total_monthly": {
         "2024-08": 1,
-        "2025-01": 1,
+        "2025-01": 3,
         "2025-02": 2,
         "2025-03": 1,
-        "2025-04": 2,
-        "2025-05": 8,
-        "2025-06": 13,
-        "2025-07": 1,
+        "2025-04": 3,
+        "2025-05": 15,
+        "2025-06": 29,
+        "2025-07": 7,
         "2026-02": 6
       },
       "discipline_monthly": {
         "Environmental Sciences": {
           "2025-07": 1,
-          "2025-06": 2,
+          "2025-06": 5,
+          "2025-05": 1,
           "2025-04": 1,
           "2026-02": 2
         },
         "Fisheries and Aquatic": {
-          "2025-06": 3,
+          "2025-06": 6,
           "2026-02": 2,
           "2025-02": 1
         },
         "Wildlife": {
-          "2025-06": 7,
-          "2025-05": 3,
-          "2025-04": 1,
+          "2025-07": 1,
+          "2025-06": 10,
+          "2025-05": 6,
+          "2025-04": 2,
           "2025-03": 1,
           "2026-02": 2,
           "2025-02": 1,
-          "2025-01": 1
+          "2025-01": 2
         },
         "Entomology": {
-          "2024-08": 1
+          "2024-08": 1,
+          "2025-07": 1,
+          "2025-06": 1
         },
         "Forestry and Habitat": {
-          "2025-06": 1,
-          "2025-05": 2
+          "2025-07": 2,
+          "2025-06": 3,
+          "2025-05": 4
         },
         "Agriculture": {
+          "2025-07": 1,
           "2025-05": 1
         },
         "Human Dimensions": {
-          "2025-05": 1
+          "2025-05": 2
         },
         "Other": {
-          "2025-05": 1
+          "2025-07": 1,
+          "2025-06": 4,
+          "2025-05": 1,
+          "2025-01": 1
         }
       }
     },
     "6_month": {
       "total_monthly": {
         "2024-08": 1,
-        "2025-01": 1,
+        "2025-01": 3,
         "2025-02": 2,
         "2025-03": 1,
-        "2025-04": 2,
-        "2025-05": 8,
-        "2025-06": 13,
-        "2025-07": 1,
+        "2025-04": 3,
+        "2025-05": 15,
+        "2025-06": 29,
+        "2025-07": 7,
         "2026-02": 6
       },
       "discipline_monthly": {
         "Environmental Sciences": {
           "2025-07": 1,
-          "2025-06": 2,
+          "2025-06": 5,
+          "2025-05": 1,
           "2025-04": 1,
           "2026-02": 2
         },
         "Fisheries and Aquatic": {
-          "2025-06": 3,
+          "2025-06": 6,
           "2026-02": 2,
           "2025-02": 1
         },
         "Wildlife": {
-          "2025-06": 7,
-          "2025-05": 3,
-          "2025-04": 1,
+          "2025-07": 1,
+          "2025-06": 10,
+          "2025-05": 6,
+          "2025-04": 2,
           "2025-03": 1,
           "2026-02": 2,
           "2025-02": 1,
-          "2025-01": 1
+          "2025-01": 2
         },
         "Entomology": {
-          "2024-08": 1
+          "2024-08": 1,
+          "2025-07": 1,
+          "2025-06": 1
         },
         "Forestry and Habitat": {
-          "2025-06": 1,
-          "2025-05": 2
+          "2025-07": 2,
+          "2025-06": 3,
+          "2025-05": 4
         },
         "Agriculture": {
+          "2025-07": 1,
           "2025-05": 1
         },
         "Human Dimensions": {
-          "2025-05": 1
+          "2025-05": 2
         },
         "Other": {
-          "2025-05": 1
+          "2025-07": 1,
+          "2025-06": 4,
+          "2025-05": 1,
+          "2025-01": 1
         }
       }
     },
     "12_month": {
       "total_monthly": {
         "2024-08": 1,
-        "2025-01": 1,
+        "2025-01": 3,
         "2025-02": 2,
         "2025-03": 1,
-        "2025-04": 2,
-        "2025-05": 8,
-        "2025-06": 13,
-        "2025-07": 1,
+        "2025-04": 3,
+        "2025-05": 15,
+        "2025-06": 29,
+        "2025-07": 7,
         "2026-02": 6
       },
       "discipline_monthly": {
         "Environmental Sciences": {
           "2025-07": 1,
-          "2025-06": 2,
+          "2025-06": 5,
+          "2025-05": 1,
           "2025-04": 1,
           "2026-02": 2
         },
         "Fisheries and Aquatic": {
-          "2025-06": 3,
+          "2025-06": 6,
           "2026-02": 2,
           "2025-02": 1
         },
         "Wildlife": {
-          "2025-06": 7,
-          "2025-05": 3,
-          "2025-04": 1,
+          "2025-07": 1,
+          "2025-06": 10,
+          "2025-05": 6,
+          "2025-04": 2,
           "2025-03": 1,
           "2026-02": 2,
           "2025-02": 1,
-          "2025-01": 1
+          "2025-01": 2
         },
         "Entomology": {
-          "2024-08": 1
+          "2024-08": 1,
+          "2025-07": 1,
+          "2025-06": 1
         },
         "Forestry and Habitat": {
-          "2025-06": 1,
-          "2025-05": 2
+          "2025-07": 2,
+          "2025-06": 3,
+          "2025-05": 4
         },
         "Agriculture": {
+          "2025-07": 1,
           "2025-05": 1
         },
         "Human Dimensions": {
-          "2025-05": 1
+          "2025-05": 2
         },
         "Other": {
-          "2025-05": 1
+          "2025-07": 1,
+          "2025-06": 4,
+          "2025-05": 1,
+          "2025-01": 1
         }
       }
     }
@@ -366,5 +404,5 @@
       "Other": 13
     }
   },
-  "last_updated": "2026-02-19 17:50:38"
+  "last_updated": "2026-02-19 12:06:23"
 }
