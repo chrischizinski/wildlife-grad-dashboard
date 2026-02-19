@@ -876,14 +876,113 @@
     };
   }
 
+  function getPostedDate(job) {
+    return (
+      parseFlexibleDate(job?.published_date)
+      || parseFlexibleDate(job?.first_seen)
+      || null
+    );
+  }
+
+  function computePostingsPerDayStats(jobs) {
+    const rows = Array.isArray(jobs) ? jobs : [];
+    const dated = rows
+      .map((job) => getPostedDate(job))
+      .filter((dt) => dt && Number.isFinite(dt.getTime()))
+      .map((dt) => normalizeDayStart(dt));
+
+    if (!dated.length) {
+      return {
+        avgPerDay: null,
+        daySpan: 0,
+        start: null,
+        end: null,
+        count: 0
+      };
+    }
+
+    const minTs = Math.min(...dated.map((dt) => dt.getTime()));
+    const maxTs = Math.max(...dated.map((dt) => dt.getTime()));
+    const daySpan = Math.max(1, Math.floor((maxTs - minTs) / 86400000) + 1);
+    const count = dated.length;
+
+    return {
+      avgPerDay: count / daySpan,
+      daySpan,
+      start: new Date(minTs),
+      end: new Date(maxTs),
+      count
+    };
+  }
+
+  function monthIndexFromDate(dt) {
+    return (dt.getFullYear() * 12) + dt.getMonth();
+  }
+
+  function monthLabelFromIndex(index) {
+    const year = Math.floor(index / 12);
+    const month = (index % 12) + 1;
+    return `${String(year).padStart(4, '0')}-${String(month).padStart(2, '0')}`;
+  }
+
+  function computeSixMonthPostingMomentum(jobs) {
+    const rows = Array.isArray(jobs) ? jobs : [];
+    const monthlyCounts = {};
+    rows.forEach((job) => {
+      const posted = getPostedDate(job);
+      if (!posted) return;
+      const idx = monthIndexFromDate(posted);
+      monthlyCounts[idx] = (monthlyCounts[idx] || 0) + 1;
+    });
+
+    const monthIndices = Object.keys(monthlyCounts).map((key) => Number(key)).filter(Number.isFinite);
+    if (!monthIndices.length) {
+      return {
+        label: null,
+        reason: 'No posted-date rows available'
+      };
+    }
+
+    const latest = Math.max(...monthIndices);
+    const series = [];
+    for (let idx = latest - 5; idx <= latest; idx += 1) {
+      series.push({
+        idx,
+        label: monthLabelFromIndex(idx),
+        count: asNumber(monthlyCounts[idx] || 0)
+      });
+    }
+
+    const values = series.map((p) => p.count);
+    const n = values.length;
+    const meanX = (n - 1) / 2;
+    const meanY = values.reduce((sum, v) => sum + v, 0) / n;
+    let num = 0;
+    let den = 0;
+    for (let i = 0; i < n; i += 1) {
+      const dx = i - meanX;
+      const dy = values[i] - meanY;
+      num += dx * dy;
+      den += dx * dx;
+    }
+    const slope = den ? (num / den) : 0;
+    const threshold = 0.35;
+    let label = 'Stable';
+    if (slope > threshold) label = 'Increasing';
+    if (slope < -threshold) label = 'Decreasing';
+
+    return {
+      label,
+      reason: `Based on posted-date monthly counts from ${series[0].label} to ${series[n - 1].label}`
+    };
+  }
+
   function renderOverviewCards(adapter) {
     const overview = adapter?.overview || {};
-    const total = asNumber(adapter?.compensation?.totalJobs || overview.totalPositions);
+    const jobs = Array.isArray(adapter?.jobs) ? adapter.jobs : [];
     const grad = asNumber(overview.graduatePositions);
-    const discCount = asNumber(overview.disciplineCount);
-    const topDisc = overview.topDiscipline;
-    const salaryParsedN = asNumber(adapter?.compensation?.salaryParsedCount);
-    const salaryParsedPct = asNumber(adapter?.compensation?.salaryParsedPct);
+    const perDay = computePostingsPerDayStats(jobs);
+    const momentum = computeSixMonthPostingMomentum(jobs);
 
     setCardValue(
       'kpi-grad-positions',
@@ -893,24 +992,21 @@
     );
 
     setCardValue(
-      'kpi-salary-coverage',
-      total > 0 ? formatRatio(salaryParsedN, total) : EMPTY_VALUE,
-      'kpi-salary-coverage-reason',
-      total > 0 ? `${formatPercent(salaryParsedPct)} of unified dataset has parseable salary` : 'No rows after filters'
+      'kpi-postings-per-day',
+      perDay.avgPerDay !== null
+        ? `${perDay.avgPerDay.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}/day`
+        : EMPTY_VALUE,
+      'kpi-postings-per-day-reason',
+      perDay.avgPerDay !== null
+        ? `${perDay.count.toLocaleString()} posted rows across ${perDay.daySpan.toLocaleString()} days (${formatDateOnly(perDay.start)} to ${formatDateOnly(perDay.end)})`
+        : 'No rows after filters'
     );
 
     setCardValue(
-      'kpi-disciplines',
-      discCount > 0 ? discCount.toLocaleString() : EMPTY_VALUE,
-      'kpi-disciplines-reason',
-      discCount > 0 ? 'Distinct discipline categories in unified dataset' : 'No rows after filters'
-    );
-
-    setCardValue(
-      'kpi-top-discipline',
-      topDisc ? topDisc : EMPTY_VALUE,
-      'kpi-top-discipline-reason',
-      topDisc ? 'Largest discipline by posting count in unified dataset' : 'No rows after filters'
+      'kpi-posting-momentum',
+      momentum?.label || EMPTY_VALUE,
+      'kpi-posting-momentum-reason',
+      momentum?.label ? momentum.reason : 'No rows after filters'
     );
   }
 
