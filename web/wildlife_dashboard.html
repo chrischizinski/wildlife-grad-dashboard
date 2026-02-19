@@ -14,7 +14,7 @@
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script defer src="assets/js/dashboard-core.js?v=11"></script>
+  <script defer src="assets/js/dashboard-core.js?v=13"></script>
 </head>
 
 <body>
@@ -33,6 +33,7 @@
         <a class="sidebar-nav__link" href="#geography">Geography</a>
         <a class="sidebar-nav__link" href="#quality">Data Quality</a>
         <a class="sidebar-nav__link" href="#listings">Listings</a>
+        <a class="sidebar-nav__link" href="#about">About</a>
       </nav>
 
       <div class="sidebar-status" id="status-banner">
@@ -145,11 +146,21 @@
         </section>
 
         <section class="section" id="compensation">
-          <div class="section__head">
-            <h2>Compensation</h2>
-            <p>Salary metrics calculated on salary-parsed postings only. COL-adjusted values are normalized to a Nebraska baseline.</p>
+          <div class="section__head section__head--split">
+            <div>
+              <h2>Compensation</h2>
+              <p>Salary metrics calculated on salary-parsed postings only. COL-adjusted values are normalized to a Nebraska baseline.</p>
+            </div>
+            <label class="discipline-control" for="compensation-institution-filter">
+              <span>Institution Group</span>
+              <select id="compensation-institution-filter" class="discipline-control__select">
+                <option value="__all__">Overall</option>
+                <option value="big10">Big Ten</option>
+                <option value="non_big10">Non-Big Ten / Unknown</option>
+              </select>
+            </label>
           </div>
-          <div class="kpi-grid kpi-grid--three">
+          <div class="kpi-grid">
             <article class="kpi-card">
               <h3>Salary Parsed (N / Total)</h3>
               <p class="kpi-card__value" id="kpi-salary-parsed-pct">—</p>
@@ -164,6 +175,11 @@
               <h3>Median Salary</h3>
               <p class="kpi-card__value" id="kpi-salary-median">—</p>
               <p class="kpi-card__reason" id="kpi-salary-median-reason">Suppressed when N &lt; 5</p>
+            </article>
+            <article class="kpi-card">
+              <h3>Big Ten Tag Coverage</h3>
+              <p class="kpi-card__value" id="kpi-big10-coverage">—</p>
+              <p class="kpi-card__reason" id="kpi-big10-coverage-reason">No rows after filters</p>
             </article>
           </div>
           <article class="panel">
@@ -262,6 +278,25 @@
                 </thead>
                 <tbody id="jobs-table"></tbody>
               </table>
+            </div>
+          </article>
+        </section>
+
+        <section class="section" id="about">
+          <div class="section__head">
+            <h2>About</h2>
+            <p>Scope, intended use, and limitations of this dashboard.</p>
+          </div>
+          <article class="panel">
+            <h3>Informational Use Only</h3>
+            <div class="about-copy">
+              <p>This dashboard is provided for informational purposes only. It is not legal, financial, academic, or career advice.</p>
+              <ul class="about-list">
+                <li>Data is compiled from automated scraping and classification pipelines and may contain errors, omissions, duplicates, or stale records.</li>
+                <li>Posting details (salary, deadlines, eligibility, location, and availability) can change after data is collected.</li>
+                <li>No guarantee is made that the dataset is complete, current, or fully accurate at any given time.</li>
+                <li>Always verify critical details using the original posting and official institution/employer sources before acting.</li>
+              </ul>
             </div>
           </article>
         </section>

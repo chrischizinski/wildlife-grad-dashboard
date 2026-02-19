@@ -23,6 +23,7 @@
     updatedDate: document.getElementById('last-updated-date'),
     dataPeriod: document.getElementById('data-period-range'),
     geographyDiscipline: document.getElementById('geography-discipline-filter'),
+    compensationInstitution: document.getElementById('compensation-institution-filter'),
     noDataBanner: document.getElementById('no-data-banner'),
     jobsTable: document.getElementById('jobs-table'),
     topLocations: document.getElementById('top-locations-list')
@@ -65,6 +66,33 @@
     'Other'
   ];
   const GEOGRAPHY_DISCIPLINE_ALL = '__all__';
+  const COMPENSATION_INSTITUTION_ALL = '__all__';
+  const COMPENSATION_INSTITUTION_BIG10 = 'big10';
+  const COMPENSATION_INSTITUTION_NON_BIG10 = 'non_big10';
+  const BIG10_MATCHERS = [
+    /\buniversity of illinois\b/i,
+    /\billinois\s+urbana[-\s]?champaign\b/i,
+    /\bindiana university\b/i,
+    /\buniversity of iowa\b/i,
+    /\buniversity of maryland\b/i,
+    /\buniversity of michigan\b/i,
+    /\bmichigan state university\b/i,
+    /\buniversity of minnesota\b/i,
+    /\buniversity of nebraska\b/i,
+    /\bnorthwestern university\b/i,
+    /\bohio state university\b/i,
+    /\buniversity of oregon\b/i,
+    /\bpennsylvania state university\b/i,
+    /\bpenn state\b/i,
+    /\bpurdue university\b/i,
+    /\brutgers university\b/i,
+    /\buniversity of california,\s*los angeles\b/i,
+    /\bucla\b/i,
+    /\buniversity of southern california\b/i,
+    /\busc\b.*\blos angeles\b/i,
+    /\buniversity of washington\b/i,
+    /\buniversity of wisconsin\b/i
+  ];
   const US_STATE_COORDS = {
     Alabama: [32.806671, -86.791130],
     Alaska: [61.370716, -152.404419],
@@ -702,6 +730,133 @@
     showNoDataBanner(!hasBaseRows || (hasActiveDisciplineFilter && !hasFilteredRows));
   }
 
+  function parseBooleanLike(value) {
+    if (typeof value === 'boolean') return value;
+    if (typeof value === 'number') return value !== 0;
+    if (typeof value !== 'string') return null;
+    const normalized = value.trim().toLowerCase();
+    if (!normalized) return null;
+    if (['true', '1', 'yes', 'y'].includes(normalized)) return true;
+    if (['false', '0', 'no', 'n'].includes(normalized)) return false;
+    return null;
+  }
+
+  function inferBig10Institution(job) {
+    const text = [
+      String(job?.organization || ''),
+      String(job?.title || ''),
+      String(job?.url || ''),
+      String(job?.description || '')
+    ].join(' ');
+
+    return BIG10_MATCHERS.some((rx) => rx.test(text));
+  }
+
+  function isBig10Institution(job) {
+    const explicit = parseBooleanLike(job?.is_big10_university);
+    if (explicit === true) return true;
+    if (explicit === false) return false;
+    return inferBig10Institution(job);
+  }
+
+  function getBig10CoverageStats(jobs) {
+    const rows = Array.isArray(jobs) ? jobs : [];
+    const total = rows.length;
+
+    let explicitTaggedCount = 0;
+    let inferredBig10Count = 0;
+
+    rows.forEach((job) => {
+      const explicit = parseBooleanLike(job?.is_big10_university);
+      if (explicit !== null) {
+        explicitTaggedCount += 1;
+        return;
+      }
+      if (inferBig10Institution(job)) inferredBig10Count += 1;
+    });
+
+    const classifiedCount = explicitTaggedCount + inferredBig10Count;
+    const unknownCount = Math.max(0, total - classifiedCount);
+    const coveragePct = total ? Number(((classifiedCount / total) * 100).toFixed(1)) : 0;
+
+    return {
+      total,
+      explicitTaggedCount,
+      inferredBig10Count,
+      classifiedCount,
+      unknownCount,
+      coveragePct
+    };
+  }
+
+  function filterJobsByCompensationInstitution(jobs, selectedInstitution) {
+    const rows = Array.isArray(jobs) ? jobs : [];
+    if (!selectedInstitution || selectedInstitution === COMPENSATION_INSTITUTION_ALL) return rows;
+    if (selectedInstitution === COMPENSATION_INSTITUTION_BIG10) {
+      return rows.filter((job) => isBig10Institution(job));
+    }
+    if (selectedInstitution === COMPENSATION_INSTITUTION_NON_BIG10) {
+      return rows.filter((job) => !isBig10Institution(job));
+    }
+    return rows;
+  }
+
+  function getSelectedCompensationInstitution() {
+    const value = String(
+      refs.compensationInstitution?.value || COMPENSATION_INSTITUTION_ALL
+    );
+    return value || COMPENSATION_INSTITUTION_ALL;
+  }
+
+  function getCompensationSelectionLabel(selectedInstitution) {
+    if (selectedInstitution === COMPENSATION_INSTITUTION_BIG10) return 'Big Ten rows';
+    if (selectedInstitution === COMPENSATION_INSTITUTION_NON_BIG10) return 'Non-Big Ten / Unknown rows';
+    return 'overall dataset';
+  }
+
+  function populateCompensationInstitutionFilter(adapter) {
+    const select = refs.compensationInstitution;
+    if (!select) return;
+
+    const allJobs = Array.isArray(adapter?.jobs) ? adapter.jobs : [];
+    const big10Jobs = filterJobsByCompensationInstitution(
+      allJobs,
+      COMPENSATION_INSTITUTION_BIG10
+    );
+    const nonBig10Jobs = filterJobsByCompensationInstitution(
+      allJobs,
+      COMPENSATION_INSTITUTION_NON_BIG10
+    );
+
+    const prior = select.value || COMPENSATION_INSTITUTION_ALL;
+    select.innerHTML = '';
+
+    const options = [
+      {
+        value: COMPENSATION_INSTITUTION_ALL,
+        label: `Overall (${allJobs.length.toLocaleString()})`
+      },
+      {
+        value: COMPENSATION_INSTITUTION_BIG10,
+        label: `Big Ten (${big10Jobs.length.toLocaleString()})`
+      },
+      {
+        value: COMPENSATION_INSTITUTION_NON_BIG10,
+        label: `Non-Big Ten / Unknown (${nonBig10Jobs.length.toLocaleString()})`
+      }
+    ];
+
+    options.forEach((optData) => {
+      const opt = document.createElement('option');
+      opt.value = optData.value;
+      opt.textContent = optData.label;
+      select.appendChild(opt);
+    });
+
+    const hasPrior = Array.from(select.options).some((opt) => opt.value === prior);
+    select.value = hasPrior ? prior : COMPENSATION_INSTITUTION_ALL;
+  }
+
   function computeGeographyStats(jobs) {
     const rows = Array.isArray(jobs) ? jobs : [];
     const totalJobs = rows.length;
@@ -775,26 +930,53 @@
   }
 
   function renderCompensationCards(adapter) {
-    const comp = adapter?.compensation || {};
-    const totalJobs = asNumber(comp.totalJobs);
-    const pct = asNumber(comp.salaryParsedPct);
-    const parsedCount = asNumber(comp.salaryParsedCount || comp.salarySampleSize);
-    const sampleN = asNumber(comp.salarySampleSize);
-    const salaryValues = Array.isArray(comp.salaryValues) ? comp.salaryValues : [];
+    const allJobs = Array.isArray(adapter?.jobs) ? adapter.jobs : [];
+    const selectedInstitution = getSelectedCompensationInstitution();
+    const selectionLabel = getCompensationSelectionLabel(selectedInstitution);
+    const filteredJobs = filterJobsByCompensationInstitution(allJobs, selectedInstitution);
+    const coverageStats = getBig10CoverageStats(allJobs);
+
+    const totalJobs = filteredJobs.length;
+    const salaryValues = filteredJobs
+      .map((job) => parseSalaryValue(job.salary ?? job.salary_min))
+      .filter((n) => n !== null);
+    const parsedCount = salaryValues.length;
+    const sampleN = salaryValues.length;
+    const pct = totalJobs ? Number(((parsedCount / totalJobs) * 100).toFixed(1)) : 0;
     const med = median(salaryValues);
 
     setCardValue(
       'kpi-salary-parsed-pct',
       totalJobs > 0 ? formatRatio(parsedCount, totalJobs) : EMPTY_VALUE,
       'kpi-salary-parsed-pct-reason',
-      totalJobs > 0 ? `${formatPercent(pct)} of unified dataset has parseable salary` : 'No rows after filters'
+      totalJobs > 0
+        ? `${formatPercent(pct)} of ${selectionLabel} has parseable salary`
+        : 'No rows for selected institution group'
     );
 
     setCardValue(
       'kpi-salary-n',
       totalJobs > 0 ? sampleN.toLocaleString() : EMPTY_VALUE,
       'kpi-salary-n-reason',
-      totalJobs > 0 ? 'Rows in salary-parsed subset from unified dataset' : 'No rows after filters'
+      totalJobs > 0
+        ? `Rows in salary-parsed subset from ${selectionLabel}`
+        : 'No rows for selected institution group'
+    );
+
+    setCardValue(
+      'kpi-big10-coverage',
+      coverageStats.total > 0
+        ? formatRatio(coverageStats.classifiedCount, coverageStats.total)
+        : EMPTY_VALUE,
+      'kpi-big10-coverage-reason',
+      coverageStats.total > 0
+        ? (
+          `${formatPercent(coverageStats.coveragePct)} usable for Big Ten split `
+          + `(${coverageStats.explicitTaggedCount} explicit, `
+          + `${coverageStats.inferredBig10Count} inferred Big Ten, `
+          + `${coverageStats.unknownCount} unknown)`
+        )
+        : 'No rows after filters'
     );
 
     if (sampleN < 5 || med === null) {
@@ -803,8 +985,12 @@
         EMPTY_VALUE,
         'kpi-salary-median-reason',
         totalJobs === 0
-          ? 'No rows after filters'
-          : (sampleN === 0 ? 'No salary-parsed rows after filters' : `Suppressed when N < 5 (N=${sampleN})`)
+          ? 'No rows for selected institution group'
+          : (
+            sampleN === 0
+              ? 'No salary-parsed rows for selected institution group'
+              : `Suppressed when N < 5 (N=${sampleN})`
+          )
       );
       return;
     }
@@ -813,7 +999,7 @@
       'kpi-salary-median',
       formatCurrency(med),
       'kpi-salary-median-reason',
-      `Median annualized salary from salary-parsed subset (N=${sampleN})`
+      `Median annualized salary from salary-parsed ${selectionLabel} (N=${sampleN})`
     );
   }
 
@@ -1500,10 +1686,12 @@
       }
     }
 
-    const salaryRows = buildSalaryByDiscipline(jobs);
+    const selectedInstitution = getSelectedCompensationInstitution();
+    const compensationJobs = filterJobsByCompensationInstitution(jobs, selectedInstitution);
+    const salaryRows = buildSalaryByDiscipline(compensationJobs);
     if (!salaryRows.length) {
       destroyChart('salary');
-      setPanelEmpty('salary-panel', 'No salary-parsed rows after filters');
+      setPanelEmpty('salary-panel', 'No salary-parsed rows for selected institution group');
     } else {
       const panel = document.getElementById('salary-panel');
       if (panel) panel.innerHTML = '<canvas id="salary-chart"></canvas>';
@@ -1664,6 +1852,7 @@
       }
 
       populateGeographyDisciplineFilter(normalized);
+      populateCompensationInstitutionFilter(normalized);
       updateNoDataBannerForFilters(normalized);
       renderOverviewCards(normalized);
       renderCompensationCards(normalized);
@@ -1673,6 +1862,7 @@
       renderCharts(normalized);
       bindTimeframeToggle(normalized);
       bindGeographyDisciplineToggle(normalized);
+      bindCompensationInstitutionToggle(normalized);
 
       setState('ok', `Adapter ready (${jobs.length} jobs)`);
     } catch (err) {
@@ -1701,6 +1891,15 @@
     select.addEventListener('change', () => {
       renderGeographyCards(adapter);
       updateNoDataBannerForFilters(adapter);
+    });
+  }
+
+  function bindCompensationInstitutionToggle(adapter) {
+    const select = refs.compensationInstitution;
+    if (!select) return;
+    select.addEventListener('change', () => {
+      renderCompensationCards(adapter);
+      renderCharts(adapter);
     });
   }
 })();
