@@ -75,7 +75,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:06.354430+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.245028+00:00"
+    "first_seen": "2025-07-13T14:47:11.245028+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Marine Turtle Intern/Research Assistant/Research Fellow",
@@ -118,7 +123,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:06.360550+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.245029+00:00"
+    "first_seen": "2025-07-13T14:47:11.245029+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "TRAINING IN WILDLIFE HANDLING & CHEMICAL IMMOBILIZATION at Fort Worth Nature Center, Fort Worth, TX December 2-4, 2025",
@@ -140,7 +150,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:06.371773+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.245034+00:00"
+    "first_seen": "2025-07-13T14:47:11.245034+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Senior Wetland Scientist",
@@ -162,7 +177,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:06.383203+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.245034+00:00"
+    "first_seen": "2025-07-13T14:47:11.245034+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Aquatic Specialist",
@@ -184,7 +204,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:06.392138+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.245035+00:00"
+    "first_seen": "2025-07-13T14:47:11.245035+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Veterinary Anatomic Pathology Resident Rotation in Marine Mammal Medicine and Pathology",
@@ -206,7 +231,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:06.400002+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.245036+00:00"
+    "first_seen": "2025-07-13T14:47:11.245036+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Post-doctoral fellow - Movement and predator-prey analysis of Canada lynx and snowshoe hare",
@@ -249,7 +279,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:06.407934+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.245037+00:00"
+    "first_seen": "2025-07-13T14:47:11.245037+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Native Plant Nursery Intern",
@@ -271,7 +306,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:06.415574+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.245038+00:00"
+    "first_seen": "2025-07-13T14:47:11.245038+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Graduate Research Assistant/Ant Colony Impacts on Ecosystems",
@@ -352,7 +392,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:06.429774+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.245042+00:00"
+    "first_seen": "2025-07-13T14:47:11.245042+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Kennel Manager/Guide",
@@ -374,7 +419,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:06.436294+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.245043+00:00"
+    "first_seen": "2025-07-13T14:47:11.245043+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Recreation Technician Crewmember",
@@ -396,7 +446,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:06.442501+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.245044+00:00"
+    "first_seen": "2025-07-13T14:47:11.245044+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Exotic Feline Keeper",
@@ -418,7 +473,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:06.448693+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.245045+00:00"
+    "first_seen": "2025-07-13T14:47:11.245045+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Exotic Feline Internship",
@@ -440,7 +500,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:06.462420+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.245046+00:00"
+    "first_seen": "2025-07-13T14:47:11.245046+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Alpaca and Dairy Farm Volunteer/Intern",
@@ -462,7 +527,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:06.469486+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.245046+00:00"
+    "first_seen": "2025-07-13T14:47:11.245046+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Fisheries Biologist / Technician",
@@ -484,7 +554,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.147530+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244579+00:00"
+    "first_seen": "2025-07-13T14:47:11.244579+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Fisheries Biologist / Technician",
@@ -506,7 +581,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.157991+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244753+00:00"
+    "first_seen": "2025-07-13T14:47:11.244753+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Wildlife Aquatic Nuisance Animal Control Tech.",
@@ -528,7 +608,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.164606+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244755+00:00"
+    "first_seen": "2025-07-13T14:47:11.244755+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Rhino Research Internship",
@@ -550,7 +635,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.170958+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244756+00:00"
+    "first_seen": "2025-07-13T14:47:11.244756+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Primate Research Project",
@@ -572,7 +662,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.177232+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244757+00:00"
+    "first_seen": "2025-07-13T14:47:11.244757+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Conduct Your Own Research Project in the Field",
@@ -594,7 +689,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.183404+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244758+00:00"
+    "first_seen": "2025-07-13T14:47:11.244758+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "USFS Effectiveness of Fire Prevention Programs on Human",
@@ -616,7 +716,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.189556+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244759+00:00"
+    "first_seen": "2025-07-13T14:47:11.244759+00:00",
+    "is_graduate_position": true,
+    "position_type": "Masters Position",
+    "grad_confidence": 0.2,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Associate Veterinarian",
@@ -638,7 +743,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.195153+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244760+00:00"
+    "first_seen": "2025-07-13T14:47:11.244760+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Park Recreation Aide 5 (Seasonal Park Educator)",
@@ -660,7 +770,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.200813+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244761+00:00"
+    "first_seen": "2025-07-13T14:47:11.244761+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Conduct Your Own Research Project in the Field - South Africa",
@@ -706,7 +821,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.206880+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244762+00:00"
+    "first_seen": "2025-07-13T14:47:11.244762+00:00",
+    "is_graduate_position": true,
+    "position_type": "Graduate Assistantship",
+    "grad_confidence": 0.85,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Fish Facility Manager Job @ Michigan State University",
@@ -728,7 +848,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.212976+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244763+00:00"
+    "first_seen": "2025-07-13T14:47:11.244763+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "PhD and MS Assistantships in Forest Soils and Biogeochemistry",
@@ -750,7 +875,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.218960+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244764+00:00"
+    "first_seen": "2025-07-13T14:47:11.244764+00:00",
+    "is_graduate_position": true,
+    "position_type": "PhD Position",
+    "grad_confidence": 0.85,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "PhD and MS Assistantships in Forest Soils and Biogeochemistry",
@@ -796,7 +926,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.225018+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244765+00:00"
+    "first_seen": "2025-07-13T14:47:11.244765+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Alabama Field to Fork Coordinator",
@@ -818,7 +953,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.231344+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244766+00:00"
+    "first_seen": "2025-07-13T14:47:11.244766+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Research Associate Specialist",
@@ -840,7 +980,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.236911+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244767+00:00"
+    "first_seen": "2025-07-13T14:47:11.244767+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "MN Accounting Support Specialist",
@@ -862,7 +1007,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.242410+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244768+00:00"
+    "first_seen": "2025-07-13T14:47:11.244768+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Untreated Seed Pilot Program Analysis Intern, Pesticides and Birds Campaign",
@@ -884,7 +1034,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.247992+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244769+00:00"
+    "first_seen": "2025-07-13T14:47:11.244769+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Sea Turtle Care Center Intern",
@@ -906,7 +1061,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.253848+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244769+00:00"
+    "first_seen": "2025-07-13T14:47:11.244769+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Conservation Podcast Assistant with CA State Parks",
@@ -928,7 +1088,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.259682+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244770+00:00"
+    "first_seen": "2025-07-13T14:47:11.244770+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Forest Environmental Planner",
@@ -950,7 +1115,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.265305+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244771+00:00"
+    "first_seen": "2025-07-13T14:47:11.244771+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "LTE Large Carnivore Research Technician (Rhinelander, Wisconsin)",
@@ -972,7 +1142,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.270736+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244772+00:00"
+    "first_seen": "2025-07-13T14:47:11.244772+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "LTE Large Carnivore Research Scientist (Wisconsin)",
@@ -994,7 +1169,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.276018+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244773+00:00"
+    "first_seen": "2025-07-13T14:47:11.244773+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Master's Level Graduate Research Assistantship: Virtual Monitoring/Herding – Sheep",
@@ -1017,7 +1197,12 @@
     "scraped_at": "2025-07-13T14:45:47.281280+00:00",
     "scraper_version": "4.0-targeted",
     "first_seen": "2025-07-13T14:47:11.244773+00:00",
-    "last_updated": "2025-07-13T14:50:25.172049+00:00"
+    "last_updated": "2025-07-13T14:50:25.172049+00:00",
+    "is_graduate_position": true,
+    "position_type": "Graduate Assistantship",
+    "grad_confidence": 0.85,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "NC Joint Chiefs Project Coordinator",
@@ -1039,7 +1224,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.287029+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244774+00:00"
+    "first_seen": "2025-07-13T14:47:11.244774+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "In",
@@ -1061,7 +1251,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.292698+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244775+00:00"
+    "first_seen": "2025-07-13T14:47:11.244775+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Natural Areas Management Technician",
@@ -1083,7 +1278,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.298471+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244776+00:00"
+    "first_seen": "2025-07-13T14:47:11.244776+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Fall Reptile Internship",
@@ -1105,7 +1305,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.304379+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244777+00:00"
+    "first_seen": "2025-07-13T14:47:11.244777+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Joint Base Lewis",
@@ -1127,7 +1332,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.310211+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244778+00:00"
+    "first_seen": "2025-07-13T14:47:11.244778+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Research Associate",
@@ -1149,7 +1359,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.315910+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244779+00:00"
+    "first_seen": "2025-07-13T14:47:11.244779+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "2026 Summer Law Clerk",
@@ -1171,7 +1386,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.321677+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244779+00:00"
+    "first_seen": "2025-07-13T14:47:11.244779+00:00",
+    "is_graduate_position": true,
+    "position_type": "Masters Position",
+    "grad_confidence": 0.2,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Gator Country Beaumont, Tx.- Wildlife Care Specialist Internship (Alligators, Venomous Snakes, and other Reptiles)",
@@ -1193,7 +1413,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.327481+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244780+00:00"
+    "first_seen": "2025-07-13T14:47:11.244780+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Wildlife Technician (2 Positions)",
@@ -1215,7 +1440,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.333634+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244781+00:00"
+    "first_seen": "2025-07-13T14:47:11.244781+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "NCC Southern Operations Manager",
@@ -1237,7 +1467,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.340043+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244782+00:00"
+    "first_seen": "2025-07-13T14:47:11.244782+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "KCD",
@@ -1259,7 +1494,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.345853+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244783+00:00"
+    "first_seen": "2025-07-13T14:47:11.244783+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "OPS",
@@ -1281,7 +1521,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.351674+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244784+00:00"
+    "first_seen": "2025-07-13T14:47:11.244784+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "USDA",
@@ -1303,7 +1548,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.357225+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244785+00:00"
+    "first_seen": "2025-07-13T14:47:11.244785+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Community Programs Coordinator",
@@ -1325,7 +1575,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.363143+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244786+00:00"
+    "first_seen": "2025-07-13T14:47:11.244786+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Interim Managing Director (International Association of Society and Natural Resources)",
@@ -1347,7 +1602,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.368911+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244786+00:00"
+    "first_seen": "2025-07-13T14:47:11.244786+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Corporate Partnerships Manager",
@@ -1369,7 +1629,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.374532+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244787+00:00"
+    "first_seen": "2025-07-13T14:47:11.244787+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Fall and Winter Fawning and Deer Breeding Assistant",
@@ -1391,7 +1656,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.379914+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244788+00:00"
+    "first_seen": "2025-07-13T14:47:11.244788+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "MSc Assistantship – Genetics and Movement Ecology of Swift Fox Following Establishment of a Translocated Population",
@@ -1413,7 +1683,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.385984+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244789+00:00"
+    "first_seen": "2025-07-13T14:47:11.244789+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "PhD Student in amphibian ecology at Lingnan University (Hong Kong, China)",
@@ -1435,7 +1710,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.392388+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244789+00:00"
+    "first_seen": "2025-07-13T14:47:11.244789+00:00",
+    "is_graduate_position": true,
+    "position_type": "PhD Position",
+    "grad_confidence": 0.85,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "GIS Mapping Internship",
@@ -1457,7 +1737,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.398378+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244790+00:00"
+    "first_seen": "2025-07-13T14:47:11.244790+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Herpetofauna Research Internship in South Africa – Explore Microhabitats & Species Diversity",
@@ -1479,7 +1764,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.409030+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244791+00:00"
+    "first_seen": "2025-07-13T14:47:11.244791+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Giraffe Project",
@@ -1501,7 +1791,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.421103+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244792+00:00"
+    "first_seen": "2025-07-13T14:47:11.244792+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Director of Development and Communications",
@@ -1523,7 +1818,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.427846+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244793+00:00"
+    "first_seen": "2025-07-13T14:47:11.244793+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Vervet Monkey Project",
@@ -1545,7 +1845,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.434372+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244794+00:00"
+    "first_seen": "2025-07-13T14:47:11.244794+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Habitat Restoration Project Manager",
@@ -1567,7 +1872,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.440782+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244794+00:00"
+    "first_seen": "2025-07-13T14:47:11.244794+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Hunting Guide/ Ranch Hand",
@@ -1589,7 +1899,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.446823+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244795+00:00"
+    "first_seen": "2025-07-13T14:47:11.244795+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Professional Scientist I",
@@ -1611,7 +1926,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:47.453003+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244796+00:00"
+    "first_seen": "2025-07-13T14:47:11.244796+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Internship with Exotic Cat",
@@ -1633,7 +1953,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:51.872619+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244797+00:00"
+    "first_seen": "2025-07-13T14:47:11.244797+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Natural Resources Specialist",
@@ -1655,7 +1980,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:51.881041+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244797+00:00"
+    "first_seen": "2025-07-13T14:47:11.244797+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "PhD Assistantship in Arthropod Biodiversity",
@@ -1677,7 +2007,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:51.888331+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244798+00:00"
+    "first_seen": "2025-07-13T14:47:11.244798+00:00",
+    "is_graduate_position": true,
+    "position_type": "PhD Position",
+    "grad_confidence": 0.85,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Natural Resource Specialist",
@@ -1699,7 +2034,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:51.901273+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244800+00:00"
+    "first_seen": "2025-07-13T14:47:11.244800+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "GAAP",
@@ -1721,7 +2061,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:51.907441+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244801+00:00"
+    "first_seen": "2025-07-13T14:47:11.244801+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "LTE Forester",
@@ -1743,7 +2088,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:51.913585+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244801+00:00"
+    "first_seen": "2025-07-13T14:47:11.244801+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Research Station in the Bolivian Amazon",
@@ -1765,7 +2115,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:06.476680+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.245047+00:00"
+    "first_seen": "2025-07-13T14:47:11.245047+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Professional Certificate: Conservation Planning",
@@ -1787,7 +2142,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:51.919621+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244802+00:00"
+    "first_seen": "2025-07-13T14:47:11.244802+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "West AL Fall Internship",
@@ -1809,7 +2169,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:51.925622+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244803+00:00"
+    "first_seen": "2025-07-13T14:47:11.244803+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Professional Certificate: Applied Quantitative Ecology",
@@ -1831,7 +2196,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:51.931467+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244804+00:00"
+    "first_seen": "2025-07-13T14:47:11.244804+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Waterbird Biologist",
@@ -1853,7 +2223,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:51.937426+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244805+00:00"
+    "first_seen": "2025-07-13T14:47:11.244805+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Assistant Conservation Project Manager",
@@ -1875,7 +2250,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:51.943454+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244806+00:00"
+    "first_seen": "2025-07-13T14:47:11.244806+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Associate Manager, Environmental/PSM",
@@ -1897,7 +2277,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:51.949786+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244807+00:00"
+    "first_seen": "2025-07-13T14:47:11.244807+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Ph.D. : The effects of invasive guineagrass on the ecology of Northern Bobwhite",
@@ -1919,7 +2304,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:51.956000+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244807+00:00"
+    "first_seen": "2025-07-13T14:47:11.244807+00:00",
+    "is_graduate_position": true,
+    "position_type": "Masters Position",
+    "grad_confidence": 0.2,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Aquarium and Zoo Lead Educator, Program and Volunteer Development (Full Time & Benefits)",
@@ -1941,7 +2331,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:51.962135+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244808+00:00"
+    "first_seen": "2025-07-13T14:47:11.244808+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Zoo and Aquarium- Lead Educator (full time with benefits), Animal Care & Public Programming",
@@ -1963,7 +2358,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:51.968340+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244809+00:00"
+    "first_seen": "2025-07-13T14:47:11.244809+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "MS position - climate change and fire effects on coastal vegetation - Marshall U, Palmquist lab",
@@ -1985,7 +2385,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:51.974665+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244810+00:00"
+    "first_seen": "2025-07-13T14:47:11.244810+00:00",
+    "is_graduate_position": true,
+    "position_type": "Masters Position",
+    "grad_confidence": 0.85,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "MS position - impacts of global change drivers on dryland plant communities - Marshall U, Palmquist lab",
@@ -2007,7 +2412,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:51.980907+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244811+00:00"
+    "first_seen": "2025-07-13T14:47:11.244811+00:00",
+    "is_graduate_position": true,
+    "position_type": "Masters Position",
+    "grad_confidence": 0.85,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Master's research assistantship: black bass conservation & ecology",
@@ -2029,7 +2439,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:51.986951+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244811+00:00"
+    "first_seen": "2025-07-13T14:47:11.244811+00:00",
+    "is_graduate_position": true,
+    "position_type": "Graduate Assistantship",
+    "grad_confidence": 0.85,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Wildlife Rescue and Rehabilitation Technician Internship",
@@ -2051,7 +2466,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:51.993366+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244812+00:00"
+    "first_seen": "2025-07-13T14:47:11.244812+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Environmental Policy Analyst",
@@ -2073,7 +2493,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:51.999451+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244813+00:00"
+    "first_seen": "2025-07-13T14:47:11.244813+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Biochemistry",
@@ -2095,7 +2520,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:52.005525+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244814+00:00"
+    "first_seen": "2025-07-13T14:47:11.244814+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Graduate Research Assistant (M.S.)",
@@ -2117,7 +2547,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:52.011429+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244815+00:00"
+    "first_seen": "2025-07-13T14:47:11.244815+00:00",
+    "is_graduate_position": true,
+    "position_type": "Graduate Assistantship",
+    "grad_confidence": 0.85,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Ecological Habitat Restoration Internship",
@@ -2139,7 +2574,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:52.017181+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244815+00:00"
+    "first_seen": "2025-07-13T14:47:11.244815+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Outreach Biologist",
@@ -2161,7 +2601,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:52.024963+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244816+00:00"
+    "first_seen": "2025-07-13T14:47:11.244816+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Botany Conservation Technician II",
@@ -2183,7 +2628,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:52.041152+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244817+00:00"
+    "first_seen": "2025-07-13T14:47:11.244817+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "M.S. Teaching Assistantship",
@@ -2205,7 +2655,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:52.047909+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244818+00:00"
+    "first_seen": "2025-07-13T14:47:11.244818+00:00",
+    "is_graduate_position": true,
+    "position_type": "Graduate Assistantship",
+    "grad_confidence": 0.85,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Mandatory Hunter Harvest Check and Chronic Wasting Disease (CWD) Technician",
@@ -2227,7 +2682,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:52.054092+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244818+00:00"
+    "first_seen": "2025-07-13T14:47:11.244818+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "USDA",
@@ -2249,7 +2709,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:52.060018+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244819+00:00"
+    "first_seen": "2025-07-13T14:47:11.244819+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "USGS Environmental Science Fellowship",
@@ -2271,7 +2736,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:52.065596+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244820+00:00"
+    "first_seen": "2025-07-13T14:47:11.244820+00:00",
+    "is_graduate_position": true,
+    "position_type": "Fellowship",
+    "grad_confidence": 0.4,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Wildlife Rehabilitation Internship Fall 2025",
@@ -2293,7 +2763,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:52.071365+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244821+00:00"
+    "first_seen": "2025-07-13T14:47:11.244821+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "M.S. Position – Using drones to study urban parrots in Southern California (Cal Poly Pomona)",
@@ -2315,7 +2790,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:52.076921+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244822+00:00"
+    "first_seen": "2025-07-13T14:47:11.244822+00:00",
+    "is_graduate_position": true,
+    "position_type": "Graduate Position",
+    "grad_confidence": 0.85,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "PhD Graduate Assistantship: Restoration of Dune Habitat for Dunes Sagebrush Lizard",
@@ -2337,7 +2817,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:52.082664+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244822+00:00"
+    "first_seen": "2025-07-13T14:47:11.244822+00:00",
+    "is_graduate_position": true,
+    "position_type": "Graduate Assistantship",
+    "grad_confidence": 0.85,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Whitetail Guide/ Ranch Hand for Fall of 2025",
@@ -2359,7 +2844,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:52.088358+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244823+00:00"
+    "first_seen": "2025-07-13T14:47:11.244823+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Bat Technician Internship",
@@ -2381,7 +2871,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:52.094105+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244824+00:00"
+    "first_seen": "2025-07-13T14:47:11.244824+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Avian Biologist",
@@ -2403,7 +2898,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:52.099873+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244825+00:00"
+    "first_seen": "2025-07-13T14:47:11.244825+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Design Engineer",
@@ -2425,7 +2925,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:52.105712+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244826+00:00"
+    "first_seen": "2025-07-13T14:47:11.244826+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Senior Bat Biologist – Bat Program Lead",
@@ -2447,7 +2952,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:52.111369+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244826+00:00"
+    "first_seen": "2025-07-13T14:47:11.244826+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "AmeriCorps Crew Leader",
@@ -2469,7 +2979,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:52.117085+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244827+00:00"
+    "first_seen": "2025-07-13T14:47:11.244827+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Research Assistants",
@@ -2491,7 +3006,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:52.122871+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244828+00:00"
+    "first_seen": "2025-07-13T14:47:11.244828+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Honey bee graduate research assistant",
@@ -2513,7 +3033,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:52.128882+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244829+00:00"
+    "first_seen": "2025-07-13T14:47:11.244829+00:00",
+    "is_graduate_position": true,
+    "position_type": "Graduate Assistantship",
+    "grad_confidence": 0.85,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "PhD Student in Landscape Ecology at The University of Texas at El Paso",
@@ -2535,7 +3060,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:52.134521+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244830+00:00"
+    "first_seen": "2025-07-13T14:47:11.244830+00:00",
+    "is_graduate_position": true,
+    "position_type": "PhD Position",
+    "grad_confidence": 0.85,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "PhD project – Eco",
@@ -2557,7 +3087,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:52.140168+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244830+00:00"
+    "first_seen": "2025-07-13T14:47:11.244830+00:00",
+    "is_graduate_position": true,
+    "position_type": "PhD Position",
+    "grad_confidence": 0.4,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "MS student",
@@ -2579,7 +3114,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:52.145881+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244831+00:00"
+    "first_seen": "2025-07-13T14:47:11.244831+00:00",
+    "is_graduate_position": true,
+    "position_type": "Graduate Position",
+    "grad_confidence": 0.85,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Naturalist Intern",
@@ -2601,7 +3141,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:52.151676+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244832+00:00"
+    "first_seen": "2025-07-13T14:47:11.244832+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Quail Research Technician(s)",
@@ -2623,7 +3168,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:52.157616+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244833+00:00"
+    "first_seen": "2025-07-13T14:47:11.244833+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Sustainable Ocean and Reefs Inc. (SOAR) Fall 2025 Internship",
@@ -2645,7 +3195,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:52.163362+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244833+00:00"
+    "first_seen": "2025-07-13T14:47:11.244833+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Graduate Teaching Assistant",
@@ -2667,7 +3222,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:52.169120+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244834+00:00"
+    "first_seen": "2025-07-13T14:47:11.244834+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Environmental Field Technician",
@@ -2689,7 +3249,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:52.174855+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244835+00:00"
+    "first_seen": "2025-07-13T14:47:11.244835+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Environmental Specialist (Rapid Responder)",
@@ -2711,7 +3276,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:52.181047+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244836+00:00"
+    "first_seen": "2025-07-13T14:47:11.244836+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Wildlife Rehabilitator",
@@ -2733,7 +3303,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.587222+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244837+00:00"
+    "first_seen": "2025-07-13T14:47:11.244837+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Environmental Educator",
@@ -2755,7 +3330,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.594084+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244837+00:00"
+    "first_seen": "2025-07-13T14:47:11.244837+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "New Mexico Resource Coordinator",
@@ -2777,7 +3357,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.601131+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244838+00:00"
+    "first_seen": "2025-07-13T14:47:11.244838+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Senior Associate, Stewardship",
@@ -2799,7 +3384,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.614964+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244852+00:00"
+    "first_seen": "2025-07-13T14:47:11.244852+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Outdoor Education Instructor",
@@ -2821,7 +3411,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.622056+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244853+00:00"
+    "first_seen": "2025-07-13T14:47:11.244853+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Masters Thesis opportunity working with the Rio Grande Cooter",
@@ -2958,7 +3553,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.636338+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244860+00:00"
+    "first_seen": "2025-07-13T14:47:11.244860+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Macaw Conservation Volunteer in Costa Rica",
@@ -2980,7 +3580,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.656938+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244873+00:00"
+    "first_seen": "2025-07-13T14:47:11.244873+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Water Resources Engineer II",
@@ -3002,7 +3607,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.670374+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244878+00:00"
+    "first_seen": "2025-07-13T14:47:11.244878+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Fisheries Technician",
@@ -3024,7 +3634,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.685571+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244879+00:00"
+    "first_seen": "2025-07-13T14:47:11.244879+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Graduate Student Work Study Positions",
@@ -3070,7 +3685,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.700623+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244882+00:00"
+    "first_seen": "2025-07-13T14:47:11.244882+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Scientist II (Ecologist)",
@@ -3092,7 +3712,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.707651+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244883+00:00"
+    "first_seen": "2025-07-13T14:47:11.244883+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Scientist I (Part",
@@ -3114,7 +3739,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.714108+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244884+00:00"
+    "first_seen": "2025-07-13T14:47:11.244884+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "TPWD",
@@ -3136,7 +3766,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.720709+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244885+00:00"
+    "first_seen": "2025-07-13T14:47:11.244885+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Scientist III (Contamination)",
@@ -3158,7 +3793,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.727450+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244885+00:00"
+    "first_seen": "2025-07-13T14:47:11.244885+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "M.S. (Biology) Graduate Research Assistantship Positions in Herpetology, Spatial Ecology, and Behavioral Ecology",
@@ -3215,7 +3855,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.733533+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244886+00:00"
+    "first_seen": "2025-07-13T14:47:11.244886+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Marine Biologist",
@@ -3237,7 +3882,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.739729+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244887+00:00"
+    "first_seen": "2025-07-13T14:47:11.244887+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Detection Dog Handler",
@@ -3259,7 +3909,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.746188+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244888+00:00"
+    "first_seen": "2025-07-13T14:47:11.244888+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "M.S. (Biology) Graduate Research Assistantship Positions in Herpetology, Spatial Ecology, and Behavioral Ecology",
@@ -3305,7 +3960,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.759946+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244892+00:00"
+    "first_seen": "2025-07-13T14:47:11.244892+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Biological Field Technician",
@@ -3327,7 +3987,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.773293+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244893+00:00"
+    "first_seen": "2025-07-13T14:47:11.244893+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "M.S. Graduate Assistantship – Deer population demographics prior to elk reintroduction",
@@ -3397,7 +4062,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.779965+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244894+00:00"
+    "first_seen": "2025-07-13T14:47:11.244894+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Conservation Associate",
@@ -3419,7 +4089,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.799686+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244899+00:00"
+    "first_seen": "2025-07-13T14:47:11.244899+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "PhD in Fisheries, Wildlife, and Conservation Sciences: Developing multi-method approaches for landscape-scale sampling of small mammals",
@@ -3510,7 +4185,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.806062+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244900+00:00"
+    "first_seen": "2025-07-13T14:47:11.244900+00:00",
+    "is_graduate_position": true,
+    "position_type": "PhD Position",
+    "grad_confidence": 0.2,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Protected Species Observer - Newport, RI (Land Based)",
@@ -3532,7 +4212,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.812554+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244901+00:00"
+    "first_seen": "2025-07-13T14:47:11.244901+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Macaw Pre",
@@ -3554,7 +4239,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.825846+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244905+00:00"
+    "first_seen": "2025-07-13T14:47:11.244905+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Poultry and poultry feed production,anthropology",
@@ -3576,7 +4266,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.832928+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244906+00:00"
+    "first_seen": "2025-07-13T14:47:11.244906+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Ph.D. Research Assistantship in Fisheries Conflict and Food Security",
@@ -3598,7 +4293,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.839709+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244907+00:00"
+    "first_seen": "2025-07-13T14:47:11.244907+00:00",
+    "is_graduate_position": true,
+    "position_type": "Graduate Assistantship",
+    "grad_confidence": 0.85,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Environmental Education Fellowship Coordinator",
@@ -3641,7 +4341,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.852927+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244912+00:00"
+    "first_seen": "2025-07-13T14:47:11.244912+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "MS Graduate Assistantship in Aquatic Ecology, Fisheries",
@@ -3753,7 +4458,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.859484+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244912+00:00"
+    "first_seen": "2025-07-13T14:47:11.244912+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "TPWD",
@@ -3775,7 +4485,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.865605+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244913+00:00"
+    "first_seen": "2025-07-13T14:47:11.244913+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Graduate Assistantship (M.S.) - Forestry/Forest Biometrics",
@@ -3821,7 +4536,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.884319+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244921+00:00"
+    "first_seen": "2025-07-13T14:47:11.244921+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Graduate Assistantship (M.S.)",
@@ -3843,7 +4563,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.891288+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244922+00:00"
+    "first_seen": "2025-07-13T14:47:11.244922+00:00",
+    "is_graduate_position": true,
+    "position_type": "Graduate Assistantship",
+    "grad_confidence": 0.85,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "PhD and MS Positions in Water Security and Sustainability",
@@ -4007,7 +4732,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.916869+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244934+00:00"
+    "first_seen": "2025-07-13T14:47:11.244934+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Orphaned baby Rhinos – Rescue, Rehab and Release in South Africa",
@@ -4029,7 +4759,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.922782+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244935+00:00"
+    "first_seen": "2025-07-13T14:47:11.244935+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Internship Marine Conservation South Africa: Shark and Coral Reef Research.",
@@ -4051,7 +4786,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:45:56.928868+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244936+00:00"
+    "first_seen": "2025-07-13T14:47:11.244936+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "TRAINING IN WILDLIFE HANDLING & CHEMICAL IMMOBILIZATION at International Conservation Center near Fairhope, PA Oct. 14-16, 2025",
@@ -4073,7 +4813,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.503133+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244937+00:00"
+    "first_seen": "2025-07-13T14:47:11.244937+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "PhD Research Assistantship - Feral Swine Ecology and Management",
@@ -4143,7 +4888,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.511517+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244938+00:00"
+    "first_seen": "2025-07-13T14:47:11.244938+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Staff Wetland Scientist",
@@ -4165,7 +4915,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.518147+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244939+00:00"
+    "first_seen": "2025-07-13T14:47:11.244939+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Ph.D. or M.Sc.",
@@ -4187,7 +4942,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.524245+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244940+00:00"
+    "first_seen": "2025-07-13T14:47:11.244940+00:00",
+    "is_graduate_position": true,
+    "position_type": "Graduate Assistantship",
+    "grad_confidence": 0.75,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "PhD Research Assistantship",
@@ -4209,7 +4969,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.530547+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244941+00:00"
+    "first_seen": "2025-07-13T14:47:11.244941+00:00",
+    "is_graduate_position": true,
+    "position_type": "Graduate Assistantship",
+    "grad_confidence": 0.85,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "MS - Assistantship - Wetland Habitat Dynamics in the Chihuahuan Desert - Graduate Research Assistant II",
@@ -4255,7 +5020,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.536892+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244898+00:00"
+    "first_seen": "2025-07-13T14:47:11.244898+00:00",
+    "is_graduate_position": true,
+    "position_type": "Graduate Assistantship",
+    "grad_confidence": 0.75,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Zookeeper",
@@ -4277,7 +5047,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.543474+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244942+00:00"
+    "first_seen": "2025-07-13T14:47:11.244942+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Environmental Education and Science Communication Fellows",
@@ -4299,7 +5074,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.556386+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244799+00:00"
+    "first_seen": "2025-07-13T14:47:11.244799+00:00",
+    "is_graduate_position": true,
+    "position_type": "Masters Position",
+    "grad_confidence": 0.2,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Farm Hand / Apprentice",
@@ -4321,7 +5101,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.550054+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244943+00:00"
+    "first_seen": "2025-07-13T14:47:11.244943+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "*Quebec, Canada* Funded MSc and PhD opportunities in Ecology",
@@ -4444,7 +5229,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.562592+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244943+00:00"
+    "first_seen": "2025-07-13T14:47:11.244943+00:00",
+    "is_graduate_position": true,
+    "position_type": "Graduate Position",
+    "grad_confidence": 0.2,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "NCC Staff Crew Lead (The Great Basin Institute)",
@@ -4466,7 +5256,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.568577+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244944+00:00"
+    "first_seen": "2025-07-13T14:47:11.244944+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Outdoor Environmental Educator at the Nations Largest 4",
@@ -4488,7 +5283,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.574826+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244945+00:00"
+    "first_seen": "2025-07-13T14:47:11.244945+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "USDA",
@@ -4510,7 +5310,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.580970+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244946+00:00"
+    "first_seen": "2025-07-13T14:47:11.244946+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "*Quebec, Canada* Funded MSc and PhD opportunities in Ecology",
@@ -4637,7 +5442,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.599599+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244955+00:00"
+    "first_seen": "2025-07-13T14:47:11.244955+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "USDA",
@@ -4659,7 +5469,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.605606+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244956+00:00"
+    "first_seen": "2025-07-13T14:47:11.244956+00:00",
+    "is_graduate_position": true,
+    "position_type": "Fellowship",
+    "grad_confidence": 0.2,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "North Branch Conservation Corps Assistant Crew Manager",
@@ -4681,7 +5496,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.617850+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244960+00:00"
+    "first_seen": "2025-07-13T14:47:11.244960+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Desert Tortoise Biologist – Nevada Greenlink Transmission Project",
@@ -4703,7 +5523,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.624286+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244961+00:00"
+    "first_seen": "2025-07-13T14:47:11.244961+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "South Floater Conservation Corps Crew Member",
@@ -4725,7 +5550,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.630717+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244962+00:00"
+    "first_seen": "2025-07-13T14:47:11.244962+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Temporary Field Botanist – Northern CA",
@@ -4747,7 +5577,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.636698+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244963+00:00"
+    "first_seen": "2025-07-13T14:47:11.244963+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Bird Banding Technician Internship",
@@ -4769,7 +5604,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.642660+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244963+00:00"
+    "first_seen": "2025-07-13T14:47:11.244963+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "On-Site Manager (French Island Farm and Ranch, LP)",
@@ -4791,7 +5631,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.648558+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244965+00:00"
+    "first_seen": "2025-07-13T14:47:11.244965+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Environmental Education and Science Communication Fellows - Masters Degree",
@@ -4834,7 +5679,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.654273+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244966+00:00"
+    "first_seen": "2025-07-13T14:47:11.244966+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "INTERDISCIPLINARY POST-DOCTORAL SCIENTIST POSITION (IN ECOSYSTEM DATABASE DEVELOPMENT & HUMAN DIMENSIONS)",
@@ -4877,7 +5727,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.660076+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244966+00:00"
+    "first_seen": "2025-07-13T14:47:11.244966+00:00",
+    "is_graduate_position": true,
+    "position_type": "Masters Position",
+    "grad_confidence": 0.2,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Fisheries Biologist",
@@ -4899,7 +5754,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.671542+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244971+00:00"
+    "first_seen": "2025-07-13T14:47:11.244971+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "PhD Graduate Research Assistantship: Virtual Fence – Range Cattle",
@@ -4956,7 +5816,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.677288+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244972+00:00"
+    "first_seen": "2025-07-13T14:47:11.244972+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Aquatic Field Biologist",
@@ -4978,7 +5843,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.683206+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244973+00:00"
+    "first_seen": "2025-07-13T14:47:11.244973+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Commercial Fishing Deckhand",
@@ -5000,7 +5870,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.694594+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244977+00:00"
+    "first_seen": "2025-07-13T14:47:11.244977+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "PhD Graduate Research Assistantship: Virtual Fence – Range Cattle",
@@ -5046,7 +5921,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.700658+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244978+00:00"
+    "first_seen": "2025-07-13T14:47:11.244978+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Full time & Assistant Lab Manager",
@@ -5068,7 +5948,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.706681+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244979+00:00"
+    "first_seen": "2025-07-13T14:47:11.244979+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Junior Forest Hydrologist",
@@ -5090,7 +5975,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.712523+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244980+00:00"
+    "first_seen": "2025-07-13T14:47:11.244980+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Associate Veterinarian – Feline & Small Mammal Exclusive Practice (Long Island, NY)",
@@ -5112,7 +6002,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.718432+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244981+00:00"
+    "first_seen": "2025-07-13T14:47:11.244981+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Postdoctoral Researcher Everglades Coastal Fisheries",
@@ -5155,7 +6050,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.735814+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244982+00:00"
+    "first_seen": "2025-07-13T14:47:11.244982+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Fall Elmwood Park Zoo Conservation, Animal Care & Education Internships",
@@ -5177,7 +6077,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.750543+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244982+00:00"
+    "first_seen": "2025-07-13T14:47:11.244982+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Northern Bobwhite Research Intern",
@@ -5199,7 +6104,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.757260+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244983+00:00"
+    "first_seen": "2025-07-13T14:47:11.244983+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Outdoor Educator",
@@ -5221,7 +6131,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.763506+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244984+00:00"
+    "first_seen": "2025-07-13T14:47:11.244984+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Graduate Assistantship in Environmental Microbiology",
@@ -5267,7 +6182,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.769726+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244985+00:00"
+    "first_seen": "2025-07-13T14:47:11.244985+00:00",
+    "is_graduate_position": true,
+    "position_type": "PhD Position",
+    "grad_confidence": 0.85,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "PhD Student, Movement Ecology of Midcontinent Mallards, Arkansas",
@@ -5345,7 +6265,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.775622+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244986+00:00"
+    "first_seen": "2025-07-13T14:47:11.244986+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Turtle Radio Telemetry Technician Internship",
@@ -5367,7 +6292,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.780836+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244986+00:00"
+    "first_seen": "2025-07-13T14:47:11.244986+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Natural Resource Technician",
@@ -5389,7 +6319,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.786426+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244987+00:00"
+    "first_seen": "2025-07-13T14:47:11.244987+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "PhD Student, Movement Ecology of Midcontinent Mallards, Arkansas",
@@ -5480,7 +6415,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.803542+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244995+00:00"
+    "first_seen": "2025-07-13T14:47:11.244995+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "California State Parks Peace Officer Cadet Academy",
@@ -5502,7 +6442,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.809200+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244996+00:00"
+    "first_seen": "2025-07-13T14:47:11.244996+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "NRI Data Collection Assistant",
@@ -5524,7 +6469,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.814760+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244997+00:00"
+    "first_seen": "2025-07-13T14:47:11.244997+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Frank Buck Zoo: Animal Care Specialist (Hoofstock)",
@@ -5546,7 +6496,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:01.820661+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244998+00:00"
+    "first_seen": "2025-07-13T14:47:11.244998+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Alaska Fellows Program Fellow",
@@ -5568,7 +6523,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:06.223163+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244999+00:00"
+    "first_seen": "2025-07-13T14:47:11.244999+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Archaeologist",
@@ -5590,7 +6550,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:06.231685+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.244999+00:00"
+    "first_seen": "2025-07-13T14:47:11.244999+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Edu",
@@ -5612,7 +6577,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:06.245129+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.245004+00:00"
+    "first_seen": "2025-07-13T14:47:11.245004+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Conservation and Recovery Specialist",
@@ -5634,7 +6604,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:06.251437+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.245005+00:00"
+    "first_seen": "2025-07-13T14:47:11.245005+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.0,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "NOAA Harmful Algal Bloom Laboratory and Field Support Research Fellowship",
@@ -5677,7 +6652,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:06.263523+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.245009+00:00"
+    "first_seen": "2025-07-13T14:47:11.245009+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Instructional Intern, Casper Mountain Science Program (Housing + Pay Provided)",
@@ -5699,7 +6679,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:06.269817+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.245010+00:00"
+    "first_seen": "2025-07-13T14:47:11.245010+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Naturalist Intern",
@@ -5721,7 +6706,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:06.276288+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.245011+00:00"
+    "first_seen": "2025-07-13T14:47:11.245011+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "MSc Position – Forest Disturbance Ecology & Remote Sensing",
@@ -6356,7 +7346,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:06.294167+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.245015+00:00"
+    "first_seen": "2025-07-13T14:47:11.245015+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Continuing Education - Master's degrees for Natural Resources Professionals",
@@ -6423,7 +7418,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:06.318528+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.245016+00:00"
+    "first_seen": "2025-07-13T14:47:11.245016+00:00",
+    "is_graduate_position": true,
+    "position_type": "Masters Position",
+    "grad_confidence": 0.85,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Continuing Education",
@@ -6445,7 +7445,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:06.324964+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.245017+00:00"
+    "first_seen": "2025-07-13T14:47:11.245017+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Board of Directors",
@@ -6467,7 +7472,12 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:06.330918+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.245018+00:00"
+    "first_seen": "2025-07-13T14:47:11.245018+00:00",
+    "is_graduate_position": true,
+    "position_type": "Masters Position",
+    "grad_confidence": 0.2,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   },
   {
     "title": "Inland Fisheries Management Seasonal Research Assistant",
@@ -6510,6 +7520,11 @@
     "contact_info": "",
     "scraped_at": "2025-07-13T14:46:06.336865+00:00",
     "scraper_version": "4.0-targeted",
-    "first_seen": "2025-07-13T14:47:11.245019+00:00"
+    "first_seen": "2025-07-13T14:47:11.245019+00:00",
+    "is_graduate_position": false,
+    "position_type": "Professional/Other",
+    "grad_confidence": 0.1,
+    "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
+    "classification_backfill_source": "GraduatePositionDetector"
   }
 ]
