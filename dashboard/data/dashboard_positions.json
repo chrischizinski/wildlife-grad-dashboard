@@ -24,6 +24,8 @@
     "scraped_at": "2026-02-19T18:12:10.254949+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:10.254949+00:00",
+    "last_updated": "2026-02-19T18:12:10.254949+00:00",
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "",
     "discipline_refinement_source": "rule"
@@ -57,6 +59,8 @@
     "scraped_at": "2026-02-19T18:11:47.642687+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:47.642687+00:00",
+    "last_updated": "2026-02-19T18:11:47.642687+00:00",
     "discipline_primary": "Environmental Sciences",
     "discipline_secondary": "Wildlife",
     "discipline_refinement_source": "rule"
@@ -90,6 +94,8 @@
     "scraped_at": "2026-02-19T18:12:11.037688+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:11.037688+00:00",
+    "last_updated": "2026-02-19T18:12:11.037688+00:00",
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "Entomology",
     "discipline_refinement_source": "rule"
@@ -119,6 +125,8 @@
     "scraped_at": "2026-02-19T18:12:18.717884+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:18.717884+00:00",
+    "last_updated": "2026-02-19T18:12:18.717884+00:00",
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "Environmental Sciences",
     "discipline_refinement_source": "secondary_ml"
@@ -153,6 +161,8 @@
     "scraped_at": "2026-02-19T18:11:49.147162+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:49.147162+00:00",
+    "last_updated": "2026-02-19T18:11:49.147162+00:00",
     "discipline_primary": "Environmental Sciences",
     "discipline_secondary": "",
     "discipline_refinement_source": "rule"
@@ -182,6 +192,8 @@
     "scraped_at": "2026-02-19T18:11:49.195879+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:49.195879+00:00",
+    "last_updated": "2026-02-19T18:11:49.195879+00:00",
     "discipline_primary": "Environmental Sciences",
     "discipline_secondary": "",
     "discipline_refinement_source": "rule"
@@ -217,6 +229,8 @@
     "scraped_at": "2026-02-19T18:11:49.242747+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:49.242747+00:00",
+    "last_updated": "2026-02-19T18:11:49.242747+00:00",
     "discipline_primary": "Environmental Sciences",
     "discipline_secondary": "Wildlife",
     "discipline_refinement_source": "rule"
@@ -246,6 +260,8 @@
     "scraped_at": "2026-02-19T18:11:49.291624+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:49.291624+00:00",
+    "last_updated": "2026-02-19T18:11:49.291624+00:00",
     "discipline_primary": "Environmental Sciences",
     "discipline_secondary": "Forestry and Habitat",
     "discipline_refinement_source": "rule"
@@ -275,6 +291,8 @@
     "scraped_at": "2026-02-19T18:11:47.803658+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:47.803658+00:00",
+    "last_updated": "2026-02-19T18:11:47.803658+00:00",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "Wildlife",
     "discipline_refinement_source": "rule"
@@ -304,6 +322,8 @@
     "scraped_at": "2026-02-19T18:12:10.302979+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:10.302979+00:00",
+    "last_updated": "2026-02-19T18:12:10.302979+00:00",
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "",
     "discipline_refinement_source": "rule"
@@ -338,6 +358,8 @@
     "scraped_at": "2026-02-19T18:12:19.126905+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:19.126905+00:00",
+    "last_updated": "2026-02-19T18:12:19.126905+00:00",
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "Environmental Sciences",
     "discipline_refinement_source": "secondary_ml"
@@ -367,6 +389,8 @@
     "scraped_at": "2026-02-19T18:11:49.339121+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:49.339121+00:00",
+    "last_updated": "2026-02-19T18:11:49.339121+00:00",
     "discipline_primary": "Agriculture",
     "discipline_secondary": "",
     "discipline_refinement_source": "rule"
@@ -400,6 +424,8 @@
     "scraped_at": "2026-02-19T18:12:11.086863+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:11.086863+00:00",
+    "last_updated": "2026-02-19T18:12:11.086863+00:00",
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "Entomology",
     "discipline_refinement_source": "rule"
@@ -434,6 +460,8 @@
     "scraped_at": "2026-02-19T18:12:10.453144+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:10.453144+00:00",
+    "last_updated": "2026-02-19T18:12:10.453144+00:00",
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "",
     "discipline_refinement_source": "rule"
@@ -469,6 +497,8 @@
     "scraped_at": "2026-02-19T18:11:49.385915+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:49.385915+00:00",
+    "last_updated": "2026-02-19T18:11:49.385915+00:00",
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "Agriculture",
     "discipline_refinement_source": "rule"
@@ -498,6 +528,8 @@
     "scraped_at": "2026-02-19T18:11:55.485268+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:55.485268+00:00",
+    "last_updated": "2026-02-19T18:11:55.485268+00:00",
     "discipline_primary": "Human Dimensions",
     "discipline_secondary": "Wildlife",
     "discipline_refinement_source": "rule"
@@ -527,6 +559,8 @@
     "scraped_at": "2026-02-19T18:11:55.598830+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:55.598830+00:00",
+    "last_updated": "2026-02-19T18:11:55.598830+00:00",
     "discipline_primary": "Environmental Sciences",
     "discipline_secondary": "",
     "discipline_refinement_source": "rule"
@@ -561,6 +595,8 @@
     "scraped_at": "2026-02-19T18:12:11.136744+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:11.136744+00:00",
+    "last_updated": "2026-02-19T18:12:11.136744+00:00",
     "discipline_primary": "Environmental Sciences",
     "discipline_secondary": "Forestry and Habitat",
     "discipline_refinement_source": "rule"
@@ -590,6 +626,8 @@
     "scraped_at": "2026-02-19T18:12:18.819499+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:18.819499+00:00",
+    "last_updated": "2026-02-19T18:12:18.819499+00:00",
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "Environmental Sciences",
     "discipline_refinement_source": "secondary_ml"
@@ -624,6 +662,8 @@
     "scraped_at": "2026-02-19T18:12:17.909560+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:17.909560+00:00",
+    "last_updated": "2026-02-19T18:12:17.909560+00:00",
     "discipline_primary": "Wildlife",
     "discipline_secondary": "Forestry and Habitat",
     "discipline_refinement_source": "rule"
@@ -653,6 +693,8 @@
     "scraped_at": "2026-02-19T18:11:47.854675+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:47.854675+00:00",
+    "last_updated": "2026-02-19T18:11:47.854675+00:00",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "Wildlife",
     "discipline_refinement_source": "rule"
@@ -682,6 +724,8 @@
     "scraped_at": "2026-02-19T18:11:48.331698+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:48.331698+00:00",
+    "last_updated": "2026-02-19T18:11:48.331698+00:00",
     "discipline_primary": "Human Dimensions",
     "discipline_secondary": "",
     "discipline_refinement_source": "rule"
@@ -711,6 +755,8 @@
     "scraped_at": "2026-02-19T18:11:55.654722+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:55.654722+00:00",
+    "last_updated": "2026-02-19T18:11:55.654722+00:00",
     "discipline_primary": "Environmental Sciences",
     "discipline_secondary": "",
     "discipline_refinement_source": "rule"
@@ -740,6 +786,8 @@
     "scraped_at": "2026-02-19T18:12:10.502931+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:10.502931+00:00",
+    "last_updated": "2026-02-19T18:12:10.502931+00:00",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "Human Dimensions",
     "discipline_refinement_source": "rule"
@@ -769,6 +817,8 @@
     "scraped_at": "2026-02-19T18:11:49.535109+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:49.535109+00:00",
+    "last_updated": "2026-02-19T18:11:49.535109+00:00",
     "discipline_primary": "Wildlife",
     "discipline_secondary": "Forestry and Habitat",
     "discipline_refinement_source": "rule"
@@ -798,6 +848,8 @@
     "scraped_at": "2026-02-19T18:11:55.709709+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:55.709709+00:00",
+    "last_updated": "2026-02-19T18:11:55.709709+00:00",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "Wildlife",
     "discipline_refinement_source": "rule"
@@ -827,6 +879,8 @@
     "scraped_at": "2026-02-19T18:11:48.380636+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:48.380636+00:00",
+    "last_updated": "2026-02-19T18:11:48.380636+00:00",
     "discipline_primary": "Human Dimensions",
     "discipline_secondary": "",
     "discipline_refinement_source": "rule"
@@ -856,6 +910,8 @@
     "scraped_at": "2026-02-19T18:12:18.112025+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:18.112025+00:00",
+    "last_updated": "2026-02-19T18:12:18.112025+00:00",
     "discipline_primary": "Other",
     "discipline_secondary": "",
     "discipline_refinement_source": "rule"
@@ -922,6 +978,8 @@
     "scraped_at": "2026-02-19T18:11:49.583267+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:49.583267+00:00",
+    "last_updated": "2026-02-19T18:11:49.583267+00:00",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "",
     "discipline_refinement_source": "rule"
@@ -2752,11 +2810,40 @@
     ],
     "is_big10_university": false,
     "university_name": "",
-    "scraped_at": "2026-02-19T18:12:10.776919+00:00",
-    "scrape_run_id": "scrape_20260219_181116_cb92cc01",
+    "scraped_at": "2026-02-22T05:12:39.268241+00:00",
+    "scrape_run_id": "scrape_20260222_051211_d86124e9",
     "scraper_version": "2.0",
     "discipline_primary": "Environmental Sciences",
     "discipline_secondary": "Forestry and Habitat",
+    "discipline_refinement_source": "rule"
+  },
+  {
+    "title": "Naturalist Boat Captain",
+    "organization": "Tideline Tours (Private)",
+    "location": "Sunset Cay Marina (Folly Beach, South Carolina)",
+    "salary": "starting at $23 per hour",
+    "starting_date": "before 4/1/2026",
+    "published_date": "02/19/2026",
+    "tags": "N/A",
+    "url": "https://jobs.rwfm.tamu.edu/view-job/?id=113920",
+    "description": "Naturalist Boat Captain\nTideline Tours (Private) | https://www.tidelinetours.com\nDetails\nPosting:\nhttps://www.instagram.com/p/DUJpuYSj36I/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==\nApplication Deadline:\n03/04/2026\nPublished:\n02/19/2026\nStarting Date:\nbefore 4/1/2026\nHours per Week:\n10 - 25\nSalary:\nstarting at $23 per hour\nEducation Required:\nnone\nExperience Required:\nat least 1 year\nLocation:\nSunset Cay Marina (Folly Beach, South Carolina)\nDescription\n Work outdoors in Charleston, SC exploring the beautiful waterways surrounding Folly Beach! We are seeking part-time boat captains to lead eco-tours for the 2026 season.\n\nKey Responsibilities:\nCaptain 24ft/12pax & 28ft/18pax Carolina Skiffs\nLead 2 & 3 hour eco tours for a variety of audiences\nParticipate in training prior to your first solo tour\nDisplay excellent customer-service skills when working with guests\nSafely operate and navigate vessels\nProvide engaging, educational commentary about the local wildlife, marine ecosystems, and local history.\nConduct pre- and post-trip inspections of the vessel.\nPerform daily maintenance like refueling, cleaning, and other light maintenance tasks. Communicate larger maintenance needs promptly and assist as needed.\nComply with all U.S. Coast Guard regulations and company safety protocols.\n\nRequired Qualifications:\nActive Masters USCG license required.\nCPR/First Aid/Lifeguard certification (we will provide recertification if necessary).\nAbility to lift at least 50 lbs and perform physical tasks associated with boat operations.\nAbility to work outdoors in all weather conditions, including extreme heat and humidity\nWillingness to work evenings and weekends.\nExperience with public speaking.\nExcellent customer service and people skills.\nMust be reliable, professional, and able to remain calm and adaptable in stressful circumstances.\n\nPreferred Qualifications:\nPreference will be given to candidates who have experience with trailering, boat maintenance, and/or working with children.\nKnowledge of local waterways, wildlife, and environmental issues is highly preferred (education or hands-on work experience).\nWork Schedule: This is a part-time, seasonal role with hours/scheduling flexible for the right candidate. The busiest season is Memorial Day to Labor Day, but we operate regularly from March-November. Tours operate 7 days a week and include late evening sunset trips.\n\nCompensation: Competitive hourly rate plus tips. Training pay is $20/hr and will go up after training period commensurate with performance and experience. Our Captains average ~$40/hour including tips.\n\nBenefits:\nUse of kayaks and paddling equipment\nFree seats on boat tours when available\nPro deals on national outdoor brands\n\nHow to Apply: Please submit a resume and a short introduction to saltmarshadventure@gmail.com. Please include “Part-time Captain Application” in the subject line.\n\nAbout Tideline Tours: Tideline Tours is a eco-tourism company based in Folly Beach, South Carolina. We specialize in outdoor education, although we offer a wide range of tour options including dolphin tours, fossil hunting, kayaking, culinary tours, and special events like bachelorette parties and kids' programs. For more information about our tours and company, visit our website: www.tidelinetours.com .\n\nJob Types: Part-time, Contract, Temporary\n\nBenefits:\nEmployee discount\nFlexible schedule\nProfessional development assistance\n\nLicense/Certification:\nUSCG Master License (Required)\nLifeguard, CPR, First Aid (we will provide training if needed)\nContact\nOlivia DePue\nsaltmarshadventure@gmail.com (preferred contact method)",
+    "requirements": "Hours per Week:\n10 - 25\nSalary:\nstarting at $23 per hour\nEducation Required:\nnone\nExperience Required:\nat least 1 year",
+    "project_details": "",
+    "contact_info": "",
+    "application_deadline": "03/04/2026\nPublished:\n02/19/2026\nStarting Date:\nbefore 4/1/2026\nHours per Week:\n10 - 25\nSalary:\nstarting at $23 per hour\nEducation Required:\nnone\nExperience Required:\nat least 1 year\nLocation:\nSunset Cay Marina (Folly Beach, South Carolina)\nDescription\n Work outdoors in Charleston, SC exploring the beautiful waterways surrounding Folly Beach! We are seeking part-time boat captains to lead eco-tours for the 2026 season",
+    "is_graduate_position": true,
+    "grad_confidence": 0.2,
+    "position_type": "Masters Position",
+    "discipline": "Fisheries and Aquatic",
+    "discipline_confidence": 0.0,
+    "discipline_keywords": [],
+    "is_big10_university": false,
+    "university_name": "",
+    "scraped_at": "2026-02-22T05:12:40.167863+00:00",
+    "scrape_run_id": "scrape_20260222_051211_d86124e9",
+    "scraper_version": "2.0",
+    "discipline_primary": "Fisheries and Aquatic",
+    "discipline_secondary": "Wildlife",
     "discipline_refinement_source": "rule"
   },
   {
@@ -2781,8 +2868,8 @@
     "discipline_keywords": [],
     "is_big10_university": false,
     "university_name": "",
-    "scraped_at": "2026-02-19T18:11:48.431339+00:00",
-    "scrape_run_id": "scrape_20260219_181116_cb92cc01",
+    "scraped_at": "2026-02-22T05:12:37.886723+00:00",
+    "scrape_run_id": "scrape_20260222_051211_d86124e9",
     "scraper_version": "2.0",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "Wildlife",
@@ -2816,8 +2903,8 @@
     ],
     "is_big10_university": false,
     "university_name": "",
-    "scraped_at": "2026-02-19T18:11:49.678155+00:00",
-    "scrape_run_id": "scrape_20260219_181116_cb92cc01",
+    "scraped_at": "2026-02-22T05:12:38.193547+00:00",
+    "scrape_run_id": "scrape_20260222_051211_d86124e9",
     "scraper_version": "2.0",
     "discipline_primary": "Wildlife",
     "discipline_secondary": "Human Dimensions",
@@ -2845,8 +2932,8 @@
     "discipline_keywords": [],
     "is_big10_university": true,
     "university_name": "University of Oregon",
-    "scraped_at": "2026-02-19T18:12:09.827210+00:00",
-    "scrape_run_id": "scrape_20260219_181116_cb92cc01",
+    "scraped_at": "2026-02-22T05:12:39.055606+00:00",
+    "scrape_run_id": "scrape_20260222_051211_d86124e9",
     "scraper_version": "2.0",
     "discipline_primary": "Wildlife",
     "discipline_secondary": "Forestry and Habitat",
@@ -2874,8 +2961,8 @@
     "discipline_keywords": [],
     "is_big10_university": false,
     "university_name": "",
-    "scraped_at": "2026-02-19T18:11:48.481151+00:00",
-    "scrape_run_id": "scrape_20260219_181116_cb92cc01",
+    "scraped_at": "2026-02-22T05:12:37.987771+00:00",
+    "scrape_run_id": "scrape_20260222_051211_d86124e9",
     "scraper_version": "2.0",
     "discipline_primary": "Environmental Sciences",
     "discipline_secondary": "Fisheries and Aquatic",
@@ -2912,6 +2999,8 @@
     "scraped_at": "2026-02-19T18:11:49.778953+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-18T19:00:01.533945+00:00",
+    "last_updated": "2026-02-19T18:11:49.778953+00:00",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "",
     "discipline_refinement_source": "rule"
@@ -2941,6 +3030,8 @@
     "scraped_at": "2026-02-19T18:11:56.319339+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:56.319339+00:00",
+    "last_updated": "2026-02-19T18:11:56.319339+00:00",
     "discipline_primary": "Agriculture",
     "discipline_secondary": "Environmental Sciences",
     "discipline_refinement_source": "rule"
@@ -3004,6 +3095,8 @@
     "scraped_at": "2026-02-19T18:11:48.633233+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:48.633233+00:00",
+    "last_updated": "2026-02-19T18:11:48.633233+00:00",
     "discipline_primary": "Human Dimensions",
     "discipline_secondary": "Wildlife",
     "discipline_refinement_source": "rule"
@@ -3033,6 +3126,8 @@
     "scraped_at": "2026-02-19T18:11:48.681291+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:48.681291+00:00",
+    "last_updated": "2026-02-19T18:11:48.681291+00:00",
     "discipline_primary": "Agriculture",
     "discipline_secondary": "Wildlife",
     "discipline_refinement_source": "rule"
@@ -3062,6 +3157,8 @@
     "scraped_at": "2026-02-19T18:11:56.972073+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:56.972073+00:00",
+    "last_updated": "2026-02-19T18:11:56.972073+00:00",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "Human Dimensions",
     "discipline_refinement_source": "rule"
@@ -3091,6 +3188,8 @@
     "scraped_at": "2026-02-19T18:12:26.766121+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:26.766121+00:00",
+    "last_updated": "2026-02-19T18:12:26.766121+00:00",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "Wildlife",
     "discipline_refinement_source": "rule"
@@ -3120,6 +3219,8 @@
     "scraped_at": "2026-02-19T18:11:47.590504+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:47.590504+00:00",
+    "last_updated": "2026-02-19T18:11:47.590504+00:00",
     "discipline_primary": "Wildlife",
     "discipline_secondary": "Human Dimensions",
     "discipline_refinement_source": "rule"
@@ -3149,6 +3250,8 @@
     "scraped_at": "2026-02-19T18:11:49.924238+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:49.924238+00:00",
+    "last_updated": "2026-02-19T18:11:49.924238+00:00",
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "",
     "discipline_refinement_source": "rule"
@@ -3178,6 +3281,8 @@
     "scraped_at": "2026-02-19T18:12:31.102499+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:31.102499+00:00",
+    "last_updated": "2026-02-19T18:12:31.102499+00:00",
     "discipline_primary": "Entomology",
     "discipline_secondary": "Forestry and Habitat",
     "discipline_refinement_source": "rule"
@@ -3213,6 +3318,8 @@
     "scraped_at": "2026-02-19T18:12:09.962967+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:09.962967+00:00",
+    "last_updated": "2026-02-19T18:12:09.962967+00:00",
     "discipline_primary": "Wildlife",
     "discipline_secondary": "Forestry and Habitat",
     "discipline_refinement_source": "rule"
@@ -3248,6 +3355,8 @@
     "scraped_at": "2026-02-19T18:12:10.009894+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:10.009894+00:00",
+    "last_updated": "2026-02-19T18:12:10.009894+00:00",
     "discipline_primary": "Wildlife",
     "discipline_secondary": "Forestry and Habitat",
     "discipline_refinement_source": "rule"
@@ -3311,6 +3420,8 @@
     "scraped_at": "2026-02-19T18:11:54.900693+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:54.900693+00:00",
+    "last_updated": "2026-02-19T18:11:54.900693+00:00",
     "discipline_primary": "Human Dimensions",
     "discipline_secondary": "Wildlife",
     "discipline_refinement_source": "rule"
@@ -3340,6 +3451,8 @@
     "scraped_at": "2026-02-19T18:11:48.072218+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:48.072218+00:00",
+    "last_updated": "2026-02-19T18:11:48.072218+00:00",
     "discipline_primary": "Human Dimensions",
     "discipline_secondary": "",
     "discipline_refinement_source": "rule"
@@ -3369,6 +3482,8 @@
     "scraped_at": "2026-02-19T18:11:54.955760+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:54.955760+00:00",
+    "last_updated": "2026-02-19T18:11:54.955760+00:00",
     "discipline_primary": "Wildlife",
     "discipline_secondary": "Human Dimensions",
     "discipline_refinement_source": "rule"
@@ -3398,6 +3513,8 @@
     "scraped_at": "2026-02-19T18:11:55.010916+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:55.010916+00:00",
+    "last_updated": "2026-02-19T18:11:55.010916+00:00",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "Wildlife",
     "discipline_refinement_source": "rule"
@@ -3427,6 +3544,8 @@
     "scraped_at": "2026-02-19T18:12:03.187299+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:03.187299+00:00",
+    "last_updated": "2026-02-19T18:12:03.187299+00:00",
     "discipline_primary": "Agriculture",
     "discipline_secondary": "Entomology",
     "discipline_refinement_source": "rule"
@@ -3456,6 +3575,8 @@
     "scraped_at": "2026-02-19T18:12:19.797405+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:19.797405+00:00",
+    "last_updated": "2026-02-19T18:12:19.797405+00:00",
     "discipline_primary": "Environmental Sciences",
     "discipline_secondary": "",
     "discipline_refinement_source": "rule"
@@ -3491,6 +3612,8 @@
     "scraped_at": "2026-02-19T18:12:03.431430+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:03.431430+00:00",
+    "last_updated": "2026-02-19T18:12:03.431430+00:00",
     "discipline_primary": "Environmental Sciences",
     "discipline_secondary": "Human Dimensions",
     "discipline_refinement_source": "rule"
@@ -3520,6 +3643,8 @@
     "scraped_at": "2026-02-19T18:11:55.167681+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:55.167681+00:00",
+    "last_updated": "2026-02-19T18:11:55.167681+00:00",
     "discipline_primary": "Agriculture",
     "discipline_secondary": "Forestry and Habitat",
     "discipline_refinement_source": "rule"
@@ -3549,6 +3674,8 @@
     "scraped_at": "2026-02-19T18:12:03.596315+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:03.596315+00:00",
+    "last_updated": "2026-02-19T18:12:03.596315+00:00",
     "discipline_primary": "Agriculture",
     "discipline_secondary": "",
     "discipline_refinement_source": "rule"
@@ -3578,6 +3705,8 @@
     "scraped_at": "2026-02-19T18:12:03.828192+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:03.828192+00:00",
+    "last_updated": "2026-02-19T18:12:03.828192+00:00",
     "discipline_primary": "Agriculture",
     "discipline_secondary": "",
     "discipline_refinement_source": "rule"
@@ -3607,6 +3736,8 @@
     "scraped_at": "2026-02-19T18:12:33.054313+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:33.054313+00:00",
+    "last_updated": "2026-02-19T18:12:33.054313+00:00",
     "discipline_primary": "Wildlife",
     "discipline_secondary": "Human Dimensions",
     "discipline_refinement_source": "rule"
@@ -3706,6 +3837,8 @@
     "scraped_at": "2026-02-19T18:12:17.674676+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:17.674676+00:00",
+    "last_updated": "2026-02-19T18:12:17.674676+00:00",
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "Wildlife",
     "discipline_refinement_source": "rule"
@@ -3735,6 +3868,8 @@
     "scraped_at": "2026-02-19T18:11:48.984008+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:48.984008+00:00",
+    "last_updated": "2026-02-19T18:11:48.984008+00:00",
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "Wildlife",
     "discipline_refinement_source": "rule"
@@ -3764,6 +3899,8 @@
     "scraped_at": "2026-02-19T18:12:04.053390+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:04.053390+00:00",
+    "last_updated": "2026-02-19T18:12:04.053390+00:00",
     "discipline_primary": "Agriculture",
     "discipline_secondary": "",
     "discipline_refinement_source": "rule"
@@ -3793,6 +3930,8 @@
     "scraped_at": "2026-02-19T18:12:04.159377+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:04.159377+00:00",
+    "last_updated": "2026-02-19T18:12:04.159377+00:00",
     "discipline_primary": "Agriculture",
     "discipline_secondary": "Human Dimensions",
     "discipline_refinement_source": "rule"
@@ -3822,6 +3961,8 @@
     "scraped_at": "2026-02-19T18:12:04.207451+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:04.207451+00:00",
+    "last_updated": "2026-02-19T18:12:04.207451+00:00",
     "discipline_primary": "Agriculture",
     "discipline_secondary": "",
     "discipline_refinement_source": "rule"
@@ -3851,6 +3992,8 @@
     "scraped_at": "2026-02-19T18:12:04.436463+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:04.436463+00:00",
+    "last_updated": "2026-02-19T18:12:04.436463+00:00",
     "discipline_primary": "Agriculture",
     "discipline_secondary": "",
     "discipline_refinement_source": "rule"
@@ -3883,6 +4026,8 @@
     "scraped_at": "2026-02-19T18:11:49.031696+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:49.031696+00:00",
+    "last_updated": "2026-02-19T18:11:49.031696+00:00",
     "discipline_primary": "Agriculture",
     "discipline_secondary": "Environmental Sciences",
     "discipline_refinement_source": "rule"
@@ -3918,6 +4063,8 @@
     "scraped_at": "2026-02-19T18:12:39.355125+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:39.355125+00:00",
+    "last_updated": "2026-02-19T18:12:39.355125+00:00",
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "Human Dimensions",
     "discipline_refinement_source": "rule"
@@ -3947,6 +4094,8 @@
     "scraped_at": "2026-02-19T18:12:39.409521+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:39.409521+00:00",
+    "last_updated": "2026-02-19T18:12:39.409521+00:00",
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "Agriculture",
     "discipline_refinement_source": "rule"
@@ -4007,6 +4156,8 @@
     "scraped_at": "2026-02-19T18:11:49.093735+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:11:49.093735+00:00",
+    "last_updated": "2026-02-19T18:11:49.093735+00:00",
     "discipline_primary": "Wildlife",
     "discipline_secondary": "",
     "discipline_refinement_source": "rule"
@@ -4036,6 +4187,8 @@
     "scraped_at": "2026-02-19T18:12:04.989005+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:04.989005+00:00",
+    "last_updated": "2026-02-19T18:12:04.989005+00:00",
     "discipline_primary": "Entomology",
     "discipline_secondary": "",
     "discipline_refinement_source": "rule"
@@ -4065,6 +4218,8 @@
     "scraped_at": "2026-02-19T18:12:05.156659+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:05.156659+00:00",
+    "last_updated": "2026-02-19T18:12:05.156659+00:00",
     "discipline_primary": "Entomology",
     "discipline_secondary": "Agriculture",
     "discipline_refinement_source": "rule"
@@ -4094,6 +4249,8 @@
     "scraped_at": "2026-02-19T18:12:05.200762+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:05.200762+00:00",
+    "last_updated": "2026-02-19T18:12:05.200762+00:00",
     "discipline_primary": "Agriculture",
     "discipline_secondary": "Human Dimensions",
     "discipline_refinement_source": "rule"
@@ -4123,6 +4280,8 @@
     "scraped_at": "2026-02-19T18:12:05.254143+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:05.254143+00:00",
+    "last_updated": "2026-02-19T18:12:05.254143+00:00",
     "discipline_primary": "Agriculture",
     "discipline_secondary": "Environmental Sciences",
     "discipline_refinement_source": "rule"
@@ -4152,6 +4311,8 @@
     "scraped_at": "2026-02-19T18:12:09.171931+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:09.171931+00:00",
+    "last_updated": "2026-02-19T18:12:09.171931+00:00",
     "discipline_primary": "Agriculture",
     "discipline_secondary": "Environmental Sciences",
     "discipline_refinement_source": "rule"
@@ -4181,6 +4342,8 @@
     "scraped_at": "2026-02-19T18:12:09.284630+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:09.284630+00:00",
+    "last_updated": "2026-02-19T18:12:09.284630+00:00",
     "discipline_primary": "Agriculture",
     "discipline_secondary": "Forestry and Habitat",
     "discipline_refinement_source": "rule"
@@ -4210,6 +4373,8 @@
     "scraped_at": "2026-02-19T18:12:09.333689+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:09.333689+00:00",
+    "last_updated": "2026-02-19T18:12:09.333689+00:00",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "Agriculture",
     "discipline_refinement_source": "rule"
@@ -4239,6 +4404,8 @@
     "scraped_at": "2026-02-19T18:12:26.379442+00:00",
     "scrape_run_id": "scrape_20260219_181116_cb92cc01",
     "scraper_version": "2.0",
+    "first_seen": "2026-02-19T18:12:26.379442+00:00",
+    "last_updated": "2026-02-19T18:12:26.379442+00:00",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "",
     "discipline_refinement_source": "rule"

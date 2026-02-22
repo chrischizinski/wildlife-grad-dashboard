@@ -1,14 +1,14 @@
 {
   "metadata": {
-    "generated_at": "2026-02-19T13:21:59.971726",
-    "total_positions": 135,
+    "generated_at": "2026-02-22T05:14:39.712541",
+    "total_positions": 136,
     "source": "merged (historical + latest + enhanced)",
     "discipline_mapping": "consolidated to 8 categories"
   },
   "summary_stats": {
-    "total_positions": 135,
-    "graduate_positions": 135,
-    "positions_with_salary": 42
+    "total_positions": 136,
+    "graduate_positions": 136,
+    "positions_with_salary": 43
   },
   "top_disciplines": {
     "Environmental Sciences": {
@@ -23,12 +23,12 @@
       }
     },
     "Fisheries and Aquatic": {
-      "total_positions": 19,
-      "grad_positions": 19,
+      "total_positions": 20,
+      "grad_positions": 20,
       "salary_stats": {
-        "count": 9,
-        "mean": 31309.33,
-        "median": 26700.0,
+        "count": 10,
+        "mean": 32778.4,
+        "median": 27542.0,
         "min": 21000.0,
         "max": 75000.0
       }
@@ -144,7 +144,7 @@
         "2025-11": 9,
         "2025-12": 8,
         "2026-01": 28,
-        "2026-02": 17
+        "2026-02": 18
       },
       "discipline_monthly": {
         "Environmental Sciences": {
@@ -163,7 +163,7 @@
           "2025-10": 3,
           "2025-08": 1,
           "2025-06": 6,
-          "2026-02": 4,
+          "2026-02": 5,
           "2025-02": 1,
           "2026-01": 3
         },
@@ -236,7 +236,7 @@
         "2025-11": 9,
         "2025-12": 8,
         "2026-01": 28,
-        "2026-02": 17
+        "2026-02": 18
       },
       "discipline_monthly": {
         "Environmental Sciences": {
@@ -255,7 +255,7 @@
           "2025-10": 3,
           "2025-08": 1,
           "2025-06": 6,
-          "2026-02": 4,
+          "2026-02": 5,
           "2025-02": 1,
           "2026-01": 3
         },
@@ -328,7 +328,7 @@
         "2025-11": 9,
         "2025-12": 8,
         "2026-01": 28,
-        "2026-02": 17
+        "2026-02": 18
       },
       "discipline_monthly": {
         "Environmental Sciences": {
@@ -347,7 +347,7 @@
           "2025-10": 3,
           "2025-08": 1,
           "2025-06": 6,
-          "2026-02": 4,
+          "2026-02": 5,
           "2025-02": 1,
           "2026-01": 3
         },
@@ -420,7 +420,7 @@
         "2025-11": 9,
         "2025-12": 8,
         "2026-01": 28,
-        "2026-02": 17
+        "2026-02": 18
       },
       "discipline_monthly": {
         "Environmental Sciences": {
@@ -439,7 +439,7 @@
           "2025-10": 3,
           "2025-08": 1,
           "2025-06": 6,
-          "2026-02": 4,
+          "2026-02": 5,
           "2025-02": 1,
           "2026-01": 3
         },
@@ -499,38 +499,39 @@
   },
   "snapshot_availability": {
     "source": "scraped_backup",
-    "run_count": 7,
+    "run_count": 8,
     "daily_avg_active_grad_positions": {
       "2025-10-14": 19,
       "2026-02-18": 8,
-      "2026-02-19": 95.5
+      "2026-02-19": 95.5,
+      "2026-02-22": 14
     },
     "daily_run_count": {
       "2025-10-14": 1,
       "2026-02-18": 4,
-      "2026-02-19": 2
+      "2026-02-19": 2,
+      "2026-02-22": 1
     },
     "monthly_avg_active_grad_positions": {
       "2025-10": 19,
-      "2026-02": 37.17
+      "2026-02": 33.86
     },
     "monthly_relative_to_peak_pct": {
-      "2025-10": 51.1,
+      "2025-10": 56.1,
       "2026-02": 100.0
     },
     "monthly_run_count": {
       "2025-10": 1,
-      "2026-02": 6
+      "2026-02": 7
     },
-    "latest_run_timestamp": "2026-02-19T18:26:55",
-    "latest_run_grad_positions": 173,
+    "latest_run_timestamp": "2026-02-22T05:14:29",
+    "latest_run_grad_positions": 14,
     "latest_run_discipline_breakdown": {
-      "Environmental Sciences": 10,
-      "Fisheries and Aquatic": 5,
-      "Wildlife": 11,
-      "Forestry and Habitat": 14,
-      "Other": 133
+      "Environmental Sciences": 1,
+      "Wildlife": 1,
+      "Forestry and Habitat": 2,
+      "Other": 10
     }
   },
-  "last_updated": "2026-02-19 13:21:59"
+  "last_updated": "2026-02-22 05:14:39"
 }
