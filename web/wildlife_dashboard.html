@@ -14,8 +14,9 @@
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1"></script>
   <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script defer src="assets/js/dashboard-core.js?v=20"></script>
+  <script defer src="assets/js/dashboard-core.js?v=22"></script>
 </head>
 
 <body>
@@ -110,6 +111,11 @@
                 <label><input type="radio" name="trend-date-basis" value="captured"> Capture</label>
                 <label><input type="radio" name="trend-date-basis" value="posted" checked> Posted</label>
               </fieldset>
+              <div class="trend-actions" aria-label="Trend chart controls">
+                <button type="button" class="trend-action-btn" id="trend-zoom-in">Zoom In</button>
+                <button type="button" class="trend-action-btn" id="trend-zoom-out">Zoom Out</button>
+                <button type="button" class="trend-action-btn" id="trend-zoom-reset">Reset</button>
+              </div>
             </div>
           </div>
           <div class="chart-grid chart-grid--single">
@@ -117,6 +123,11 @@
               <h3 id="trend-title">Unique Graduate Positions Posted by Date</h3>
               <div class="panel__body" id="trend-panel">
                 <canvas id="trend-chart"></canvas>
+              </div>
+              <div class="trend-feedback">
+                <p class="trend-feedback__line" id="trend-window-label">Window: Full range</p>
+                <p class="trend-feedback__line" id="trend-selection-label">Click a point to inspect that day/month.</p>
+                <p class="trend-feedback__hint">Tip: scroll or drag in the chart to zoom, hold Shift and drag to pan.</p>
               </div>
             </article>
           </div>

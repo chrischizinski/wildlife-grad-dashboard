@@ -26,7 +26,12 @@
     compensationInstitution: document.getElementById('compensation-institution-filter'),
     noDataBanner: document.getElementById('no-data-banner'),
     weeklySpotlight: document.getElementById('weekly-spotlight'),
-    topLocations: document.getElementById('top-locations-list')
+    topLocations: document.getElementById('top-locations-list'),
+    trendZoomIn: document.getElementById('trend-zoom-in'),
+    trendZoomOut: document.getElementById('trend-zoom-out'),
+    trendZoomReset: document.getElementById('trend-zoom-reset'),
+    trendWindowLabel: document.getElementById('trend-window-label'),
+    trendSelectionLabel: document.getElementById('trend-selection-label')
   };
 
   const chartState = {
@@ -36,6 +41,10 @@
     salary: null,
     seasonality: null
   };
+  const trendInteractionState = {
+    mode: 'daily'
+  };
+  let zoomPluginRegistered = false;
 
   const SOURCE_PATHS = {
     analytics: 'data/dashboard_analytics.json',
@@ -224,7 +233,7 @@
   async function fetchJsonWithFallback(path) {
     const candidates = [path, `./${path}`, `../${path}`];
     for (const candidate of candidates) {
-      const response = await fetch(candidate).catch(() => null);
+      const response = await fetch(candidate, { cache: 'no-store' }).catch(() => null);
       if (!response || !response.ok) continue;
       try {
         return await response.json();
@@ -419,6 +428,86 @@
     return graduateOnly;
   }
 
+  function parseTimestampToDate(value) {
+    if (!value) return null;
+    if (value instanceof Date) {
+      return Number.isFinite(value.getTime()) ? value : null;
+    }
+    const parsed = parseFlexibleDate(value) || parseFlexibleDate(String(value).replace(' ', 'T'));
+    return parsed && Number.isFinite(parsed.getTime()) ? parsed : null;
+  }
+
+  function getLatestJobTimestamp(jobs) {
+    let latest = null;
+    (Array.isArray(jobs) ? jobs : []).forEach((job) => {
+      const candidates = [
+        job?.scraped_at,
+        job?.last_updated,
+        job?.first_seen,
+        job?.published_date
+      ];
+      candidates.forEach((value) => {
+        const dt = parseTimestampToDate(value);
+        if (dt && (!latest || dt > latest)) latest = dt;
+      });
+    });
+    return latest;
+  }
+
+  function resolveLastUpdated(analytics, jobs) {
+    const candidates = [
+      {
+        value: analytics?.metadata?.last_updated,
+        source: 'analytics metadata'
+      },
+      {
+        value: analytics?.last_updated,
+        source: 'analytics payload'
+      },
+      {
+        value: analytics?.metadata?.generated_at,
+        source: 'analytics generated_at'
+      },
+      {
+        value: analytics?.snapshot_availability?.latest_run_timestamp,
+        source: 'snapshot availability'
+      }
+    ];
+
+    const latestJobTimestamp = getLatestJobTimestamp(jobs);
+    if (latestJobTimestamp) {
+      candidates.push({
+        value: latestJobTimestamp,
+        source: 'positions data timestamps'
+      });
+    }
+
+    let best = null;
+    candidates.forEach((candidate) => {
+      const parsed = parseTimestampToDate(candidate.value);
+      if (!parsed) return;
+      if (!best || parsed > best.parsed) {
+        best = {
+          raw: candidate.value instanceof Date ? candidate.value.toISOString() : String(candidate.value),
+          parsed,
+          source: candidate.source
+        };
+      }
+    });
+
+    if (!best) {
+      return {
+        value: null,
+        source: null
+      };
+    }
+
+    return {
+      value: best.raw,
+      source: best.source
+    };
+  }
+
   function normalizeData({ analytics, enhanced, jobs }) {
     const summary = analytics?.summary_stats || analytics?.summary || {};
     const topDisciplines = analytics?.top_disciplines || {};
@@ -442,11 +531,13 @@
     const topLocations = Object.entries(geography)
       .sort((a, b) => asNumber(b[1]) - asNumber(a[1]))
       .slice(0, TOP_US_STATES_LIMIT);
+    const resolvedLastUpdated = resolveLastUpdated(analytics, jobs);
 
     return {
       meta: {
         generatedAt: analytics?.metadata?.generated_at || null,
-        lastUpdated: analytics?.metadata?.last_updated || analytics?.last_updated || null,
+        lastUpdated: resolvedLastUpdated.value,
+        lastUpdatedSource: resolvedLastUpdated.source,
         sourceFiles: SOURCE_PATHS
       },
       overview: {
@@ -483,7 +574,8 @@
         locationParsedCount,
         salaryParsedPct,
         locationParsedPct,
-        lastUpdated: analytics?.last_updated || analytics?.metadata?.last_updated || null
+        lastUpdated: resolvedLastUpdated.value,
+        lastUpdatedSource: resolvedLastUpdated.source
       },
       jobs,
       raw: {
@@ -586,6 +678,49 @@
       day: 'numeric',
       year: 'numeric'
     }).format(value);
+  }
+
+  function formatMonthYear(value) {
+    if (!(value instanceof Date) || Number.isNaN(value.getTime())) return EMPTY_VALUE;
+    return new Intl.DateTimeFormat('en-US', {
+      month: 'short',
+      year: 'numeric'
+    }).format(value);
+  }
+
+  function setTrendWindowLabel(text) {
+    if (!refs.trendWindowLabel) return;
+    refs.trendWindowLabel.textContent = text;
+  }
+
+  function setTrendSelectionLabel(text) {
+    if (!refs.trendSelectionLabel) return;
+    refs.trendSelectionLabel.textContent = text;
+  }
+
+  function defaultTrendSelectionMessage() {
+    return trendInteractionState.mode === 'monthly'
+      ? 'Click a month to inspect postings in that period.'
+      : 'Click a day to inspect postings in that period.';
+  }
+
+  function formatTrendPointDate(ts, mode) {
+    if (!Number.isFinite(ts)) return EMPTY_VALUE;
+    const dt = new Date(ts);
+    if (mode === 'monthly') return formatMonthYear(dt);
+    return formatDateOnly(dt);
+  }
+
+  function updateTrendWindowFromChart(chart, mode) {
+    const xScale = chart?.scales?.x;
+    if (!xScale || !Number.isFinite(xScale.min) || !Number.isFinite(xScale.max)) {
+      setTrendWindowLabel('Window: Full range');
+      return;
+    }
+
+    const startText = formatTrendPointDate(xScale.min, mode);
+    const endText = formatTrendPointDate(xScale.max, mode);
+    setTrendWindowLabel(`Window: ${startText} to ${endText}`);
   }
 
   function getJobPeriodDate(job) {
@@ -1150,6 +1285,7 @@
     const salaryPct = asNumber(quality.salaryParsedPct);
     const locationPct = asNumber(quality.locationParsedPct);
     const updated = quality.lastUpdated;
+    const updatedSource = quality.lastUpdatedSource;
 
     setCardValue(
       'kpi-quality-salary',
@@ -1169,7 +1305,7 @@
       'kpi-quality-updated',
       updated ? formatDisplayTimestamp(updated) : EMPTY_VALUE,
       'kpi-quality-updated-reason',
-      updated ? 'From analytics output (dashboard_analytics.json)' : 'No timestamp available'
+      updated ? `Latest timestamp from ${updatedSource || 'available data source'}` : 'No timestamp available'
     );
   }
 
@@ -1392,6 +1528,25 @@
 
   function ensureChartJs() {
     return typeof Chart !== 'undefined';
+  }
+
+  function ensureZoomPluginRegistered() {
+    if (!ensureChartJs() || zoomPluginRegistered) return;
+    const candidate =
+      (typeof window !== 'undefined' && (
+        window.ChartZoom
+        || window['chartjs-plugin-zoom']
+        || window.chartjs_plugin_zoom
+      )) || null;
+    const plugin = candidate?.default || candidate;
+    if (!plugin || typeof Chart.register !== 'function') return;
+    try {
+      Chart.register(plugin);
+      zoomPluginRegistered = true;
+    } catch (_) {
+      // no-op: plugin may already be registered in some builds.
+      zoomPluginRegistered = true;
+    }
   }
 
   function destroyChart(name) {
@@ -1770,6 +1925,7 @@
     const topDisciplines = adapter?.disciplines?.topDisciplines || {};
     const timeSeries = adapter?.disciplines?.timeSeries || {};
     const snapshotAvailability = adapter?.disciplines?.snapshotAvailability || {};
+    trendInteractionState.mode = 'daily';
 
     if (!jobs.length) {
       destroyChart('trend');
@@ -1784,6 +1940,8 @@
       setPanelEmpty('salary-panel', 'No data for current filters');
       setPanelEmpty('seasonality-panel', 'No data for current filters');
       setPanelEmpty('map-panel', 'No data for current filters');
+      setTrendWindowLabel('Window: —');
+      setTrendSelectionLabel('No trend data for current filters.');
       return;
     }
 
@@ -1794,8 +1952,11 @@
       setPanelEmpty('discipline-overall-panel', 'Chart library unavailable');
       setPanelEmpty('salary-panel', 'Chart library unavailable');
       setPanelEmpty('seasonality-panel', 'Chart library unavailable');
+      setTrendWindowLabel('Window: —');
+      setTrendSelectionLabel('Chart library unavailable.');
       return;
     }
+    ensureZoomPluginRegistered();
 
     const selected = document.querySelector('input[name="timeframe"]:checked')?.value || '1_year';
     const trendBasis = document.querySelector('input[name="trend-date-basis"]:checked')?.value || 'posted';
@@ -1876,10 +2037,13 @@
         : 'Postings (count)';
       trendEmptyMessage = 'No capture-date data for current filters';
     }
+    trendInteractionState.mode = trendMode;
 
     if (!trendValues.length) {
       destroyChart('trend');
       setPanelEmpty('trend-panel', trendEmptyMessage);
+      setTrendWindowLabel('Window: —');
+      setTrendSelectionLabel(trendEmptyMessage);
     } else {
       const trendPanel = document.getElementById('trend-panel');
       if (trendPanel) trendPanel.innerHTML = '<canvas id="trend-chart"></canvas>';
@@ -1915,6 +2079,28 @@
             layout: {
               padding: { left: 10, right: 6 }
             },
+            onClick: (_, elements) => {
+              const idx = elements?.[0]?.index;
+              if (!Number.isInteger(idx)) {
+                setTrendSelectionLabel(defaultTrendSelectionMessage());
+                return;
+              }
+              const point = trendValues[idx] || null;
+              const ts = Number(point?.x);
+              const yVal = point?.y;
+              if (!Number.isFinite(ts)) {
+                setTrendSelectionLabel(defaultTrendSelectionMessage());
+                return;
+              }
+              const pointDate = formatTrendPointDate(ts, trendMode);
+              if (yVal === null || yVal === undefined) {
+                setTrendSelectionLabel(`Selected ${pointDate}: no postings recorded.`);
+                return;
+              }
+              const count = asNumber(yVal);
+              const suffix = count === 1 ? '' : 's';
+              setTrendSelectionLabel(`Selected ${pointDate}: ${count.toLocaleString()} posting${suffix}.`);
+            },
             scales: {
               x: {
                 type: 'linear',
@@ -1942,10 +2128,46 @@
                     return Number.isFinite(ts) ? xDateFormatter.format(new Date(ts)) : '';
                   }
                 }
+              },
+              zoom: {
+                mode: 'x',
+                limits: {
+                  x: {
+                    min: 'original',
+                    max: 'original',
+                    minRange: trendMode === 'monthly'
+                      ? 28 * 24 * 60 * 60 * 1000
+                      : 3 * 24 * 60 * 60 * 1000
+                  }
+                },
+                zoom: {
+                  wheel: {
+                    enabled: true,
+                    speed: 0.12
+                  },
+                  pinch: {
+                    enabled: true
+                  },
+                  drag: {
+                    enabled: true,
+                    backgroundColor: 'rgba(15, 118, 110, 0.18)',
+                    borderColor: '#0f766e',
+                    borderWidth: 1
+                  }
+                },
+                pan: {
+                  enabled: true,
+                  mode: 'x',
+                  modifierKey: 'shift'
+                },
+                onZoomComplete: ({ chart }) => updateTrendWindowFromChart(chart, trendMode),
+                onPanComplete: ({ chart }) => updateTrendWindowFromChart(chart, trendMode)
               }
             }
           }
         });
+        updateTrendWindowFromChart(chartState.trend, trendMode);
+        setTrendSelectionLabel(defaultTrendSelectionMessage());
       }
     }
 
@@ -2162,6 +2384,7 @@
 
     try {
       bindSidebarActive();
+      bindTrendInteractionControls();
       renderScaffoldPlaceholders();
 
       const [analytics, positionsData, verifiedData, enhanced, exportData] = await Promise.all([
@@ -2212,6 +2435,39 @@
       const msg = err && err.message ? err.message : String(err || 'Unknown error');
       console.error('Dashboard boot failed:', err);
       setState('error', `Dashboard boot failed: ${msg}`);
+    }
+  }
+
+  function bindTrendInteractionControls() {
+    if (refs.trendZoomIn && !refs.trendZoomIn.dataset.bound) {
+      refs.trendZoomIn.dataset.bound = '1';
+      refs.trendZoomIn.addEventListener('click', () => {
+        const chart = chartState.trend;
+        if (!chart || typeof chart.zoom !== 'function') return;
+        chart.zoom(1.2);
+        updateTrendWindowFromChart(chart, trendInteractionState.mode);
+      });
+    }
+
+    if (refs.trendZoomOut && !refs.trendZoomOut.dataset.bound) {
+      refs.trendZoomOut.dataset.bound = '1';
+      refs.trendZoomOut.addEventListener('click', () => {
+        const chart = chartState.trend;
+        if (!chart || typeof chart.zoom !== 'function') return;
+        chart.zoom(0.8);
+        updateTrendWindowFromChart(chart, trendInteractionState.mode);
+      });
+    }
+
+    if (refs.trendZoomReset && !refs.trendZoomReset.dataset.bound) {
+      refs.trendZoomReset.dataset.bound = '1';
+      refs.trendZoomReset.addEventListener('click', () => {
+        const chart = chartState.trend;
+        if (!chart || typeof chart.resetZoom !== 'function') return;
+        chart.resetZoom();
+        updateTrendWindowFromChart(chart, trendInteractionState.mode);
+        setTrendSelectionLabel(defaultTrendSelectionMessage());
+      });
     }
   }
 
