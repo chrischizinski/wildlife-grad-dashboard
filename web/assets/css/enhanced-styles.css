@@ -325,6 +325,59 @@ body {
   gap: 8px;
 }
 
+.trend-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.trend-action-btn {
+  border: 1px solid #cddbe7;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #244057;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 7px 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.trend-action-btn:hover {
+  background: #eef7f8;
+  border-color: #9fc6cf;
+  color: #0b5f59;
+}
+
+.trend-action-btn:focus-visible {
+  outline: 2px solid #0f766e;
+  outline-offset: 1px;
+}
+
+.trend-feedback {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border: 1px solid #d5e3ee;
+  border-radius: 10px;
+  background: #f8fcff;
+}
+
+.trend-feedback__line {
+  margin: 0;
+  font-size: 0.82rem;
+  color: #1f3347;
+}
+
+.trend-feedback__line + .trend-feedback__line {
+  margin-top: 4px;
+}
+
+.trend-feedback__hint {
+  margin: 6px 0 0;
+  font-size: 0.76rem;
+  color: var(--muted);
+}
+
 .discipline-control {
   display: flex;
   flex-direction: column;
@@ -697,6 +750,10 @@ th, td {
   }
   .trend-controls {
     justify-content: flex-start;
+  }
+  .trend-actions {
+    width: 100%;
+    flex-wrap: wrap;
   }
   .discipline-control__select { min-width: 0; width: 100%; }
   .kpi-grid,
