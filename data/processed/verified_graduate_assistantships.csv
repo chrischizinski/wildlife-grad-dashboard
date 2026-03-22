@@ -1,399 +1,975 @@
 title,organization,location,salary,starting_date,published_date,tags,url,description,requirements,project_details,contact_info,application_deadline,is_graduate_position,grad_confidence,position_type,discipline,discipline_confidence,discipline_keywords,is_big10_university,university_name,scraped_at,scrape_run_id,scraper_version
-Ph.D. Position: Avian movement modeling,Berigan Lab at Auburn University (State),"auburn, Alabama","starting at $30,000 per year",before 8/17/2026,03/09/2026,Graduate Opportunities,https://jobs.rwfm.tamu.edu/view-job/?id=114522,"Ph.D. Position: Avian movement modeling
-Berigan Lab at Auburn University (State) | https://liamaberigan.github.io
-Details
-Application Deadline:
-06/01/2026
-Published:
-03/09/2026
-Starting Date:
-before 8/17/2026
-Hours per Week:
-at least 40
-Salary:
-starting at $30,000 per year
-Education Required:
-Masters
-Experience Required:
-none
-Location:
-auburn, Alabama
-Tags:
-Graduate Opportunities
-Description
-The Berigan lab (https://liamaberigan.github.io) at Auburn University College of Forestry, Wildlife and Environment is hiring a PhD student to research quantitative methods for modeling animal movement. The successful applicant will apply Bayesian state-space models or related techniques to large datasets, including both GPS and Motus data, to build improved movement models for avian migration. We anticipate this position to be highly collaborative and will focus mostly on leveraging preexisting datasets. Fieldwork will be up to the discretion of the student but will likely be a minor component of the dissertation.
-
-Minimum qualifications:
-
-·      Master’s degree (awarded or anticipated) in biology, statistics, or a related discipline
-·      Extensive experience working with the programming language R
-·      Strong communication skills in oral and written English
-·      Ability to work independently and as part of an interdisciplinary team
-·      Self-motivation, a positive attitude, and strong interpersonal skills
-
-Desired qualifications:
-
-·      Strong background in statistics, especially Bayesian methods
-·      Experience collecting and/or analyzing avian movement data, especially using the Motus network
-·      Record of publication in peer-reviewed journals
-
-The successful applicant will be asked to apply to Auburn University’s College of Forestry, Wildlife and Environment for admission in Fall 2026, and will be expected to arrive prior to the first day of classes (August 17th). Note that GRE scores are not required for admission but may create opportunities for additional funding support (e.g., Auburn Presidential Graduate Opportunity Program). If you have GRE scores, please submit them as a part of your application package.
-
-Compensation: Stipend of $30,000 per year, plus a tuition waiver. 
-
-How to apply: Please email Dr. Liam Berigan (lib0016@auburn.edu) a single PDF document containing a 1) cover letter, 2) CV, 3) unofficial transcripts from all colleges attended, 4) GRE scores (if available), and 5) contact information for 3 professional references. Please title your email “PhD application” to ensure it is routed correctly. Application deadline is April 15th, but I encourage you to apply early as applications will be evaluated on a rolling basis until a suitable candidate is found. More information about our graduate program can be found here: https://cfwe.auburn.edu/graduate-study/graduate-degrees/.
-
-Contact
-Dr. Liam Berigan
-lib0016@auburn.edu (preferred contact method)","The Berigan lab (https://liamaberigan.github.io) at Auburn University College of Forestry, Wildlife and Environment is hiring a PhD student to research quantitative methods for modeling animal movement. The successful applicant will apply Bayesian state-space models or related techniques to large datasets, including both GPS and Motus data, to build improved movement models for avian migration. We anticipate this position to be highly collaborative and will focus mostly on leveraging preexisting datasets. Fieldwork will be up to the discretion of the student but will likely be a minor component of the dissertation.
-
-Minimum qualifications:
-
-·      Master’s degree (awarded or anticipated) in biology, statistics, or a related discipline
-·      Extensive experience working with the programming language R
-·      Strong communication skills in oral and written English
-·      Ability to work independently and as part of an interdisciplinary team
-·      Self-motivation, a positive attitude, and strong interpersonal skills
-
-Desired qualifications:
-
-·      Strong background in statistics, especially Bayesian methods
-·      Experience collecting and/or analyzing avian movement data, especially using the Motus network
-·      Record of publication in peer-reviewed journals
-
-The successful applicant will be asked to apply to Auburn University’s College of Forestry, Wildlife and Environment for admission in Fall 2026, and will be expected to arrive prior to the first day of classes (August 17th). Note that GRE scores are not required for admission but may create opportunities for additional funding support (e.g., Auburn Presidential Graduate Opportunity Program). If you have GRE scores, please submit them as a part of your application package.
-
-Compensation: Stipend of $30,000 per year, plus a tuition waiver. 
-
-How to apply: Please email Dr. Liam Berigan (lib0016@auburn.edu) a single PDF document containing a 1) cover letter, 2) CV, 3) unofficial transcripts from all colleges attended, 4) GRE scores (if available), and 5) contact information for 3 professional references. Please title your email “PhD application” to ensure it is routed correctly. Application deadline is April 15th, but I encourage you to apply early as applications will be evaluated on a rolling basis until a suitable candidate is found. More information about our graduate program can be found here: https://cfwe.auburn.edu/graduate-study/graduate-degrees/.","io) at Auburn University College of Forestry, Wildlife and Environment is hiring a PhD student to research quantitative methods for modeling animal movement",,"06/01/2026
-Published:
-03/09/2026
-Starting Date:
-before 8/17/2026
-Hours per Week:
-at least 40
-Salary:
-starting at $30,000 per year
-Education Required:
-Masters
-Experience Required:
-none
-Location:
-auburn, Alabama
-Tags:
-Graduate Opportunities
-Description
-The Berigan lab (https://liamaberigan",True,0.95,Graduate,Unknown,0.0,[],False,,2026-03-15T05:25:24.180790+00:00,scrape_20260315_052459_a96d9800,2.0
-"Assistant Professor, Applied Mammal Ecologist, Tenure-track",University of North Dakota (State),"University of North Dakota (Grand Forks, North Dakota)","starting at $72,000 per year",after 8/17/2026,03/09/2026,Faculty / Post-Doc Appointments,https://jobs.rwfm.tamu.edu/view-job/?id=114604,"Assistant Professor, Applied Mammal Ecologist, Tenure-track
-University of North Dakota (State) | https://campus.und.edu/human-resources/careers/index.html
+What a MS in Enviro. Observation & Informatics can do for your career!,"University of Wisconsin-Madison, Nelson Institute for Environmental Studies (State)","550 N Park St (Madison, Wisconsin)",Commensurate / Negotiable,after 6/1/2026,03/18/2026,Graduate Opportunities,https://jobs.rwfm.tamu.edu/view-job/?id=108429,"What a MS in Enviro. Observation & Informatics can do for your career!
+University of Wisconsin-Madison, Nelson Institute for Environmental Studies (State) | https://nelson.wisc.edu/graduate/professional-programs/
 Details
 Posting:
-https://careers.und.edu/jobs/assistant-professor-biology-tenure-track-grand-forks-north-dakota-united-states-c73b74e2-ec06-431d-90e8-0ba4932faa63
-Application Deadline:
-03/23/2026
-Published:
-03/09/2026
-Starting Date:
-after 8/17/2026
-Hours per Week:
-at least 40
-Salary:
-starting at $72,000 per year
-Education Required:
-Doctorate
-Experience Required:
-none
-Location:
-University of North Dakota (Grand Forks, North Dakota)
-Tags:
-Faculty / Post-Doc Appointments
-Description
-Purpose of Position
-
-We seek a broadly trained Applied Mammal Ecologist to strengthen the Fisheries and Wildlife Program and focus on ecology of the Northern Great Plains. This is a nine-month, tenure track assistant professor position.
-
-The department offers undergraduate and graduate degrees through the Ph.D., and active training of graduate students is expected. The Fisheries and Wildlife program boasts an active student population that has received numerous recognitions from The Wildlife Society and whose students go on to work for state and federal agencies, non-profit organizations, industry and other conservation organizations. The department has a history of strong relationships with local, state (e.g., ND Game and Fish), federal and non-governmental organizations, and it is expected that the selected candidate will contribute directly to this mission. This person should have a demonstrated record of working in partnership with state, federal, and/or non-government agencies.  
-
-The successful candidate will demonstrate outstanding promise for establishing a sustainable research program that will attract a diversity of external funds and be aligned with the UND LEADS Strategic Plan. The Department of Biology is an academic unit in the College of Arts & Sciences at the University of North Dakota. It serves about 500 undergraduate majors and 30 M.S. and Ph.D. students. In addition to teaching, our faculty members are involved in private, state, and federally funded research programs that span scales of organization from molecular biology to developmental biology and physiology to population and landscape ecology. The department’s faculty members actively train undergraduate and graduate students in their research programs 
-
-Established in 1883, the University of North Dakota is the oldest research university in North Dakota. Founded with a strong liberal arts foundation, it is the state’s flagship university and is classified by the Carnegie Foundation as having very high research activity. UND offers degrees in more than 225 fields of study and enrolls nearly 16,000 students. It is the home of the state’s only School of Law and School of Medicine. The School of Medicine and Health Sciences has major initiatives in rural and public health, and Aerospace is home to one of the first and largest unmanned aerial vehicle programs in the world.
-
-UND is located in Grand Forks, North Dakota, a vibrant college town of over 57,000 people located on the border of North Dakota and Minnesota. Short commutes, a great public-school system, high quality medical facilities, low crime, ample parks and theaters, and a cost of living below that found in large American cities are some of Grand Forks’ advantages. Ranked as one of the top 5 Best Small College Towns, and America’s Best Hockey Town, Grand Forks offers stellar quality of life without the metropolitan hassles.
-
-Duties & Responsibilities
-Establish a productive and extramurally funded research program that works directly with wildlife conservation and management agencies/organizations (e.g., state, federal, local, industry, and/or non-profit) in the state of North Dakota and may also involve other relevant regional partners.  
-Contribute to the undergraduate Fisheries & Wildlife and other Biology programs through teaching, advising, and providing undergraduate and graduate research experiences.  
-Contribute to implementing the new UND LEADS strategic plan. 
-Contribute to department research and teaching strengths in the Ecology of the Northern Great Plains.  
-Provide mammal-focused expertise to enhance our graduate programs in Biology (4+1 B.S/M.S., M.S. and Ph.D.). 
-Teaching duties will be equivalent to two courses in year one. Courses will be assigned from departmental offerings related to mammal ecology and wildlife conservation and management. Teaching load will increase to three courses in year two and four courses in year three.  
-
-Required Competencies
-Excellent written and oral communication skills, including evidence of the ability to teach, inspire, and mentor students
-Ability to develop an original, independent, and extramurally funded research program in mammal ecology and management relevant to North Dakota
-Effective interpersonal skills, including the ability to collaborate effectively with diverse students, staff, faculty, colleagues, and agency partners
-Ability to implement high-impact teaching practices in a variety of learning environments
-Ability to contribute to the department’s Fisheries and Wildlife program and contribute to research strengths in the Ecology of the Northern Great Plains with specific interest to North Dakota
-
-Minimum Requirements
-Ph.D. in Wildlife Biology, Ecology, Conservation Biology, or related discipline
-Successful completion of a Criminal History Background Check
-In compliance with federal law, all persons hired will be required to verify identity and eligibility to work in the US and to complete the required employment eligibility verification form upon hire. 
-
-
-Preferred Qualifications
-Applied research experience in mammal ecology and management
-Experience obtaining extramural research funding
-Experience working with a variety of stakeholders (e.g., state and federal agencies, non-governmental, landowners, industry)
-Experience mentoring students in research
-Experience teaching undergraduate or graduate courses related to mammal ecology and wildlife conservation and management
-Relevant postdoctoral experience
-
-To Apply
-
-To assure full consideration, applications must be received by 3/22/2026 and include the following materials:
-
-Cover letter highlighting qualifications for position
-Curriculum Vitae
-Statements of research interests (not to exceed 3 pages)
-Statements of teaching interests (not to exceed 2 pages)
-Three representative reprints as PDF files
-Names and contact information for three references
-Unofficial transcripts. Please note that the selected candidate will be required to submit official transcripts upon hire.
-Position is open until filled. 
-
-Questions can be directed to the chair of the search committee, Dr. Susan Felege at susan.felege@und.edu. 
-
-Contact
-Susan Felege
-7017773699
-susan.felege@und.edu (preferred contact method)","Hours per Week:
-at least 40
-Salary:
-starting at $72,000 per year
-Education Required:
-Doctorate
-Experience Required:
-none","The successful candidate will demonstrate outstanding promise for establishing a sustainable research program that will attract a diversity of external funds and be aligned with the UND LEADS Strategic Plan. In addition to teaching, our faculty members are involved in private, state, and federally funded research programs that span scales of organization from molecular biology to developmental biology and physiology to population and landscape ecology. The department’s faculty members actively train undergraduate and graduate students in their research programs 
-
-Established in 1883, the University of North Dakota is the oldest research university in North Dakota",,"03/23/2026
-Published:
-03/09/2026
-Starting Date:
-after 8/17/2026
-Hours per Week:
-at least 40
-Salary:
-starting at $72,000 per year
-Education Required:
-Doctorate
-Experience Required:
-none
-Location:
-University of North Dakota (Grand Forks, North Dakota)
-Tags:
-Faculty / Post-Doc Appointments
-Description
-Purpose of Position
-
-We seek a broadly trained Applied Mammal Ecologist to strengthen the Fisheries and Wildlife Program and focus on ecology of the Northern Great Plains",True,0.95,Graduate,Wildlife & Natural Resources,0.222,"['wildlife', 'wildlife conservation', 'mammal', 'conservation biology', 'landscape ecology']",False,,2026-03-15T05:25:24.284459+00:00,scrape_20260315_052459_a96d9800,2.0
-Environmental Toxicology Student Services Contractor (USGS- Columbia Environmental Research Center),U.S. Geological Survey (Federal),"4200 East New Haven Rd (Columbia , Missouri)",$21.01 to $38.52 per hour,between 6/1/2026 and 9/30/2026,03/10/2026,Graduate Opportunities,https://jobs.rwfm.tamu.edu/view-job/?id=114613,"Environmental Toxicology Student Services Contractor (USGS- Columbia Environmental Research Center)
-U.S. Geological Survey (Federal) | https://www.usgs.gov/mission-areas/ecosystems
-Details
-Application Deadline:
-04/10/2026
-Published:
-03/10/2026
-Starting Date:
-between 6/1/2026 and 9/30/2026
-Ending Date:
-between 6/1/2028 and 9/30/2028
-Hours per Week:
-30 - 40
-Salary:
-$21.01 to $38.52 per hour
-Education Required:
-Bachelors
-Experience Required:
-none
-Location:
-4200 East New Haven Rd (Columbia , Missouri)
-Tags:
-Graduate Opportunities
-Description
- 2026 Jobs in Environmental Toxicology 
-
-(For students with a B.S or M.S. degree) 
- Project Descriptions 
-The student contractor will work with scientists in the Ecology and Toxicology branches of the U.S. Geological Survey Columbia Environmental Research Center to support multiple research efforts. Projects include: 
-· Acute and chronic laboratory exposures of freshwater insects, mussels, and fish to emerging contaminants 
-· Aquatic community mesocosm experiments evaluating the fate and effects of contaminants 
-· Field assessments of freshwater ecosystems impacted by pollution or environmental stressors  
- Types of Services Required 
-The student contractor will assist with a suite of laboratory, field, and data management responsibilities primarily in Columbia, Missouri. Duties include: 
- Laboratory, Field, and Data Responsibilities 
-· Support laboratory and mesocosm studies in the Ecology and Toxicology branches 
-· Preparation of biological samples for chemical analysis 
-· Maintain aquatic organism cultures and perform other laboratory activities, as needed 
-· Enter, harmonize, and summarize laboratory and environmental datasets 
-· Data management of laboratory and field-collected datasets, occasional statistical analysis 
-· Assist with figure preparation, data summaries, and report development 
-· Support occasional field sampling of chemical and biological matrices in freshwater ecosystems 
- Project Independence and Professional Development 
-· Student contractors will have opportunities to lead components of ongoing projects 
-· Student contractors may develop side projects using collected data if they fit within program goals 
-· Publication or presentation of student contractor-led work is possible if desired and supported by project timelines 
-·The student contractor may also assist with other research within the Ecology and Toxicology Branch, as needed 
- Requirements 
-Applicants must have completed a Bachelor of Science degree or be nearing completion of their Bachelor of Science in the current academic term. Individuals with a Bachelor of Science or Master of Science degree are encouraged to apply. Degrees should be in environmental science, ecology, toxicology, or a related discipline. Terminal degrees (either Master's or Bachelor's) must have been completed less than one year prior to appointment. Former students who graduated more than 12 months ago and are not currently enrolled are not eligible. 
-  Required qualifications 
-· Experience working in a laboratory setting, including following SOPs and QA/QC procedures 
-· Basic proficiency with computers, spreadsheets, and data entry 
-· Strong interpersonal skills suited to collaborative field and lab environments 
-· A valid driver’s license 
- Preferred qualifications 
-· Experience or interest in ecology, toxicology, or environmental chemistry 
-· Experience with R and analyzing environmental datasets 
-· Experience conducting field work, particularly in aquatic ecosystems 
-· Experience or interest in freshwater organisms including freshwater insects, mussels, and fish 
- Description of working conditions 
-Work will take place primarily in office and laboratory settings at the U.S. Geological Survey Columbia Environmental Research Center. There may be occasional fieldwork associated with this position. Fieldwork will occur in a wide range of weather and environmental conditions. If overnight travel is required for extended field operations, lodging and per diem will be provided. 
- Compensation rate applicable to the specified education level and locality 
-Compensation is commensurate with the level of education and experience, as follows: 
- $21.01 per hour for a Bachelor of Science degree to $38.52 for a Master of Science degree 
- There is no salary withholding from contractor compensation. Student contractors must pay for their own social security, health insurance, and any applicable taxes. 
-Student contractors are responsible for all costs of transportation to and from the principal duty station location (Columbia, Missouri). The Government does not provide housing, meals, or other living expenses while working at the principal duty station. Transportation will be provided to and from field investigation site(s). Meals/cost of food while on travel away from the principal duty station at field investigation sites will be provided by the USGS in the same manner as for federal employees, in accordance with the Government Travel Regulations. The position is a contract position, and not a federal government position. 
- Principal Duty Station 
-USGS Columbia Environmental Research Center 
-4200 New Haven Rd 
-Columbia, MO 65201 
-
-How to apply 
-The anticipated start date is in summer 2026 and will continue through Summer 2027. The contract may be renewed for 1 additional year. 
- The job will remain open until filled, but it is anticipated that all selections will be made in the Spring of 2026. After selection, selected applicants will be required to provide an official transcript and to register as a contractor, including acquiring and providing a UEI number to USGS. A UEI number is required for all federal contracts. There is no charge for a UEI number. No work can be performed, and no payment can be provided prior to USGS receipt of the applicant’s UEI number. Successful candidates are contractors and will be responsible for withholding of state and federal taxes. 
- In responding to this USGS contract opportunity, interested students should submit a cover letter and resume that includes: full legal name of the student, mailing address, telephone number, email address (if available), date of birth, place of birth, citizenship (if not a US citizen, provide immigration/VISA status), education (including descriptions of relevant classes) and work or volunteer experience related to the scientific field. In addition, a copy of the most recent transcript listing courses taken and the student’s overall GPA should be submitted. Review of application materials will begin in Spring 2026 and will continue until the position is filled. 
- Applicants should submit their materials to Dr. Christopher Kotalik (ckotalik@usgs.gov) and Dr. Brittany Perrotta (bperrotta@usgs.gov). Additional information about the position can be requested by email inquiry. 
-Contact
-Christopher Kotalik
-ckotalik@usgs.gov (preferred contact method)","Hours per Week:
-30 - 40
-Salary:
-$21.01 to $38.52 per hour
-Education Required:
-Bachelors
-Experience Required:
-none","Environmental Toxicology Student Services Contractor (USGS- Columbia Environmental Research Center)
-U. Geological Survey Columbia Environmental Research Center to support multiple research efforts. Duties include: 
- Laboratory, Field, and Data Responsibilities 
-· Support laboratory and mesocosm studies in the Ecology and Toxicology branches 
-· Preparation of biological samples for chemical analysis 
-· Maintain aquatic organism cultures and perform other laboratory activities, as needed 
-· Enter, harmonize, and summarize laboratory and environmental datasets 
-· Data management of laboratory and field-collected datasets, occasional statistical analysis 
-· Assist with figure preparation, data summaries, and report development 
-· Support occasional field sampling of chemical and biological matrices in freshwater ecosystems 
- Project Independence and Professional Development 
-· Student contractors will have opportunities to lead components of ongoing projects 
-· Student contractors may develop side projects using collected data if they fit within program goals 
-· Publication or presentation of student contractor-led work is possible if desired and supported by project timelines 
-·The student contractor may also assist with other research within the Ecology and Toxicology Branch, as needed 
- Requirements 
-Applicants must have completed a Bachelor of Science degree or be nearing completion of their Bachelor of Science in the current academic term",,"04/10/2026
-Published:
-03/10/2026
-Starting Date:
-between 6/1/2026 and 9/30/2026
-Ending Date:
-between 6/1/2028 and 9/30/2028
-Hours per Week:
-30 - 40
-Salary:
-$21",True,0.9,Graduate,Environmental Science,0.317,"['environmental science', 'ecology', 'environmental chemistry', 'environmental toxicology', 'pollution']",False,,2026-03-15T05:25:24.387760+00:00,scrape_20260315_052459_a96d9800,2.0
-Lecturer or Assistant Professor of Forestry,Abraham Baldwin Agricultural College (State),"2802 Moore Highway (Tifton, GA, Georgia)",Commensurate / Negotiable,after 8/1/2026,03/10/2026,Faculty / Post-Doc Appointments,https://jobs.rwfm.tamu.edu/view-job/?id=114615,"Lecturer or Assistant Professor of Forestry
-Abraham Baldwin Agricultural College (State) | https://www.abac.edu
-Details
-Posting:
-https://careers.hprod.onehcm.usg.edu/psc/careers/CAREERS/HRMS/c/HRS_HRAM_FL.HRS_CG_SEARCH_FL.GBL?Page=HRS_APP_SCHJOB_FL&Action=U
+https://nelson.wisc.edu/graduate/professional-programs/how-to-apply/
 Application Deadline:
 04/30/2026
 Published:
-03/10/2026
+03/18/2026
 Starting Date:
-after 8/1/2026
+after 6/1/2026
+Ending Date:
+after 8/13/2027
 Hours per Week:
-40
+30 - 40
 Salary:
 Commensurate / Negotiable
 Education Required:
-Masters
+Bachelors
 Experience Required:
 none
 Location:
-2802 Moore Highway (Tifton, GA, Georgia)
+550 N Park St (Madison, Wisconsin)
 Tags:
-Faculty / Post-Doc Appointments
+Graduate Opportunities
 Description
+What is the Environmental Observation & Informatics MS (EOI) degree? 
+The EOI is a professional master's program designed for people who are interested in data science, environmental technology, and communicating environmental data. Students come from all levels of experience and backgrounds, such as computer science, statistics and more. Our programs aim to prepare you for a career. 
 
-Position Summary
+What can you do with the professional EOI MS degree? 
+Many students go on to work in the geospatial/conservation sector, where they apply their conservation knowledge, GIS, remote sensing, and spatial data analysis to a range of fields. 
 
+Final deadline for domestic applicants: May 1
+No longer accepting international applications. Applications are currently being reviewed on a rolling basis with limited space remaining. Apply as early as you can here: https://nelson.wisc.edu/graduate/professional-programs/how-to-apply/
 
-The Department of Forest Resources, housed within the School of Agriculture and Natural Resources, seeks applicants for an Assistant Professor of Forestry. This is a 10-month tenure track teaching position at the Assistant Professor level, or a 10-month non-tenure track position. The successful candidate will teach courses supporting the Bachelor of Science in Natural Resource Management and contribute to a highly applied, student-centered learning environment. 
+What the program looks like:
+15 months: Classes are held in-person, with exception of the final project which can be completed anywhere in the world (see what makes UW-Madison great)  
+Real-world experience: In your final semester, students complete a professional, non-thesis project in partnership with an organization, giving them the chance to apply knowledge and skills to real-world challenges. Each student project is unique to their interests, goals, and provides career-relevant experience. 
+Past students have collaborated with a wide range of organizations, including The Nature Conservancy (AK, AZ, DC, GA, WI), NASA DEVELOP, the Wisconsin Department of Natural Resources, U.S. Fish & Wildlife Service, Sea Grant, USDA, Organic Valley, and many others.
+Small cohort learning: Experience the benefits of a small cohort-based model. Expect to learn and grow alongside a diverse group of peers while building professional connections.
+Cost-conscious education: The programs provide top-tier environmental education at a more accessible cost than many comparable programs. Tuition assistance may still be available (we recommend all interested applicants also apply for this tuition assistance award).
 
+Reach out to vang27@wisc.edu if you have questions about applying.
+Contact
+Maikou Vang
+vang27@wisc.edu (preferred contact method)","Hours per Week:
+30 - 40
+Salary:
+Commensurate / Negotiable
+Education Required:
+Bachelors
+Experience Required:
+none","edu/graduate/professional-programs/how-to-apply/
 
-Responsibilities include high-quality instruction, incorporating experiential and field-based learning, and developing partnerships with industry, community, and commodity organizations that enhance student engagement and readiness. The individual hired will also serve as an academic advisor to students in the department's programs, participate in administrative and service activities, serve as an advisor for mentored projects, and work effectively as a member of a faculty team to continually update and improve the content of degree programs in the department. Teaching assignments will depend on the successful candidate's experience and departmental needs. Courses may include, but are not limited to Dendrology, Forest Measurements and Mapping, Intro to Forest Measurements, and Silviculture.
+What the program looks like:
+15 months: Classes are held in-person, with exception of the final project which can be completed anywhere in the world (see what makes UW-Madison great)  
+Real-world experience: In your final semester, students complete a professional, non-thesis project in partnership with an organization, giving them the chance to apply knowledge and skills to real-world challenges. Each student project is unique to their interests, goals, and provides career-relevant experience",,"04/30/2026
+Published:
+03/18/2026
+Starting Date:
+after 6/1/2026
+Ending Date:
+after 8/13/2027
+Hours per Week:
+30 - 40
+Salary:
+Commensurate / Negotiable
+Education Required:
+Bachelors
+Experience Required:
+none
+Location:
+550 N Park St (Madison, Wisconsin)
+Tags:
+Graduate Opportunities
+Description
+What is the Environmental Observation & Informatics MS (EOI) degree? 
+The EOI is a professional master's program designed for people who are interested in data science, environmental technology, and communicating environmental data",True,0.95,Graduate,Unknown,0.0,[],True,University of Wisconsin,2026-03-22T05:16:05.403402+00:00,scrape_20260322_051522_c5731e83,2.0
+Master's Student: Fish Assemblages on Artificial Reefs in Lake Pontchartrain,Tulane University (Private),"Tulane University (New Orleans, Louisiana)","starting at $30,000 per year",between 7/1/2026 and 8/1/2026,03/16/2026,Graduate Opportunities,https://jobs.rwfm.tamu.edu/view-job/?id=114770,"Master's Student: Fish Assemblages on Artificial Reefs in Lake Pontchartrain
+Tulane University (Private) | https://tulane.edu/
+Details
+Posting:
+https://sse.tulane.edu/eebio/academics/graduate
+Application Deadline:
+03/27/2026
+Published:
+03/16/2026
+Starting Date:
+between 7/1/2026 and 8/1/2026
+Ending Date:
+before 5/15/2029
+Hours per Week:
+40
+Salary:
+starting at $30,000 per year
+Education Required:
+Bachelors
+Experience Required:
+none
+Location:
+Tulane University (New Orleans, Louisiana)
+Tags:
+Graduate Opportunities
+Description
+Master’s Student Sought: Linking Imaging Sonar and Sampling to Understand How the Fishes of Lake Pontchartrain Utilize Inshore Artificial Reefs
 
- Required Qualifications:    
+The Sidlauskas Lab at Tulane University seeks a master’s student to undertake a three-year study of fish ecology in Lake Pontchartrain in collaboration with the Rieucau Lab at LUMCON.  Though Louisiana has used artificial reefs to restore fish habitats and enhance fisheries since 1986, much remains unknown about the effectiveness of these interventions, the precise composition of the fish assemblages that use reefs of different ages and construction, and how the presence or absence of the reefs affect the ecological function of their surrounding ecosystems.  This project will investigate those questions with a novel combination of traditional specimen collection and high-resolution imaging sonar-based surveys of the fish assemblages on four artificial reefs.  The approach will not only reveal which fishes use which reefs when but will also test the effectiveness of monitoring reef usage via a non-lethal, low-cost sampling approach. It will also yield valuable specimens to be archived in Tulane’s Royal D. Suttkus fish collection, the world’s largest collection of preserved post-larval fishes. 
 
-Assistant Professor level shall have earned PhD in Forestry or closely related discipline;
-Lecturer level shall have an earned MS in Forestry or closely related discipline;
-Strong written and oral communication skills; 
-Ability to use current instructional technologies to support teaching and learning;    
-Demonstrated commitment to undergraduate education and student success; 
-Ability to work effectively with students, faculty, staff, administrators, alumni, and external stakeholders;  
-Demonstrated ability to engage industry and community partners in activities that enhance experiential learning, student engagement, and workforce preparation.
+Interested applicants should send a resumé or CV, a cover letter, and contact information for three professional references to Dr. Brian Sidlauskas at bsidlauskas@tulane.edu. Applications should be received by March 27, 2026, to ensure full consideration.  This position includes a stipend and tuition benefit funded through the generous support of the Louisiana Sea Grant program.
 
- 
-Desired Qualifications:    
+Required qualifications
 
-College-level teaching experience;
-Professional experience in forestry or a closely related field. 
+·       Bachelor’s degree
+·       Ability to perform fieldwork from boats
+·       Ability to operate a motor vehicle
+·       Strong interpersonal skills and ability to work as a member of a team
 
-Application Instructions:  All applications are submitted electronically at the following web site:   https://link.abac.edu/CAREERS.  Candidates will submit a cover letter, curriculum vitae, teaching philosophy, transcripts (unofficial at time of application), and list of three references with complete contact information.  Finalists will be required to submit official transcripts and three letters of reference. Review of applications will begin immediately and will continue until the position is filled. 
+Preferred qualifications
+
+·       Bachelor’s degree in biology, marine science, fisheries science or a related field
+·       Prior knowledge of basic statistical techniques
+·       Prior knowledge of freshwater and marine fishes of Louisiana
+·       Boating experience
+·       Experience driving vehicles with attached trailers
+·       Interest in learning new technology
+·       Interest in pursuing a career in marine science, fisheries science, ecology, or ichthyology
 
 Contact
-William Moore
-2293914805
-wmoore@abac.edu (preferred contact method)","Position Summary
+Brian Sidlauskas
+504-247-1579
+bsidlauskas@tulane.edu (preferred contact method)","Master’s Student Sought: Linking Imaging Sonar and Sampling to Understand How the Fishes of Lake Pontchartrain Utilize Inshore Artificial Reefs
 
+The Sidlauskas Lab at Tulane University seeks a master’s student to undertake a three-year study of fish ecology in Lake Pontchartrain in collaboration with the Rieucau Lab at LUMCON.  Though Louisiana has used artificial reefs to restore fish habitats and enhance fisheries since 1986, much remains unknown about the effectiveness of these interventions, the precise composition of the fish assemblages that use reefs of different ages and construction, and how the presence or absence of the reefs affect the ecological function of their surrounding ecosystems.  This project will investigate those questions with a novel combination of traditional specimen collection and high-resolution imaging sonar-based surveys of the fish assemblages on four artificial reefs.  The approach will not only reveal which fishes use which reefs when but will also test the effectiveness of monitoring reef usage via a non-lethal, low-cost sampling approach. It will also yield valuable specimens to be archived in Tulane’s Royal D. Suttkus fish collection, the world’s largest collection of preserved post-larval fishes. 
 
-The Department of Forest Resources, housed within the School of Agriculture and Natural Resources, seeks applicants for an Assistant Professor of Forestry. This is a 10-month tenure track teaching position at the Assistant Professor level, or a 10-month non-tenure track position. The successful candidate will teach courses supporting the Bachelor of Science in Natural Resource Management and contribute to a highly applied, student-centered learning environment. 
+Interested applicants should send a resumé or CV, a cover letter, and contact information for three professional references to Dr. Brian Sidlauskas at bsidlauskas@tulane.edu. Applications should be received by March 27, 2026, to ensure full consideration.  This position includes a stipend and tuition benefit funded through the generous support of the Louisiana Sea Grant program.
 
+Required qualifications
 
-Responsibilities include high-quality instruction, incorporating experiential and field-based learning, and developing partnerships with industry, community, and commodity organizations that enhance student engagement and readiness. The individual hired will also serve as an academic advisor to students in the department's programs, participate in administrative and service activities, serve as an advisor for mentored projects, and work effectively as a member of a faculty team to continually update and improve the content of degree programs in the department. Teaching assignments will depend on the successful candidate's experience and departmental needs. Courses may include, but are not limited to Dendrology, Forest Measurements and Mapping, Intro to Forest Measurements, and Silviculture.
+·       Bachelor’s degree
+·       Ability to perform fieldwork from boats
+·       Ability to operate a motor vehicle
+·       Strong interpersonal skills and ability to work as a member of a team
 
- Required Qualifications:    
+Preferred qualifications
 
-Assistant Professor level shall have earned PhD in Forestry or closely related discipline;
-Lecturer level shall have an earned MS in Forestry or closely related discipline;
-Strong written and oral communication skills; 
-Ability to use current instructional technologies to support teaching and learning;    
-Demonstrated commitment to undergraduate education and student success; 
-Ability to work effectively with students, faculty, staff, administrators, alumni, and external stakeholders;  
-Demonstrated ability to engage industry and community partners in activities that enhance experiential learning, student engagement, and workforce preparation.
-
- 
-Desired Qualifications:    
-
-College-level teaching experience;
-Professional experience in forestry or a closely related field. 
-
-Application Instructions:  All applications are submitted electronically at the following web site:   https://link.abac.edu/CAREERS.  Candidates will submit a cover letter, curriculum vitae, teaching philosophy, transcripts (unofficial at time of application), and list of three references with complete contact information.  Finalists will be required to submit official transcripts and three letters of reference. Review of applications will begin immediately and will continue until the position is filled.","The individual hired will also serve as an academic advisor to students in the department's programs, participate in administrative and service activities, serve as an advisor for mentored projects, and work effectively as a member of a faculty team to continually update and improve the content of degree programs in the department",,"04/30/2026
+·       Bachelor’s degree in biology, marine science, fisheries science or a related field
+·       Prior knowledge of basic statistical techniques
+·       Prior knowledge of freshwater and marine fishes of Louisiana
+·       Boating experience
+·       Experience driving vehicles with attached trailers
+·       Interest in learning new technology
+·       Interest in pursuing a career in marine science, fisheries science, ecology, or ichthyology",This project will investigate those questions with a novel combination of traditional specimen collection and high-resolution imaging sonar-based surveys of the fish assemblages on four artificial reefs,,"03/27/2026
 Published:
-03/10/2026
+03/16/2026
+Starting Date:
+between 7/1/2026 and 8/1/2026
+Ending Date:
+before 5/15/2029
+Hours per Week:
+40
+Salary:
+starting at $30,000 per year
+Education Required:
+Bachelors
+Experience Required:
+none
+Location:
+Tulane University (New Orleans, Louisiana)
+Tags:
+Graduate Opportunities
+Description
+Master’s Student Sought: Linking Imaging Sonar and Sampling to Understand How the Fishes of Lake Pontchartrain Utilize Inshore Artificial Reefs
+
+The Sidlauskas Lab at Tulane University seeks a master’s student to undertake a three-year study of fish ecology in Lake Pontchartrain in collaboration with the Rieucau Lab at LUMCON",True,0.95,Graduate,Fisheries & Aquatic Science,0.24,"['fish', 'fisheries', 'marine', 'freshwater', 'lake']",False,,2026-03-22T05:16:05.500074+00:00,scrape_20260322_051522_c5731e83,2.0
+PhD Student Position - Climate Change Biology - University of Wyoming,Marketa Zimova (State),Wyoming,"starting at $28,000 per year",after 8/31/2026,03/18/2026,Graduate Opportunities,https://jobs.rwfm.tamu.edu/view-job/?id=114896,"PhD Student Position - Climate Change Biology - University of Wyoming
+Marketa Zimova (State) | https://www.marketazimova.com/
+Details
+Posting:
+https://www.marketazimova.com/opportunities
+Application Deadline:
+04/19/2026
+Published:
+03/18/2026
+Starting Date:
+after 8/31/2026
+Hours per Week:
+at least 40
+Salary:
+starting at $28,000 per year
+Education Required:
+Bachelors
+Experience Required:
+at least 3 years
+Location:
+Wyoming
+Tags:
+Graduate Opportunities
+Description
+The Zimova Lab at the University of Wyoming (UW), Dept of Zoology and Physiology is looking for 1-2 PhD students to join our group. The PhD students will work with Dr. Marketa Zimova on research related to camouflage mismatch in white-tailed jackrabbits, snowshoe hares, and other seasonally color-molting species.
+All students will develop strong field ecology and quantitative analysis, with additional opportunities to build expertise aligned with their interests (e.g., evolutionary biology, movement ecology, behavioral ecology, remote sensing, AI, museum collections, genomics). Both positions are highly collaborative and will involve a combination of data collection by the student, existing datasets, and interaction with interdisciplinary collaborators.
+Students admitted to the program will be supported by a combination of teaching and research assistantships (min $28,000/year plus tuition waiver and health insurance) for the duration of their studies. The start date is Fall 2026 or Spring 2027.
+
+ Required Qualifications
+MS degree (awarded or anticipated) in biology, zoology, wildlife and fisheries science, or related field, or commensurate experience designing and leading research projects
+Interest in addressing key questions in conservation biology, animal ecology, and or evolutionary biology
+Ability to safely conduct field work in all seasons and remote environments
+Experience managing and analyzing data in R, Python, and or ArcGIS
+Strong interpersonal, written, and verbal communication skills, with demonstrated ability to work collaboratively
+Valid US driver’s license
+ 
+Preferred Qualifications
+Interest in applying research to wildlife management and conservation
+Strong background in quantitative analysis and or spatial modeling
+Experience with wildlife field methods (eg live-trapping, radiotelemetry, camera trapping)
+Experience leading field crews
+Track record of peer-reviewed publications
+
+About Zimova lab
+The research in Zimova lab focuses on quantifying the consequences of climate change for vertebrate populations and understanding the potential for evolutionary change to facilitate adaptation to climate change-related stressors. Our work integrates diverse approaches including field studies, museum collections, high-resolution environmental data, genetics, and advanced statistical modeling.
+
+About Zoology & Physiology and Laramie, Wyoming
+The Dept of Zoology and Physiology at UW is a collaborative and interdisciplinary community with strong ties to state, federal and other wildlife agencies. The department has particular strengths in wildlife biology, ecology, and physiology, with many opportunities for applied conservation research. The university is located in Laramie, a small, vibrant college town in southeastern Wyoming. Laramie sits at the base of the Medicine Bow Mountains and offers immediate access to exceptional outdoor recreation, including hiking, climbing, and skiing.
+
+Application Instructions
+To apply, please fill out this Google Form: https://forms.gle/hTmNJbjqNmwsodju6 by April 12th 2026. Please include the following materials:
+Cover letter: Describe your research motivations, relevant experience, and clearly indicate which aspects of the lab’s research interest you most and why. In addition, outline a potential research direction you would be excited to pursue in the lab. This should include general questions or hypotheses, possible approaches or methods, and how your ideas align with ongoing work in the lab. This proposal does not need to represent your final PhD project; rather, it is an opportunity to demonstrate your scientific interests, creativity, and communication skills.
+CV: Include academic and professional experience, as well as names and email addresses of three references.
+Unofficial transcripts: Upload copies of transcripts or a list of coursework including undergraduate GPA. GRE scores are not required and should not be included.
+
+PI Zimova will begin reviewing applications immediately and will contact suitable candidates on a rolling basis. Applicants are encouraged to apply as early as possible.
+Contact
+Marketa Zimova
+mzimova@uwyo.edu (preferred contact method)","The Zimova Lab at the University of Wyoming (UW), Dept of Zoology and Physiology is looking for 1-2 PhD students to join our group. The PhD students will work with Dr. Marketa Zimova on research related to camouflage mismatch in white-tailed jackrabbits, snowshoe hares, and other seasonally color-molting species.
+All students will develop strong field ecology and quantitative analysis, with additional opportunities to build expertise aligned with their interests (e.g., evolutionary biology, movement ecology, behavioral ecology, remote sensing, AI, museum collections, genomics). Both positions are highly collaborative and will involve a combination of data collection by the student, existing datasets, and interaction with interdisciplinary collaborators.
+Students admitted to the program will be supported by a combination of teaching and research assistantships (min $28,000/year plus tuition waiver and health insurance) for the duration of their studies. The start date is Fall 2026 or Spring 2027.
+
+ Required Qualifications","Marketa Zimova on research related to camouflage mismatch in white-tailed jackrabbits, snowshoe hares, and other seasonally color-molting species. Students admitted to the program will be supported by a combination of teaching and research assistantships (min $28,000/year plus tuition waiver and health insurance) for the duration of their studies. Required Qualifications
+MS degree (awarded or anticipated) in biology, zoology, wildlife and fisheries science, or related field, or commensurate experience designing and leading research projects
+Interest in addressing key questions in conservation biology, animal ecology, and or evolutionary biology
+Ability to safely conduct field work in all seasons and remote environments
+Experience managing and analyzing data in R, Python, and or ArcGIS
+Strong interpersonal, written, and verbal communication skills, with demonstrated ability to work collaboratively
+Valid US driver’s license
+ 
+Preferred Qualifications
+Interest in applying research to wildlife management and conservation
+Strong background in quantitative analysis and or spatial modeling
+Experience with wildlife field methods (eg live-trapping, radiotelemetry, camera trapping)
+Experience leading field crews
+Track record of peer-reviewed publications
+
+About Zimova lab
+The research in Zimova lab focuses on quantifying the consequences of climate change for vertebrate populations and understanding the potential for evolutionary change to facilitate adaptation to climate change-related stressors",,"04/19/2026
+Published:
+03/18/2026
+Starting Date:
+after 8/31/2026
+Hours per Week:
+at least 40
+Salary:
+starting at $28,000 per year
+Education Required:
+Bachelors
+Experience Required:
+at least 3 years
+Location:
+Wyoming
+Tags:
+Graduate Opportunities
+Description
+The Zimova Lab at the University of Wyoming (UW), Dept of Zoology and Physiology is looking for 1-2 PhD students to join our group",True,0.95,Graduate,Wildlife & Natural Resources,0.25,"['wildlife', 'animal ecology', 'wildlife management', 'behavior', 'telemetry']",False,,2026-03-22T05:16:05.598014+00:00,scrape_20260322_051522_c5731e83,2.0
+"University of Tennessee, Knoxville Graduate Assistantship - MS or PhD - Evaluating Success in Aquatic Connectivity Restorations","University of Tennessee, Knoxville - School of Natural Resources, Fisheries (State)","Knoxville, Tennessee","starting at $28,000 per year",after 8/1/2026,03/17/2026,Graduate Opportunities,https://jobs.rwfm.tamu.edu/view-job/?id=114839,"University of Tennessee, Knoxville Graduate Assistantship - MS or PhD - Evaluating Success in Aquatic Connectivity Restorations
+University of Tennessee, Knoxville - School of Natural Resources, Fisheries (State) | https://naturalresources.tennessee.edu/
+Details
+Posting:
+https://utkfisheriesconservationecology.com/opportunities.html
+Application Deadline:
+04/07/2026
+Published:
+03/17/2026
 Starting Date:
 after 8/1/2026
 Hours per Week:
+at least 40
+Salary:
+starting at $28,000 per year
+Education Required:
+Bachelors
+Experience Required:
+none
+Location:
+Knoxville, Tennessee
+Tags:
+Graduate Opportunities
+Description
+University of Tennessee, Knoxville (UTK) Graduate Assistantship – Evaluating success in aquatic connectivity restorations 
+
+We are accepting applications for a M.S. or PhD graduate student research assistant that would develop a thesis or dissertation evaluating aquatic animal movements and the effectiveness of restorations of connectivity in stream ecosystems. 
+
+Duties: In addition to classes and other requirements of the M.S. in Wildlife and Fisheries Science or the PhD in Natural resources program, the student will complete teaching assistant duties, lead their own comprehensive research project, and assist on other research projects. The objectives of the project that the student will address some or all of the following:
+
+(1)    Characterizing changes in stream animal assemblages, habitat, and the spatial distribution of animals in response to connectivity restorations, including dam removals and aquatic organism passage (AOP) measures at dams and road-stream crossings
+(2)     Measuring the dispersal capacity of select stream animals
+(3)    Investigating the role of physical habitat characteristics, species life history, movement capacity, and the location and magnitude of potential source populations on the likelihood that species will recolonize an area in response to aquatic connectivity restoration
+
+This assistantship will involve extensive and intensive field work, to be conducted in Tennessee and other locations where aquatic connectivity restorations have recently been completed or are ongoing/planned. Field research activities will involve sampling mobile stream organisms (primarily fishes) with multiple gears (i.e., backpack and/or boat electrofishing, seine, snorkeling, various traps etc.), implantation of passive integrated transponder (PIT) tags and marking with visual implant elastomer (VIE), operation of PIT tag arrays and/or portable antennas and may involve extensive travel and overnight stays at/near the field site locations. Lab and office duties will include data and literature reviews, equipment maintenance and construction, statistical analysis, and writing peer-reviewed publications and technical reports. 
+
+Qualifications: Successful master’s degree applicants will have a B.S. degree in Biology, Ecology, Fisheries and Wildlife Science, or a closely related field, and PhD applicants are expected to hold an M.S. in one of the fields listed above. Applicants must meet all other qualifications for admission to the UTK School of Natural Resources Master's or PhD program. Applicants must have a strong desire to work in the field and laboratory and are expected to publish their research findings in peer-reviewed journals and present at professional conferences. Previous experience in aquatic field research, use of PIT tags and VIE marking techniques, data analysis using statistical software, and data management skills are preferred. The student must also possess a valid driver's license. Successful candidates will also have demonstrated the ability to manage multiple competing tasks for their time (e.g., writing, data collection, coursework), excellent abilities to work in a team setting, are goal oriented and self-directed.
+
+Funding and Timeline: Guaranteed financial support is available for 2 years for a Master’s student or 3 years for a PhD student, beginning in August of 2026. Financial support includes a stipend, tuition, and insurance. Review of applications will begin on March 25th, 2026 and new applications will not be accepted after April 7th, 2026.
+
+To Apply: please submit the following to Dr. Augustin Engman (aengman@utk.edu) and Dr. Lisa Izzo (lizzo1@utk.edu):
+
+1) Personal statement of research interests and career goals
+
+2) Resume or curriculum vitae
+
+3) Transcripts (unofficial is OK)
+
+4) Contact information for three references
+
+Contact
+Lisa Izzo & Augustin Engman
+lizzo1@utk.edu (preferred contact method)","University of Tennessee, Knoxville (UTK) Graduate Assistantship – Evaluating success in aquatic connectivity restorations 
+
+We are accepting applications for a M.S. or PhD graduate student research assistant that would develop a thesis or dissertation evaluating aquatic animal movements and the effectiveness of restorations of connectivity in stream ecosystems. 
+
+Duties: In addition to classes and other requirements of the M.S. in Wildlife and Fisheries Science or the PhD in Natural resources program, the student will complete teaching assistant duties, lead their own comprehensive research project, and assist on other research projects. The objectives of the project that the student will address some or all of the following:
+
+(1)    Characterizing changes in stream animal assemblages, habitat, and the spatial distribution of animals in response to connectivity restorations, including dam removals and aquatic organism passage (AOP) measures at dams and road-stream crossings
+(2)     Measuring the dispersal capacity of select stream animals
+(3)    Investigating the role of physical habitat characteristics, species life history, movement capacity, and the location and magnitude of potential source populations on the likelihood that species will recolonize an area in response to aquatic connectivity restoration
+
+This assistantship will involve extensive and intensive field work, to be conducted in Tennessee and other locations where aquatic connectivity restorations have recently been completed or are ongoing/planned. Field research activities will involve sampling mobile stream organisms (primarily fishes) with multiple gears (i.e., backpack and/or boat electrofishing, seine, snorkeling, various traps etc.), implantation of passive integrated transponder (PIT) tags and marking with visual implant elastomer (VIE), operation of PIT tag arrays and/or portable antennas and may involve extensive travel and overnight stays at/near the field site locations. Lab and office duties will include data and literature reviews, equipment maintenance and construction, statistical analysis, and writing peer-reviewed publications and technical reports. 
+
+Qualifications: Successful master’s degree applicants will have a B.S. degree in Biology, Ecology, Fisheries and Wildlife Science, or a closely related field, and PhD applicants are expected to hold an M.S. in one of the fields listed above. Applicants must meet all other qualifications for admission to the UTK School of Natural Resources Master's or PhD program. Applicants must have a strong desire to work in the field and laboratory and are expected to publish their research findings in peer-reviewed journals and present at professional conferences. Previous experience in aquatic field research, use of PIT tags and VIE marking techniques, data analysis using statistical software, and data management skills are preferred. The student must also possess a valid driver's license. Successful candidates will also have demonstrated the ability to manage multiple competing tasks for their time (e.g., writing, data collection, coursework), excellent abilities to work in a team setting, are goal oriented and self-directed.
+
+Funding and Timeline: Guaranteed financial support is available for 2 years for a Master’s student or 3 years for a PhD student, beginning in August of 2026. Financial support includes a stipend, tuition, and insurance. Review of applications will begin on March 25th, 2026 and new applications will not be accepted after April 7th, 2026.
+
+To Apply: please submit the following to Dr. Augustin Engman (aengman@utk.edu) and Dr. Lisa Izzo (lizzo1@utk.edu):
+
+1) Personal statement of research interests and career goals
+
+2) Resume or curriculum vitae
+
+3) Transcripts (unofficial is OK)
+
+4) Contact information for three references","or PhD graduate student research assistant that would develop a thesis or dissertation evaluating aquatic animal movements and the effectiveness of restorations of connectivity in stream ecosystems. in Wildlife and Fisheries Science or the PhD in Natural resources program, the student will complete teaching assistant duties, lead their own comprehensive research project, and assist on other research projects. Field research activities will involve sampling mobile stream organisms (primarily fishes) with multiple gears (i",,"04/07/2026
+Published:
+03/17/2026
+Starting Date:
+after 8/1/2026
+Hours per Week:
+at least 40
+Salary:
+starting at $28,000 per year
+Education Required:
+Bachelors
+Experience Required:
+none
+Location:
+Knoxville, Tennessee
+Tags:
+Graduate Opportunities
+Description
+University of Tennessee, Knoxville (UTK) Graduate Assistantship – Evaluating success in aquatic connectivity restorations 
+
+We are accepting applications for a M",True,0.95,Graduate,Fisheries & Aquatic Science,0.18,"['fish', 'fisheries', 'aquatic', 'stream', 'river']",False,,2026-03-22T05:16:05.697413+00:00,scrape_20260322_051522_c5731e83,2.0
+USDA-ARS Post Graduate Research Fellow in Agrigenomics,Oak Ridge Associated Universities (ORAU) (Private),"Hilo, Hawaii",Commensurate / Negotiable,after 5/1/2026,03/20/2026,"Graduate Opportunities, Undergraduate Opportunities",https://jobs.rwfm.tamu.edu/view-job/?id=114999,"USDA-ARS Post Graduate Research Fellow in Agrigenomics
+Oak Ridge Associated Universities (ORAU) (Private) | https://orise.orau.gov/index.html
+Details
+Posting:
+https://www.zintellect.com/Opportunity/Details/USDA-ARS-PWA-2026-0129
+Application Deadline:
+06/05/2026
+Published:
+03/20/2026
+Starting Date:
+after 5/1/2026
+Hours per Week:
+at least 40
+Salary:
+Commensurate / Negotiable
+Education Required:
+Bachelors
+Experience Required:
+at least 1 year
+Location:
+Hilo, Hawaii
+Tags:
+Graduate Opportunities
+Undergraduate Opportunities
+Description
+ *Applications are reviewed on a rolling-basis.
+
+ARS Office/Lab and Location: A research opportunity is currently available with the U.S. Department of Agriculture (USDA), Agricultural Research Service (ARS), located in Hilo, Hawaii.
+
+The Agricultural Research Service (ARS) is the U.S. Department of Agriculture's chief scientific in-house research agency with a mission to find solutions to agricultural problems that affect Americans every day from field to table. ARS will deliver cutting-edge, scientific tools and innovative solutions for American farmers, producers, industry, and communities to support the nourishment and well-being of all people; sustain our nation’s agroecosystems and natural resources; and ensure the economic competitiveness and excellence of our agriculture. The vision of the agency is to provide global leadership in agricultural discoveries through scientific excellence.
+
+The mission of the Tropical Pest Genetics and Molecular Biology Research Unit is to develop new technologies in pest management, improve molecular diagnostics, and enhance biocontrol agents to support American agriculture and protect it from invasive tropical pests. 
+
+Research Project: This project is for a research fellow at the post-grad or post-bac level that is interested in expanding research experience in insect genomics, genome sequencing, bioinformatics, functional genomics or molecular biology. The research focus is on genomics of tropical and subtropical pest insect species. The lab uniquely hosts a complete production scale genomics laboratory, including all current sequencing technologies and tools.  We develop and apply both emerging tools and techniques to insect genomics and have resources to support development of rich datasets for asking complex questions and collaborate broadly across many different research communities. 
+
+Learning Objectives: Participants will gain skills in execution of emerging genomic techniques to agrigenomic samples including insects, plants, and microbes on a broad range of sample types and genomic instrumentation. The participant will gain knowledge of genomics from sample preparation, sequencing, to handling data and interacting with a variety of researchers and projects associated with this opportunity.
+
+Mentor(s): The mentor for this opportunity is Scott Geib (scott.geib@usda.gov). If you have questions about the nature of the research, please contact the mentor(s).
+
+Anticipated Appointment Start Date: May 1, 2026. Start date is flexible and will depend on a variety of factors.
+
+Appointment Length: The appointment will initially be for one year, but may be renewed upon recommendation of ARS and is contingent on the availability of funds.
+
+Level of Participation: The appointment is full time.
+
+Participant Stipend: The participant will receive a monthly stipend commensurate with educational level and experience. The anticipated stipend range is $4,000 - $5,500 monthly.
+
+Citizenship Requirements: This opportunity is available to U.S. citizens only.
+
+ORISE Information: This program, administered by ORAU through its contract with the U.S. Department of Energy (DOE) to manage the Oak Ridge Institute for Science and Education (ORISE), was established through an interagency agreement between DOE and ARS. Participants do not become employees of USDA, ARS, DOE or the program administrator, and there are no employment-related benefits. Proof of health insurance is required for participation in this program. Health insurance can be obtained through ORISE.
+
+Questions: Please visit our Program Website. After reading, if you have additional questions about the application process, please email ORISE.ARS.PacificWest@orau.org and include the reference code for this opportunity.
+
+Qualifications
+The qualified candidate should be currently pursuing or have received a bachelor's or master's degree in the one of the relevant fields
+
+Preferred skills:
+
+Experience in basic molecular biology techniques such as DNA extraction, PCR, gel electrophoresis, and potentially more advanced skills in genomics or high-throughput sequencing.  
+
+Contact
+USDA-ARS-PWA-2026-0129
+contact via the web posting is preferred (see Details section)",Citizenship Requirements: This opportunity is available to U.S. citizens only.,"USDA-ARS Post Graduate Research Fellow in Agrigenomics
+Oak Ridge Associated Universities (ORAU) (Private) | https://orise. ARS Office/Lab and Location: A research opportunity is currently available with the U. Department of Agriculture (USDA), Agricultural Research Service (ARS), located in Hilo, Hawaii",,"06/05/2026
+Published:
+03/20/2026
+Starting Date:
+after 5/1/2026
+Hours per Week:
+at least 40
+Salary:
+Commensurate / Negotiable
+Education Required:
+Bachelors
+Experience Required:
+at least 1 year
+Location:
+Hilo, Hawaii
+Tags:
+Graduate Opportunities
+Undergraduate Opportunities
+Description
+ *Applications are reviewed on a rolling-basis",True,0.95,Graduate,Unknown,0.0,[],False,,2026-03-22T05:16:06.118255+00:00,scrape_20260322_051522_c5731e83,2.0
+Graduate Research Assistantship (M.S. or Ph.D.) – Northern Bobwhite Ecology & Remote Sensing,University of Georgia (State),"Athens (Athens, Georgia)",Commensurate / Negotiable,between 4/1/2026 and 8/1/2026,03/18/2026,Graduate Opportunities,https://jobs.rwfm.tamu.edu/view-job/?id=114910,"Graduate Research Assistantship (M.S. or Ph.D.) – Northern Bobwhite Ecology & Remote Sensing
+University of Georgia (State) | http://www.warnell.uga.edu
+Details
+Application Deadline:
+03/27/2026
+Published:
+03/18/2026
+Starting Date:
+between 4/1/2026 and 8/1/2026
+Hours per Week:
 40
+Salary:
+Commensurate / Negotiable
+Education Required:
+Bachelors
+Experience Required:
+none
+Location:
+Athens (Athens, Georgia)
+Tags:
+Graduate Opportunities
+Description
+A fully funded M.S. (2) or Ph.D. (1) position is available to join a collaborative research project focused on advancing conservation and management of northern bobwhite through cutting-edge remote sensing and quantitative ecology.
+
+Project Overview
+
+This project integrates remote sensing, field ecology, and advanced statistical modeling to better understand how habitat structure and composition influence bobwhite populations across spatial scales.
+
+The selected student will contribute to two primary objectives:
+
+Objective 1: Landscape Mapping Using Remote Sensing
+
+The student will develop spatial datasets to distinguish native grass-dominated systems from exotic grass pastures and quantify shrub cover across study landscapes.
+
+Key approaches include:
+
+Multispectral and hyperspectral satellite imagery
+
+Vegetation indices (e.g., NDVI) and phenological signatures
+
+Machine learning classification methods
+
+LiDAR (USGS 3DEP; Q2) for shrub structure mapping
+
+Integration of NAIP imagery and potential use of GEDI or SAR data
+
+This component will result in high-resolution habitat maps to support ecological analyses and management decisions.
+
+Objective 2: Multi-scale Habitat Selection of Northern Bobwhite
+
+The student will quantify bobwhite habitat selection across micro-site, patch, and landscape scales using radio-telemetry data.
+
+Field and analytical components include:
+
+Intensive telemetry (year-round tracking)
+
+Micro-site vegetation sampling (structure, composition, ground cover)
+
+Patch-scale GIS analysis (composition, connectivity, edge density)
+
+Integration of land management data (fire, grazing, etc.)
+
+A central component of the project will be development of a Structural Equation Model (SEM) to:
+
+Link habitat characteristics across scales
+
+Quantify direct and indirect drivers of habitat selection
+
+Evaluate mechanistic pathways influencing survival and reproduction
+
+Qualifications
+
+Preferred candidates will have:
+
+B.S. or M.S. in wildlife ecology, ecology, natural resources, or related field
+
+Strong interest in upland game bird ecology and conservation
+
+Experience (or willingness to learn) R, GIS, and statistical modeling
+
+Familiarity with remote sensing, LiDAR, or telemetry data is a plus
+
+Ability to work independently in field conditions and collaboratively on a research team
+
+Support & Benefits
+
+Full tuition coverage
+
+Competitive stipend
+
+Health insurance
+
+Opportunities for publication and professional development
+
+Location
+
+The student will be based at the University of Georgia (Athens, GA), with fieldwork conducted in Kansas.
+
+How to Apply
+
+Please send the following as a single PDF:
+
+Cover letter describing interests and experience
+
+CV
+
+Contact information for 2–3 references
+
+Send materials to: James Martin (jmart22@uga.edu)
+Review of applications will begin immediately and continue until the position is filled.
+
+Contact
+James Martin
+jmart22@uga.edu (preferred contact method)","Hours per Week:
+40
+Salary:
+Commensurate / Negotiable
+Education Required:
+Bachelors
+Experience Required:
+none","Graduate Research Assistantship (M. (1) position is available to join a collaborative research project focused on advancing conservation and management of northern bobwhite through cutting-edge remote sensing and quantitative ecology. in wildlife ecology, ecology, natural resources, or related field
+
+Strong interest in upland game bird ecology and conservation
+
+Experience (or willingness to learn) R, GIS, and statistical modeling
+
+Familiarity with remote sensing, LiDAR, or telemetry data is a plus
+
+Ability to work independently in field conditions and collaboratively on a research team
+
+Support & Benefits
+
+Full tuition coverage
+
+Competitive stipend
+
+Health insurance
+
+Opportunities for publication and professional development
+
+Location
+
+The student will be based at the University of Georgia (Athens, GA), with fieldwork conducted in Kansas",,"03/27/2026
+Published:
+03/18/2026
+Starting Date:
+between 4/1/2026 and 8/1/2026
+Hours per Week:
+40
+Salary:
+Commensurate / Negotiable
+Education Required:
+Bachelors
+Experience Required:
+none
+Location:
+Athens (Athens, Georgia)
+Tags:
+Graduate Opportunities
+Description
+A fully funded M",True,0.95,Graduate,Unknown,0.0,[],False,,2026-03-22T05:16:06.222726+00:00,scrape_20260322_051522_c5731e83,2.0
+Ph.D. graduate assistantship in coastal phytoplankton/harmful algal bloom dynamics,"Harte Research Institute, Texas A&M University-Corpus Christi (State)","6300 Ocean Drive (Corpus Christi, Texas)","$2,000 per month",between 8/1/2026 and 1/31/2027,03/18/2026,Graduate Opportunities,https://jobs.rwfm.tamu.edu/view-job/?id=114876,"Ph.D. graduate assistantship in coastal phytoplankton/harmful algal bloom dynamics
+Harte Research Institute, Texas A&M University-Corpus Christi (State)
+Details
+Application Deadline:
+03/31/2026
+Published:
+03/18/2026
+Starting Date:
+between 8/1/2026 and 1/31/2027
+Hours per Week:
+at least 40
+Salary:
+$2,000 per month
+Education Required:
+Masters
+Experience Required:
+at least 2 years
+Location:
+6300 Ocean Drive (Corpus Christi, Texas)
+Tags:
+Graduate Opportunities
+Description
+A Ph.D. graduate student position is available in the Coastal Water Health at the Harte Research Institute of Texas A&M University-Corpus Christi (https://www.harteresearch.org/research/coastal-water-health) to study phytoplankton/harmful algal bloom dynamics in Texas estuaries. The position is available for an August 2026, or January 2027 start date. Students may apply to either the Marine Biology (https://www.tamucc.edu/science/departments/life-sciences/marine-biology/) or Coastal and Marine System Science (https://www.tamucc.edu/science/departments/physical-sciences/coastal-marine/) program at Texas A&M University-Corpus Christi. 
+ Required Qualifications
+·       Completion of an M.S. degree in ecology, marine biology, or related field
+·       Demonstrated experience conducting quantitative analyses with statistical programs such as R, PRIMER, etc. 
+·       Excellent scientific writing skills 
+·       Ability to work independently and solve problems 
+ Preferred Qualifications
+·       Previous working experience with marine phytoplankton taxonomy
+·       At least one peer-reviewed article published or in review as first author 
+ Compensation
+·       Monthly stipend ($2,000/month)
+·       Tuition
+·       Health Insurance  
+ Please email Dr. Mike Wetz with a copy of your CV, unofficial transcripts, a brief (<500 words) cover letter describing your interests and fit for this opportunity, and contact information for 3 references. Review of applications will begin March 23rd, 2026, and continue until filled.
+ Contact information:
+Michael Wetz
+Michael.wetz@tamucc.edu
+ 
+
+Contact
+Mike Wetz
+michael.wetz@tamucc.edu (preferred contact method)","Hours per Week:
+at least 40
+Salary:
+$2,000 per month
+Education Required:
+Masters
+Experience Required:
+at least 2 years","graduate assistantship in coastal phytoplankton/harmful algal bloom dynamics
+Harte Research Institute, Texas A&M University-Corpus Christi (State)
+Details
+Application Deadline:
+03/31/2026
+Published:
+03/18/2026
+Starting Date:
+between 8/1/2026 and 1/31/2027
+Hours per Week:
+at least 40
+Salary:
+$2,000 per month
+Education Required:
+Masters
+Experience Required:
+at least 2 years
+Location:
+6300 Ocean Drive (Corpus Christi, Texas)
+Tags:
+Graduate Opportunities
+Description
+A Ph. graduate student position is available in the Coastal Water Health at the Harte Research Institute of Texas A&M University-Corpus Christi (https://www. harteresearch",,"03/31/2026
+Published:
+03/18/2026
+Starting Date:
+between 8/1/2026 and 1/31/2027
+Hours per Week:
+at least 40
+Salary:
+$2,000 per month
+Education Required:
+Masters
+Experience Required:
+at least 2 years
+Location:
+6300 Ocean Drive (Corpus Christi, Texas)
+Tags:
+Graduate Opportunities
+Description
+A Ph",True,0.95,Graduate,Unknown,0.0,[],False,,2026-03-22T05:16:06.480550+00:00,scrape_20260322_051522_c5731e83,2.0
+Graduate Research Assistant (M.S.),University of Nebraska at Kearney (State),"2401 11th Ave (Kearney, Nebraska)","starting at $19,386 per year",between 7/1/2026 and 8/10/2026,03/16/2026,Graduate Opportunities,https://jobs.rwfm.tamu.edu/view-job/?id=114817,"Graduate Research Assistant (M.S.)
+University of Nebraska at Kearney (State)
+Details
+Application Deadline:
+04/15/2026
+Published:
+03/16/2026
+Starting Date:
+between 7/1/2026 and 8/10/2026
+Hours per Week:
+at least 40
+Salary:
+starting at $19,386 per year
+Education Required:
+Bachelors
+Experience Required:
+none
+Location:
+2401 11th Ave (Kearney, Nebraska)
+Tags:
+Graduate Opportunities
+Description
+A M.S.-level research project investigating ecosystem impacts of Common Carp and White Sucker recolonization at Lake Ogallala following a chemical renovation in 2023 and potential for targeted removals to sustain fishery benefits. In an open system, immigration or density-dependent compensatory responses may result in stable or increasing nuisance populations. In Lake Ogallala, high densities of Carp and White Sucker contribute to the degradation of the system through uprooting or ingestion of submerged aquatic vegetation resulting in a loss of macrophyte and macroinvertebrate production. Fish exclosures to protect macrophyte production in tandem with targeted fish removals may be able to maintain trophic conditions. Models involving population structure and dynamics of each species may provide insights as to whether biomass may be suppressed for longer benefits to other recreationally important fishes. 
+
+Completion of the project will serve as partial fulfillment of the requirements for a MS degree from the University of Nebraska at Kearney (UNK). Other requirements include satisfactory completion of coursework, successful thesis defense, and submission of manuscripts for publication.  Each student will be supported on a year-round research assistantship, which includes monthly pay, full tuition waiver, and optional student health insurance. 
+
+Qualifications: B.S. in fisheries or wildlife science/management, population ecology, environmental science, or related field. Experience in fisheries field work, understanding of recreational fisheries management, and data analysis is highly desirable, especially in a competitive selection process. Candidates with demonstrated written and oral communication skills, analytical skills, and strong academic credentials are preferred. Applicants must be self-motivated, demonstrate a strong work ethic, and be capable and willing to work long hours (within boundaries) to complete all aspects of the research, including in the field, laboratory, and office.
+
+How to apply: Send application (cover letter, résumé/CV, transcripts, and contact information of 3 references) electronically to Dr. Melissa Wuellner, Department of Biology, UNK, wuellnermr@unk.edu.  Finalists moving to the next step will be notified and will receive a writing prompt that will be due within a short window of time (3 days from the date of notification).  
+Contact
+Melissa Wuellner
+3088658006
+wuellnermr@unk.edu (preferred contact method)","A M.S.-level research project investigating ecosystem impacts of Common Carp and White Sucker recolonization at Lake Ogallala following a chemical renovation in 2023 and potential for targeted removals to sustain fishery benefits. In an open system, immigration or density-dependent compensatory responses may result in stable or increasing nuisance populations. In Lake Ogallala, high densities of Carp and White Sucker contribute to the degradation of the system through uprooting or ingestion of submerged aquatic vegetation resulting in a loss of macrophyte and macroinvertebrate production. Fish exclosures to protect macrophyte production in tandem with targeted fish removals may be able to maintain trophic conditions. Models involving population structure and dynamics of each species may provide insights as to whether biomass may be suppressed for longer benefits to other recreationally important fishes. 
+
+Completion of the project will serve as partial fulfillment of the requirements for a MS degree from the University of Nebraska at Kearney (UNK). Other requirements include satisfactory completion of coursework, successful thesis defense, and submission of manuscripts for publication.  Each student will be supported on a year-round research assistantship, which includes monthly pay, full tuition waiver, and optional student health insurance. 
+
+Qualifications: B.S. in fisheries or wildlife science/management, population ecology, environmental science, or related field. Experience in fisheries field work, understanding of recreational fisheries management, and data analysis is highly desirable, especially in a competitive selection process. Candidates with demonstrated written and oral communication skills, analytical skills, and strong academic credentials are preferred. Applicants must be self-motivated, demonstrate a strong work ethic, and be capable and willing to work long hours (within boundaries) to complete all aspects of the research, including in the field, laboratory, and office.
+
+How to apply: Send application (cover letter, résumé/CV, transcripts, and contact information of 3 references) electronically to Dr. Melissa Wuellner, Department of Biology, UNK, wuellnermr@unk.edu.  Finalists moving to the next step will be notified and will receive a writing prompt that will be due within a short window of time (3 days from the date of notification).","Graduate Research Assistant (M. -level research project investigating ecosystem impacts of Common Carp and White Sucker recolonization at Lake Ogallala following a chemical renovation in 2023 and potential for targeted removals to sustain fishery benefits. Each student will be supported on a year-round research assistantship, which includes monthly pay, full tuition waiver, and optional student health insurance",,"04/15/2026
+Published:
+03/16/2026
+Starting Date:
+between 7/1/2026 and 8/10/2026
+Hours per Week:
+at least 40
+Salary:
+starting at $19,386 per year
+Education Required:
+Bachelors
+Experience Required:
+none
+Location:
+2401 11th Ave (Kearney, Nebraska)
+Tags:
+Graduate Opportunities
+Description
+A M",True,0.95,Graduate,Unknown,0.0,[],True,University of Nebraska,2026-03-22T05:16:06.589728+00:00,scrape_20260322_051522_c5731e83,2.0
+USDA-ARS Postdoctoral Research Fellowship in Computational Biology,Oak Ridge Associated Universities (ORAU) (Private),"Ames, Iowa",Commensurate / Negotiable,after 4/1/2026,03/20/2026,Faculty / Post-Doc Appointments,https://jobs.rwfm.tamu.edu/view-job/?id=114993,"USDA-ARS Postdoctoral Research Fellowship in Computational Biology
+Oak Ridge Associated Universities (ORAU) (Private) | https://orise.orau.gov/index.html
+Details
+Posting:
+https://www.zintellect.com/Opportunity/Details/USDA-ARS-HQ-2026-0126
+Application Deadline:
+05/08/2026
+Published:
+03/20/2026
+Starting Date:
+after 4/1/2026
+Hours per Week:
+at least 40
+Salary:
+Commensurate / Negotiable
+Education Required:
+Doctorate
+Experience Required:
+at least 1 year
+Location:
+Ames, Iowa
+Tags:
+Faculty / Post-Doc Appointments
+Description
+ *Applications may be reviewed on a rolling-basis. The mentor for this opportunity is actively reviewing applications as they are submitted.
+
+ARS Office/Lab and Location: A postdoctoral research opportunity is available with the U.S. Department of Agriculture (USDA), Agricultural Research Service (ARS) at the National Animal Disease Center (NADC) in the Food Safety and Enteric Pathogens Research Unit in Ames, Iowa.
+
+The Agricultural Research Service (ARS) is the U.S. Department of Agriculture's chief scientific in-house research agency with a mission to find solutions to agricultural problems that affect Americans every day from field to table. ARS will deliver cutting-edge, scientific tools and innovative solutions for American farmers, producers, industry, and communities to support the nourishment and well-being of all people; sustain our nation’s agroecosystems and natural resources; and ensure the economic competitiveness and excellence of our agriculture. The vision of the agency is to provide global leadership in agricultural discoveries through scientific excellence.
+
+Research Project:  The research team is seeking a motivated and independent fellow to join our project to investigate host-microbe interactions for the discovery of antimicrobial resistance transfer mechanisms involving multidrug-resistant Salmonella, analyses of genomic and phenotypic factors of emerging and/or persistent Salmonella outbreak isolates, and the development of antibiotic alternatives that will benefit food safety and public health. A major emphasis for this research opportunity is placed on the use of genomic, transcriptomic, proteomic and metabolomic approaches to solve these research problems. 
+
+Learning Objectives: The learning objectives for the fellow include developing skills in novel bioinformatics-based tools for analyzing and interpreting genomic, metagenomic, and/or gene expression datasets from animals and microbes, particularly in response to emerging Salmonella foodborne outbreak issues.
+
+Mentor(s): The mentor for this opportunity is Dr. Shawn Bearson (shawn.bearson@usda.gov). If you have questions about the nature of the research project, please contact the mentor(s).
+
+Anticipated Appointment Start Date: As soon as a qualified candidate is identified.  Start date is flexible and will depend on a variety of factors.
+
+Appointment Length: The appointment will initially be for two years.
+
+Level of Participation: The appointment is full-time.
+
+Participant Stipend: The participant will receive a monthly stipend commensurate with educational level and experience. The anticipated stipend is $75,284 annually. Travel allowance and health insurance stipend supplement are provided.
+
+Citizenship Requirements: This opportunity is available to U.S. citizens only.
+
+ORISE Information: This program, administered by ORAU through its contract with the U.S. Department of Energy (DOE) to manage the Oak Ridge Institute for Science and Education (ORISE), was established through an interagency agreement between DOE and ARS. Participants do not become employees of USDA, ARS, DOE or the program administrator, and there are no employment-related benefits. Proof of health insurance is required for participation in this program. Health insurance can be obtained through ORISE.
+
+The participant does not become an employee of ARS or ORISE. However, this position requires a pre-employment check and a full background investigation. 
+
+Questions: Please visit our Program Website. After reading, if you have additional questions about the application process please email ORISE.ARS.Midwest@orau.org and include the reference code for this opportunity.
+
+Qualifications
+The qualified candidate should have received a doctoral degree in one of the relevant fields. Degree must have been received within four years of the appointment start date.
+
+Preferred Skills:
+
+Experience in bioinformatics and computational analysis across prokaryotic and/or eukaryotic systems, with experience addressing complex biological questions related to bacterial genome organization and function, gene regulation (host and bacterial), and microbial community structure in the context of host–pathogen interactions in food animals.
+Ability to perform bioinformatic and statistical analyses of genomic, transcriptomic, and/or metabolomic data to support systems biology modeling of host–pathogen interfaces, host–microbiota interactions, and host immune responses.
+Capability to establish and maintain data processing pipelines with appropriate quality control procedures for high-throughput data streams.
+Enthusiastic and self-motivated with good communication skills and a strong work ethic. 
+
+Contact
+USDA-ARS-HQ-2026-0126
+contact via the web posting is preferred (see Details section)",Citizenship Requirements: This opportunity is available to U.S. citizens only.,"USDA-ARS Postdoctoral Research Fellowship in Computational Biology
+Oak Ridge Associated Universities (ORAU) (Private) | https://orise. ARS Office/Lab and Location: A postdoctoral research opportunity is available with the U. Department of Agriculture (USDA), Agricultural Research Service (ARS) at the National Animal Disease Center (NADC) in the Food Safety and Enteric Pathogens Research Unit in Ames, Iowa",,"05/08/2026
+Published:
+03/20/2026
+Starting Date:
+after 4/1/2026
+Hours per Week:
+at least 40
+Salary:
+Commensurate / Negotiable
+Education Required:
+Doctorate
+Experience Required:
+at least 1 year
+Location:
+Ames, Iowa
+Tags:
+Faculty / Post-Doc Appointments
+Description
+ *Applications may be reviewed on a rolling-basis",True,0.95,Graduate,Unknown,0.0,[],False,,2026-03-22T05:16:06.688909+00:00,scrape_20260322_051522_c5731e83,2.0
+Alaska Fellows Program Fellow,Alaska Fellows Program (Private),multiple,"$1,200 per month",after 9/1/2026,03/18/2026,Graduate Opportunities,https://jobs.rwfm.tamu.edu/view-job/?id=114878,"Alaska Fellows Program Fellow
+Alaska Fellows Program (Private) | https://alaskafellows.org
+Details
+Posting:
+https://alaskafellows.org/apply/positions
+Application Deadline:
+03/25/2026
+Published:
+03/18/2026
+Starting Date:
+after 9/1/2026
+Ending Date:
+before 5/31/2027
+Hours per Week:
+30 - 40
+Salary:
+$1,200 per month
+Education Required:
+Bachelors
+Experience Required:
+none
+Locations:
+Fairbanks, Alaska
+Anchorage, Alaska
+Juneau, Alaska
+Sitka, Alaska
+Tags:
+Graduate Opportunities
+Description
+Mission
+
+AFP nurtures community and charts professional pathways through the fellowship of talented young Alaskans who gain real world experience, mentorship, and training from critical organizations in Alaska.
+
+Vision
+
+We envision enduring, meaningful pathways for talented young Alaskans, both homegrown and new, to build their careers and serve as visionary leaders in Alaska.
+
+The Alaska Fellows Program (AFP) is a fall-to-spring residential fellowship program that nurtures the next generation of Alaska-based leaders by pairing talented young people with strong communities and professional mentors. Initially launched with a small pool of Yale graduates in 2014, the program now boasts alumni from 35 states and seven countries and hosts fellows in Anchorage, Juneau, Sitka and Fairbanks. Forty-six percent of alumni continue to live and work in Alaska for a year or more following their fellowships.
+
+By attracting young, dynamic professionals to the state of Alaska, AFP arrests and reverses the “brain drain” of young people supersaturating in Seattle, San Francisco, Boston, New York, and D.C. AFP also helps Alaska retain homegrown talent by connecting born-and-raised Alaskans with high-impact opportunities in their home state.
+
+Fellows serve with a dynamic non-profit or public-sector organization for the fellowship term and receive modest living stipends and housing is provided and paid for by the program. Fellows live communally, work closely with professional mentors, and make lasting contributions to their host community. 
+
+Fellows attend program-funded opening and closing retreats as well as two facilitated “convenings” — events that draw together fellows across all sites to cultivate connections, friendships, and common identity.
+
+AFP is currently recruiting for 30+ fellow roles across our four communities.  Host organizations include 
+
+University of Alaska system
+Cold Climate Housing Research Center
+The Folk School
+Cook Inlet Housing Authority
+American Civil Liberties Union of Alaska
+Alaska Children's Trust
+The Alaska Center
+Big Brothers Big Sisters of Alaska
+Alaska Travel Industry Association
+Sealaska Heritage Institute
+Alaska Council of School Administrators
+Outer Coast
+Sitka Counseling and Prevention Services, Inc.
+Alaska Venture Fund
+Southeast Alaska Conservation Council (SEACC)
+And many more.
+To see all the roles and host organizations and to apply please visit - https://alaskafellows.org/apply/positions
+Contact
+Tina Buxbaum
+907-978-8383
+tina@alaskafellows.org (preferred contact method)","Hours per Week:
+30 - 40
+Salary:
+$1,200 per month
+Education Required:
+Bachelors
+Experience Required:
+none","Host organizations include 
+
+University of Alaska system
+Cold Climate Housing Research Center
+The Folk School
+Cook Inlet Housing Authority
+American Civil Liberties Union of Alaska
+Alaska Children's Trust
+The Alaska Center
+Big Brothers Big Sisters of Alaska
+Alaska Travel Industry Association
+Sealaska Heritage Institute
+Alaska Council of School Administrators
+Outer Coast
+Sitka Counseling and Prevention Services, Inc",,"03/25/2026
+Published:
+03/18/2026
+Starting Date:
+after 9/1/2026
+Ending Date:
+before 5/31/2027
+Hours per Week:
+30 - 40
+Salary:
+$1,200 per month
+Education Required:
+Bachelors
+Experience Required:
+none
+Locations:
+Fairbanks, Alaska
+Anchorage, Alaska
+Juneau, Alaska
+Sitka, Alaska
+Tags:
+Graduate Opportunities
+Description
+Mission
+
+AFP nurtures community and charts professional pathways through the fellowship of talented young Alaskans who gain real world experience, mentorship, and training from critical organizations in Alaska",True,0.95,Graduate,Unknown,0.0,[],False,,2026-03-22T05:16:07.197684+00:00,scrape_20260322_051522_c5731e83,2.0
+USDA-ARS Research Fellowship Developing Nanoparticles as Insecticides,Oak Ridge Associated Universities (ORAU) (Private),"Manhattan, Kansas",Commensurate / Negotiable,after 6/1/2026,03/16/2026,"Faculty / Post-Doc Appointments, Graduate Opportunities",https://jobs.rwfm.tamu.edu/view-job/?id=114738,"USDA-ARS Research Fellowship Developing Nanoparticles as Insecticides
+Oak Ridge Associated Universities (ORAU) (Private) | https://orise.orau.gov/index.html
+Details
+Posting:
+https://www.zintellect.com/Opportunity/Details/USDA-ARS-PA-2026-0110
+Application Deadline:
+05/22/2026
+Published:
+03/16/2026
+Starting Date:
+after 6/1/2026
+Hours per Week:
+at least 40
 Salary:
 Commensurate / Negotiable
 Education Required:
@@ -401,12 +977,1003 @@ Masters
 Experience Required:
 none
 Location:
-2802 Moore Highway (Tifton, GA, Georgia)
+Manhattan, Kansas
+Tags:
+Faculty / Post-Doc Appointments
+Graduate Opportunities
+Description
+ *Applications are reviewed on a rolling-basis.
+
+ARS Office/Lab and Location: A postdoctoral research opportunity is currently available with the U.S. Department of Agriculture (USDA), Agriculture Research Service (ARS), within the Foreign Arthropod-Borne Animal Disease Research Unit (FABADRU). This opportunity will be located at the National Bio and Agro-defense Facility (NBAF) and Kansas State University campus in Manhattan, Kansas.
+
+The Agricultural Research Service (ARS) is the U.S. Department of Agriculture's chief scientific in-house research agency with a mission to find solutions to agricultural problems that affect Americans every day from field to table. ARS will deliver cutting-edge, scientific tools and innovative solutions for American farmers, producers, industry, and communities to support the nourishment and well-being of all people; sustain our nation’s agroecosystems and natural resources; and ensure the economic competitiveness and excellence of our agriculture. The vision of the agency is to provide global leadership in agricultural discoveries through scientific excellence.
+
+Research Project: FABADRU uses multifaceted and interdisciplinary techniques to understand the interactions of viruses, vectors, hosts, and the environment on the transmission of viruses affecting livestock. The specific mission is to identify and manage exotic arthropod-borne diseases that have the potential to cross international boundaries and present a risk to U.S. livestock. The fellow will have the opportunity to contribute to the development of novel insecticides targeting arthropod pests of livestock, humans, crops, and stored products. Under the guidance of the mentor(s), the fellow will have the opportunity to take part in research that aims to:
+
+Characterize and formulate the next generation of insecticides using nano- or microparticles,
+Evaluate active ingredients, and;
+Develop novel methods that incorporate existing and new products to create new tools for an integrated pest management plan to protect American agriculture.
+Learning Objectives: Under the guidance of a mentor, the fellow will learn techniques related to chemistry, molecular biology, and microscopy during the development phase and efficacy testing of insecticides during the trial phase of this research project. Opportunities to develop skills in manuscript preparation, research presentation, and domestic and international collaboration with other USDA and non-USDA researchers to address complex questions in agriculture will be available. Additionally, opportunities to develop soft skills to enhance career success will be available.
+
+Mentor(s): The mentors for this opportunity are Dr. Lee Cohnstaedt (Lee.Cohnstaedt@usda.gov) and Dr. Dustin Swanson (Dustin.Swanson@usda.gov). If you have questions about the nature of the research, please contact the mentor(s).
+
+Anticipated Appointment Start Date: July/August 2026. Start date is flexible and will depend on a variety of factors.
+
+Appointment Length: The appointment will initially be for one year but may be renewed upon recommendation of ARS and is contingent on the availability of funds.
+
+Level of Participation: The appointment is full time.
+
+Participant Stipend: The participant will receive a monthly stipend commensurate with educational level and experience. Anticipated stipend range is $60,000 - $100,000 annually.
+
+Citizenship Requirements: This opportunity is available to U.S. citizens only.
+
+ORISE Information: This program, administered by ORAU through its contract with the U.S. Department of Energy (DOE) to manage the Oak Ridge Institute for Science and Education (ORISE), was established through an interagency agreement between DOE and ARS. Participants do not become employees of USDA, ARS, DOE or the program administrator, and there are no employment-related benefits. Proof of health insurance is required for participation in this program. Health insurance can be obtained through ORISE.
+
+Questions: Please visit our Program Website. After reading, if you have additional questions about the application process, please email ORISE.ARS.Plains@orau.org and include the reference code for this opportunity.
+
+Qualifications
+The qualified candidate should be currently pursuing or have received a master's or doctoral degree in the one of the relevant fields (e.g. molecular biology, chemistry, biochemistry, chemical or agricultural engineering, or closely related discipline). Degree must have been received within the past five years or anticipated to be received by start of appointment.
+
+Preferred skills:
+
+Experience related to the development and/or application of nanoparticles, microparticles, pesticides, or other biologically active products
+Experience working with insects
+Previous experience in team and collaborative scientific environments
+Attention to detail, accuracy, and reproducible documentation
+Clear written and verbal communication skills for both scientific and applied audiences
+Stipend
+$60,000.00 – $100,000.00 Yearly 
+Contact
+USDA-ARS-PA-2026-0110
+contact via the web posting is preferred (see Details section)",Citizenship Requirements: This opportunity is available to U.S. citizens only.,"USDA-ARS Research Fellowship Developing Nanoparticles as Insecticides
+Oak Ridge Associated Universities (ORAU) (Private) | https://orise. ARS Office/Lab and Location: A postdoctoral research opportunity is currently available with the U. Department of Agriculture (USDA), Agriculture Research Service (ARS), within the Foreign Arthropod-Borne Animal Disease Research Unit (FABADRU)",,"05/22/2026
+Published:
+03/16/2026
+Starting Date:
+after 6/1/2026
+Hours per Week:
+at least 40
+Salary:
+Commensurate / Negotiable
+Education Required:
+Masters
+Experience Required:
+none
+Location:
+Manhattan, Kansas
+Tags:
+Faculty / Post-Doc Appointments
+Graduate Opportunities
+Description
+ *Applications are reviewed on a rolling-basis",True,0.95,Graduate,Unknown,0.0,[],False,,2026-03-22T05:16:07.401877+00:00,scrape_20260322_051522_c5731e83,2.0
+USDA-ARS Postgraduate Fellowship in Bacterial Biofilms in Cattle Farm Environments in the Northeastern U.S.,Oak Ridge Associated Universities (ORAU) (Private),"Burlington, Vermont",Commensurate / Negotiable,after 4/6/2026,03/16/2026,"Graduate Opportunities, Undergraduate Opportunities",https://jobs.rwfm.tamu.edu/view-job/?id=114739,"USDA-ARS Postgraduate Fellowship in Bacterial Biofilms in Cattle Farm Environments in the Northeastern U.S.
+Oak Ridge Associated Universities (ORAU) (Private) | https://orise.orau.gov/index.html
+Details
+Posting:
+https://www.zintellect.com/Opportunity/Details/USDA-ARS-NEA-2026-0109
+Application Deadline:
+05/08/2026
+Published:
+03/16/2026
+Starting Date:
+after 4/6/2026
+Hours per Week:
+at least 40
+Salary:
+Commensurate / Negotiable
+Education Required:
+Bachelors
+Experience Required:
+none
+Location:
+Burlington, Vermont
+Tags:
+Graduate Opportunities
+Undergraduate Opportunities
+Description
+ *Applications are reviewed on a rolling-basis.
+
+ARS Office/Lab and Location: A research opportunity is currently available with the U.S. Department of Agriculture (USDA), Agricultural Research Service (ARS), located in Burlington, Vermont.
+
+The Agricultural Research Service (ARS) is the U.S. Department of Agriculture's chief scientific in-house research agency with a mission to find solutions to agricultural problems that affect Americans every day from field to table. ARS will deliver cutting-edge, scientific tools and innovative solutions for American farmers, producers, industry, and communities to support the nourishment and well-being of all people; sustain our nation’s agroecosystems and natural resources; and ensure the economic competitiveness and excellence of our agriculture. The vision of the agency is to provide global leadership in agricultural discoveries through scientific excellence.
+
+Research Project: This opportunity, available at the USDA Agricultural Research Service in the Food Systems Research Unit in Burlington, VT, focuses on understanding the dynamics and characterization of environmental bacterial biofilms that promote sanitizer tolerance and dissemination of foodborne pathogens in the beef-on-dairy farm environments in the Northeastern US. The unit’s research focuses on assessing the changes needed within supply chains and across agricultural landscapes for food systems to provide animal-sourced foods in amounts and preparations that support improved nutrition and human health and improved economic, environmental, and social sustainability. The fellow will have the opportunity to be involved in research that aims to understand the dynamics of biofilm formation, bacterial fitness in those biofilms, and the role of multispecies bacterial biofilms in the farm environment that will aid in identifying strategies to overcome stress resistance shown by pathogenic bacteria present in biofilm niches. The fellow will help test the following hypothesis: Identification and evaluation of effective strategies to mitigate the formation of biofilms would aid in the implementation of these strategies on small- to mid-sized cattle farms, thereby reducing the incidence/prevalence of foodborne pathogens in cattle entering the slaughter facilities.
+
+Learning Objectives:  The fellow will gain experience in planning experiments and data collection, enumeration/detection of bacterial groups, screening of biofilm formation, pathogen protection in biofilm, metagenomic shotgun sequencing and analysis, evaluation of decontamination/sanitation strategies in the cattle farm environment and statistical analysis related to the experiments. The ORISE postgraduate fellow will also gain experience in literature reviews, writing up results, presenting the research and contributing to peer-reviewed manuscripts.
+
+Mentor(s): The mentor for this opportunity is Divya Jaroni (Divya.Jaroni@usda.gov). If you have questions about the nature of the research, please contact the mentor(s).
+
+Anticipated Appointment Start Date: April 6, 2026. Start date is flexible and will depend on a variety of factors.
+
+Appointment Length: The appointment will initially be for one years but may be renewed upon recommendation of ARS and is contingent on the availability of funds.
+
+Level of Participation: The appointment is full time.
+
+Participant Stipend: The participant will receive a monthly stipend commensurate with educational level and experience.
+
+Citizenship Requirements: This opportunity is available to U.S. citizens only.
+
+ORISE Information: This program, administered by ORAU through its contract with the U.S. Department of Energy (DOE) to manage the Oak Ridge Institute for Science and Education (ORISE), was established through an interagency agreement between DOE and ARS. Participants do not become employees of USDA, ARS, DOE or the program administrator, and there are no employment-related benefits. Proof of health insurance is required for participation in this program. Health insurance can be obtained through ORISE.
+
+Questions: Please visit our Program Website. After reading, if you have additional questions about the application process, please email ORISE.ARS.Northeast@orau.org and include the reference code for this opportunity.
+
+Qualifications
+The qualified candidate should have received a bachelor's or master's degree in the one of the relevant fields. Degree should be received within the past five years.
+
+Stipend
+$5,000.00 – $5,400.00 Monthly 
+Contact
+USDA-ARS-NEA-2026-0109
+contact via the web posting is preferred (see Details section)",Citizenship Requirements: This opportunity is available to U.S. citizens only.,"ARS Office/Lab and Location: A research opportunity is currently available with the U. Department of Agriculture (USDA), Agricultural Research Service (ARS), located in Burlington, Vermont. The Agricultural Research Service (ARS) is the U",,"05/08/2026
+Published:
+03/16/2026
+Starting Date:
+after 4/6/2026
+Hours per Week:
+at least 40
+Salary:
+Commensurate / Negotiable
+Education Required:
+Bachelors
+Experience Required:
+none
+Location:
+Burlington, Vermont
+Tags:
+Graduate Opportunities
+Undergraduate Opportunities
+Description
+ *Applications are reviewed on a rolling-basis",True,0.95,Graduate,Unknown,0.0,[],False,,2026-03-22T05:16:07.510017+00:00,scrape_20260322_051522_c5731e83,2.0
+USDA-ARS Research Fellowship for Nutrients and Phytochemical Analysis in Leafy Greens from Controlled Environmental Agriculture,Oak Ridge Associated Universities (ORAU) (Private),"Beltsville, Maryland",Commensurate / Negotiable,after 6/1/2026,03/16/2026,Faculty / Post-Doc Appointments,https://jobs.rwfm.tamu.edu/view-job/?id=114745,"USDA-ARS Research Fellowship for Nutrients and Phytochemical Analysis in Leafy Greens from Controlled Environmental Agriculture
+Oak Ridge Associated Universities (ORAU) (Private) | https://orise.orau.gov/index.html
+Details
+Posting:
+https://www.zintellect.com/Opportunity/Details/USDA-ARS-NEA-2026-0122
+Application Deadline:
+05/08/2026
+Published:
+03/16/2026
+Starting Date:
+after 6/1/2026
+Hours per Week:
+at least 40
+Salary:
+Commensurate / Negotiable
+Education Required:
+Doctorate
+Experience Required:
+none
+Location:
+Beltsville, Maryland
 Tags:
 Faculty / Post-Doc Appointments
 Description
+ *Applications are reviewed on a rolling-basis.
 
-Position Summary
+ARS Office/Lab and Location: A research opportunity is currently available with the U.S. Department of Agriculture (USDA), Agricultural Research Service (ARS), located in Beltsville, Maryland.
+
+The Agricultural Research Service (ARS) is the U.S. Department of Agriculture's chief scientific in-house research agency with a mission to find solutions to agricultural problems that affect Americans every day from field to table. ARS will deliver cutting-edge, scientific tools and innovative solutions for American farmers, producers, industry, and communities to support the nourishment and well-being of all people; sustain our nation’s agroecosystems and natural resources; and ensure the economic competitiveness and excellence of our agriculture. The vision of the agency is to provide global leadership in agricultural discoveries through scientific excellence.
+
+Research Project: You will have the opportunity to contribute to collaborative research between the Methods and Applications of Food Composition Laboratory and the Food Quality Laboratory. The project focuses on enhancing health-promoting compounds in leafy greens through optimized nutrient delivery and controlled lighting conditions. We will evaluate how tailored modifications to a standard hydroponic fertilizer solution influence plant growth and chemical composition. Metabolomic profiling will be used to identify key metabolites involved in the biosynthetic pathways of carbohydrates, organic acids, flavonoids, and glucosinolates. Sensory quality, phytochemical content, and important physiological parameters related to photosynthesis and secondary metabolism will also be assessed.
+
+Metabolomic profiling of the phytochemicals for the leafy greens grown in controlled environments with the modulation of different light and nutrients delivery system.
+Determining the impact of different growing conditions on the nutrient compounds and plant secondary metabolites.
+Developing non-targeted metabolomic methodologies using different LC/MS or GC/MS based techniques.
+Learning Objectives: As a result of this training, you will gain knowledge and experience in:
+
+Liquid chromatography, gas chromatography, and the hyphenated techniques with high-resolution mass spectrometry for the analysis of phytochemicals.
+Hand-on experiences on growing agricultural products in controlled environmental agriculture (CEA)
+Analytical method validation, including assessment of analytical figures of merit, robustness, and method detection limits.
+Chemometric methods used for non-targeted metabolomic profiling.
+Mentor(s): The mentor for this opportunity is Jianghao Sun (Jianghao.Sun@usda.gov). If you have questions about the nature of the research, please contact the mentor(s).
+
+Anticipated Appointment Start Date: June 1, 2026; as soon as possible. Start date is flexible and will depend on a variety of factors.
+
+Appointment Length: The appointment will initially be for one year but may be renewed upon recommendation of ARS and is contingent on the availability of funds.
+
+Level of Participation: The appointment is full time.
+
+Participant Stipend: The participant will receive a monthly stipend commensurate with educational level and experience. The anticipated stipend range is $7,500 - $8,000 monthly.
+
+Citizenship Requirements: This opportunity is available to U.S. citizens only.
+
+ORISE Information: This program, administered by ORAU through its contract with the U.S. Department of Energy (DOE) to manage the Oak Ridge Institute for Science and Education (ORISE), was established through an interagency agreement between DOE and ARS. Participants do not become employees of USDA, ARS, DOE or the program administrator, and there are no employment-related benefits. Proof of health insurance is required for participation in this program. Health insurance can be obtained through ORISE.
+
+Questions: Please visit our Program Website. After reading, if you have additional questions about the application process, please email ORISE.ARS.Northeast@orau.org and include the reference code for this opportunity.
+
+Qualifications
+The qualified candidate should be currently pursuing or have received a doctoral degree in the one of the relevant fields
+
+Stipend
+$7,500.00 – $8,000.00 Monthly 
+Contact
+USDA-ARS-NEA-2026-0122
+contact via the web posting is preferred (see Details section)",Citizenship Requirements: This opportunity is available to U.S. citizens only.,"USDA-ARS Research Fellowship for Nutrients and Phytochemical Analysis in Leafy Greens from Controlled Environmental Agriculture
+Oak Ridge Associated Universities (ORAU) (Private) | https://orise. ARS Office/Lab and Location: A research opportunity is currently available with the U. Department of Agriculture (USDA), Agricultural Research Service (ARS), located in Beltsville, Maryland",,"05/08/2026
+Published:
+03/16/2026
+Starting Date:
+after 6/1/2026
+Hours per Week:
+at least 40
+Salary:
+Commensurate / Negotiable
+Education Required:
+Doctorate
+Experience Required:
+none
+Location:
+Beltsville, Maryland
+Tags:
+Faculty / Post-Doc Appointments
+Description
+ *Applications are reviewed on a rolling-basis",True,0.95,Graduate,Unknown,0.0,[],False,,2026-03-22T05:16:07.606692+00:00,scrape_20260322_051522_c5731e83,2.0
+USDA-ARS Potato Breeding Fellowship,Oak Ridge Associated Universities (ORAU) (Private),"Aberdeen, Idaho",Commensurate / Negotiable,after 5/4/2026,03/16/2026,Faculty / Post-Doc Appointments,https://jobs.rwfm.tamu.edu/view-job/?id=114751,"USDA-ARS Potato Breeding Fellowship
+Oak Ridge Associated Universities (ORAU) (Private) | https://orise.orau.gov/index.html
+Details
+Posting:
+https://www.zintellect.com/Opportunity/Details/USDA-ARS-PWA-2026-0124
+Application Deadline:
+05/08/2026
+Published:
+03/16/2026
+Starting Date:
+after 5/4/2026
+Hours per Week:
+at least 40
+Salary:
+Commensurate / Negotiable
+Education Required:
+Doctorate
+Experience Required:
+none
+Location:
+Aberdeen, Idaho
+Tags:
+Faculty / Post-Doc Appointments
+Description
+ *Applications are reviewed on a rolling-basis.
+
+ARS Office/Lab and Location: A research opportunity is currently available with the U.S. Department of Agriculture (USDA), Agricultural Research Service (ARS), located in Aberdeen, Idaho.
+
+The Agricultural Research Service (ARS) is the U.S. Department of Agriculture's chief scientific in-house research agency with a mission to find solutions to agricultural problems that affect Americans every day from field to table. ARS will deliver cutting-edge, scientific tools and innovative solutions for American farmers, producers, industry, and communities to support the nourishment and well-being of all people; sustain our nation’s agroecosystems and natural resources; and ensure the economic competitiveness and excellence of our agriculture. The vision of the agency is to provide global leadership in agricultural discoveries through scientific excellence.
+
+Research Project: This research focuses on the hybridization of potato plants to develop new varieties. The participant will collaborate directly with parental breeding lines and segregating populations used to identify and study novel genetic traits, under the guidance of a research geneticist. In addition, they will contribute to all phases of the potato breeding program, including greenhouse and field-based research activities.
+
+Learning Objectives: Under the guidance of the mentor, you will engage in an exciting, hands-on breeding program where you will learn how to incorporate molecular markers for key potato disease resistance traits, develop and evaluate breeding populations to discover resistance to tuber necrotic viruses, and create populations optimized for field selection. This experience will also expose you to strategies for selecting superior lines based on market class while simultaneously improving disease resistance, providing a dynamic and practical foundation in modern potato breeding.
+
+Mentor(s): The mentor for this opportunity is Jonathan Whitworth (jonathan.whitworth@usda.gov). If you have questions about the nature of the research, please contact the mentor(s).
+
+Anticipated Appointment Start Date: May 4, 2026. Start date is flexible and will depend on a variety of factors.
+
+Appointment Length: The appointment will initially be for one year, but may be renewed upon recommendation of ARS and is contingent on the availability of funds.
+
+Level of Participation: The appointment is full time.
+
+Participant Stipend: The participant will receive a monthly stipend commensurate with educational level and experience. The anticipated stipend is $74,678 annually.
+
+Citizenship Requirements: This opportunity is available to U.S. citizens only.
+
+ORISE Information: This program, administered by ORAU through its contract with the U.S. Department of Energy (DOE) to manage the Oak Ridge Institute for Science and Education (ORISE), was established through an interagency agreement between DOE and ARS. Participants do not become employees of USDA, ARS, DOE or the program administrator, and there are no employment-related benefits. Proof of health insurance is required for participation in this program. Health insurance can be obtained through ORISE.
+
+Questions: Please visit our Program Website. After reading, if you have additional questions about the application process, please email ORISE.ARS.PacificWest@orau.org and include the reference code for this opportunity.
+
+Qualifications
+The qualified candidate should be currently pursuing or have received a doctoral degree in the one of the relevant fields. 
+
+Preferred skills:
+
+Background of genetics/plant breeding, with some experience in potato tetraploid and/or diploid breeding. 
+Stipend
+$74,678.00 Yearly 
+Contact
+USDA-ARS-PWA-2026-0124
+contact via the web posting is preferred (see Details section)",Citizenship Requirements: This opportunity is available to U.S. citizens only.,"ARS Office/Lab and Location: A research opportunity is currently available with the U. Department of Agriculture (USDA), Agricultural Research Service (ARS), located in Aberdeen, Idaho. The Agricultural Research Service (ARS) is the U",,"05/08/2026
+Published:
+03/16/2026
+Starting Date:
+after 5/4/2026
+Hours per Week:
+at least 40
+Salary:
+Commensurate / Negotiable
+Education Required:
+Doctorate
+Experience Required:
+none
+Location:
+Aberdeen, Idaho
+Tags:
+Faculty / Post-Doc Appointments
+Description
+ *Applications are reviewed on a rolling-basis",True,0.95,Graduate,Unknown,0.0,[],False,,2026-03-22T05:16:07.905567+00:00,scrape_20260322_051522_c5731e83,2.0
+Assistant Professor (NTT) - Animal Behavior and Wildlife Conservation,Delaware Valley University (Private),"700 E. Butler Ave (Doylestown, Pennsylvania)",Commensurate / Negotiable,after 8/17/2026,03/18/2026,Faculty / Post-Doc Appointments,https://jobs.rwfm.tamu.edu/view-job/?id=114889,"Assistant Professor (NTT) - Animal Behavior and Wildlife Conservation
+Delaware Valley University (Private) | https://www.delval.edu
+Details
+Posting:
+https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=997c6fde-f713-4be9-b6cf-f4bdbc02cbbb&ccId=19000101_000001&type=JS&lang=en_US&selectedMenuKey=CurrentOpenings&jobId=562483
+Application Deadline:
+04/18/2026
+Published:
+03/18/2026
+Starting Date:
+after 8/17/2026
+Hours per Week:
+40 - 60
+Salary:
+Commensurate / Negotiable
+Education Required:
+Masters
+Experience Required:
+at least 1 year
+Location:
+700 E. Butler Ave (Doylestown, Pennsylvania)
+Tags:
+Faculty / Post-Doc Appointments
+Description
+APPLY HERE
+
+Job Summary:
+
+The Department of Animal Biotechnology & Conservation invites applications for an Assistant Professor of Animal Biotechnology & Conservation, non-tenure track position. The preferred start date for this full-time, nine-month (annually renewable) teaching appointment is August 2026.
+
+The department offers bachelor’s degrees in Wildlife Conservation, Zoo Science, and Small Animal Science. This position entails an in-person teaching load for a full-time faculty member. The ideal candidate is prepared to develop and teach lecture and laboratory undergraduate courses in Wildlife Management & Conservation, Animal Behavior, Exotic Animal Husbandry & Management, and One Health & Climate Change.
 
 
-The Department of Forest Resources, housed within the School of Agriculture and Natural Resources, seeks applicants for an Assistant Professor of Forestry",True,0.95,Graduate,Natural Resource Management,0.247,"['natural resources', 'resource management', 'forestry', 'silviculture', 'agriculture']",False,,2026-03-15T05:25:24.684662+00:00,scrape_20260315_052459_a96d9800,2.0
+Essential Duties and Responsibilities:
+
+Develop and teach courses (combination of laboratory and/or lectures) such as: Wildlife Management & Conservation, Animal Behavior, Exotic Animal Husbandry & Management, and One Health & Climate Change.
+Provide experiential learning opportunities via laboratory exercises
+Post and maintain office hours
+Follow IACUC AUAF guidelines and reporting requirements
+Advise students individually and participate in recruitment and outcomes assessment activities
+Serve on faculty committees as assigned or elected
+Participate in professional development activities to remain current in the field
+Attend regularly scheduled faculty and department meetings
+Performs other job-related duties in area of responsibility as assigned
+ 
+
+Required Knowledge, Skills and Abilities:
+
+Commitment to undergraduate teaching and mentoring
+Excellent oral and written communication skills
+Ongoing commitment to professional development
+
+Education and Experience:
+
+PhD in related field (Wildlife Biology, Zoo Science or similar) preferred. Candidates with a master’s degree in a related field combined with related work experience are also encouraged to apply.
+Wildlife experience or animal husbandry experience in an AZA accredited zoo is preferred.
+Teaching experience at the undergraduate level or in industry training (animal collection management or laboratory animal technical) programs is preferred.
+
+Physical Requirements and Working Conditions:
+
+Prolonged periods of sitting at a desk and working on a computer.
+Typically lifting 25 lbs or less
+Rarely lifting 25 lbs or more
+Typically standing or walking
+Typically bending, crouching, stooping
+Rarely climbing ladders, scaffolds
+Using tools requiring high dexterity
+Rare to occasional outdoor exposure to weather
+Occasional exposure to chemicals
+May be exposed to human pathogens
+Exposure to moving machinery
+Exposure to unpleasant odors
+Exposure to animal fluids, feces and specimens
+May be exposed to animal bites, scratches and contagious diseases
+
+Selected applicants will be responsible for providing the University with clearances, appropriate to the position, that have been completed within the last 5 years. These clearances include, but are not limited to the Pennsylvania State Police Criminal Record Check, FBI Fingerprints completed by IDENTGO, Pennsylvania Child Abuse History clearance. Additionally, upon an acceptance of an offer of employment this position will require an official transcript verification. 
+
+
+
+About the University
+
+Delaware Valley University (DelVal) is a private, comprehensive, nonprofit university educating students with a curriculum that emphasizes and requires experiential learning. Located in Doylestown, Pennsylvania, about 30 miles north of Philadelphia, the University offers 28 undergraduate majors in business, arts and sciences, and agricultural and environmental sciences; 12 master's degrees; and a doctorate in education. Founded in 1896, DelVal has been cited by the National Society for Experiential Education as having the country's top experiential learning program, by Princeton Review as one of the best colleges in the Northeast, and by College Factual as having one of the top 20 animal science programs in the country.
+
+
+Delaware Valley University is an equal opportunity employer and is committed to a diverse workforce.
+
+Contact
+Alicia Shenko
+contact via the web posting is preferred (see Details section)","Develop and teach courses (combination of laboratory and/or lectures) such as: Wildlife Management & Conservation, Animal Behavior, Exotic Animal Husbandry & Management, and One Health & Climate Change.
+Provide experiential learning opportunities via laboratory exercises
+Post and maintain office hours
+Follow IACUC AUAF guidelines and reporting requirements
+Advise students individually and participate in recruitment and outcomes assessment activities
+Serve on faculty committees as assigned or elected
+Participate in professional development activities to remain current in the field
+Attend regularly scheduled faculty and department meetings
+Performs other job-related duties in area of responsibility as assigned",,,"04/18/2026
+Published:
+03/18/2026
+Starting Date:
+after 8/17/2026
+Hours per Week:
+40 - 60
+Salary:
+Commensurate / Negotiable
+Education Required:
+Masters
+Experience Required:
+at least 1 year
+Location:
+700 E",True,0.95,Graduate,Wildlife & Natural Resources,0.222,"['wildlife', 'wildlife management', 'wildlife conservation', 'behavior', 'animal behavior']",False,,2026-03-22T05:16:09.809367+00:00,scrape_20260322_051522_c5731e83,2.0
+Conduct Your Own Research Project in the Field — South Africa,WildComm Research Stations (Private),"Vivo, Limpopo, South Africa",none,between 7/16/2026 and 8/27/2026,03/18/2026,"Graduate Opportunities, Undergraduate Opportunities",https://jobs.rwfm.tamu.edu/view-job/?id=107642,"Conduct Your Own Research Project in the Field — South Africa
+WildComm Research Stations (Private) | https://wildcomm.org/
+Details
+Application Deadline:
+04/24/2026
+Published:
+03/18/2026
+Starting Date:
+between 7/16/2026 and 8/27/2026
+Ending Date:
+between 10/22/2026 and 11/19/2026
+Hours per Week:
+25 - 45
+Salary:
+none
+Education Required:
+Some Undergraduate
+Experience Required:
+none
+Location:
+Vivo, Limpopo, South Africa
+Tags:
+Graduate Opportunities
+Undergraduate Opportunities
+Description
+Are you a student, postgraduate researcher, academic, or conservationist looking for a supportive, field-based environment to carry out your research? WildComm Research Stations invites researchers from around the world to join our multidisciplinary conservation hub and conduct their own projects within a protected private reserve.
+
+What We Offer
+WildComm is situated on a biodiverse private reserve, home to large mammals, birds, and complex savanna ecosystems. We provide a collaborative, research-focused atmosphere with access to on-site research equipment and a team of experienced conservation professionals.
+
+Whether you're conducting undergraduate fieldwork, working on a Master’s thesis, developing a PhD project, or leading a long-term conservation initiative—we welcome your inquiry.
+
+Support Includes
+On-site research equipment
+Field guidance from experienced researchers and ecologists
+Access to long-term data and local wildlife monitoring systems
+Shared accommodation
+
+Transport: 
+Pickup and drop-off in Louis Trichardt.
+Biweekly trips to town for supplies.
+
+Ideal Research Themes
+Behavioural ecology
+Movement ecology and camera trap studies
+Population dynamics
+Vegetation 
+Interdisciplinary conservation topics
+
+Fitness
+Fieldwork is physically demanding and conducted on foot in challenging weather conditions. Moderate fitness is recommended, but stamina builds over time.
+
+Flexible Dates and Duration
+We accept researchers year-round. Project lengths are flexible depending on your goals, from short-term exploratory work to multi-year research initiatives.
+
+Conservation Fee
+A monthly fee is required to support:
+Conservation research infrastructure and data support
+Field logistics, equipment access, accommodation, and transport
+Protection and maintenance of the reserve ecosystem
+
+How to Apply
+Email your CV, project proposal (if available), and a short letter of interest to applications@wildcomm.org
+
+Not sure if your project fits? Contact us—we’d love to explore it with you.
+Contact
+Chanelle Becker
++27 76 261 5365
+applications@wildcomm.org (preferred contact method)","Hours per Week:
+25 - 45
+Salary:
+none
+Education Required:
+Some Undergraduate
+Experience Required:
+none","Conduct Your Own Research Project in the Field — South Africa
+WildComm Research Stations (Private) | https://wildcomm. org/
+Details
+Application Deadline:
+04/24/2026
+Published:
+03/18/2026
+Starting Date:
+between 7/16/2026 and 8/27/2026
+Ending Date:
+between 10/22/2026 and 11/19/2026
+Hours per Week:
+25 - 45
+Salary:
+none
+Education Required:
+Some Undergraduate
+Experience Required:
+none
+Location:
+Vivo, Limpopo, South Africa
+Tags:
+Graduate Opportunities
+Undergraduate Opportunities
+Description
+Are you a student, postgraduate researcher, academic, or conservationist looking for a supportive, field-based environment to carry out your research. WildComm Research Stations invites researchers from around the world to join our multidisciplinary conservation hub and conduct their own projects within a protected private reserve",,"04/24/2026
+Published:
+03/18/2026
+Starting Date:
+between 7/16/2026 and 8/27/2026
+Ending Date:
+between 10/22/2026 and 11/19/2026
+Hours per Week:
+25 - 45
+Salary:
+none
+Education Required:
+Some Undergraduate
+Experience Required:
+none
+Location:
+Vivo, Limpopo, South Africa
+Tags:
+Graduate Opportunities
+Undergraduate Opportunities
+Description
+Are you a student, postgraduate researcher, academic, or conservationist looking for a supportive, field-based environment to carry out your research? WildComm Research Stations invites researchers from around the world to join our multidisciplinary conservation hub and conduct their own projects within a protected private reserve",True,0.95,Graduate,Wildlife & Natural Resources,0.194,"['wildlife', 'bird', 'mammal', 'population dynamics', 'ecosystem']",False,,2026-03-22T05:16:15.648406+00:00,scrape_20260322_051522_c5731e83,2.0
+Doctoral Student in Environmental Toxicology,"Wildlife Toxicology Laboratory, Texas Tech University (State)","Texas Tech University (Lubbock, Tx, Texas)",Commensurate / Negotiable,between 7/31/2026 and 5/1/2027,03/18/2026,Graduate Opportunities,https://jobs.rwfm.tamu.edu/view-job/?id=114882,"Doctoral Student in Environmental Toxicology
+Wildlife Toxicology Laboratory, Texas Tech University (State) | https://www.wildlifetoxicologylab.org
+Details
+Posting:
+https://www.wildlifetoxicologylab.org
+Application Deadline:
+12/01/2026
+Published:
+03/18/2026
+Starting Date:
+between 7/31/2026 and 5/1/2027
+Hours per Week:
+at least 40
+Salary:
+Commensurate / Negotiable
+Education Required:
+Masters
+Experience Required:
+none
+Location:
+Texas Tech University (Lubbock, Tx, Texas)
+Tags:
+Graduate Opportunities
+Description
+We seek an outstanding individual to pursue a doctoral degree in environmental toxicology at Texas Tech University. This will be a tremendous opportunity for an individual to work in the area of wildlife toxicology. We are particularly interested in someone that can conduct interdisciplinary research at the interface of wildlife disease and toxicology. The doctoral candidate will work in an interdisciplinary team with other doctoral students. This will be cutting-edge research, particularly focusing on birds and integrating disease/toxic chemical interactions.  
+ We are seeking a doctoral student with a Master of Science degree already in hand. In addition, we are looking for a student with a biology, wildlife biology, or environmental science background with a strong emphasis on toxicology. The graduate student should be comfortable in animal experiments, conducting field and laboratory research, and showing particular capabilities for research in birds.  This will be an exceptional opportunity for an outstanding student to make a significant contribution in the field of wildlife toxicology. The individual should be a team player and highly capable of interdisciplinary research. Strong analytical skills are a necessity, including a background in animal testing, toxicology, and computer skills, including statistical analysis.  
+ Start date: Fall 2026 / Spring 2027
+  Apply to:
+
+ Ronald J. Kendall, Ph.D.
+Professor
+ Wildlife Toxicology Laboratory
+Texas Tech University
+Box 43290
+Lubbock, TX 79409-3290
+ron.kendall@ttu.edu
+Contact
+Ronald J. Kendall, Ph.D.
+ron.kendall@ttu.edu (preferred contact method)","Hours per Week:
+at least 40
+Salary:
+Commensurate / Negotiable
+Education Required:
+Masters
+Experience Required:
+none","We are particularly interested in someone that can conduct interdisciplinary research at the interface of wildlife disease and toxicology. This will be cutting-edge research, particularly focusing on birds and integrating disease/toxic chemical interactions. The graduate student should be comfortable in animal experiments, conducting field and laboratory research, and showing particular capabilities for research in birds",,"12/01/2026
+Published:
+03/18/2026
+Starting Date:
+between 7/31/2026 and 5/1/2027
+Hours per Week:
+at least 40
+Salary:
+Commensurate / Negotiable
+Education Required:
+Masters
+Experience Required:
+none
+Location:
+Texas Tech University (Lubbock, Tx, Texas)
+Tags:
+Graduate Opportunities
+Description
+We seek an outstanding individual to pursue a doctoral degree in environmental toxicology at Texas Tech University",True,0.95,Graduate,Unknown,0.0,[],False,,2026-03-22T05:16:16.857948+00:00,scrape_20260322_051522_c5731e83,2.0
+USDA-ARS Advancing Novel Solutions to Control Varroa Destructor in Managed Honey Bee Colonies,Oak Ridge Associated Universities (ORAU) (Private),"Davis, California",Commensurate / Negotiable,after 5/1/2026,03/16/2026,Graduate Opportunities,https://jobs.rwfm.tamu.edu/view-job/?id=114740,"USDA-ARS Advancing Novel Solutions to Control Varroa Destructor in Managed Honey Bee Colonies
+Oak Ridge Associated Universities (ORAU) (Private) | https://orise.orau.gov/index.html
+Details
+Posting:
+https://www.zintellect.com/Opportunity/Details/USDA-ARS-PWA-2026-0118
+Application Deadline:
+05/08/2026
+Published:
+03/16/2026
+Starting Date:
+after 5/1/2026
+Hours per Week:
+at least 40
+Salary:
+Commensurate / Negotiable
+Education Required:
+Masters
+Experience Required:
+none
+Location:
+Davis, California
+Tags:
+Graduate Opportunities
+Description
+ *Applications are reviewed on a rolling-basis.
+
+ARS Office/Lab and Location: A research opportunity is currently available with the U.S. Department of Agriculture (USDA), Agricultural Research Service (ARS), located in Davis, California.
+
+The Agricultural Research Service (ARS) is the U.S. Department of Agriculture's chief scientific in-house research agency with a mission to find solutions to agricultural problems that affect Americans every day from field to table. ARS will deliver cutting-edge, scientific tools and innovative solutions for American farmers, producers, industry, and communities to support the nourishment and well-being of all people; sustain our nation’s agroecosystems and natural resources; and ensure the economic competitiveness and excellence of our agriculture. The vision of the agency is to provide global leadership in agricultural discoveries through scientific excellence.
+
+The Pollinator Health Laboratory in Davis, CA is located in the heart of the Central Valley and surrounded by agricultural lands, providing easy access to commercial beekeepers and realistic field settings to maintain experimental apiaries. Simultaneously, the facility contains state of the art instruments and equipment for performing complex arthropod bioassays as well as physiological and molecular analyses.
+
+Research Project: The pollinator health laboratory is currently developing and testing novel tools and strategies to control Varroa destructor, a highly destructive parasite of honey bee colonies.  The participant will be a part of this by performing bioassays on Varroa mites and honey bees, recording data, collecting samples, and processing and conducting various molecular analyses on the collected samples. This will be in both the laboratory and field using modern molecular techniques.
+
+Learning Objectives: The participant will develop the ability to evaluate and enhance the health of honey bees and their colonies by performing a range of relevant tests and activities. This will include selecting, developing, and, when necessary, modifying methods and procedures to best meet specific research goals. The participant will also learn to plan, implement, and maintain laboratory bioassays involving honey bees at various developmental stages and Varroa mites obtained from field colonies. In addition, they will adapt and apply techniques to study the physiological and biochemical responses of honey bees and Varroa mites to different treatments and processes, as well as analyze samples collected from both field and laboratory experiments.
+
+Mentor(s): The mentor for this opportunity is Julia Fine (julia.fine@usda.gov). If you have questions about the nature of the research, please contact the mentor(s).
+
+Anticipated Appointment Start Date: May 1, 2026. Start date is flexible and will depend on a variety of factors.
+
+Appointment Length: The appointment will initially be for one year, but may be renewed upon recommendation of ARS and is contingent on the availability of funds.
+
+Level of Participation: The appointment is full time.
+
+Participant Stipend: The participant will receive a monthly stipend commensurate with educational level and experience. The anticipated stipend range is $5,000 - $5,702 monthly.
+
+Citizenship Requirements: This opportunity is available to U.S. citizens only.
+
+ORISE Information: This program, administered by ORAU through its contract with the U.S. Department of Energy (DOE) to manage the Oak Ridge Institute for Science and Education (ORISE), was established through an interagency agreement between DOE and ARS. Participants do not become employees of USDA, ARS, DOE or the program administrator, and there are no employment-related benefits. Proof of health insurance is required for participation in this program. Health insurance can be obtained through ORISE.
+
+Questions: Please visit our Program Website. After reading, if you have additional questions about the application process, please email ORISE.ARS.PacificWest@orau.org and include the reference code for this opportunity.
+
+Qualifications
+The qualified candidate should have received a master's degree in one of the relevant fields. Degree must have been received within the past five years.
+
+Preferred skills:
+
+Entomology and honey bee biology and physiology.
+Experience with and being around honey bee colonies, proficiency with basic molecular techniques such as qPCR, and experience conducting arthropod bioassays and performing statistical analyses to generate preliminary results.
+Experience handling Varroa mites and in vitro rearing of honey bees.
+Stipend
+$5,000.00 – $5,702.00 Monthly 
+Contact
+USDA-ARS-PWA-2026-0118
+contact via the web posting is preferred (see Details section)",Citizenship Requirements: This opportunity is available to U.S. citizens only.,"ARS Office/Lab and Location: A research opportunity is currently available with the U. Department of Agriculture (USDA), Agricultural Research Service (ARS), located in Davis, California. The Agricultural Research Service (ARS) is the U",,"05/08/2026
+Published:
+03/16/2026
+Starting Date:
+after 5/1/2026
+Hours per Week:
+at least 40
+Salary:
+Commensurate / Negotiable
+Education Required:
+Masters
+Experience Required:
+none
+Location:
+Davis, California
+Tags:
+Graduate Opportunities
+Description
+ *Applications are reviewed on a rolling-basis",True,0.95,Graduate,Unknown,0.0,[],False,,2026-03-22T05:16:18.634607+00:00,scrape_20260322_051522_c5731e83,2.0
+USDA-ARS Plant Pathology Intern,Oak Ridge Associated Universities (ORAU) (Private),"Aberdeen, Idaho",Commensurate / Negotiable,after 5/4/2026,03/16/2026,"Faculty / Post-Doc Appointments, Graduate Opportunities, Undergraduate Opportunities",https://jobs.rwfm.tamu.edu/view-job/?id=114750,"USDA-ARS Plant Pathology Intern
+Oak Ridge Associated Universities (ORAU) (Private) | https://orise.orau.gov/index.html
+Details
+Posting:
+https://www.zintellect.com/Opportunity/Details/USDA-ARS-PWA-2026-0106A
+Application Deadline:
+05/08/2026
+Published:
+03/16/2026
+Starting Date:
+after 5/4/2026
+Hours per Week:
+at least 40
+Salary:
+Commensurate / Negotiable
+Education Required:
+Bachelors
+Experience Required:
+none
+Location:
+Aberdeen, Idaho
+Tags:
+Faculty / Post-Doc Appointments
+Graduate Opportunities
+Undergraduate Opportunities
+Description
+ *Applications are reviewed on a rolling-basis.
+
+ARS Office/Lab and Location: A research opportunity is currently available with the U.S. Department of Agriculture (USDA), Agricultural Research Service (ARS), located in Aberdeen, Idaho.
+
+The Agricultural Research Service (ARS) is the U.S. Department of Agriculture's chief scientific in-house research agency with a mission to find solutions to agricultural problems that affect Americans every day from field to table. ARS will deliver cutting-edge, scientific tools and innovative solutions for American farmers, producers, industry, and communities to support the nourishment and well-being of all people; sustain our nation’s agroecosystems and natural resources; and ensure the economic competitiveness and excellence of our agriculture. The vision of the agency is to provide global leadership in agricultural discoveries through scientific excellence.
+
+The Small Grains and Potato Germplasm Research Unit in Aberdeen, Idaho develops and releases improved varieties of barley, oat and potato germplasm with improved disease and pest resistance. It also houses the National Small Grains Collection, a component of the National Plant Germplasm System, that maintains genetically diverse collections of wheat, barley, oat, rice, rye and other small grains.
+
+Research Project: The participant will join a barley and oat improvement project, whose goals are to enhance barley and oat productivity, quality, and stress resistance by combing traditional, molecular, and genomics methods. The participant will be part of the research effort in the laboratory, greenhouse, and field environment, and will be involved in creating experimental designs and treatments, collecting experimental data, and analyzing and interpreting results. 
+
+Learning Objectives: Under the guidance of a mentor, the intern will be given the opportunity to participate in preparing plant bacterial colonies of Xanthomonas translucens pv. translucens (Xtt), evaluating barley, oat and wheat germplasm for bacterial leaf streak infection, creating and validating molecular markers specific to Xtt, quantifying bacterial DNA in infected host tissues, and correlating bacterial DNA content with bacterial colonies, all of which will enhance the participant's training and skills.  Attending mentor-approved meetings and workshops will be encouraged.
+
+Mentor(s): The mentor for this opportunity is Belayneh Yimer (belayneh.yimer@usda.gov). If you have questions about the nature of the research, please contact the mentor(s).
+
+Anticipated Appointment Start Date: May 4, 2026.  Start date is flexible and will depend on a variety of factors.
+
+Appointment Length: The appointment will initially be for three months, but may be renewed upon recommendation of ARS and is contingent on the availability of funds.
+
+Level of Participation: The appointment is full time.
+
+Participant Stipend: The participant will receive a monthly stipend commensurate with educational level and experience. The anticipated stipend range is $4,800 - $5,600 monthly.
+
+Citizenship Requirements: This opportunity is available to U.S. citizens only.
+
+ORISE Information: This program, administered by ORAU through its contract with the U.S. Department of Energy (DOE) to manage the Oak Ridge Institute for Science and Education (ORISE), was established through an interagency agreement between DOE and ARS. Participants do not become employees of USDA, ARS, DOE or the program administrator, and there are no employment-related benefits. Proof of health insurance is required for participation in this program. Health insurance can be obtained through ORISE.
+
+Questions: Please visit our Program Website. After reading, if you have additional questions about the application process, please email ORISE.ARS.PacificWest@orau.org and include the reference code for this opportunity.
+
+Qualifications
+The qualified candidate should be currently pursuing or has received a bachelor's, master's, or doctoral degree in the one of the relevant fields.
+
+Preferred skills:
+
+Relevant coursework in Biology and agricultural sciences.
+Experience with molecular biology techniques.
+Experience with microorganisms.
+Willingness to conduct field, greenhouse and laboratory experiments.
+Strong communication skills for collaborative experimental design and reporting results.
+Stipend
+$4,800.00 – $5,600.00 Monthly 
+Contact
+USDA-ARS-PWA-2026-0106A
+contact via the web posting is preferred (see Details section)",Citizenship Requirements: This opportunity is available to U.S. citizens only.,"ARS Office/Lab and Location: A research opportunity is currently available with the U. Department of Agriculture (USDA), Agricultural Research Service (ARS), located in Aberdeen, Idaho. The Agricultural Research Service (ARS) is the U",,"05/08/2026
+Published:
+03/16/2026
+Starting Date:
+after 5/4/2026
+Hours per Week:
+at least 40
+Salary:
+Commensurate / Negotiable
+Education Required:
+Bachelors
+Experience Required:
+none
+Location:
+Aberdeen, Idaho
+Tags:
+Faculty / Post-Doc Appointments
+Graduate Opportunities
+Undergraduate Opportunities
+Description
+ *Applications are reviewed on a rolling-basis",True,0.95,Graduate,Unknown,0.0,[],False,,2026-03-22T05:16:19.005498+00:00,scrape_20260322_051522_c5731e83,2.0
+Database Engineer/OPS Scientific/Engineering Programmer,Florida Fish and Wildlife Conservation Commission (State),"100 8th Ave SE, St. Petersburg, FL 33701, USA (St. Petersburg, Florida)",$25 per hour,after 5/1/2026,03/20/2026,N/A,https://jobs.rwfm.tamu.edu/view-job/?id=114974,"Database Engineer/OPS Scientific/Engineering Programmer
+Florida Fish and Wildlife Conservation Commission (State) | https://myfwc.com/
+Details
+Posting:
+https://jobs.myflorida.com/job/ST-PETERSBURG-OPS-ScientificEngineering-Programmer-77907014-1-FL-33701/1370706700/
+Application Deadline:
+03/31/2026
+Published:
+03/20/2026
+Starting Date:
+after 5/1/2026
+Hours per Week:
+40
+Salary:
+$25 per hour
+Education Required:
+Bachelors
+Experience Required:
+at least 4 years
+Location:
+100 8th Ave SE, St. Petersburg, FL 33701, USA (St. Petersburg, Florida)
+Description
+Florida Fish and Wildlife Conservation Commission
+Fish and Wildlife Research Institute
+Marine Mammal Section – OPS Position 
+$25 per hour
+100 8th Avenue Southeast
+St. Petersburg, FL 33701
+ FWRI – Marine Mammal Section 
+Database Engineer/OPS Scientific/Engineering Programmer
+St. Petersburg, Florida - $25 per hour 
+   Our organization: 
+The FWC envisions a Florida where fish and wildlife are abundant and thriving in healthy and connected natural landscapes with vital working lands and waterways; where natural resources are valued and safely enjoyed by all; and wherein natural systems support vibrant human communities and a strong economy. 
+Our Mission: Managing fish and wildlife resources for their long-term well-being and the benefit of people. 
+Every organization has an identity that is forged not only by what it does, but by how it conducts itself.  The values embedded in our mission and expressed in the vision of the FWC are to make quality decisions by being dynamic, science-informed, efficient, ethical, collaborative and committed to the vitality of the state and its environment. 
+ Minimum Qualifications: 
+Six years of experience in computer systems analysis and/or computer programming, two years of which must have been in database design; OR A bachelor’s degree from an accredited college or university with a major in computer sciences or management information systems and four years of experience in computer systems analysis and/or computer programming, one year of which must have been in database design; OR a master's degree from an accredited college or university in one of the computer sciences or management information systems and three years of experience in computer systems analysis and/or computer programming, one year of which must have been in database design; OR a doctorate from an accredited college or university in one of the computer sciences or management information systems and one year of experience in database design. Completion of a one-year program of study from a vocational/technical school in an area of data processing (excluding data entry) can substitute for one year of the required computer systems analysis and/or computer programming experience. 
+ 
+Preferred Qualifications:  
+Preference may be given to candidates with demonstrated experience with biological datasets. 
+ Requirements: 
+Employment in this position is contingent upon a satisfactory Level 1 background check at no cost to the candidate.  
+Responses to qualifying questions should be verifiable by skills and/or experience stated on the profile application/resume. 
+ 
+Position Overview and Responsibilities:
+This position is for a database engineer with the Marine Mammal Section of the Fish and Wildlife Research Institute (FWRI) to support Florida marine mammal population research and monitoring. The successful candidate will be responsible for providing timely data management support to FWRI’s Marine Mammal research staff. These services include assistance in the design and implementation of relational databases to ensure data access, quality, and viability. This assistance may be in the form of building backend functionality for frontend applications; writing and maintaining documentation and data manuals; recommending and implementing appropriate tools, methods, and software as necessary; or discussing database workflow issues, priority needs, and potential solutions. Ensure appropriate agency policies and procedures are followed for data storage, project workflow documentation, software selection, metadata generation, and security. 
+ 
+Knowledge, Skills and Abilities: 
+The knowledge, skills and abilities (KSAs) needed to perform job duties are: 
+Knowledge of database development and management, data storage, and modern data standards  
+Knowledge of biological research methods and data  
+Skilled in using a personal computer using Microsoft software, including proficiency in Excel, Access, and SQL  
+Skilled in writing and developing stored procedures using SSMS SQL/T SQL  
+Ability to develop and construct relational databases  
+Ability to produce database entry, storage, and query programs, in a manner that will allow them to be easily implemented by other FWC/FWRI staff to produce high-quality, rigorously QC’d data for analysis  
+Ability to organize, coordinate, and prioritize work assignments independently and collaboratively to establish and meet work related goals  
+Ability to communicate effectively graphically, verbally, and in writing  
+Ability to establish and maintain effective working relationships with research staff and others. 
+ Why should I apply? 
+ The Benefits of Working for the State of Florida:
+*Eligible OPS positions and qualifying applicants may enjoy top-tier benefits offerings including comprehensive health coverage to meet the needs of you and your family while maintaining low deductibles and low monthly out-of-pocket contributions. . 
+Health Premiums $25.00- Single / $90.00- Family Biweekly 
+Low Cost $25,000 Life Insurance 
+OPS FICA Alternative Retirement Plan  
+On the Job Trainings 
+Family and Medical Leave Act (FMLA) 
+For a more complete list of benefits, visit https://www.mybenefits.myflorida.com/. 
+Candidates requiring a reasonable accommodation, as defined by the Americans with Disabilities Act, must notify the agency hiring authority and/or People First Service Center (1-866-663-4735). Notification to the hiring authority must be made in advance to allow sufficient time to provide the accommodation.
+The State of Florida supports a Drug-Free workplace. All employees are subject to reasonable suspicion drug testing in accordance with Section 112.0455, F.S., Drug-Free Workplace Act.
+Location:  ST PETERSBURG, FL, US, 33701
+
+Nearest Major Market: Tampa
+
+State applicants must apply in PeopleFirst to be considered.
+Contact
+FWC-FWRI Marine Mammal Section
+contact via the web posting is preferred (see Details section)","Hours per Week:
+40
+Salary:
+$25 per hour
+Education Required:
+Bachelors
+Experience Required:
+at least 4 years","Petersburg, Florida)
+Description
+Florida Fish and Wildlife Conservation Commission
+Fish and Wildlife Research Institute
+Marine Mammal Section – OPS Position 
+$25 per hour
+100 8th Avenue Southeast
+St. Position Overview and Responsibilities:
+This position is for a database engineer with the Marine Mammal Section of the Fish and Wildlife Research Institute (FWRI) to support Florida marine mammal population research and monitoring. The successful candidate will be responsible for providing timely data management support to FWRI’s Marine Mammal research staff",,"03/31/2026
+Published:
+03/20/2026
+Starting Date:
+after 5/1/2026
+Hours per Week:
+40
+Salary:
+$25 per hour
+Education Required:
+Bachelors
+Experience Required:
+at least 4 years
+Location:
+100 8th Ave SE, St",True,0.9,Graduate,Unknown,0.0,[],False,,2026-03-22T05:16:19.254729+00:00,scrape_20260322_051522_c5731e83,2.0
+Biological Science Technician (Student Service Contract),U.S. Geological Survey (Federal),"Northern Prairie Wildlife Research Center, 8711 37th St. SE ( Jamestown, North Dakota)",$18.78 to $21.01 per hour,between 5/15/2026 and 6/15/2026,03/16/2026,Undergraduate Opportunities,https://jobs.rwfm.tamu.edu/view-job/?id=114816,"Biological Science Technician (Student Service Contract)
+U.S. Geological Survey (Federal)
+Details
+Application Deadline:
+03/22/2026
+Published:
+03/16/2026
+Starting Date:
+between 5/15/2026 and 6/15/2026
+Ending Date:
+between 8/28/2026 and 8/31/2027
+Hours per Week:
+40 - 60
+Salary:
+$18.78 to $21.01 per hour
+Education Required:
+Some Undergraduate
+Experience Required:
+none
+Location:
+Northern Prairie Wildlife Research Center, 8711 37th St. SE ( Jamestown, North Dakota)
+Tags:
+Undergraduate Opportunities
+Description
+We anticipate hiring a student services contractor to collaborate on multiple freshwater ecology and biodiversity research projects in the Northern Great Plains. We are looking for a recent graduate (B.S. or B.A.) to work with our team in support of aquatic data collection, data management,  and GIS deliverables related to the development of (1) freshwater mussel distribution models and maps in North Dakota, (2) biological integrity assessments for wadeable streams in Western North Dakota, and (3) water-quality data management for a long-term prairie-pothole wetland study.
+
+Project details are included below in the statement of work. To be eligible, applicants must currently be enrolled as a student within a year of the start date (June 1st).  The student’s program of study should be in Ecology, Fisheries and Wildlife Science, Environmental Science, or another relevant field. This position is for a full-time (40 hours per week) contractor. Preference will be given to applicants who have completed their B.S./B.A. by the position start date (June 1st, 2026). 
+
+To apply for this position, please send the following information:
+
+(1) A resume
+
+(2) The contact information for three professional references (can be within resume)
+
+(3) An unofficial copy of your transcripts (make sure degree conferral date is listed)
+
+Please send this information in an attachment to Kyle McLean via email (kmclean@usgs.gov) with the following subject line: Application-NPWRC Aquatic SSC Opportunity . A single attachment is preferred. 
+
+Review of applications will begin on 03/16/2026 and continue until the position is filled. 
+
+ For questions, contact Kyle McLean (kmclean@usgs.gov).
+
+
+STATEMENT OF WORK---Biological Science Technician
+ 
+
+1.      Project Description: 
+
+USGS Northern Prairie Wildlife Research Center is seeking 1 biological science technician for the 2026 summer field season to assist with research assessing the ecological integrity of prairie streams located within the Fort Berthold Indian Reservation (FBIR) and wetland water quality. The technician will be responsible  for conducting physical, hydrological, and biological assessments of at least seven wadeable streams located near New Town, ND. The biological assessments will include sampling fish, aquatic invertebrate, periphyton, and riparian plant communities. The technician will also participate in about a dozen (depending on storm events) wetland water quality sample collections and processing at the NDSU Central Grassland Research Extension Center. Technicians will be trained in data-collection methods at the beginning of the field season. This work will take place between late May and August of 2026, with the possibility for an extension. The student will also be assisting with the development of freshwater mussel species distribution models, research synthesis, and mussel distribution maps for a project aimed at assessing the distribution and habitat associations of freshwater mussels in North Dakota. 
+
+2.      Description of Student Services:
+
+The student working as a biological technician should have or be pursuing a B.S. or B.A. degree in wildlife, natural resources, or a related field. Applicants with 2+ years of college and 1 year of experience will be considered. The student must demonstrate skill and experience in collecting accurate and complete data under field conditions, as well as doing data entry. The student should be familiar with some kind of natural resource inventory/survey (some examples include insect or bird surveys) where one uses a search image to locate a species of interest. The student will be collecting ecological data at prairie streams located within the FBIR. This includes wading in streams to collect water and periphyton samples, seine fish, and dip-net aquatic invertebrates. The student will also assist with the digitizing, formatting, and synthesis of the previously collected data. In collaboration with project scientists, the intern will summarize temporal changes in water quality and biodiversity. Periodic wetland sampling will include filtering water and delivering to Bismarck ND DEQ. During the fall and winter months the student will be assisting project scientists with developing species distribution models, creating distribution maps, and synthesizing research on mussel ecology in the region.  
+
+3.      Required Skills: 
+
+The student will be expected to have an educational background in the environmental or biological sciences. The student will be expected to learn and carry out stream monitoring activities that involve wading in streams and walking through uneven terrain. The student will also be expected to summarize existing data and will have the opportunity to gain experience with statistical software, such as R, and gain GIS skills. The student will need to be pursuing a degree in a field related to environmental science, fish and wildlife science, ecology, or conservation biology. A valid drivers license is required.
+
+4.      Description of Working Conditions: 
+
+Work will be performed in both an office and field setting. Field work is extensive and requires long hours walking off trail in grassland sites and wearing waders in shallow streams. Field work will involve exposure to a wide range of weather conditions including cold, mud, and intense heat. Exposure to biting insects and ticks is possible. The incumbent may be required to lift items weighing up to 25 pounds in the performance of assigned duties. At the end of each field day, students are expected to enter data collected that day into a computer database. Fieldwork will be conducted during the months of June and July (2026) at remote field sites located withing the Fort Berthold Indian Reservation. There will be about 20 sampling sites in total scattered along at least 7 wadeable streams. Wetland water quality collection will take place May-August and require driving from Jamestown to Bismarck. During the Fall and Winter months most of the work will be in an office or lab setting that will require long periods of sitting or standing. 
+
+5.      Compensation:
+
+
+Compensation is commensurate with the level of education and experience, as follows:
+
+
+$18.78/hour for student who has completed 2+ years of college with 1 year of experience.
+
+
+$21.01/hour for student who has completed a B.S. or B.A. degree.
+
+
+This rate includes an amount for self-employment taxes. The student is expected to work a 40-60 hour week, but they will not receive a premium rate for work beyond 8 hours/day or 40 hours/week. Work-related travel costs will be compensated as would be done for federal employees. The student also will be eligible for Workers Compensation at government expense, as would a federal employee. The student is responsible for all costs of transportation to and from the duty station and for personal vehicle use at their duty station; a federal vehicle will be provided for transportation to and from their duty station for field work.
+
+ 
+
+6.      Principal Duty Station: 
+
+Northern Prairie Wildlife Research Center, 8711 37th St. SE Jamestown, ND 58401 
+
+Contact
+Dr. Kyle McLean
+(701)253-5539
+kmclean@usgs.gov (preferred contact method)","Hours per Week:
+40 - 60
+Salary:
+$18.78 to $21.01 per hour
+Education Required:
+Some Undergraduate
+Experience Required:
+none","01 per hour
+Education Required:
+Some Undergraduate
+Experience Required:
+none
+Location:
+Northern Prairie Wildlife Research Center, 8711 37th St. SE ( Jamestown, North Dakota)
+Tags:
+Undergraduate Opportunities
+Description
+We anticipate hiring a student services contractor to collaborate on multiple freshwater ecology and biodiversity research projects in the Northern Great Plains. Project Description: 
+
+USGS Northern Prairie Wildlife Research Center is seeking 1 biological science technician for the 2026 summer field season to assist with research assessing the ecological integrity of prairie streams located within the Fort Berthold Indian Reservation (FBIR) and wetland water quality",,"03/22/2026
+Published:
+03/16/2026
+Starting Date:
+between 5/15/2026 and 6/15/2026
+Ending Date:
+between 8/28/2026 and 8/31/2027
+Hours per Week:
+40 - 60
+Salary:
+$18",True,0.9,Graduate,Fisheries & Aquatic Science,0.24,"['fish', 'fisheries', 'aquatic', 'freshwater', 'stream']",False,,2026-03-22T05:16:27.976365+00:00,scrape_20260322_051522_c5731e83,2.0
