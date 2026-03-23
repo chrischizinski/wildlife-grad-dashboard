@@ -713,6 +713,8 @@ class WildlifeJobScraper:
                 "educator",
                 "specialist",
                 "officer",
+                "engineer",
+                "programmer",
                 "program officer",
                 "programme officer",
                 "project manager",
@@ -728,6 +730,8 @@ class WildlifeJobScraper:
                 "degree program",
                 "bachelor",
                 "undergraduate",
+                "post graduate",
+                "postgraduate",
                 "post-doc",
                 "postdoc",
                 "visiting scholar",
@@ -785,6 +789,8 @@ class WildlifeJobScraper:
                 "specialist",
                 "coordinator",
                 "manager",
+                "engineer",
+                "programmer",
                 "officer",
             ]
             has_key_professional = any(
@@ -851,6 +857,11 @@ class WildlifeJobScraper:
                 is_graduate = False
 
             # Additional checks for edge cases
+            if any(term in full_text for term in ["post graduate", "postgraduate"]):
+                is_graduate = False
+                confidence = max(confidence, 0.9)
+                position_type = "Professional"
+
             if "student" in job.title.lower() and "research" in full_text:
                 is_graduate = True
                 confidence = max(confidence, 0.8)

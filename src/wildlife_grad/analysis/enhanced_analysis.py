@@ -102,7 +102,6 @@ class GraduatePositionDetector:
                 "fellowship",
                 "graduate fellowship",
                 "research fellowship",
-                "postgraduate fellowship",
                 "PhD fellowship",
                 "masters fellowship",
                 "doctoral fellowship",
@@ -160,6 +159,9 @@ class GraduatePositionDetector:
                 "coordinator position",
                 "specialist position",
                 "analyst position",
+                "engineer position",
+                "engineer role",
+                "programmer position",
                 "technician position",
                 "officer position",
                 "director position",
@@ -189,6 +191,7 @@ class GraduatePositionDetector:
         # Hard exclusions for roles that should not be treated as graduate positions
         # unless assistantship language is explicit.
         self.hard_exclusion_patterns = [
+            r"\bpost[-\s]?graduate\b",
             r"\bpost[-\s]?doc(toral)?\b",
             r"\bveterinarian\b",
             r"\barchaeologist\b",
@@ -220,6 +223,8 @@ class GraduatePositionDetector:
             r"\bbiologist\s+i{1,2}\b",
             r"\bprofessional\s+certificate\b",
             r"\bcertificate\s+program\b",
+            r"\bengineer\b",
+            r"\bprogrammer\b",
         ]
         self.explicit_assistantship_patterns = [
             r"\bgraduate\s+assistantship\b",

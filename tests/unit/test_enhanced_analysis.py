@@ -114,6 +114,42 @@ class TestGraduatePositionDetector:
         assert classification_type == "Graduate Assistantship"
         assert confidence >= 0.75
 
+    def test_postgraduate_fellowship_is_not_graduate_position(self):
+        position = JobPosition(
+            title="USDA-ARS Post Graduate Research Fellow in Agrigenomics",
+            organization="Oak Ridge Associated Universities (ORAU)",
+            location="Hilo, Hawaii",
+            salary="",
+            starting_date="",
+            published_date="03/23/2026",
+            tags="Fellowships",
+            description="Post graduate research fellowship hosted with USDA-ARS."
+        )
+
+        is_grad, classification_type, confidence = self.detector.is_graduate_position(position)
+
+        assert is_grad is False
+        assert classification_type == "Professional/Other"
+        assert confidence <= 0.3
+
+    def test_engineer_programmer_role_is_not_graduate_position(self):
+        position = JobPosition(
+            title="Database Engineer/OPS Scientific/Engineering Programmer",
+            organization="Florida Fish and Wildlife Conservation Commission (State)",
+            location="St. Petersburg, Florida",
+            salary="",
+            starting_date="",
+            published_date="03/23/2026",
+            tags="Job Openings",
+            description="Professional engineering and programming role supporting agency data systems."
+        )
+
+        is_grad, classification_type, confidence = self.detector.is_graduate_position(position)
+
+        assert is_grad is False
+        assert classification_type == "Professional/Other"
+        assert confidence <= 0.3
+
 
 class TestCostOfLivingAdjuster:
     """Test cost of living adjustment functionality."""
