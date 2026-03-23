@@ -28,7 +28,11 @@
     "last_updated": "2026-02-19T18:12:10.254949+00:00",
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 5000.0,
+    "cost_of_living_index": 1.05,
+    "salary_lincoln_adjusted": 4761.9,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Doctoral Graduate Research Assistant Position",
@@ -63,7 +67,11 @@
     "last_updated": "2026-02-19T18:11:47.642687+00:00",
     "discipline_primary": "Environmental Sciences",
     "discipline_secondary": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 30618.0,
+    "cost_of_living_index": 1.0,
+    "salary_lincoln_adjusted": 30618.0,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Ph.D/MS Positions: Plant quarantine & Invasion biology School of Forestry -Beijing Forestry University",
@@ -98,7 +106,11 @@
     "last_updated": "2026-02-19T18:12:11.037688+00:00",
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "Entomology",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 5000.0,
+    "cost_of_living_index": 1.05,
+    "salary_lincoln_adjusted": 4761.9,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "MS Positions: Plant and Microbial Comparative Genomics - School of Grassland Science - Beijing Forestry University",
@@ -129,7 +141,11 @@
     "last_updated": "2026-02-19T18:12:18.717884+00:00",
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "Environmental Sciences",
-    "discipline_refinement_source": "secondary_ml"
+    "discipline_refinement_source": "secondary_ml",
+    "salary_annualized": 5000.0,
+    "cost_of_living_index": 1.05,
+    "salary_lincoln_adjusted": 4761.9,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "UCI Masters in Conservation and Restoration Science Program",
@@ -295,7 +311,11 @@
     "last_updated": "2026-02-19T18:11:47.803658+00:00",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 24096.0,
+    "cost_of_living_index": 1.2,
+    "salary_lincoln_adjusted": 20080.0,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Ph.D/MS Positions: Global change ecology, grassland ecology and ecological stoichiometry School of Grassland Science -Beijing Forestry University",
@@ -326,7 +346,11 @@
     "last_updated": "2026-02-19T18:12:10.302979+00:00",
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 5000.0,
+    "cost_of_living_index": 1.05,
+    "salary_lincoln_adjusted": 4761.9,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "MS Positions: Forest ecology/ Ecological meteorology/Forest fire ecology, School of Ecology and Nature Conservation-Beijing Forestry University",
@@ -362,7 +386,11 @@
     "last_updated": "2026-02-19T18:12:19.126905+00:00",
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "Environmental Sciences",
-    "discipline_refinement_source": "secondary_ml"
+    "discipline_refinement_source": "secondary_ml",
+    "salary_annualized": 5000.0,
+    "cost_of_living_index": 1.05,
+    "salary_lincoln_adjusted": 4761.9,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Master's student in plant genetics and molecular biology",
@@ -393,7 +421,11 @@
     "last_updated": "2026-02-19T18:11:49.339121+00:00",
     "discipline_primary": "Agriculture",
     "discipline_secondary": "",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 10000.0,
+    "cost_of_living_index": 0.8,
+    "salary_lincoln_adjusted": 12500.0,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Ph.D/MS Positions: Plant quarantine & Invasion biology",
@@ -428,7 +460,11 @@
     "last_updated": "2026-02-19T18:12:11.086863+00:00",
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "Entomology",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 5000.0,
+    "cost_of_living_index": 1.05,
+    "salary_lincoln_adjusted": 4761.9,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Ph.D/MS Positions: Ecological Restoration, Grassland Management School of Grassland Science -Beijing Forestry University",
@@ -464,7 +500,11 @@
     "last_updated": "2026-02-19T18:12:10.453144+00:00",
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 5000.0,
+    "cost_of_living_index": 1.05,
+    "salary_lincoln_adjusted": 4761.9,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "MS or PhD Fellow (Pendelton Scholarship), Texas Tech Natural Resources Management",
@@ -501,7 +541,11 @@
     "last_updated": "2026-02-19T18:11:49.385915+00:00",
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "Agriculture",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 20000.0,
+    "cost_of_living_index": 0.95,
+    "salary_lincoln_adjusted": 21052.63,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Graduate Naturalist Training Program at Wolf Ridge ELC",
@@ -563,7 +607,11 @@
     "last_updated": "2026-02-19T18:11:55.598830+00:00",
     "discipline_primary": "Environmental Sciences",
     "discipline_secondary": "",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 14000.0,
+    "cost_of_living_index": 0.9,
+    "salary_lincoln_adjusted": 15555.56,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Ph.D Positions: Ecological and environmental restoration, Solid waste management, School of Environmental Science and Engineering-Beijing Forestry University",
@@ -599,7 +647,11 @@
     "last_updated": "2026-02-19T18:12:11.136744+00:00",
     "discipline_primary": "Environmental Sciences",
     "discipline_secondary": "Forestry and Habitat",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 5500.0,
+    "cost_of_living_index": 1.05,
+    "salary_lincoln_adjusted": 5238.1,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "MS Positions: Behavioral ecology of forest pests, College of Forestry-Beijing Forestry University",
@@ -630,7 +682,11 @@
     "last_updated": "2026-02-19T18:12:18.819499+00:00",
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "Environmental Sciences",
-    "discipline_refinement_source": "secondary_ml"
+    "discipline_refinement_source": "secondary_ml",
+    "salary_annualized": 5000.0,
+    "cost_of_living_index": 1.05,
+    "salary_lincoln_adjusted": 4761.9,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Ph.D/MS Positions: Coastal/Urban wetland ecology",
@@ -666,7 +722,11 @@
     "last_updated": "2026-02-19T18:12:17.909560+00:00",
     "discipline_primary": "Wildlife",
     "discipline_secondary": "Forestry and Habitat",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 5500.0,
+    "cost_of_living_index": 1.05,
+    "salary_lincoln_adjusted": 5238.1,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Now Accepting Summer and Fall 2026 Applications! Master of Wildlife and Fisheries Resources Program",
@@ -759,7 +819,11 @@
     "last_updated": "2026-02-19T18:11:55.654722+00:00",
     "discipline_primary": "Environmental Sciences",
     "discipline_secondary": "",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 21000.0,
+    "cost_of_living_index": 0.95,
+    "salary_lincoln_adjusted": 22105.26,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Multiple MS positions at Austin Peay State University",
@@ -821,7 +885,11 @@
     "last_updated": "2026-02-19T18:11:49.535109+00:00",
     "discipline_primary": "Wildlife",
     "discipline_secondary": "Forestry and Habitat",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 24500.0,
+    "cost_of_living_index": 0.8,
+    "salary_lincoln_adjusted": 30625.0,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Graduate Student Opportunities in Behavioral Ecology of Fish",
@@ -914,7 +982,11 @@
     "last_updated": "2026-02-19T18:12:18.112025+00:00",
     "discipline_primary": "Other",
     "discipline_secondary": "",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 28000.0,
+    "cost_of_living_index": 0.95,
+    "salary_lincoln_adjusted": 29473.68,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Graduate Research Assistant/Ant Colony Impacts on Ecosystems",
@@ -951,7 +1023,9 @@
     "data_enhanced": true,
     "enhanced_at": "2025-07-13T14:47:11.245041+00:00",
     "discipline": "Entomology",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 21000.0,
+    "salary_adjustment_source": "source_data"
   },
   {
     "title": "PhD Position at University of Alaska Fairbanks",
@@ -1640,7 +1714,9 @@
     "data_enhanced": true,
     "enhanced_at": "2025-07-13T14:47:11.244858+00:00",
     "discipline": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 20000.0,
+    "salary_adjustment_source": "source_data"
   },
   {
     "title": "M.S. (Biology) Graduate Research Assistantship Positions in Herpetology, Spatial Ecology, and Behavioral Ecology",
@@ -1677,7 +1753,9 @@
     "data_enhanced": true,
     "enhanced_at": "2025-07-13T14:47:11.244891+00:00",
     "discipline": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 26159.0,
+    "salary_adjustment_source": "source_data"
   },
   {
     "title": "M.S. Graduate Assistantship – Deer population demographics prior to elk reintroduction",
@@ -1711,7 +1789,9 @@
       "cleaned_location": "Bemidji, Minnesota"
     },
     "discipline": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 28000.0,
+    "salary_adjustment_source": "source_data"
   },
   {
     "title": "MS - Assistantship - Migratory Game Bird Wintering Habitat Assessment - Graduate Research Assistant II",
@@ -1745,7 +1825,9 @@
       "cleaned_location": "Alpine, Texas"
     },
     "discipline": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 18000.0,
+    "salary_adjustment_source": "source_data"
   },
   {
     "title": "PhD in Fisheries, Wildlife, and Conservation Sciences: Developing multi-method approaches for landscape-scale sampling of small mammals",
@@ -1779,7 +1861,9 @@
       "cleaned_location": "Oregon State University"
     },
     "discipline": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 30000.0,
+    "salary_adjustment_source": "source_data"
   },
   {
     "title": "Ph.D. Research Assistantship in Fisheries Conflict and Food Security - Start date Fall 2025 or Spring 2026",
@@ -1813,7 +1897,9 @@
       "cleaned_location": "New Bedford, Massachusetts"
     },
     "discipline": "Fisheries and Aquatic",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 26700.0,
+    "salary_adjustment_source": "source_data"
   },
   {
     "title": "M.S. Research Assistantship in Manta Ray Conservation and Bycatch Mitigation",
@@ -1847,7 +1933,9 @@
       "cleaned_location": "New Bedford, Massachusetts"
     },
     "discipline": "Fisheries and Aquatic",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 24700.0,
+    "salary_adjustment_source": "source_data"
   },
   {
     "title": "PhD in Fisheries, Wildlife, and Conservation Sciences: Developing multi",
@@ -1943,7 +2031,9 @@
       "cleaned_location": "Clemson, South Carolina"
     },
     "discipline": "Fisheries and Aquatic",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 22000.0,
+    "salary_adjustment_source": "source_data"
   },
   {
     "title": "MS graduate research assistantship - mountain goat adaptive management in Montana",
@@ -2011,7 +2101,9 @@
       "cleaned_location": "University of Tennessee"
     },
     "discipline": "Forestry and Habitat",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 21000.0,
+    "salary_adjustment_source": "source_data"
   },
   {
     "title": "Graduate Assistantship (M.S.)",
@@ -2116,7 +2208,9 @@
     "data_enhanced": true,
     "enhanced_at": "2025-07-13T14:47:11.244929+00:00",
     "discipline": "Environmental Sciences",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 22000.0,
+    "salary_adjustment_source": "source_data"
   },
   {
     "title": "MS Research Assistant - Natural Resource Sciences",
@@ -2150,7 +2244,9 @@
       "cleaned_location": "North Dakota State University"
     },
     "discipline": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 22000.0,
+    "salary_adjustment_source": "source_data"
   },
   {
     "title": "PhD Research Assistantship - Feral Swine Ecology and Management",
@@ -2184,7 +2280,9 @@
       "cleaned_location": "Lubbock, Texas"
     },
     "discipline": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 22000.0,
+    "salary_adjustment_source": "source_data"
   },
   {
     "title": "Ph.D. or M.Sc.- Graduate Assistantship in American Black Duck Movement Ecology",
@@ -2218,7 +2316,9 @@
       "cleaned_location": "University of Rhode Island"
     },
     "discipline": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 43000.0,
+    "salary_adjustment_source": "source_data"
   },
   {
     "title": "Ph.D. or M.Sc.",
@@ -2314,7 +2414,9 @@
       "cleaned_location": "Alpine, Texas"
     },
     "discipline": "Forestry and Habitat",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 18000.0,
+    "salary_adjustment_source": "source_data"
   },
   {
     "title": "MS",
@@ -2413,7 +2515,9 @@
     "data_enhanced": true,
     "enhanced_at": "2025-07-13T14:47:11.244950+00:00",
     "discipline": "Other",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 20000.0,
+    "salary_adjustment_source": "source_data"
   },
   {
     "title": "Graduate Student Position - seasonal bat health dynamics at Auburn University",
@@ -2447,7 +2551,9 @@
       "cleaned_location": "College of Forestry, Wildlife and Environment"
     },
     "discipline": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 23500.0,
+    "salary_adjustment_source": "source_data"
   },
   {
     "title": "Graduate Student Position",
@@ -2645,7 +2751,9 @@
     "data_enhanced": true,
     "enhanced_at": "2025-07-13T14:47:11.244976+00:00",
     "discipline": "Agriculture",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 31000.0,
+    "salary_adjustment_source": "source_data"
   },
   {
     "title": "Graduate Assistantship in Environmental Microbiology",
@@ -2679,7 +2787,9 @@
       "cleaned_location": "Georgia Southern University"
     },
     "discipline": "Environmental Sciences",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 14000.0,
+    "salary_adjustment_source": "source_data"
   },
   {
     "title": "Doctoral Student in Environmental Toxicology",
@@ -2747,7 +2857,9 @@
     "data_enhanced": true,
     "enhanced_at": "2025-07-13T14:47:11.244991+00:00",
     "discipline": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 30000.0,
+    "salary_adjustment_source": "source_data"
   },
   {
     "title": "PhD Graduate Assistantship, Avian Community and Population Responses to Northern Bobwhite Management",
@@ -2781,7 +2893,9 @@
       "cleaned_location": "Box T-0050"
     },
     "discipline": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 30000.0,
+    "salary_adjustment_source": "source_data"
   },
   {
     "title": "USDA-ARS Post Graduate Research Fellow in Agrigenomics",
@@ -2805,8 +2919,8 @@
     "discipline_keywords": [],
     "is_big10_university": false,
     "university_name": "",
-    "scraped_at": "2026-03-23T16:52:19.158442+00:00",
-    "scrape_run_id": "scrape_20260323_165151_bb01fc54",
+    "scraped_at": "2026-03-23T17:09:54.888722+00:00",
+    "scrape_run_id": "scrape_20260323_170924_1926627a",
     "scraper_version": "2.0",
     "discipline_primary": "Entomology",
     "discipline_secondary": "Agriculture",
@@ -2834,12 +2948,16 @@
     "discipline_keywords": [],
     "is_big10_university": false,
     "university_name": "",
-    "scraped_at": "2026-03-23T16:52:31.322972+00:00",
-    "scrape_run_id": "scrape_20260323_165151_bb01fc54",
+    "scraped_at": "2026-03-23T17:10:08.530374+00:00",
+    "scrape_run_id": "scrape_20260323_170924_1926627a",
     "scraper_version": "2.0",
     "discipline_primary": "Wildlife",
     "discipline_secondary": "Fisheries and Aquatic",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 52000.0,
+    "cost_of_living_index": 0.95,
+    "salary_lincoln_adjusted": 54736.84,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "What a MS in Enviro. Observation & Informatics can do for your career!",
@@ -2863,8 +2981,8 @@
     "discipline_keywords": [],
     "is_big10_university": true,
     "university_name": "University of Wisconsin",
-    "scraped_at": "2026-03-23T16:52:18.479925+00:00",
-    "scrape_run_id": "scrape_20260323_165151_bb01fc54",
+    "scraped_at": "2026-03-23T17:09:54.225825+00:00",
+    "scrape_run_id": "scrape_20260323_170924_1926627a",
     "scraper_version": "2.0",
     "discipline_primary": "Human Dimensions",
     "discipline_secondary": "Fisheries and Aquatic",
@@ -2898,12 +3016,16 @@
     ],
     "is_big10_university": false,
     "university_name": "",
-    "scraped_at": "2026-03-23T16:52:18.666579+00:00",
-    "scrape_run_id": "scrape_20260323_165151_bb01fc54",
+    "scraped_at": "2026-03-23T17:09:54.443683+00:00",
+    "scrape_run_id": "scrape_20260323_170924_1926627a",
     "scraper_version": "2.0",
     "discipline_primary": "Environmental Sciences",
     "discipline_secondary": "",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 28000.0,
+    "cost_of_living_index": 0.9,
+    "salary_lincoln_adjusted": 31111.11,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Graduate Research Assistantship (M.S. or Ph.D.) – Northern Bobwhite Ecology & Remote Sensing",
@@ -2927,8 +3049,8 @@
     "discipline_keywords": [],
     "is_big10_university": false,
     "university_name": "",
-    "scraped_at": "2026-03-23T16:52:19.259161+00:00",
-    "scrape_run_id": "scrape_20260323_165151_bb01fc54",
+    "scraped_at": "2026-03-23T17:09:54.997140+00:00",
+    "scrape_run_id": "scrape_20260323_170924_1926627a",
     "scraper_version": "2.0",
     "discipline_primary": "Wildlife",
     "discipline_secondary": "Forestry and Habitat",
@@ -2956,12 +3078,16 @@
     "discipline_keywords": [],
     "is_big10_university": false,
     "university_name": "",
-    "scraped_at": "2026-03-23T16:52:19.451499+00:00",
-    "scrape_run_id": "scrape_20260323_165151_bb01fc54",
+    "scraped_at": "2026-03-23T17:09:55.213036+00:00",
+    "scrape_run_id": "scrape_20260323_170924_1926627a",
     "scraper_version": "2.0",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 24000.0,
+    "cost_of_living_index": 0.95,
+    "salary_lincoln_adjusted": 25263.16,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Alaska Fellows Program Fellow",
@@ -2985,12 +3111,16 @@
     "discipline_keywords": [],
     "is_big10_university": false,
     "university_name": "",
-    "scraped_at": "2026-03-23T16:52:20.113326+00:00",
-    "scrape_run_id": "scrape_20260323_165151_bb01fc54",
+    "scraped_at": "2026-03-23T17:09:55.965402+00:00",
+    "scrape_run_id": "scrape_20260323_170924_1926627a",
     "scraper_version": "2.0",
     "discipline_primary": "Environmental Sciences",
     "discipline_secondary": "",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 14400.0,
+    "cost_of_living_index": 1.0,
+    "salary_lincoln_adjusted": 14400.0,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Doctoral Student in Environmental Toxicology",
@@ -3014,8 +3144,8 @@
     "discipline_keywords": [],
     "is_big10_university": false,
     "university_name": "",
-    "scraped_at": "2026-03-23T16:52:28.912048+00:00",
-    "scrape_run_id": "scrape_20260323_165151_bb01fc54",
+    "scraped_at": "2026-03-23T17:10:05.753729+00:00",
+    "scrape_run_id": "scrape_20260323_170924_1926627a",
     "scraper_version": "2.0",
     "discipline_primary": "Other",
     "discipline_secondary": "",
@@ -3049,12 +3179,16 @@
     ],
     "is_big10_university": false,
     "university_name": "",
-    "scraped_at": "2026-03-23T16:52:18.763036+00:00",
-    "scrape_run_id": "scrape_20260323_165151_bb01fc54",
+    "scraped_at": "2026-03-23T17:09:54.552475+00:00",
+    "scrape_run_id": "scrape_20260323_170924_1926627a",
     "scraper_version": "2.0",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 28000.0,
+    "cost_of_living_index": 0.85,
+    "salary_lincoln_adjusted": 32941.18,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Master's Student: Fish Assemblages on Artificial Reefs in Lake Pontchartrain",
@@ -3084,12 +3218,16 @@
     ],
     "is_big10_university": false,
     "university_name": "",
-    "scraped_at": "2026-03-23T16:52:18.573097+00:00",
-    "scrape_run_id": "scrape_20260323_165151_bb01fc54",
+    "scraped_at": "2026-03-23T17:09:54.333854+00:00",
+    "scrape_run_id": "scrape_20260323_170924_1926627a",
     "scraper_version": "2.0",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 30000.0,
+    "cost_of_living_index": 0.85,
+    "salary_lincoln_adjusted": 35294.12,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Graduate Research Assistant (M.S.)",
@@ -3113,12 +3251,16 @@
     "discipline_keywords": [],
     "is_big10_university": true,
     "university_name": "University of Nebraska",
-    "scraped_at": "2026-03-23T16:52:19.543419+00:00",
-    "scrape_run_id": "scrape_20260323_165151_bb01fc54",
+    "scraped_at": "2026-03-23T17:09:55.316644+00:00",
+    "scrape_run_id": "scrape_20260323_170924_1926627a",
     "scraper_version": "2.0",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 19386.0,
+    "cost_of_living_index": 1.0,
+    "salary_lincoln_adjusted": 19386.0,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "USDA-ARS Postgraduate Fellowship in Bacterial Biofilms in Cattle Farm Environments in the Northeastern U.S.",
@@ -3142,8 +3284,8 @@
     "discipline_keywords": [],
     "is_big10_university": false,
     "university_name": "",
-    "scraped_at": "2026-03-23T16:52:20.418107+00:00",
-    "scrape_run_id": "scrape_20260323_165151_bb01fc54",
+    "scraped_at": "2026-03-23T17:09:56.321687+00:00",
+    "scrape_run_id": "scrape_20260323_170924_1926627a",
     "scraper_version": "2.0",
     "discipline_primary": "Agriculture",
     "discipline_secondary": "Environmental Sciences",
@@ -3171,8 +3313,8 @@
     "discipline_keywords": [],
     "is_big10_university": false,
     "university_name": "",
-    "scraped_at": "2026-03-23T16:52:30.680178+00:00",
-    "scrape_run_id": "scrape_20260323_165151_bb01fc54",
+    "scraped_at": "2026-03-23T17:10:07.810035+00:00",
+    "scrape_run_id": "scrape_20260323_170924_1926627a",
     "scraper_version": "2.0",
     "discipline_primary": "Entomology",
     "discipline_secondary": "Agriculture",
@@ -3207,7 +3349,11 @@
     "last_updated": "2026-03-15T05:25:24.180790+00:00",
     "discipline_primary": "Wildlife",
     "discipline_secondary": "Forestry and Habitat",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 30000.0,
+    "cost_of_living_index": 0.8,
+    "salary_lincoln_adjusted": 37500.0,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Ph.D. research assistantship",
@@ -3238,7 +3384,11 @@
     "last_updated": "2026-03-08T05:05:47.035868+00:00",
     "discipline_primary": "Wildlife",
     "discipline_secondary": "Human Dimensions",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 29000.0,
+    "cost_of_living_index": 0.95,
+    "salary_lincoln_adjusted": 30526.32,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Fisheries Assistant",
@@ -3300,7 +3450,11 @@
     "last_updated": "2026-03-08T05:05:47.232113+00:00",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 24000.0,
+    "cost_of_living_index": 0.95,
+    "salary_lincoln_adjusted": 25263.16,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "USDA-FS Bioacoustics Laboratory Fellowship (USDA-FS-PNWRS-2026-0089)",
@@ -3367,7 +3521,11 @@
     "last_updated": "2026-03-08T05:05:47.331543+00:00",
     "discipline_primary": "Wildlife",
     "discipline_secondary": "",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 28000.0,
+    "cost_of_living_index": 0.85,
+    "salary_lincoln_adjusted": 32941.18,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Funded MS graduate assistantship Wyoming Wildlife policy",
@@ -3404,44 +3562,11 @@
     "last_updated": "2026-03-01T05:14:49.931222+00:00",
     "discipline_primary": "Human Dimensions",
     "discipline_secondary": "Wildlife",
-    "discipline_refinement_source": "rule"
-  },
-  {
-    "title": "Habitat/Spatial Ecology Lecturer Position",
-    "organization": "Cal Poly Humboldt (State)",
-    "location": "Arcata, California",
-    "salary": "Commensurate / Negotiable",
-    "starting_date": "after 8/17/2026",
-    "published_date": "02/27/2026",
-    "tags": "N/A",
-    "url": "https://jobs.rwfm.tamu.edu/view-job/?id=114255",
-    "description": "Habitat/Spatial Ecology Lecturer Position\nCal Poly Humboldt (State)\nDetails\nPosting:\nhttps://careers.humboldt.edu/hm/en-us/job/555311/lecturer-pool-in-department-of-wildlife-management-academic-year-2627\nApplication Deadline:\n05/01/2026\nPublished:\n02/27/2026\nStarting Date:\nafter 8/17/2026\nEnding Date:\nafter 5/19/2027\nHours per Week:\nat most 40\nSalary:\nCommensurate / Negotiable\nEducation Required:\nDoctorate\nExperience Required:\nnone\nLocation:\nArcata, California\nDescription\nHabitat/Spatial Ecology Lecturer Position\n\nThe Department of Wildlife at Cal Poly Humboldt is seeking a lecturer with expertise in Habitat Ecology, Spatial Ecology, or Landscape Ecology for the 2026-2027 academic year. The successful candidate will teach Ecology & Management of Habitat for Wildlife and Spatial Wildlife Ecology, two upper-division courses in the undergraduate curriculum, and/or other courses as assigned.  The position is full-time, though a part-time appointment may be possible if desired. Potential additional course topics include: introduction to Wildlife Conservation and Policy, Ecology of Wildlife Populations, and/or Senior Project (see here for course offerings). To learn more about the department, please visit our website. Initial appointment will be for the Fall 2026 semester and subsequent reappointments will be contingent upon satisfactory performance evaluations, and programmatic need. The department has a strong record of multi-year instructional continuity.\n QUALIFICATIONS: PhD (or ABD) in Wildlife, Ecology, or a related field from an accredited college. Candidates must have demonstrated topical expertise in the subject area and/or demonstrated teaching experience at the university or collegial level. Preferred qualifications are a record of training and expertise in spatial ecology and/or habitat ecology, with additional experience in areas such as wildlife management, ecology and evolution.\n\nSALARY: See information on website\n\nAPPLICATION: Qualified candidates should submit the following materials through PageUp application portal: \n\nLetter of Application; \nCurriculum Vitae; \nTeaching Evaluations, if available; and \nNames and Contact Information for Three (3) Professional References. \n\nQuestions may be directed to: Department Chair Barbara Clucas – barbara.clucas@humboldt.edu\n\nAPPLICATION DEADLINE: Review of applications will begin March 20. Early response is encouraged. \nContact\nBarbara Clucas\n707-826-5651\nbarbara.clucas@humboldt.edu (preferred contact method)",
-    "requirements": "Habitat/Spatial Ecology Lecturer Position\n\nThe Department of Wildlife at Cal Poly Humboldt is seeking a lecturer with expertise in Habitat Ecology, Spatial Ecology, or Landscape Ecology for the 2026-2027 academic year. The successful candidate will teach Ecology & Management of Habitat for Wildlife and Spatial Wildlife Ecology, two upper-division courses in the undergraduate curriculum, and/or other courses as assigned.  The position is full-time, though a part-time appointment may be possible if desired. Potential additional course topics include: introduction to Wildlife Conservation and Policy, Ecology of Wildlife Populations, and/or Senior Project (see here for course offerings). To learn more about the department, please visit our website. Initial appointment will be for the Fall 2026 semester and subsequent reappointments will be contingent upon satisfactory performance evaluations, and programmatic need. The department has a strong record of multi-year instructional continuity.\n QUALIFICATIONS: PhD (or ABD) in Wildlife, Ecology, or a related field from an accredited college. Candidates must have demonstrated topical expertise in the subject area and/or demonstrated teaching experience at the university or collegial level. Preferred qualifications are a record of training and expertise in spatial ecology and/or habitat ecology, with additional experience in areas such as wildlife management, ecology and evolution.\n\nSALARY: See information on website\n\nAPPLICATION: Qualified candidates should submit the following materials through PageUp application portal: \n\nLetter of Application; \nCurriculum Vitae; \nTeaching Evaluations, if available; and \nNames and Contact Information for Three (3) Professional References. \n\nQuestions may be directed to: Department Chair Barbara Clucas – barbara.clucas@humboldt.edu\n\nAPPLICATION DEADLINE: Review of applications will begin March 20. Early response is encouraged.",
-    "project_details": "Potential additional course topics include: introduction to Wildlife Conservation and Policy, Ecology of Wildlife Populations, and/or Senior Project (see here for course offerings)",
-    "contact_info": "",
-    "application_deadline": "05/01/2026\nPublished:\n02/27/2026\nStarting Date:\nafter 8/17/2026\nEnding Date:\nafter 5/19/2027\nHours per Week:\nat most 40\nSalary:\nCommensurate / Negotiable\nEducation Required:\nDoctorate\nExperience Required:\nnone\nLocation:\nArcata, California\nDescription\nHabitat/Spatial Ecology Lecturer Position\n\nThe Department of Wildlife at Cal Poly Humboldt is seeking a lecturer with expertise in Habitat Ecology, Spatial Ecology, or Landscape Ecology for the 2026-2027 academic year",
-    "is_graduate_position": true,
-    "grad_confidence": 0.4,
-    "position_type": "PhD Position",
-    "discipline": "Wildlife",
-    "discipline_confidence": 0.222,
-    "discipline_keywords": [
-      "wildlife",
-      "wildlife management",
-      "wildlife conservation",
-      "habitat",
-      "landscape ecology"
-    ],
-    "is_big10_university": false,
-    "university_name": "",
-    "scraped_at": "2026-03-01T05:14:51.393457+00:00",
-    "scrape_run_id": "scrape_20260301_051421_e852c440",
-    "scraper_version": "2.0",
-    "first_seen": "2026-03-01T05:14:51.393457+00:00",
-    "last_updated": "2026-03-01T05:14:51.393457+00:00",
-    "discipline_primary": "Wildlife",
-    "discipline_secondary": "Forestry and Habitat",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 23000.0,
+    "cost_of_living_index": 0.9,
+    "salary_lincoln_adjusted": 25555.56,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "UMaine PhD Assistantship in Fish Environmental RNA (eRNA)",
@@ -3472,7 +3597,11 @@
     "last_updated": "2026-03-01T05:14:49.830961+00:00",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "Agriculture",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 31500.0,
+    "cost_of_living_index": 1.0,
+    "salary_lincoln_adjusted": 31500.0,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "M.S. Assistantship – Habitat use, movements, and survival of female Mottled Ducks",
@@ -3503,7 +3632,11 @@
     "last_updated": "2026-03-01T05:14:50.030411+00:00",
     "discipline_primary": "Wildlife",
     "discipline_secondary": "Fisheries and Aquatic",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 22000.0,
+    "cost_of_living_index": 0.85,
+    "salary_lincoln_adjusted": 25882.35,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Graduate Assistant",
@@ -3534,7 +3667,11 @@
     "last_updated": "2026-03-01T05:14:50.231018+00:00",
     "discipline_primary": "Wildlife",
     "discipline_secondary": "Environmental Sciences",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 21660.0,
+    "cost_of_living_index": 1.05,
+    "salary_lincoln_adjusted": 20628.57,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "M.S. Graduate Research Assistantship — Crayfish Population Ecology (Fall 2026)",
@@ -3571,7 +3708,11 @@
     "last_updated": "2026-03-01T05:14:50.330633+00:00",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "Forestry and Habitat",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 24000.0,
+    "cost_of_living_index": 0.95,
+    "salary_lincoln_adjusted": 25263.16,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "MSc Position – Forest Disturbance Ecology & Remote Sensing",
@@ -3607,7 +3748,11 @@
     "last_updated": "2026-02-22T05:12:39.268241+00:00",
     "discipline_primary": "Environmental Sciences",
     "discipline_secondary": "Forestry and Habitat",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 20000.0,
+    "cost_of_living_index": 1.1,
+    "salary_lincoln_adjusted": 18181.82,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Naturalist Boat Captain",
@@ -3638,7 +3783,11 @@
     "last_updated": "2026-02-22T05:12:40.167863+00:00",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 47840.0,
+    "cost_of_living_index": 0.85,
+    "salary_lincoln_adjusted": 56282.35,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "PhD assistantship: Rio Grande cutthroat trout conservation and genetics",
@@ -3669,7 +3818,11 @@
     "last_updated": "2026-02-22T05:12:37.886723+00:00",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 28384.0,
+    "cost_of_living_index": 0.85,
+    "salary_lincoln_adjusted": 33392.94,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Large Mammal/AI Graduate Assistantship (MS), Colorado State University",
@@ -3706,7 +3859,11 @@
     "last_updated": "2026-02-22T05:12:38.193547+00:00",
     "discipline_primary": "Wildlife",
     "discipline_secondary": "Human Dimensions",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 36000.0,
+    "cost_of_living_index": 1.1,
+    "salary_lincoln_adjusted": 32727.27,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "MS Assistantship: Pinyon Jay management, Deschutes County, Oregon. Masters of Natural Resources program, Oregon Tech, Klamath Falls, OR",
@@ -3737,7 +3894,11 @@
     "last_updated": "2026-02-22T05:12:39.055606+00:00",
     "discipline_primary": "Wildlife",
     "discipline_secondary": "Forestry and Habitat",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 37440.0,
+    "cost_of_living_index": 1.1,
+    "salary_lincoln_adjusted": 34036.36,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "PhD Scholarship – Transforming Climate Action",
@@ -3768,7 +3929,11 @@
     "last_updated": "2026-02-22T05:12:37.987771+00:00",
     "discipline_primary": "Environmental Sciences",
     "discipline_secondary": "Fisheries and Aquatic",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 30000.0,
+    "cost_of_living_index": 1.1,
+    "salary_lincoln_adjusted": 27272.73,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Graduate Assistantship at WVU: Aquatic Species Responses to Changing River Conditions",
@@ -3805,7 +3970,11 @@
     "last_updated": "2026-02-19T18:11:49.778953+00:00",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 21000.0,
+    "cost_of_living_index": 0.75,
+    "salary_lincoln_adjusted": 28000.0,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "USDA-ARS Sensors for Crops Mortality and Soil Quality in Agriculture Fellowship",
@@ -3870,7 +4039,9 @@
       "cleaned_location": "TTU Natural Resources Management 2903 15th Street 2903 15th Street"
     },
     "discipline": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 18000.0,
+    "salary_adjustment_source": "source_data"
   },
   {
     "title": "Graduate Assistantship (MS/PhD)",
@@ -3901,7 +4072,11 @@
     "last_updated": "2026-02-19T18:11:48.633233+00:00",
     "discipline_primary": "Human Dimensions",
     "discipline_secondary": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 35328.0,
+    "cost_of_living_index": 0.85,
+    "salary_lincoln_adjusted": 41562.35,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "PhD Assistanship: Virtual Fencing, Grazing Behavior, and Animal Welfare",
@@ -3932,7 +4107,11 @@
     "last_updated": "2026-02-19T18:11:48.681291+00:00",
     "discipline_primary": "Agriculture",
     "discipline_secondary": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 30000.0,
+    "cost_of_living_index": 1.0,
+    "salary_lincoln_adjusted": 30000.0,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Aquaculture Experiential Opportunities for Undergraduate Students (AquEOUS) Fellowship",
@@ -3963,7 +4142,11 @@
     "last_updated": "2026-02-19T18:11:56.972073+00:00",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "Human Dimensions",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 31200.0,
+    "cost_of_living_index": 1.0,
+    "salary_lincoln_adjusted": 31200.0,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Executive Director of Merry Lea Environmental Learning Center of Goshen College",
@@ -3994,7 +4177,11 @@
     "last_updated": "2026-02-19T18:12:26.766121+00:00",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 75000.0,
+    "cost_of_living_index": 1.0,
+    "salary_lincoln_adjusted": 75000.0,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Graduate Teaching Assistantships (PhD): water snake ecology, Fall 2026: Indiana",
@@ -4025,7 +4212,11 @@
     "last_updated": "2026-02-19T18:11:47.590504+00:00",
     "discipline_primary": "Wildlife",
     "discipline_secondary": "Human Dimensions",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 13500.0,
+    "cost_of_living_index": 0.85,
+    "salary_lincoln_adjusted": 15882.35,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "MS Assistantship - Forest Fire and LiDAR in Wyoming",
@@ -4056,7 +4247,11 @@
     "last_updated": "2026-02-19T18:11:49.924238+00:00",
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 23000.0,
+    "cost_of_living_index": 0.9,
+    "salary_lincoln_adjusted": 25555.56,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "USDA-ARS Tree Nut Pest Management Analysis",
@@ -4124,7 +4319,11 @@
     "last_updated": "2026-02-19T18:12:09.962967+00:00",
     "discipline_primary": "Wildlife",
     "discipline_secondary": "Forestry and Habitat",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 20000.0,
+    "cost_of_living_index": 0.8,
+    "salary_lincoln_adjusted": 25000.0,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Arkansas - MS Graduate Assistantship. Movement ecology of Green-winged teal",
@@ -4161,7 +4360,11 @@
     "last_updated": "2026-02-19T18:12:10.009894+00:00",
     "discipline_primary": "Wildlife",
     "discipline_secondary": "Forestry and Habitat",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 20000.0,
+    "cost_of_living_index": 0.8,
+    "salary_lincoln_adjusted": 25000.0,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "PhD Assistantship - Fisheries Science",
@@ -4195,7 +4398,9 @@
       "cleaned_location": "200 US-14 BYP, Brookings, SD 57006, USA"
     },
     "discipline": "Fisheries and Aquatic",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 29000.0,
+    "salary_adjustment_source": "source_data"
   },
   {
     "title": "Road to Recovery Graduate Fellow",
@@ -4226,7 +4431,11 @@
     "last_updated": "2026-02-19T18:11:54.900693+00:00",
     "discipline_primary": "Human Dimensions",
     "discipline_secondary": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 30000.0,
+    "cost_of_living_index": 1.0,
+    "salary_lincoln_adjusted": 30000.0,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Environmental Education and Science Communication Fellowship – Master of Natural Resources",
@@ -4288,7 +4497,11 @@
     "last_updated": "2026-02-19T18:11:54.955760+00:00",
     "discipline_primary": "Wildlife",
     "discipline_secondary": "Human Dimensions",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 36000.0,
+    "cost_of_living_index": 1.1,
+    "salary_lincoln_adjusted": 32727.27,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "M.S. Research Assistantship - Stream Restoration",
@@ -4319,7 +4532,11 @@
     "last_updated": "2026-02-19T18:11:55.010916+00:00",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 25000.0,
+    "cost_of_living_index": 0.9,
+    "salary_lincoln_adjusted": 27777.78,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "USDA-ARS Research Fellowship in Behavioral Pest Management for Vegetable Crops",
@@ -4381,7 +4598,11 @@
     "last_updated": "2026-02-19T18:12:19.797405+00:00",
     "discipline_primary": "Environmental Sciences",
     "discipline_secondary": "",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 40000.0,
+    "cost_of_living_index": 0.95,
+    "salary_lincoln_adjusted": 42105.26,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Adaptation/Hydrology/Construction Management Fellowship",
@@ -4418,7 +4639,11 @@
     "last_updated": "2026-02-19T18:12:03.431430+00:00",
     "discipline_primary": "Environmental Sciences",
     "discipline_secondary": "Human Dimensions",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 41600.0,
+    "cost_of_living_index": 1.2,
+    "salary_lincoln_adjusted": 34666.67,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "MS Assistantship: Understanding how cattle foraging behavior influences weight gain in Central Arizona",
@@ -4449,7 +4674,11 @@
     "last_updated": "2026-02-19T18:11:55.167681+00:00",
     "discipline_primary": "Agriculture",
     "discipline_secondary": "Forestry and Habitat",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 27500.0,
+    "cost_of_living_index": 1.0,
+    "salary_lincoln_adjusted": 27500.0,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "USDA-ARS Postgraduate Fellowship in Rice Utilization and Cancer Prevention",
@@ -4576,7 +4805,9 @@
       "cleaned_location": "Frostburg State University"
     },
     "discipline": "Wildlife",
-    "discipline_refinement_source": "secondary_ml"
+    "discipline_refinement_source": "secondary_ml",
+    "salary_annualized": 9000.0,
+    "salary_adjustment_source": "source_data"
   },
   {
     "title": "Several MS positions in Applied Ecology and Conservation Biology",
@@ -4604,10 +4835,10 @@
     "grad_confidence": 0.85,
     "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
     "classification_backfill_source": "GraduatePositionDetector",
-    "discipline_primary": "Other",
-    "discipline_secondary": "",
-    "discipline": "Other",
-    "discipline_refinement_source": "rule"
+    "discipline_primary": "Wildlife",
+    "discipline_secondary": "Environmental Sciences",
+    "discipline": "Wildlife",
+    "discipline_refinement_source": "secondary_ml"
   },
   {
     "title": "Ph.D/MS Positions: Coastal/Urban wetland ecology - School of Ecology and Nature Conservation - Beijing Forestry University",
@@ -4643,7 +4874,11 @@
     "last_updated": "2026-02-19T18:12:17.674676+00:00",
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 5000.0,
+    "cost_of_living_index": 1.05,
+    "salary_lincoln_adjusted": 4761.9,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "PhD Graduate Assistantship",
@@ -4674,7 +4909,11 @@
     "last_updated": "2026-02-19T18:11:48.984008+00:00",
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 28000.0,
+    "cost_of_living_index": 0.85,
+    "salary_lincoln_adjusted": 32941.18,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "USDA-ARS Biological Science Fellowship",
@@ -4832,7 +5071,11 @@
     "last_updated": "2026-02-19T18:11:49.031696+00:00",
     "discipline_primary": "Agriculture",
     "discipline_secondary": "Environmental Sciences",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 15000.0,
+    "cost_of_living_index": 1.1,
+    "salary_lincoln_adjusted": 13636.36,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "Program Leader I- Water Resources",
@@ -4869,7 +5112,11 @@
     "last_updated": "2026-02-19T18:12:39.355125+00:00",
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "Human Dimensions",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 75600.0,
+    "cost_of_living_index": 0.95,
+    "salary_lincoln_adjusted": 79578.95,
+    "salary_adjustment_source": "analytics_backfill"
   },
   {
     "title": "USDA-ARS Research Fellow Citrus Scion Breeding Program",
@@ -5210,6 +5457,10 @@
     "last_updated": "2026-02-19T18:12:26.379442+00:00",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "salary_annualized": 13000.0,
+    "cost_of_living_index": 0.9,
+    "salary_lincoln_adjusted": 14444.44,
+    "salary_adjustment_source": "analytics_backfill"
   }
 ]
