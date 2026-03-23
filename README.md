@@ -61,6 +61,16 @@ python -m http.server 8080
 # then open http://localhost:8080/wildlife_dashboard.html
 ```
 
+## Optional Discord Notifications
+The weekly scrape workflow can post a Discord summary after each successful run.
+
+Configure a GitHub Actions secret named `DISCORD_WEBHOOK_URL` and the workflow
+will send:
+- total graduate positions in the refreshed dashboard dataset
+- salary-parsed count
+- latest scrape timestamp
+- titles, organizations, and locations from the latest capture batch
+
 ## Continual Discipline Model Refinement
 The discipline classifier now supports a versioned promoted model plus an
 uncertainty review queue.

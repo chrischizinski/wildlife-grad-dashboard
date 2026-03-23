@@ -192,6 +192,7 @@ class GraduatePositionDetector:
             r"\bpost[-\s]?doc(toral)?\b",
             r"\bveterinarian\b",
             r"\barchaeologist\b",
+            r"\blecturer\b",
             r"\bassistant\s+professor\b",
             r"\bassociate\s+professor\b",
             r"\bprofessor\b",

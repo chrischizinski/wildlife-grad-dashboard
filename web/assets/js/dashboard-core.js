@@ -411,6 +411,7 @@
     const positionType = String(job?.position_type || '').toLowerCase();
 
     const hardExclude = [
+      'lecturer',
       'veterinarian',
       'veterinary',
       'technician',

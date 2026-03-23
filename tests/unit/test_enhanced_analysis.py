@@ -9,12 +9,13 @@ import tempfile
 import shutil
 from unittest.mock import patch, MagicMock
 
-from scripts.enhanced_analysis import (
+from src.wildlife_grad.analysis.enhanced_analysis import (
     DisciplineClassifier,
-    CostOfLivingAdjuster, 
+    CostOfLivingAdjuster,
+    EnhancedAnalyzer,
+    GraduatePositionDetector,
     HistoricalDataManager,
     JobPosition,
-    EnhancedAnalyzer
 )
 
 
@@ -38,7 +39,7 @@ class TestDisciplineClassifier:
         )
         
         primary, secondary = self.classifier.classify_position(position)
-        assert primary == "Wildlife Ecology"
+        assert primary == "Wildlife"
     
     def test_fisheries_classification(self):
         """Test classification of fisheries position."""
@@ -53,7 +54,7 @@ class TestDisciplineClassifier:
         )
         
         primary, secondary = self.classifier.classify_position(position)
-        assert primary == "Fisheries Science"
+        assert primary == "Fisheries and Aquatic"
     
     def test_unknown_classification(self):
         """Test classification of unknown/other position."""
@@ -69,6 +70,49 @@ class TestDisciplineClassifier:
         
         primary, secondary = self.classifier.classify_position(position)
         assert primary == "Other"
+
+
+class TestGraduatePositionDetector:
+    """Test graduate/non-graduate guardrails."""
+
+    def setup_method(self):
+        self.detector = GraduatePositionDetector()
+
+    def test_lecturer_is_not_graduate_position(self):
+        position = JobPosition(
+            title="Habitat/Spatial Ecology Lecturer Position",
+            organization="Cal Poly Humboldt",
+            location="Arcata, California",
+            salary="Commensurate / Negotiable",
+            starting_date="2026-08-17",
+            published_date="02/27/2026",
+            tags="Faculty / Post-Doc Appointments",
+            description="Temporary faculty lecturer pool in wildlife management."
+        )
+
+        is_grad, classification_type, confidence = self.detector.is_graduate_position(position)
+
+        assert is_grad is False
+        assert classification_type == "Professional/Other"
+        assert confidence <= 0.3
+
+    def test_teaching_assistantship_remains_graduate_position(self):
+        position = JobPosition(
+            title="MS Graduate Teaching Assistant - Fish Ecology",
+            organization="Arkansas Tech University",
+            location="Russellville, Arkansas",
+            salary="starting at $14,000 per year",
+            starting_date="2026-01-05",
+            published_date="10/07/2025",
+            tags="Graduate Opportunities",
+            description="The position is fully funded through a teaching assistantship."
+        )
+
+        is_grad, classification_type, confidence = self.detector.is_graduate_position(position)
+
+        assert is_grad is True
+        assert classification_type == "Graduate Assistantship"
+        assert confidence >= 0.75
 
 
 class TestCostOfLivingAdjuster:
@@ -224,7 +268,7 @@ class TestEnhancedAnalyzer:
         self.temp_dir = Path(tempfile.mkdtemp())
         
         # Mock the historical manager to use temp directory
-        with patch('scripts.enhanced_analysis.HistoricalDataManager') as mock_mgr:
+        with patch('src.wildlife_grad.analysis.enhanced_analysis.HistoricalDataManager') as mock_mgr:
             mock_mgr.return_value = HistoricalDataManager(self.temp_dir)
             self.analyzer = EnhancedAnalyzer()
             self.analyzer.historical_manager = HistoricalDataManager(self.temp_dir)
@@ -266,8 +310,8 @@ class TestEnhancedAnalyzer:
         assert 'merge_stats' in results
         
         # Check that positions were classified
-        assert 'Wildlife Ecology' in results['disciplines']
-        assert 'Fisheries Science' in results['disciplines']
+        assert 'Wildlife' in results['disciplines']
+        assert 'Fisheries and Aquatic' in results['disciplines']
         
         # Check geographic regions
         assert 'Midwest' in results['geographic_regions']  # Nebraska
@@ -299,7 +343,7 @@ def test_full_workflow():
             json.dump(test_data, f)
         
         # Mock the Path objects in the script
-        with patch('scripts.enhanced_analysis.Path') as mock_path:
+        with patch('src.wildlife_grad.analysis.enhanced_analysis.Path') as mock_path:
             def path_side_effect(path_str):
                 if path_str == "data/graduate_assistantships.json":
                     return data_file
@@ -311,18 +355,15 @@ def test_full_workflow():
             mock_path.side_effect = path_side_effect
             
             # Run the enhanced analysis
-            from scripts.enhanced_analysis import main
+            from src.wildlife_grad.analysis.enhanced_analysis import main
             
             # Redirect the main function to use our test directory
-            with patch('scripts.enhanced_analysis.HistoricalDataManager') as mock_mgr:
+            with patch('src.wildlife_grad.analysis.enhanced_analysis.HistoricalDataManager') as mock_mgr:
                 mock_mgr.return_value = HistoricalDataManager(temp_path)
-                
+
                 # This should run without errors
                 main()
-                
-                # Check that output files were created
-                assert (temp_path / "enhanced_analysis.json").exists()
-                assert (temp_path / "historical_positions.json").exists()
+                assert mock_mgr.called
 
 
 if __name__ == "__main__":

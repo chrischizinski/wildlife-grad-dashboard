@@ -25,8 +25,7 @@ async def test_dashboard_frontend():
                     checks = [
                         ("HTML structure", "<html" in content and "</html>" in content),
                         ("Title", "Wildlife Graduate Assistantships Dashboard" in content),
-                        ("Supabase config", "supabase-config.js" in content),
-                        ("Dashboard JS", "supabase-dashboard.js" in content),
+                        ("Dashboard JS", "dashboard-core.js" in content),
                         ("Context banner", 'id="context-banner"' in content),
                         ("Graduate positions card", "Graduate Positions" in content),
                         ("Status banner", 'id="status-banner"' in content),
@@ -51,7 +50,7 @@ async def test_dashboard_frontend():
                         print("2. Check if the context banner shows '# positions analyzed, # identified as graduate'")
                         print("3. Verify all cards show graduate-specific metrics")
                         print("4. Confirm charts display graduate data only")
-                        print("5. Check the connection status (should show Supabase connected)")
+                        print("5. Check the dashboard status banner and data timestamp")
                         return True
                     else:
                         print("\n❌ Some components missing - check the dashboard code")
@@ -64,7 +63,7 @@ async def test_dashboard_frontend():
         except Exception as e:
             print(f"❌ Error testing dashboard: {e}")
             print("🔧 Make sure the server is running:")
-            print("   python -m http.server 8081 --directory dashboard")
+            print("   cd web && python -m http.server 8081")
             return False
 
 if __name__ == "__main__":

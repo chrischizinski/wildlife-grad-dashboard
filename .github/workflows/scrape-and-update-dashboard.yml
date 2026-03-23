@@ -10,6 +10,7 @@ on:
     paths:
       - "src/wildlife_grad/scraper/wildlife_job_scraper.py"
       - "scripts/generate_dashboard_analytics.py"
+      - "scripts/send_discord_weekly_summary.py"
       - "scripts/retrain_discipline_model.py"
       - "src/wildlife_grad/analysis/enhanced_analysis.py"
 
@@ -113,6 +114,13 @@ jobs:
             git pull --rebase --strategy-option=theirs origin main
             git push origin main
           fi
+
+      - name: Send Discord weekly summary
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          python3 scripts/send_discord_weekly_summary.py
 
       - name: Workflow summary
         run: |

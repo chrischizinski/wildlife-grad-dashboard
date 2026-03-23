@@ -1,19 +1,17 @@
 #!/usr/bin/env python3
 """
 Robust data pipeline with comprehensive fallback mechanisms.
-Handles Supabase failures gracefully and ensures data is never lost.
-Unified entry point for scraping, processing, and uploading.
+Handles local data processing and dashboard file generation.
+Unified entry point for scraping, processing, and exporting.
 """
 
 import json
 import logging
-import os
 import shutil
 import sys
-import time
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Any, Optional
+from typing import Any, Dict, List, Optional
 
 # Add project root to path to allow imports from src
 project_root = Path(__file__).resolve().parent.parent
@@ -21,10 +19,9 @@ sys.path.insert(0, str(project_root))
 
 try:
     from dotenv import load_dotenv
-    from supabase import create_client
 except ImportError:
     print("❌ Required packages not installed. Run:")
-    print("pip install supabase python-dotenv")
+    print("pip install python-dotenv")
     sys.exit(1)
 
 # Import project modules
@@ -67,31 +64,9 @@ class RobustDataPipeline:
         self.discipline_classifier = DisciplineClassifier()
         self.col_adjuster = CostOfLivingAdjuster()
         
-        self.supabase_available = False
-        self.supabase_client = None
-        self._init_supabase()
-        
     def load_config(self):
         """Load configuration."""
         load_dotenv()
-        self.supabase_url = os.getenv("SUPABASE_URL")
-        self.supabase_key = os.getenv("SUPABASE_ANON_KEY")
-
-    def _init_supabase(self):
-        """Initialize Supabase client."""
-        if self.supabase_url and self.supabase_key:
-            try:
-                self.supabase_client = create_client(self.supabase_url, self.supabase_key)
-                # Test with a simple query
-                self.supabase_client.table("jobs").select("id").limit(1).execute()
-                self.supabase_available = True
-                logger.info("✅ Supabase connection successful")
-            except Exception as e:
-                logger.warning(f"⚠️  Supabase unavailable: {e}")
-                self.supabase_available = False
-        else:
-            logger.warning("⚠️  Supabase credentials not configured")
-            self.supabase_available = False
     
     def setup_directories(self):
         """Ensure all required directories exist."""
@@ -247,16 +222,12 @@ class RobustDataPipeline:
             
             logger.info(f"✅ Processed data saved: {processed_file}")
             
-            # Upload to Supabase
-            upload_result = self.upload_to_supabase(processed_data, timestamp)
-            
             # Generate dashboard
             dashboard_result = self.generate_dashboard_data(processed_data)
             
             return {
                 "status": "success",
                 "processed_count": len(processed_data),
-                "supabase_upload": upload_result,
                 "dashboard_update": dashboard_result,
                 "local_files": {
                     "backup": str(backup_file),
@@ -315,12 +286,9 @@ class RobustDataPipeline:
             # (Assuming salary parsing logic exists or we do basic check)
             # For now, just pass the index
             
-            # Convert back to dict and merge with original to keep extra fields
-            # Convert back to dict and merge with original to keep extra fields
+            # Convert back to dict and merge with original to keep extra fields.
             enhanced_dict = position_dict.copy()
-            logger.error(f"DEBUG: pos type: {type(pos)}")
             pos_dict = pos.to_dict()
-            logger.error(f"DEBUG: pos.to_dict(): {pos_dict}")
             enhanced_dict.update(pos_dict)
             
             # Add metadata
@@ -330,38 +298,6 @@ class RobustDataPipeline:
             enhanced.append(enhanced_dict)
             
         return enhanced
-
-    def upload_to_supabase(self, data: List[Dict], timestamp: str) -> Dict[str, Any]:
-        """Upload to Supabase with batching and error handling."""
-        if not self.supabase_available:
-            return {"status": "skipped", "reason": "Supabase unavailable"}
-            
-        try:
-            batch_size = 25
-            successful = 0
-            failed = 0
-            
-            logger.info(f"📤 Uploading {len(data)} positions to Supabase")
-            
-            for i in range(0, len(data), batch_size):
-                batch = data[i:i + batch_size]
-                try:
-                    self.supabase_client.table("jobs").insert(batch).execute()
-                    successful += len(batch)
-                    logger.info(f"✅ Batch {i//batch_size + 1} uploaded")
-                    time.sleep(1) # Rate limit protection
-                except Exception as e:
-                    logger.error(f"⚠️ Batch {i//batch_size + 1} failed: {e}")
-                    failed += len(batch)
-                    
-            return {
-                "status": "success" if failed == 0 else "partial_success",
-                "successful": successful,
-                "failed": failed
-            }
-        except Exception as e:
-            logger.error(f"Supabase upload error: {e}")
-            return {"status": "error", "error": str(e)}
 
     def generate_dashboard_data(self, data: List[Dict]) -> Dict[str, Any]:
         """Generate static dashboard JSON files."""
@@ -403,7 +339,6 @@ class RobustDataPipeline:
         if result["status"] == "success":
             print(f"✅ Status: SUCCESS")
             print(f"📄 Processed: {result['processed_count']} positions")
-            print(f"☁️  Supabase: {result['supabase_upload']['status']}")
             print(f"🌐 Dashboard: {result['dashboard_update']['status']}")
         else:
             print(f"❌ Status: FAILED")

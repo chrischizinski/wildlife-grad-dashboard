@@ -19,7 +19,7 @@
    - Download functionality
 
 4. **Automation** (`.github/workflows/`)
-   - Weekly scheduled scraping (`scrape-and-update-supabase.yml`)
+   - Weekly scheduled scraping (`scrape-and-update-dashboard.yml`)
    - Automatic dashboard updates
    - Data archiving with timestamps
 
