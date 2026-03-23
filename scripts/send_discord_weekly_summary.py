@@ -21,6 +21,11 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 POSITIONS_PATH = PROJECT_ROOT / "web" / "data" / "dashboard_positions.json"
 ANALYTICS_PATH = PROJECT_ROOT / "web" / "data" / "dashboard_analytics.json"
 MAX_LISTED_POSTINGS = 15
+DEFAULT_USER_AGENT = (
+    "Mozilla/5.0 (X11; Linux x86_64) "
+    "AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/146.0.0.0 Safari/537.36"
+)
 
 
 def load_json(path: Path) -> Any:
@@ -153,7 +158,11 @@ def send_discord_message(webhook_url: str, content: str) -> None:
     req = request.Request(
         webhook_url,
         data=payload,
-        headers={"Content-Type": "application/json"},
+        headers={
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "User-Agent": DEFAULT_USER_AGENT,
+        },
         method="POST",
     )
     try:
