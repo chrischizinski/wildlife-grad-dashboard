@@ -14,7 +14,7 @@ import os
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
-from urllib import request
+from urllib import error, request
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -156,9 +156,22 @@ def send_discord_message(webhook_url: str, content: str) -> None:
         headers={"Content-Type": "application/json"},
         method="POST",
     )
-    with request.urlopen(req) as response:
-        if response.status not in (200, 204):
-            raise RuntimeError(f"Discord webhook failed with HTTP {response.status}")
+    try:
+        with request.urlopen(req) as response:
+            if response.status not in (200, 204):
+                raise RuntimeError(f"Discord webhook failed with HTTP {response.status}")
+    except error.HTTPError as exc:
+        response_body = exc.read().decode("utf-8", errors="replace").strip()
+        details = f"HTTP {exc.code}"
+        if response_body:
+            details = f"{details}: {response_body}"
+        if exc.code in (401, 403):
+            raise RuntimeError(
+                "Discord rejected the webhook. Check that the "
+                "DISCORD_WEBHOOK_URL secret points to an active webhook for the "
+                f"target channel. Details: {details}"
+            ) from exc
+        raise RuntimeError(f"Discord webhook request failed. Details: {details}") from exc
 
 
 def main() -> int:
@@ -171,7 +184,12 @@ def main() -> int:
     analytics = load_json(ANALYTICS_PATH)
     message = build_message(rows, analytics)
 
-    send_discord_message(webhook_url, message[:1900])
+    try:
+        send_discord_message(webhook_url, message[:1900])
+    except RuntimeError as exc:
+        print(f"Discord weekly summary failed: {exc}")
+        return 0
+
     print("Discord weekly summary sent.")
     return 0
 
