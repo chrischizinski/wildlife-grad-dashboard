@@ -249,20 +249,95 @@
     return Number.isFinite(n) ? n : 0;
   }
 
+  const SALARY_NON_NUMERIC_TOKENS = [
+    'commensurate',
+    'negotiable',
+    'competitive',
+    'none',
+    'n/a',
+    'depends on',
+    'varies',
+    'tbd',
+    'to be determined'
+  ];
+
   function parseSalaryValue(value) {
     if (typeof value === 'number' && Number.isFinite(value)) {
       return value > 0 ? value : null;
     }
     if (typeof value !== 'string' || !value.trim()) return null;
 
-    const text = value.replace(/[,$]/g, '');
-    const match = text.match(/(\d+(?:\.\d+)?)/);
-    if (!match) return null;
+    const normalizedText = value.toLowerCase().replace(/[–—]/g, '-').trim();
+    if (!normalizedText) return null;
+    if (SALARY_NON_NUMERIC_TOKENS.some((token) => normalizedText.includes(token))) {
+      return null;
+    }
 
-    let n = Number(match[1]);
+    const matches = normalizedText.match(/\$?\s*(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d{4,7}(?:\.\d+)?|\d{1,3}(?:\.\d+)?[kK]?)/g) || [];
+    const amounts = matches
+      .map((token) => token.replace(/\$/g, '').trim())
+      .map((token) => {
+        const hasK = /[kK]$/.test(token);
+        const numeric = Number(token.replace(/[kK,]/g, ''));
+        if (!Number.isFinite(numeric) || numeric <= 0) return null;
+        return hasK ? numeric * 1000 : numeric;
+      })
+      .filter((n) => n !== null);
+
+    if (!amounts.length) return null;
+
+    const usesRange = amounts.length >= 2
+      && /(\bbetween\b|\bto\b|\bup to\b|-)/i.test(normalizedText);
+    const base = usesRange ? Math.min(...amounts) : Math.max(...amounts);
+
+    let annualized = base;
+    if (/(?:\bhour\b|\bhr\b|\bhrs\b|\/hr)/i.test(normalizedText)) annualized *= 2080;
+    else if (/\b(bi-?week|fortnight)\b/i.test(normalizedText)) annualized *= 26;
+    else if (/(?:\bweek\b|\bwk\b|\/wk)/i.test(normalizedText)) annualized *= 52;
+    else if (/(?:\bday\b|\bdaily\b|\/day)/i.test(normalizedText)) annualized *= 260;
+    else if (/(?:\bmonth\b|\bmo\b|\/mo)/i.test(normalizedText)) annualized *= 12;
+    else if (/\b(semester|term)\b/i.test(normalizedText)) annualized *= 2;
+
+    if (!Number.isFinite(annualized) || annualized < 1000 || annualized > 300000) return null;
+    return annualized;
+  }
+
+  function parseCostIndex(value) {
+    const n = Number(value);
     if (!Number.isFinite(n) || n <= 0) return null;
-    if (/hour|hr/i.test(text)) n *= 2000;
     return n;
+  }
+
+  function getAdjustedSalaryValue(job, nominalSalary = null) {
+    const explicitAdjusted = parseSalaryValue(job?.salary_lincoln_adjusted);
+    if (explicitAdjusted !== null) return explicitAdjusted;
+
+    const costIndex = parseCostIndex(job?.cost_of_living_index);
+    const nominal = nominalSalary !== null
+      ? nominalSalary
+      : parseSalaryValue(job?.salary ?? job?.salary_min);
+    if (nominal === null || costIndex === null) return null;
+    return nominal / costIndex;
+  }
+
+  function computeSalaryCoverage(jobs) {
+    const rows = Array.isArray(jobs) ? jobs : [];
+    let parseableCount = 0;
+    let adjustedCount = 0;
+
+    rows.forEach((job) => {
+      const nominal = parseSalaryValue(job?.salary ?? job?.salary_min);
+      if (nominal === null) return;
+      parseableCount += 1;
+      if (getAdjustedSalaryValue(job, nominal) !== null) adjustedCount += 1;
+    });
+
+    return {
+      totalRows: rows.length,
+      parseableCount,
+      adjustedCount,
+      missingAdjustedCount: Math.max(0, parseableCount - adjustedCount)
+    };
   }
 
   function isLocationParsed(location) {
@@ -458,15 +533,15 @@
     const candidates = [
       {
         value: analytics?.metadata?.last_updated,
-        source: 'analytics metadata'
+        source: 'analytics output (metadata.last_updated)'
       },
       {
         value: analytics?.last_updated,
-        source: 'analytics payload'
+        source: 'analytics output (payload last_updated)'
       },
       {
         value: analytics?.metadata?.generated_at,
-        source: 'analytics generated_at'
+        source: 'analytics output (generated_at)'
       },
       {
         value: analytics?.snapshot_availability?.latest_run_timestamp,
@@ -1174,6 +1249,7 @@
     const salaryValues = filteredJobs
       .map((job) => parseSalaryValue(job.salary ?? job.salary_min))
       .filter((n) => n !== null);
+    const salaryCoverage = computeSalaryCoverage(filteredJobs);
     const parsedCount = salaryValues.length;
     const sampleN = salaryValues.length;
     const pct = totalJobs ? Number(((parsedCount / totalJobs) * 100).toFixed(1)) : 0;
@@ -1193,7 +1269,11 @@
       totalJobs > 0 ? sampleN.toLocaleString() : EMPTY_VALUE,
       'kpi-salary-n-reason',
       totalJobs > 0
-        ? `Rows in salary-parsed subset from ${selectionLabel}`
+        ? (
+          `Rows in salary-parsed subset from ${selectionLabel}; `
+          + `COL-adjusted coverage ${salaryCoverage.adjustedCount.toLocaleString()}/`
+          + `${salaryCoverage.parseableCount.toLocaleString()}`
+        )
         : 'No rows for selected institution group'
     );
 
@@ -1279,6 +1359,7 @@
 
   function renderQualityCards(adapter) {
     const quality = adapter?.quality || {};
+    const salaryCoverage = computeSalaryCoverage(adapter?.jobs || []);
     const totalJobs = asNumber(quality.totalJobs);
     const salaryParsedCount = asNumber(quality.salaryParsedCount);
     const locationParsedCount = asNumber(quality.locationParsedCount);
@@ -1291,7 +1372,13 @@
       'kpi-quality-salary',
       totalJobs > 0 ? formatRatio(salaryParsedCount, totalJobs) : EMPTY_VALUE,
       'kpi-quality-salary-reason',
-      totalJobs > 0 ? `${formatPercent(salaryPct)} parseable salary in unified dataset` : 'No rows after filters'
+      totalJobs > 0
+        ? (
+          `${formatPercent(salaryPct)} parseable salary in unified dataset; `
+          + `COL-adjusted available for ${salaryCoverage.adjustedCount.toLocaleString()}/`
+          + `${salaryCoverage.parseableCount.toLocaleString()} parseable salary rows`
+        )
+        : 'No rows after filters'
     );
 
     setCardValue(
@@ -1563,7 +1650,7 @@
         String(job?.discipline_primary || job?.discipline || 'Other').trim() || 'Other'
       );
       const nominal = parseSalaryValue(job?.salary ?? job?.salary_min);
-      const adjusted = parseSalaryValue(job?.salary_lincoln_adjusted);
+      const adjusted = getAdjustedSalaryValue(job, nominal);
       const row = groups.get(discipline) || { nominal: [], adjusted: [] };
       if (nominal !== null) row.nominal.push(nominal);
       if (adjusted !== null) row.adjusted.push(adjusted);
@@ -1860,6 +1947,7 @@
 
     const selectedInstitution = getSelectedCompensationInstitution();
     const compensationJobs = filterJobsByCompensationInstitution(rows, selectedInstitution);
+    const salaryCoverage = computeSalaryCoverage(compensationJobs);
     const salaryRows = buildSalaryByDiscipline(compensationJobs);
     if (!salaryRows.length) {
       destroyChart('salary');
@@ -1913,7 +2001,11 @@
         plugins: {
           subtitle: {
             display: true,
-            text: 'COL-adjusted bars display only when salary and location/COL inputs are available.'
+            text: (
+              `COL-adjusted coverage: ${salaryCoverage.adjustedCount.toLocaleString()} / `
+              + `${salaryCoverage.parseableCount.toLocaleString()} salary-parsed rows `
+              + `(missing ${salaryCoverage.missingAdjustedCount.toLocaleString()} due to location/COL gaps).`
+            )
           }
         }
       }

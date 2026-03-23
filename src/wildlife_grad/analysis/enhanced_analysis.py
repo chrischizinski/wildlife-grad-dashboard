@@ -1262,6 +1262,9 @@ class CostOfLivingAdjuster:
         # Based on Bureau of Labor Statistics, C2ER, and academic salary surveys
         # Load cost of living indices from configuration file
         self.cost_indices = self._load_cost_indices()
+        self.cost_keys_by_length = sorted(
+            self.cost_indices.keys(), key=len, reverse=True
+        )
 
         # State abbreviation mapping
         self.state_abbrevs = {
@@ -1342,7 +1345,7 @@ class CostOfLivingAdjuster:
             print(f"Error loading cost of living config: {e}")
             return {"lincoln": 1.0}
 
-    def get_cost_index(self, location: str) -> float:
+    def get_cost_index(self, location: str, log_missing: bool = True) -> float:
         """
         Get cost of living index for a location using comprehensive parsing.
 
@@ -1372,12 +1375,14 @@ class CostOfLivingAdjuster:
 
         # Priority 1: Check parenthetical content first (often contains city, state)
         if location_from_parens:
-            for city, index in self.cost_indices.items():
+            for city in self.cost_keys_by_length:
+                index = self.cost_indices[city]
                 if city in location_from_parens and len(city) > 3:
                     return index
 
         # Priority 2: Check for exact city matches in cleaned location
-        for city, index in self.cost_indices.items():
+        for city in self.cost_keys_by_length:
+            index = self.cost_indices[city]
             if (
                 city in location_clean and len(city) > 3
             ):  # Avoid short matches like 'al'
@@ -1420,7 +1425,8 @@ class CostOfLivingAdjuster:
                     return self.cost_indices[state_name]
 
         # Priority 4: Partial matches for common patterns
-        for key, index in self.cost_indices.items():
+        for key in self.cost_keys_by_length:
+            index = self.cost_indices[key]
             if (
                 len(key) > 4 and key in location_clean
             ):  # Longer keys for better matching
@@ -1428,9 +1434,10 @@ class CostOfLivingAdjuster:
 
         # If no match found, this is a real gap in our data that should be addressed
         # Log this for future improvement rather than defaulting
-        print(
-            f"Warning: No cost of living data found for location: '{location}' (cleaned: '{location_clean}')"
-        )
+        if log_missing:
+            print(
+                f"Warning: No cost of living data found for location: '{location}' (cleaned: '{location_clean}')"
+            )
 
         # Return US average as best estimate (not Lincoln baseline)
         return 1.05  # Slightly above Lincoln as conservative estimate
@@ -1458,11 +1465,11 @@ class CostOfLivingAdjuster:
         return 0.0, cost_index
 
     def _extract_salary_value(self, salary_str: str) -> float:
-        """Extract numeric value from salary string with comprehensive parsing."""
+        """Extract annualized salary value from salary text."""
         if not salary_str:
             return 0.0
 
-        salary_lower = salary_str.lower()
+        salary_lower = salary_str.lower().strip()
 
         # Return 0 for explicitly non-numeric salaries
         if any(
@@ -1481,56 +1488,49 @@ class CostOfLivingAdjuster:
         ):
             return 0.0
 
-        # Find all monetary amounts in the string
-        # Match patterns like $25,000, $25000, 25,000, 25000, 25.5k, etc.
-        money_patterns = [
-            r"\$?(\d{1,3}(?:,\d{3})+(?:\.\d+)?)",  # $25,000 or 25,000
-            r"\$?(\d{4,6}(?:\.\d+)?)",  # $25000 or 25000
-            r"(\d{1,3}(?:\.\d+)?)[kK]",  # 25k or 25.5k
-            r"(\d{1,3}(?:,\d{3})*)\s*(?:per|/)?\s*(?:year|annual)",  # 25,000 per year
-            r"(\d{1,3}(?:,\d{3})*)\s*(?:per|/)?\s*(?:month)",  # 2,500 per month
-        ]
+        annual_multiplier = 1.0
+        if re.search(r"\b(hour|hr|hrs|/hr)\b", salary_lower):
+            annual_multiplier = 2080.0
+        elif re.search(r"\b(bi-?week|fortnight)\b", salary_lower):
+            annual_multiplier = 26.0
+        elif re.search(r"\b(week|wk|/wk)\b", salary_lower):
+            annual_multiplier = 52.0
+        elif re.search(r"\b(day|daily|/day)\b", salary_lower):
+            annual_multiplier = 260.0
+        elif re.search(r"\b(month|mo|/mo)\b", salary_lower):
+            annual_multiplier = 12.0
+        elif re.search(r"\b(semester|term)\b", salary_lower):
+            annual_multiplier = 2.0
 
         amounts = []
-        for pattern in money_patterns:
-            matches = re.findall(pattern, salary_str, re.IGNORECASE)
-            for match in matches:
-                try:
-                    # Clean and convert
-                    clean_num = match.replace(",", "")
-
-                    # Handle 'k' suffix
-                    if "k" in salary_lower and clean_num in salary_str.lower():
-                        value = float(clean_num) * 1000
-                    else:
-                        value = float(clean_num)
-
-                    # Convert monthly to annual if detected
-                    if "month" in salary_lower and value > 100:
-                        value *= 12
-
-                    # Only consider reasonable salary ranges
-                    if 1000 <= value <= 200000:  # Reasonable academic salary range
-                        amounts.append(value)
-
-                except (ValueError, TypeError):
+        for raw_num, k_suffix in re.findall(
+            r"\$?\s*(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d{4,7}(?:\.\d+)?|\d{1,3}(?:\.\d+)?)\s*([kK]?)",
+            salary_str,
+        ):
+            try:
+                clean_num = raw_num.replace(",", "")
+                value = float(clean_num)
+                if k_suffix:
+                    value *= 1000.0
+                if value <= 0:
                     continue
+                amounts.append(value)
+            except (ValueError, TypeError):
+                continue
 
         if not amounts:
             return 0.0
 
-        # Handle salary ranges (take the lower value for conservative estimate)
-        if len(amounts) >= 2:
-            # Look for range indicators
-            if any(word in salary_lower for word in ["to", "-", "between", "up to"]):
-                return min(amounts)  # Conservative estimate
+        uses_range = (
+            len(amounts) >= 2
+            and bool(re.search(r"\bbetween\b|\bto\b|\bup to\b|[-–—]", salary_lower))
+        )
+        base_amount = min(amounts) if uses_range else max(amounts)
+        annualized = base_amount * annual_multiplier
 
-        # Return the most reasonable amount (prefer amounts > 10k for annual salaries)
-        reasonable_amounts = [amt for amt in amounts if amt >= 10000]
-        if reasonable_amounts:
-            return max(reasonable_amounts)  # Likely the annual salary
-
-        return max(amounts) if amounts else 0.0
+        if 1000 <= annualized <= 300000:
+            return annualized
+        return 0.0
 
 
 class HistoricalDataManager:

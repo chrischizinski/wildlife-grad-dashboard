@@ -27,6 +27,7 @@ if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
 from wildlife_grad.analysis.enhanced_analysis import (
+    CostOfLivingAdjuster,
     DisciplineClassifier,
     GraduatePositionDetector,
     JobPosition,
@@ -84,6 +85,7 @@ DISCIPLINE_ORDER_INDEX = {name: idx for idx, name in enumerate(DISCIPLINE_DISPLA
 DISCIPLINE_CONFIDENCE_QUEUE_JSON = Path("data/processed/discipline_confidence_queue.json")
 DISCIPLINE_CONFIDENCE_QUEUE_CSV = Path("data/processed/discipline_confidence_queue.csv")
 WEB_DISCIPLINE_CONFIDENCE_QUEUE_JSON = Path("web/data/discipline_confidence_queue.json")
+COL_ADJUSTER = CostOfLivingAdjuster()
 
 
 def normalize_discipline(disc: str) -> str:
@@ -115,6 +117,17 @@ def discipline_sort_key(discipline: str) -> tuple[int, int, str]:
 def sort_disciplines(disciplines: List[str]) -> List[str]:
     """Sort discipline names with canonical order and Other-last rule."""
     return sorted(disciplines, key=discipline_sort_key)
+
+
+def _as_positive_float(value: Any) -> Optional[float]:
+    """Parse a positive float, returning None for missing/invalid values."""
+    try:
+        n = float(value)
+    except (TypeError, ValueError):
+        return None
+    if not (n > 0):
+        return None
+    return n
 
 
 def _build_row_key(row: Dict[str, Any]) -> str:
@@ -498,32 +511,86 @@ def load_and_merge_data() -> List[Dict[str, Any]]:
     deduped_positions = list(unique_positions.values())
     sanitized_positions = sanitize_and_classify_positions(deduped_positions)
     dropped_guardrail = len(deduped_positions) - len(sanitized_positions)
+    compensation_backfill = enrich_compensation_fields(sanitized_positions)
     print(
         f"\n📊 Merged dataset: {len(sanitized_positions)} unique graduate positions "
         f"({len(deduped_positions)} deduped; dropped {dropped_guardrail} non-grad by guardrails)\n"
+    )
+    print(
+        "  ↳ Compensation enrichment: "
+        f"{compensation_backfill['salary_annualized']} salary-annualized, "
+        f"{compensation_backfill['cost_index_backfilled']} cost-index backfilled, "
+        f"{compensation_backfill['adjusted_backfilled']} Lincoln-adjusted backfilled"
     )
 
     return sanitized_positions
 
 
 def extract_salary_number(salary_str: Any) -> Optional[float]:
-    """Extract numeric salary from string."""
+    """Extract annualized salary from string."""
     if not salary_str or salary_str in ["", "N/A", "Unknown", "None"]:
         return None
+    parsed = COL_ADJUSTER._extract_salary_value(str(salary_str))
+    return round(parsed, 2) if parsed > 0 else None
 
-    salary_str = str(salary_str).lower()
-    salary_str = re.sub(r"[,$]", "", salary_str)
 
-    match = re.search(r"(\d+\.?\d*)", salary_str)
-    if match:
-        num = float(match.group(1))
-        # Convert hourly to annual
-        if "hour" in salary_str or "hr" in salary_str:
-            num = num * 2000
-        # Reasonable annual salary range
-        if 15000 < num < 200000:
-            return num
-    return None
+def enrich_compensation_fields(rows: List[Dict[str, Any]]) -> Dict[str, int]:
+    """
+    Backfill salary/COL fields used by dashboard compensation charts.
+
+    This keeps older rows (that predate COL enrichment) usable by deriving:
+    - salary_annualized
+    - cost_of_living_index
+    - salary_lincoln_adjusted
+    """
+    salary_annualized_count = 0
+    cost_index_backfilled = 0
+    adjusted_backfilled = 0
+
+    for row in rows:
+        salary_annualized = extract_salary_number(row.get("salary"))
+        if salary_annualized is None:
+            continue
+        salary_annualized_count += 1
+        row["salary_annualized"] = salary_annualized
+
+        existing_adjusted = _as_positive_float(row.get("salary_lincoln_adjusted"))
+        existing_index = _as_positive_float(row.get("cost_of_living_index"))
+        mapped_index = COL_ADJUSTER.get_cost_index(
+            str(row.get("location") or ""),
+            log_missing=False,
+        )
+
+        if existing_index is None and existing_adjusted and existing_adjusted > 0:
+            inferred = salary_annualized / existing_adjusted
+            if inferred > 0:
+                existing_index = inferred
+                row["cost_of_living_index"] = round(existing_index, 4)
+                cost_index_backfilled += 1
+
+        if existing_index is None:
+            existing_index = mapped_index
+            row["cost_of_living_index"] = round(existing_index, 4)
+            cost_index_backfilled += 1
+        elif abs(existing_index - 1.05) < 1e-9 and abs(mapped_index - 1.05) > 1e-9:
+            existing_index = mapped_index
+            row["cost_of_living_index"] = round(existing_index, 4)
+            cost_index_backfilled += 1
+
+        if existing_adjusted is None and existing_index > 0:
+            row["salary_lincoln_adjusted"] = round(
+                salary_annualized / existing_index, 2
+            )
+            row["salary_adjustment_source"] = "analytics_backfill"
+            adjusted_backfilled += 1
+        elif existing_adjusted is not None and not row.get("salary_adjustment_source"):
+            row["salary_adjustment_source"] = "source_data"
+
+    return {
+        "salary_annualized": salary_annualized_count,
+        "cost_index_backfilled": cost_index_backfilled,
+        "adjusted_backfilled": adjusted_backfilled,
+    }
 
 
 def calculate_analytics(data: List[Dict[str, Any]]) -> Dict[str, Any]:
@@ -574,6 +641,12 @@ def calculate_analytics(data: List[Dict[str, Any]]) -> Dict[str, Any]:
 
     positions_with_salary = sum(
         1 for p in data if extract_salary_number(p.get("salary"))
+    )
+    positions_with_col_adjusted = sum(
+        1
+        for p in data
+        if extract_salary_number(p.get("salary"))
+        and _as_positive_float(p.get("salary_lincoln_adjusted")) is not None
     )
 
     # Geographic summary
@@ -650,6 +723,7 @@ def calculate_analytics(data: List[Dict[str, Any]]) -> Dict[str, Any]:
             "total_positions": total_positions,
             "graduate_positions": total_positions,
             "positions_with_salary": positions_with_salary,
+            "positions_with_col_adjusted": positions_with_col_adjusted,
         },
         "top_disciplines": top_disciplines,
         "geographic_summary": dict(location_counts.most_common(25)),
