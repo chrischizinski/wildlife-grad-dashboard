@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-04-12T05:53:03.250605",
-  "count": 11,
+  "generated_at": "2026-04-19T05:55:57.320268",
+  "count": 12,
   "items": [
     {
       "severity": 3,
@@ -188,6 +188,30 @@
       "location": "Biology (Peterborough, Ontario, Canada)",
       "url": "https://jobs.rwfm.tamu.edu/view/107404/",
       "published_date": "06/26/2025",
+      "discipline_refinement_source": "rule",
+      "review_status": "",
+      "reviewed_discipline": "",
+      "review_notes": "",
+      "reviewer": ""
+    },
+    {
+      "severity": 3,
+      "reasons": [
+        "final_other",
+        "still_other_low_signal"
+      ],
+      "position_key": "title_org::m.s. graduate teaching assistantships in biology::university of west georgia (state)::carrollton, georgia::04/13/2026",
+      "discipline_final": "Other",
+      "discipline_model_suggested": "Fisheries and Aquatic",
+      "discipline_model_secondary": "",
+      "model_id": "20260222_051435",
+      "model_confidence": 0.2076,
+      "model_margin": 0.0236,
+      "title": "M.S. Graduate Teaching Assistantships in Biology",
+      "organization": "University of West Georgia (State)",
+      "location": "Carrollton, Georgia",
+      "url": "https://jobs.rwfm.tamu.edu/view-job/?id=115606",
+      "published_date": "04/13/2026",
       "discipline_refinement_source": "rule",
       "review_status": "",
       "reviewed_discipline": "",
