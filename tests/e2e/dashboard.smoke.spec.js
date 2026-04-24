@@ -37,6 +37,7 @@ test('dashboard loads and exits loading state', async ({ page }) => {
 
 test('dashboard uses relative data paths and shows data quality labels', async ({ page }) => {
   await page.goto('/wildlife_dashboard.html');
+  await page.waitForFunction(() => window.WGD_ADAPTER_STATUS === 'ready');
 
   const sourcePaths = await page.evaluate(() => window.WGD_ADAPTER?.meta?.sourceFiles || {});
   for (const p of Object.values(sourcePaths)) {
@@ -46,8 +47,10 @@ test('dashboard uses relative data paths and shows data quality labels', async (
 
   await expect(page.locator('#kpi-quality-salary-reason')).toContainText('parseable salary');
   await expect(page.locator('#kpi-quality-location-reason')).toContainText('parseable location');
-  await expect(page.locator('#kpi-quality-updated-reason')).toContainText('analytics output');
+  await expect(page.locator('#kpi-quality-updated-reason')).toContainText('analytics metadata');
   await expect(page.locator('#kpi-quality-updated')).not.toHaveText('—');
+  await expect(page.locator('#kpi-quality-capture-reason')).toContainText('source-data capture');
+  await expect(page.locator('#kpi-quality-capture')).not.toHaveText('—');
   await expect(page.locator('#kpi-quality-salary')).toContainText('/');
   await expect(page.locator('#kpi-quality-location')).toContainText('/');
 
@@ -60,7 +63,17 @@ test('dashboard uses relative data paths and shows data quality labels', async (
 
 test('suppresses salary median when salary sample is less than 5', async ({ page }) => {
   const mockAnalytics = {
-    metadata: { generated_at: '2026-02-18T00:00:00Z' },
+    metadata: {
+      generated_at: '2026-02-18T00:00:00Z',
+      freshness: {
+        analytics_generated_at: '2026-02-18T00:00:00Z',
+        latest_capture_at: '2026-02-17T23:00:00Z',
+        latest_capture_source: 'scraped_at',
+        posting_period_start: '2026-02-10',
+        posting_period_end: '2026-02-10',
+        row_count: 4
+      }
+    },
     summary_stats: { total_positions: 4, graduate_positions: 4, positions_with_salary: 4 },
     top_disciplines: {
       Fisheries: { total_positions: 4, grad_positions: 4, salary_stats: { count: 4 } }
@@ -103,7 +116,17 @@ test('suppresses salary median when salary sample is less than 5', async ({ page
 
 test('shows explicit no-data states when dataset is empty', async ({ page }) => {
   const mockAnalytics = {
-    metadata: { generated_at: '2026-02-18T00:00:00Z' },
+    metadata: {
+      generated_at: '2026-02-18T00:00:00Z',
+      freshness: {
+        analytics_generated_at: '2026-02-18T00:00:00Z',
+        latest_capture_at: null,
+        latest_capture_source: null,
+        posting_period_start: null,
+        posting_period_end: null,
+        row_count: 0
+      }
+    },
     summary_stats: { total_positions: 0, graduate_positions: 0, positions_with_salary: 0 },
     top_disciplines: {},
     geographic_summary: {},

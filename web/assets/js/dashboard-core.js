@@ -21,6 +21,7 @@
     statusText: document.getElementById('status-text'),
     statusIcon: document.getElementById('status-icon'),
     updatedDate: document.getElementById('last-updated-date'),
+    captureDate: document.getElementById('latest-capture-date'),
     dataPeriod: document.getElementById('data-period-range'),
     geographyDiscipline: document.getElementById('geography-discipline-filter'),
     compensationInstitution: document.getElementById('compensation-institution-filter'),
@@ -530,57 +531,70 @@
     return latest;
   }
 
-  function resolveLastUpdated(analytics, jobs) {
-    const candidates = [
+  function firstValidTimestamp(candidates) {
+    for (const candidate of candidates) {
+      const parsed = parseTimestampToDate(candidate.value);
+      if (!parsed) continue;
+      return {
+        value: candidate.value instanceof Date ? candidate.value.toISOString() : String(candidate.value),
+        source: candidate.source
+      };
+    }
+    return { value: null, source: null };
+  }
+
+  function resolveFreshnessMetadata(analytics, jobs) {
+    const metadata = analytics?.metadata || {};
+    const freshness = metadata.freshness || {};
+    const analyticsGenerated = firstValidTimestamp([
       {
-        value: analytics?.metadata?.last_updated,
-        source: 'analytics output (metadata.last_updated)'
+        value: freshness.analytics_generated_at,
+        source: 'metadata.freshness.analytics_generated_at'
+      },
+      {
+        value: metadata.generated_at,
+        source: 'metadata.generated_at'
+      },
+      {
+        value: metadata.last_updated,
+        source: 'metadata.last_updated'
       },
       {
         value: analytics?.last_updated,
-        source: 'analytics output (payload last_updated)'
+        source: 'payload last_updated'
+      }
+    ]);
+
+    const latestJobTimestamp = getLatestJobTimestamp(jobs);
+    const latestCapture = firstValidTimestamp([
+      {
+        value: freshness.latest_capture_at,
+        source: freshness.latest_capture_source
+          ? `row ${freshness.latest_capture_source}`
+          : 'metadata.freshness.latest_capture_at'
       },
       {
-        value: analytics?.metadata?.generated_at,
-        source: 'analytics output (generated_at)'
+        value: freshness.latest_snapshot_run_at,
+        source: 'metadata.freshness.latest_snapshot_run_at'
       },
       {
         value: analytics?.snapshot_availability?.latest_run_timestamp,
-        source: 'snapshot availability'
-      }
-    ];
-
-    const latestJobTimestamp = getLatestJobTimestamp(jobs);
-    if (latestJobTimestamp) {
-      candidates.push({
+        source: 'snapshot_availability.latest_run_timestamp'
+      },
+      {
         value: latestJobTimestamp,
-        source: 'positions data timestamps'
-      });
-    }
-
-    let best = null;
-    candidates.forEach((candidate) => {
-      const parsed = parseTimestampToDate(candidate.value);
-      if (!parsed) return;
-      if (!best || parsed > best.parsed) {
-        best = {
-          raw: candidate.value instanceof Date ? candidate.value.toISOString() : String(candidate.value),
-          parsed,
-          source: candidate.source
-        };
+        source: 'row timestamps fallback'
       }
-    });
-
-    if (!best) {
-      return {
-        value: null,
-        source: null
-      };
-    }
+    ]);
 
     return {
-      value: best.raw,
-      source: best.source
+      analyticsGeneratedAt: analyticsGenerated.value,
+      analyticsGeneratedSource: analyticsGenerated.source,
+      latestCaptureAt: latestCapture.value,
+      latestCaptureSource: latestCapture.source,
+      postingPeriodStart: freshness.posting_period_start || null,
+      postingPeriodEnd: freshness.posting_period_end || null,
+      rowCount: asNumber(freshness.row_count)
     };
   }
 
@@ -607,13 +621,16 @@
     const topLocations = Object.entries(geography)
       .sort((a, b) => asNumber(b[1]) - asNumber(a[1]))
       .slice(0, TOP_US_STATES_LIMIT);
-    const resolvedLastUpdated = resolveLastUpdated(analytics, jobs);
+    const freshness = resolveFreshnessMetadata(analytics, jobs);
 
     return {
       meta: {
-        generatedAt: analytics?.metadata?.generated_at || null,
-        lastUpdated: resolvedLastUpdated.value,
-        lastUpdatedSource: resolvedLastUpdated.source,
+        generatedAt: freshness.analyticsGeneratedAt,
+        generatedAtSource: freshness.analyticsGeneratedSource,
+        latestCaptureAt: freshness.latestCaptureAt,
+        latestCaptureSource: freshness.latestCaptureSource,
+        postingPeriodStart: freshness.postingPeriodStart,
+        postingPeriodEnd: freshness.postingPeriodEnd,
         sourceFiles: SOURCE_PATHS
       },
       overview: {
@@ -650,8 +667,10 @@
         locationParsedCount,
         salaryParsedPct,
         locationParsedPct,
-        lastUpdated: resolvedLastUpdated.value,
-        lastUpdatedSource: resolvedLastUpdated.source
+        analyticsGeneratedAt: freshness.analyticsGeneratedAt,
+        analyticsGeneratedSource: freshness.analyticsGeneratedSource,
+        latestCaptureAt: freshness.latestCaptureAt,
+        latestCaptureSource: freshness.latestCaptureSource
       },
       jobs,
       raw: {
@@ -816,6 +835,13 @@
 
     if (!dates.length) return null;
     return { start: dates[0], end: dates[dates.length - 1] };
+  }
+
+  function resolveDataPeriodRange(adapter) {
+    const start = parseFlexibleDate(adapter?.meta?.postingPeriodStart);
+    const end = parseFlexibleDate(adapter?.meta?.postingPeriodEnd);
+    if (start && end) return { start, end };
+    return computeDataPeriodRange(adapter?.jobs || []);
   }
 
   function escapeRegExp(value) {
@@ -1366,8 +1392,9 @@
     const locationParsedCount = asNumber(quality.locationParsedCount);
     const salaryPct = asNumber(quality.salaryParsedPct);
     const locationPct = asNumber(quality.locationParsedPct);
-    const updated = quality.lastUpdated;
-    const updatedSource = quality.lastUpdatedSource;
+    const generatedAt = quality.analyticsGeneratedAt;
+    const latestCaptureAt = quality.latestCaptureAt;
+    const latestCaptureSource = quality.latestCaptureSource;
 
     setCardValue(
       'kpi-quality-salary',
@@ -1391,9 +1418,20 @@
 
     setCardValue(
       'kpi-quality-updated',
-      updated ? formatDisplayTimestamp(updated) : EMPTY_VALUE,
+      generatedAt ? formatDisplayTimestamp(generatedAt) : EMPTY_VALUE,
       'kpi-quality-updated-reason',
-      updated ? `Latest timestamp from ${updatedSource || 'available data source'}` : 'No timestamp available'
+      generatedAt
+        ? 'Generated from analytics metadata'
+        : 'No analytics generation timestamp available'
+    );
+
+    setCardValue(
+      'kpi-quality-capture',
+      latestCaptureAt ? formatDisplayTimestamp(latestCaptureAt) : EMPTY_VALUE,
+      'kpi-quality-capture-reason',
+      latestCaptureAt
+        ? `Newest source-data capture timestamp (${latestCaptureSource || 'metadata'})`
+        : 'No capture timestamp available'
     );
   }
 
@@ -2503,10 +2541,13 @@
       setState('ok', `Adapter ready (${jobs.length} jobs)`);
 
       if (refs.updatedDate) {
-        refs.updatedDate.textContent = formatDisplayTimestamp(normalized.meta.lastUpdated) || EMPTY_VALUE;
+        refs.updatedDate.textContent = formatDisplayTimestamp(normalized.meta.generatedAt) || EMPTY_VALUE;
+      }
+      if (refs.captureDate) {
+        refs.captureDate.textContent = formatDisplayTimestamp(normalized.meta.latestCaptureAt) || EMPTY_VALUE;
       }
       if (refs.dataPeriod) {
-        const period = computeDataPeriodRange(normalized.jobs);
+        const period = resolveDataPeriodRange(normalized);
         refs.dataPeriod.textContent = period
           ? `${formatDateOnly(period.start)} to ${formatDateOnly(period.end)}`
           : EMPTY_VALUE;

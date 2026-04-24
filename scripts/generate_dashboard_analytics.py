@@ -16,7 +16,7 @@ import re
 import statistics
 import sys
 from collections import Counter, defaultdict
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -26,12 +26,12 @@ SRC_ROOT = PROJECT_ROOT / "src"
 if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
-from wildlife_grad.analysis.enhanced_analysis import (
+from wildlife_grad.analysis.enhanced_analysis import (  # noqa: E402
     CostOfLivingAdjuster,
     DisciplineClassifier,
     GraduatePositionDetector,
     JobPosition,
-)
+)  # noqa: E402
 
 # Discipline consolidation mapping
 DISCIPLINE_MAPPING = {
@@ -180,7 +180,7 @@ def _to_job_position(row: Dict[str, Any]) -> JobPosition:
         last_updated=str(row.get("last_updated") or ""),
         scrape_run_id=str(row.get("scrape_run_id") or ""),
         scraper_version=str(row.get("scraper_version") or ""),
-    )
+)
 
 
 def build_discipline_confidence_queue(
@@ -695,7 +695,7 @@ def calculate_analytics(data: List[Dict[str, Any]]) -> Dict[str, Any]:
                 )
                 normalized_disc = normalize_discipline(original_disc)
                 monthly_by_discipline[normalized_disc][month] += 1
-            except:
+            except Exception:
                 pass
 
     sorted_months = sorted(monthly_counts.keys())
@@ -711,13 +711,17 @@ def calculate_analytics(data: List[Dict[str, Any]]) -> Dict[str, Any]:
         }
 
     snapshot_availability = calculate_snapshot_availability()
+    generated_at = _utc_now_iso()
+    freshness = summarize_freshness(data, snapshot_availability, generated_at)
 
     return {
         "metadata": {
-            "generated_at": datetime.now().isoformat(),
+            "generated_at": generated_at,
+            "last_updated": generated_at,
             "total_positions": total_positions,
             "source": "merged (historical + latest + enhanced)",
             "discipline_mapping": "consolidated to 8 categories",
+            "freshness": freshness,
         },
         "summary_stats": {
             "total_positions": total_positions,
@@ -729,7 +733,118 @@ def calculate_analytics(data: List[Dict[str, Any]]) -> Dict[str, Any]:
         "geographic_summary": dict(location_counts.most_common(25)),
         "time_series": time_series,
         "snapshot_availability": snapshot_availability,
-        "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        # Backward-compatible alias. New dashboard code reads metadata.freshness.
+        "last_updated": generated_at,
+    }
+
+
+def _utc_now_iso() -> str:
+    """Return an explicit UTC timestamp for generated static dashboard artifacts."""
+    return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+
+
+def _parse_dashboard_datetime(value: Any) -> Optional[datetime]:
+    """Parse the timestamp/date formats used by scraped rows and archive filenames."""
+    if not value:
+        return None
+
+    text = str(value).strip()
+    if not text:
+        return None
+
+    iso_text = text.replace("Z", "+00:00")
+    try:
+        return datetime.fromisoformat(iso_text)
+    except ValueError:
+        pass
+
+    for fmt in ("%Y-%m-%d %H:%M:%S", "%m/%d/%Y", "%m/%d/%y", "%Y-%m-%d"):
+        try:
+            return datetime.strptime(text, fmt)
+        except ValueError:
+            continue
+
+    match = re.search(r"(\d{1,2})/(\d{1,2})/(\d{4})", text)
+    if match:
+        try:
+            return datetime(
+                int(match.group(3)),
+                int(match.group(1)),
+                int(match.group(2)),
+            )
+        except ValueError:
+            return None
+
+    return None
+
+
+def _max_timestamp(rows: List[Dict[str, Any]], fields: List[str]) -> Optional[Dict[str, str]]:
+    """Find the latest timestamp among named fields and keep its source field."""
+    latest: Optional[Dict[str, Any]] = None
+    for row in rows:
+        for field in fields:
+            parsed = _parse_dashboard_datetime(row.get(field))
+            if not parsed:
+                continue
+            comparable = parsed.timestamp()
+            if latest is None or comparable > latest["comparable"]:
+                latest = {
+                    "value": parsed.isoformat(),
+                    "field": field,
+                    "comparable": comparable,
+                }
+
+    if latest is None:
+        return None
+    return {"value": latest["value"], "field": latest["field"]}
+
+
+def _date_range(rows: List[Dict[str, Any]], fields: List[str]) -> Dict[str, Optional[str]]:
+    """Find earliest/latest dates for a logical dashboard period."""
+    parsed_dates = []
+    for row in rows:
+        for field in fields:
+            parsed = _parse_dashboard_datetime(row.get(field))
+            if parsed:
+                parsed_dates.append(parsed)
+                break
+
+    if not parsed_dates:
+        return {"start": None, "end": None}
+
+    return {
+        "start": min(parsed_dates).date().isoformat(),
+        "end": max(parsed_dates).date().isoformat(),
+    }
+
+
+def summarize_freshness(
+    rows: List[Dict[str, Any]],
+    snapshot_availability: Dict[str, Any],
+    generated_at: str,
+) -> Dict[str, Any]:
+    """
+    Centralize dashboard freshness semantics.
+
+    - analytics_generated_at: when this script created the dashboard artifacts.
+    - latest_capture_at: newest timestamp on the merged row-level dataset.
+    - latest_snapshot_run_at: newest raw scrape snapshot used for active-position trends.
+    - posting_period_*: publication/first-seen date range represented by the dataset.
+    """
+    latest_capture = _max_timestamp(rows, ["scraped_at", "last_updated", "first_seen"])
+    posting_period = _date_range(
+        rows,
+        ["published_date", "first_seen", "scraped_at", "last_updated"],
+    )
+
+    return {
+        "analytics_generated_at": generated_at,
+        "latest_capture_at": latest_capture["value"] if latest_capture else None,
+        "latest_capture_source": latest_capture["field"] if latest_capture else None,
+        "latest_snapshot_run_at": snapshot_availability.get("latest_run_timestamp"),
+        "posting_period_start": posting_period["start"],
+        "posting_period_end": posting_period["end"],
+        "row_count": len(rows),
     }
 
 
