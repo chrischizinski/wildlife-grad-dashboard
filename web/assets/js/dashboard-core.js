@@ -435,10 +435,13 @@
       'biologist ii',
       'crew lead',
       'crew leader',
+      'programmer',
       'assistant professor',
       'associate professor',
       'postdoctoral',
       'post-doc',
+      'postgraduate',
+      'post graduate',
       'internship'
     ];
     if (hardExclude.some((kw) => title.includes(kw))) return false;
@@ -1562,7 +1565,8 @@
   }
 
   function selectWeeklySpotlight(jobs) {
-    const poolInfo = getMostRecentScrapePool(jobs);
+    const eligibleJobs = (Array.isArray(jobs) ? jobs : []).filter((job) => isGraduatePosting(job));
+    const poolInfo = getMostRecentScrapePool(eligibleJobs);
     const pool = Array.isArray(poolInfo.pool) ? poolInfo.pool : [];
     if (!pool.length) return null;
 

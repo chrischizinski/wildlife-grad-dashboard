@@ -167,3 +167,75 @@ test('shows explicit no-data states when dataset is empty', async ({ page }) => 
   await expect(page.locator('#salary-panel')).toContainText('No data for current filters');
   await expect(page.locator('#map-panel')).toContainText('No data for current filters');
 });
+
+test('weekly spotlight excludes professional roles even if they are flagged graduate', async ({ page }) => {
+  const mockAnalytics = {
+    metadata: {
+      generated_at: '2026-04-24T18:43:24Z',
+      freshness: {
+        analytics_generated_at: '2026-04-24T18:43:24Z',
+        latest_capture_at: '2026-03-23T17:34:12Z',
+        latest_capture_source: 'scraped_at',
+        posting_period_start: '2026-03-20',
+        posting_period_end: '2026-03-20',
+        row_count: 2
+      }
+    },
+    summary_stats: { total_positions: 2, graduate_positions: 2, positions_with_salary: 2 },
+    top_disciplines: {
+      Wildlife: { total_positions: 2, grad_positions: 2, salary_stats: { count: 2 } }
+    },
+    geographic_summary: { Florida: 1, Nebraska: 1 },
+    time_series: { '12_month': { total_monthly: { '2026-03': 2 }, discipline_monthly: {} } },
+    last_updated: '2026-04-24T18:43:24Z'
+  };
+
+  const mockPositions = [
+    {
+      title: 'Database Engineer/OPS Scientific/Engineering Programmer',
+      organization: 'Florida Fish and Wildlife Conservation Commission (State)',
+      location: 'St. Petersburg, Florida',
+      salary: '$25 per hour',
+      discipline: 'Wildlife',
+      published_date: '03/20/2026',
+      scraped_at: '2026-03-23T17:34:12Z',
+      tags: 'N/A',
+      description: 'Professional engineering and programming role supporting agency data systems.',
+      is_graduate_position: true
+    },
+    {
+      title: 'M.S. Graduate Research Assistantship in Wildlife Ecology',
+      organization: 'Example University',
+      location: 'Lincoln, Nebraska',
+      salary: '$24,000 per year',
+      discipline: 'Wildlife',
+      published_date: '03/20/2026',
+      scraped_at: '2026-03-23T17:34:10Z',
+      tags: 'Graduate Opportunities',
+      description: 'Student will enroll in an M.S. graduate program and receive a research assistantship.',
+      is_graduate_position: true
+    }
+  ];
+
+  await page.route(/\/data\/dashboard_analytics\.json$/, async (route) => {
+    await route.fulfill({ json: mockAnalytics });
+  });
+  await page.route(/\/data\/dashboard_positions\.json$/, async (route) => {
+    await route.fulfill({ json: mockPositions });
+  });
+  await page.route(/\/data\/verified_graduate_assistantships\.json$/, async (route) => {
+    await route.fulfill({ json: [] });
+  });
+  await page.route(/\/data\/enhanced_data\.json$/, async (route) => {
+    await route.fulfill({ json: [] });
+  });
+  await page.route(/\/data\/export_data\.json$/, async (route) => {
+    await route.fulfill({ json: [] });
+  });
+
+  await page.goto('/wildlife_dashboard.html');
+  await page.waitForFunction(() => window.WGD_ADAPTER_STATUS === 'ready');
+
+  await expect(page.locator('#weekly-spotlight')).toContainText('M.S. Graduate Research Assistantship');
+  await expect(page.locator('#weekly-spotlight')).not.toContainText('Database Engineer');
+});
