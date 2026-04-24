@@ -51,6 +51,7 @@ test('dashboard uses relative data paths and shows data quality labels', async (
   await expect(page.locator('#kpi-quality-updated')).not.toHaveText('—');
   await expect(page.locator('#kpi-quality-capture-reason')).toContainText('source-data capture');
   await expect(page.locator('#kpi-quality-capture')).not.toHaveText('—');
+  await expect(page.locator('#data-period-range')).toContainText('Aug 29, 2024 to Mar 18, 2026');
   await expect(page.locator('#kpi-quality-salary')).toContainText('/');
   await expect(page.locator('#kpi-quality-location')).toContainText('/');
 

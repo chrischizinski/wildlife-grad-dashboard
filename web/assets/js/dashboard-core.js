@@ -370,6 +370,14 @@
     const text = String(value).trim();
     if (!text) return null;
 
+    // Date-only metadata should display as the stated local calendar date,
+    // not as UTC midnight shifted by the viewer's timezone.
+    const ymd = text.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (ymd) {
+      const dt = new Date(Number(ymd[1]), Number(ymd[2]) - 1, Number(ymd[3]));
+      return Number.isFinite(dt.getTime()) ? dt : null;
+    }
+
     // Try native parse first (ISO and many common formats).
     const native = Date.parse(text);
     if (Number.isFinite(native)) return new Date(native);
