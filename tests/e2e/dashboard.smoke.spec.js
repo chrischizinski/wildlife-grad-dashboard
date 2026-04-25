@@ -51,7 +51,20 @@ test('dashboard uses relative data paths and shows data quality labels', async (
   await expect(page.locator('#kpi-quality-updated')).not.toHaveText('—');
   await expect(page.locator('#kpi-quality-capture-reason')).toContainText('source-data capture');
   await expect(page.locator('#kpi-quality-capture')).not.toHaveText('—');
-  await expect(page.locator('#data-period-range')).toContainText('Aug 29, 2024 to Mar 18, 2026');
+  const period = await page.evaluate(() => ({
+    text: document.querySelector('#data-period-range')?.textContent?.trim(),
+    start: window.WGD_ADAPTER?.meta?.postingPeriodStart,
+    end: window.WGD_ADAPTER?.meta?.postingPeriodEnd
+  }));
+  const formatYmd = (ymd) => {
+    const [year, month, day] = ymd.split('-').map(Number);
+    return new Intl.DateTimeFormat('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    }).format(new Date(year, month - 1, day));
+  };
+  expect(period.text).toContain(`${formatYmd(period.start)} to ${formatYmd(period.end)}`);
   await expect(page.locator('#kpi-quality-salary')).toContainText('/');
   await expect(page.locator('#kpi-quality-location')).toContainText('/');
 

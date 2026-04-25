@@ -1,9 +1,19 @@
 {
   "metadata": {
-    "generated_at": "2026-04-19T05:55:57.654459",
+    "generated_at": "2026-04-25T16:55:20Z",
+    "last_updated": "2026-04-25T16:55:20Z",
     "total_positions": 187,
     "source": "merged (historical + latest + enhanced)",
-    "discipline_mapping": "consolidated to 8 categories"
+    "discipline_mapping": "consolidated to 8 categories",
+    "freshness": {
+      "analytics_generated_at": "2026-04-25T16:55:20Z",
+      "latest_capture_at": "2026-04-19T05:53:42.465535+00:00",
+      "latest_capture_source": "scraped_at",
+      "latest_snapshot_run_at": "2026-04-19T05:55:43",
+      "posting_period_start": "2024-08-29",
+      "posting_period_end": "2026-04-15",
+      "row_count": 187
+    }
   },
   "summary_stats": {
     "total_positions": 187,
@@ -623,5 +633,5 @@
       "Other": 5
     }
   },
-  "last_updated": "2026-04-19 05:55:57"
+  "last_updated": "2026-04-25T16:55:20Z"
 }
