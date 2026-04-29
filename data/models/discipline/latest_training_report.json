@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-29T14:26:48.547092",
+  "generated_at": "2026-04-29T19:19:16.271699",
   "trained": true,
   "promoted": false,
   "promotion_reason": "validation_not_improved",
@@ -18,9 +18,9 @@
     "validation_samples": 9
   },
   "candidate_model": {
-    "model_id": "20260429_142648",
-    "trained_at": "2026-04-29T14:26:48.343464",
-    "artifact_path": "data/models/discipline/models/discipline_model_20260429_142648.pkl",
+    "model_id": "20260429_191916",
+    "trained_at": "2026-04-29T19:19:16.098130",
+    "artifact_path": "data/models/discipline/models/discipline_model_20260429_191916.pkl",
     "classes": [
       "Agriculture",
       "Entomology",
