@@ -269,11 +269,10 @@ def build_discipline_confidence_queue(
 
     queue.sort(
         key=lambda item: (
-            int(item.get("severity") or 0),
+            -int(item.get("severity") or 0),
             -float(item.get("model_confidence") or 0.0),
             str(item.get("title") or ""),
-        ),
-        reverse=True,
+        )
     )
     return queue
 
@@ -314,7 +313,7 @@ def write_discipline_confidence_queue(queue: List[Dict[str, Any]]) -> None:
         "url",
     ]
     with open(DISCIPLINE_CONFIDENCE_QUEUE_CSV, "w", encoding="utf-8", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer = csv.DictWriter(f, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         for row in queue:
             row_out = dict(row)
@@ -593,13 +592,27 @@ def enrich_compensation_fields(rows: List[Dict[str, Any]]) -> Dict[str, int]:
     }
 
 
+def build_salary_stats(values: List[float]) -> Dict[str, float]:
+    """Build salary summary statistics for a numeric salary series."""
+    clean_values = [float(value) for value in values if _as_positive_float(value)]
+    return {
+        "count": len(clean_values),
+        "mean": round(statistics.mean(clean_values), 2) if clean_values else 0,
+        "median": round(statistics.median(clean_values), 2) if clean_values else 0,
+        "min": round(min(clean_values), 2) if clean_values else 0,
+        "max": round(max(clean_values), 2) if clean_values else 0,
+    }
+
+
 def calculate_analytics(data: List[Dict[str, Any]]) -> Dict[str, Any]:
     """Calculate comprehensive analytics with consolidated disciplines."""
 
     total_positions = len(data)
 
     # Discipline analysis with consolidation
-    discipline_data = defaultdict(lambda: {"count": 0, "salaries": []})
+    discipline_data = defaultdict(
+        lambda: {"count": 0, "salaries": [], "adjusted_salaries": []}
+    )
     for p in data:
         # Get original discipline
         original_disc = (
@@ -616,6 +629,11 @@ def calculate_analytics(data: List[Dict[str, Any]]) -> Dict[str, Any]:
         salary = extract_salary_number(p.get("salary"))
         if salary:
             discipline_data[normalized_disc]["salaries"].append(salary)
+            adjusted_salary = _as_positive_float(p.get("salary_lincoln_adjusted"))
+            if adjusted_salary is not None:
+                discipline_data[normalized_disc]["adjusted_salaries"].append(
+                    adjusted_salary
+                )
 
     # Build top disciplines in canonical display order.
     top_disciplines = {}
@@ -624,18 +642,17 @@ def calculate_analytics(data: List[Dict[str, Any]]) -> Dict[str, Any]:
             data_dict = discipline_data[discipline]
             count = data_dict["count"]
             salaries = data_dict["salaries"]
-
-            salary_stats = {
-                "count": len(salaries),
-                "mean": round(statistics.mean(salaries), 2) if salaries else 0,
-                "median": round(statistics.median(salaries), 2) if salaries else 0,
-                "min": round(min(salaries), 2) if salaries else 0,
-                "max": round(max(salaries), 2) if salaries else 0,
-            }
+            adjusted_salaries = data_dict["adjusted_salaries"]
+            salary_stats = build_salary_stats(salaries)
+            adjusted_salary_stats = build_salary_stats(adjusted_salaries)
 
             top_disciplines[discipline] = {
                 "total_positions": count,
                 "grad_positions": count,
+                "salary_stats_nominal": salary_stats,
+                "salary_stats_col_adjusted": adjusted_salary_stats,
+                # Backward-compatible alias. New consumers should choose
+                # salary_stats_nominal or salary_stats_col_adjusted explicitly.
                 "salary_stats": salary_stats,
             }
 

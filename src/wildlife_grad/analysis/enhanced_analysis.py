@@ -99,13 +99,10 @@ class GraduatePositionDetector:
                 "assistantship position",
             ],
             "fellowship": [
-                "fellowship",
                 "graduate fellowship",
-                "research fellowship",
                 "PhD fellowship",
                 "masters fellowship",
                 "doctoral fellowship",
-                "scholar program",
             ],
             "degree_pursuit": [
                 "PhD position",
@@ -225,25 +222,38 @@ class GraduatePositionDetector:
             r"\bcertificate\s+program\b",
             r"\bengineer\b",
             r"\bprogrammer\b",
+            r"\blaw\s+clerk\b",
+            r"\bboard\s+of\s+directors\b",
+            r"\bboat\s+captain\b",
+            r"\bnaturalist\s+boat\b",
+            r"\bfisheries\s+assistant\b",
+            r"\bresearch\s+associate\s+position\b",
+            r"\bundergraduate\s+(students?|opportunit(y|ies)|fellow(ship)?)\b",
         ]
         self.explicit_assistantship_patterns = [
             r"\bgraduate\s+assistantship\b",
             r"\bresearch\s+assistantship\b",
             r"\bteaching\s+assistantship\b",
+            r"\bgraduate\s+teaching\s+assistant\b",
             r"\bgraduate\s+research\s+assistant(ship)?\b",
             r"\bph\.?d\.?\s+assistantship\b",
             r"\bms\b.*\bassistantship\b",
+            r"\bms\b.*\bgraduate\s+teaching\s+assistant\b",
         ]
         self.explicit_graduate_patterns = [
             r"graduate\s+research\s+assistantship",
             r"graduate\s+research\s+assistant\b",
+            r"graduate\s+teaching\s+assistant\b",
             r"(ms|m\.s\.|masters?)\s+(research\s+)?assistantship",
             r"(ms|m\.s\.|masters?)\s+research\s+assistant\b",
+            r"(ms|m\.s\.|masters?)\s+graduate\s+teaching\s+assistant\b",
             r"(phd|ph\.d\.)\s+(research\s+)?assistantship",
+            r"(phd|ph\.d\.)\s+research\b",
             r"graduate\s+research\s+associate",
             r"doctoral\s+(student|candidate|research|assistantship)",
             r"(phd|ph\.d\.)\s+(student|candidate|position)",
             r"(ms|m\.s\.)\s+(student|candidate|position)",
+            r"(masters?|m\.s\.)\s+in\s+.+",
             r"thesis\s+research",
             r"dissertation\s+research",
         ]
@@ -370,11 +380,6 @@ class GraduatePositionDetector:
         is_graduate = (
             float(analysis["confidence"]) >= 0.7
             or bool(analysis["has_explicit_pattern"])
-            or (
-                int(analysis["total_score"]) > 0
-                and int(analysis["grad_score"]) >= 2
-                and int(analysis["exclusion_score"]) < int(analysis["grad_score"]) * 2
-            )
         )
         confidence = float(analysis["confidence"])
         if is_graduate and (
@@ -1495,8 +1500,22 @@ class CostOfLivingAdjuster:
             return 0.0
 
         annual_multiplier = 1.0
-        if re.search(r"\b(hour|hr|hrs|/hr)\b", salary_lower):
-            annual_multiplier = 2080.0
+        hourly_match = re.search(r"\b(hour|hr|hrs|/hr)\b", salary_lower)
+        if hourly_match:
+            rate_match = re.search(
+                r"\$?\s*(\d{1,3}(?:\.\d+)?)\s*(?:/|\s+per\s+)?\s*(?:hour|hr|hrs)\b",
+                salary_lower,
+            )
+            hours_match = re.search(
+                r"(\d{1,2}(?:\.\d+)?)\s*(?:hours?|hrs?)\s*(?:/|\s+per\s+)?\s*(?:week|wk)\b",
+                salary_lower,
+            )
+            if not rate_match or not hours_match:
+                return 0.0
+            hourly_rate = float(rate_match.group(1))
+            weekly_hours = float(hours_match.group(1))
+            annualized = hourly_rate * weekly_hours * 52.0
+            return annualized if 1000 <= annualized <= 300000 else 0.0
         elif re.search(r"\b(bi-?week|fortnight)\b", salary_lower):
             annual_multiplier = 26.0
         elif re.search(r"\b(week|wk|/wk)\b", salary_lower):

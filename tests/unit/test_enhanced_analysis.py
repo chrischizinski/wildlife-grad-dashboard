@@ -191,7 +191,11 @@ class TestCostOfLivingAdjuster:
         assert self.adjuster._extract_salary_value("$20,000 to $25,000") == 20000.0
         assert self.adjuster._extract_salary_value("$2,000 per month") == 24000.0
         assert self.adjuster._extract_salary_value("$600 per week") == 31200.0
-        assert self.adjuster._extract_salary_value("$15 per hour") == 31200.0
+        assert self.adjuster._extract_salary_value("$15 per hour") == 0.0
+        assert (
+            self.adjuster._extract_salary_value("$15 per hour, 20 hours per week")
+            == 15600.0
+        )
         assert self.adjuster._extract_salary_value("Commensurate") == 0.0
 
 

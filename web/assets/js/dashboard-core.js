@@ -274,6 +274,18 @@
       return null;
     }
 
+    const hourly = /(?:\bhour\b|\bhr\b|\bhrs\b|\/hr)/i.test(normalizedText);
+    if (hourly) {
+      const rateMatch = normalizedText.match(/\$?\s*(\d{1,3}(?:\.\d+)?)\s*(?:\/|\s+per\s+)?\s*(?:hour|hr|hrs)\b/i);
+      const hoursMatch = normalizedText.match(/(\d{1,2}(?:\.\d+)?)\s*(?:hours?|hrs?)\s*(?:\/|\s+per\s+)?\s*(?:week|wk)\b/i);
+      if (!rateMatch || !hoursMatch) return null;
+      const hourlyRate = Number(rateMatch[1]);
+      const weeklyHours = Number(hoursMatch[1]);
+      const annualized = hourlyRate * weeklyHours * 52;
+      if (!Number.isFinite(annualized) || annualized < 1000 || annualized > 300000) return null;
+      return annualized;
+    }
+
     const matches = normalizedText.match(/\$?\s*(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d{4,7}(?:\.\d+)?|\d{1,3}(?:\.\d+)?[kK]?)/g) || [];
     const amounts = matches
       .map((token) => token.replace(/\$/g, '').trim())
@@ -292,8 +304,7 @@
     const base = usesRange ? Math.min(...amounts) : Math.max(...amounts);
 
     let annualized = base;
-    if (/(?:\bhour\b|\bhr\b|\bhrs\b|\/hr)/i.test(normalizedText)) annualized *= 2080;
-    else if (/\b(bi-?week|fortnight)\b/i.test(normalizedText)) annualized *= 26;
+    if (/\b(bi-?week|fortnight)\b/i.test(normalizedText)) annualized *= 26;
     else if (/(?:\bweek\b|\bwk\b|\/wk)/i.test(normalizedText)) annualized *= 52;
     else if (/(?:\bday\b|\bdaily\b|\/day)/i.test(normalizedText)) annualized *= 260;
     else if (/(?:\bmonth\b|\bmo\b|\/mo)/i.test(normalizedText)) annualized *= 12;
@@ -1287,11 +1298,18 @@
     const salaryValues = filteredJobs
       .map((job) => parseSalaryValue(job.salary ?? job.salary_min))
       .filter((n) => n !== null);
+    const adjustedSalaryValues = filteredJobs
+      .map((job) => {
+        const nominal = parseSalaryValue(job.salary ?? job.salary_min);
+        return getAdjustedSalaryValue(job, nominal);
+      })
+      .filter((n) => n !== null);
     const salaryCoverage = computeSalaryCoverage(filteredJobs);
     const parsedCount = salaryValues.length;
     const sampleN = salaryValues.length;
     const pct = totalJobs ? Number(((parsedCount / totalJobs) * 100).toFixed(1)) : 0;
     const med = median(salaryValues);
+    const adjustedMedian = median(adjustedSalaryValues);
 
     setCardValue(
       'kpi-salary-parsed-pct',
@@ -1351,7 +1369,14 @@
       'kpi-salary-median',
       formatCurrency(med),
       'kpi-salary-median-reason',
-      `Median annualized salary from salary-parsed ${selectionLabel} (N=${sampleN})`
+      (
+        `Median nominal annualized salary from salary-parsed ${selectionLabel} (N=${sampleN}); `
+        + (
+          adjustedMedian !== null && adjustedSalaryValues.length >= 5
+            ? `COL-adjusted median ${formatCurrency(adjustedMedian)} (N=${adjustedSalaryValues.length})`
+            : 'COL-adjusted median suppressed when N < 5'
+        )
+      )
     );
   }
 
