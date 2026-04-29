@@ -189,6 +189,72 @@ def test_calculate_analytics_exposes_nominal_and_col_adjusted_salary_stats(
     assert analytics["summary_stats"]["positions_with_col_adjusted"] == 2
 
 
+def test_location_parser_extracts_only_canonical_us_states():
+    cases = {
+        "100 8th Ave SE, St. Petersburg, FL 33701, USA (St. Petersburg, Florida)": "Florida",
+        "6300 Ocean Drive (Corpus Christi, Texas)": "Texas",
+        "6405 Old Main Hill, Logan, UT 84321, USA (Logan, Utah)": "Utah",
+        "Foundational Sciences Building , 1600 Ashland Ave (Muncie, Indiana)": "Indiana",
+        "QingHua Street, HaiDian District, Beijing Forestry University (Beijing, China)": None,
+        "Trent University (Peterborough, Ontario, Canada)": None,
+        "multiple | remote work allowed": None,
+        "remote work allowed": None,
+        "Hong Kong": None,
+    }
+
+    for raw_location, expected in cases.items():
+        assert analytics_generator.normalize_location_to_us_state(raw_location) == expected
+
+
+def test_calculate_analytics_uses_clean_us_state_geography(monkeypatch):
+    monkeypatch.setattr(
+        analytics_generator,
+        "calculate_snapshot_availability",
+        lambda: {},
+    )
+    rows = [
+        {
+            "title": "MS Assistantship Texas",
+            "discipline": "Wildlife",
+            "location": "6300 Ocean Drive (Corpus Christi, Texas)",
+            "published_date": "2026-01-01",
+        },
+        {
+            "title": "MS Assistantship Florida",
+            "discipline": "Wildlife",
+            "location": "100 8th Ave SE, St. Petersburg, FL 33701, USA (St. Petersburg, Florida)",
+            "published_date": "2026-01-02",
+        },
+        {
+            "title": "MS Assistantship China",
+            "discipline": "Wildlife",
+            "location": "QingHua Street, HaiDian District, Beijing Forestry University (Beijing, China)",
+            "published_date": "2026-01-03",
+        },
+        {
+            "title": "MS Assistantship Remote",
+            "discipline": "Wildlife",
+            "location": "multiple | remote work allowed",
+            "published_date": "2026-01-04",
+        },
+    ]
+    analytics_generator.enrich_location_fields(rows)
+
+    analytics = analytics_generator.calculate_analytics(rows)
+
+    assert analytics["geographic_summary"] == {"Texas": 1, "Florida": 1}
+    assert analytics["summary_stats"]["positions_with_location"] == 3
+    assert analytics["summary_stats"]["positions_with_us_mappable_location"] == 2
+    assert analytics["geographic_quality"] == {
+        "location_present_count": 3,
+        "us_mappable_count": 2,
+        "unmappable_count": 2,
+        "us_mappable_pct": 50.0,
+    }
+    assert rows[0]["location_state"] == "Texas"
+    assert rows[2]["is_us_mappable"] is False
+
+
 def test_discipline_confidence_queue_orders_higher_confidence_first():
     class FakeClassifier:
         def predict_with_promoted_model(self, position):

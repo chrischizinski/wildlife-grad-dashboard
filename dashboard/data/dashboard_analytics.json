@@ -1,12 +1,12 @@
 {
   "metadata": {
-    "generated_at": "2026-04-29T14:26:53Z",
-    "last_updated": "2026-04-29T14:26:53Z",
+    "generated_at": "2026-04-29T19:14:29Z",
+    "last_updated": "2026-04-29T19:14:29Z",
     "total_positions": 128,
     "source": "merged (historical + latest + enhanced)",
     "discipline_mapping": "consolidated to 8 categories",
     "freshness": {
-      "analytics_generated_at": "2026-04-29T14:26:53Z",
+      "analytics_generated_at": "2026-04-29T19:14:29Z",
       "latest_capture_at": "2026-04-29T14:24:32.981845+00:00",
       "latest_capture_source": "scraped_at",
       "latest_snapshot_run_at": "2026-04-29T14:26:41",
@@ -19,7 +19,9 @@
     "total_positions": 128,
     "graduate_positions": 128,
     "positions_with_salary": 88,
-    "positions_with_col_adjusted": 88
+    "positions_with_col_adjusted": 88,
+    "positions_with_location": 120,
+    "positions_with_us_mappable_location": 104
   },
   "top_disciplines": {
     "Environmental Sciences": {
@@ -73,8 +75,8 @@
       }
     },
     "Wildlife": {
-      "total_positions": 35,
-      "grad_positions": 35,
+      "total_positions": 34,
+      "grad_positions": 34,
       "salary_stats_nominal": {
         "count": 26,
         "mean": 25762.27,
@@ -98,8 +100,8 @@
       }
     },
     "Entomology": {
-      "total_positions": 5,
-      "grad_positions": 5,
+      "total_positions": 4,
+      "grad_positions": 4,
       "salary_stats_nominal": {
         "count": 2,
         "mean": 22650.0,
@@ -198,8 +200,8 @@
       }
     },
     "Other": {
-      "total_positions": 6,
-      "grad_positions": 6,
+      "total_positions": 8,
+      "grad_positions": 8,
       "salary_stats_nominal": {
         "count": 2,
         "mean": 18500.0,
@@ -224,31 +226,37 @@
     }
   },
   "geographic_summary": {
-    "Texas)": 12,
-    "China)": 9,
-    "Texas": 8,
-    "multiple": 6,
-    "Georgia)": 3,
-    "Tennessee": 3,
-    "Alabama)": 3,
-    "West Virginia)": 3,
-    "Louisiana)": 3,
+    "Texas": 20,
+    "Tennessee": 6,
+    "Alabama": 5,
+    "Georgia": 4,
+    "West Virginia": 4,
+    "Arkansas": 4,
+    "Louisiana": 4,
+    "Idaho": 3,
+    "North Dakota": 3,
     "Massachusetts": 3,
     "South Carolina": 3,
-    "Tennessee)": 3,
     "Colorado": 3,
-    "remote work allowed": 2,
-    "Canada)": 2,
-    "China (Beijing)": 2,
-    "Indiana)": 2,
-    "Idaho)": 2,
-    "Arkansas)": 2,
-    "North Dakota)": 2,
-    "Rhode Island)": 2,
-    "Vermont)": 2,
-    "Canada": 2,
-    "Alabama": 2,
-    "Iowa": 2
+    "Wyoming": 3,
+    "Indiana": 2,
+    "California": 2,
+    "Utah": 2,
+    "Minnesota": 2,
+    "Rhode Island": 2,
+    "Florida": 2,
+    "Vermont": 2,
+    "Illinois": 2,
+    "Iowa": 2,
+    "Missouri": 2,
+    "Oregon": 2,
+    "Maryland": 2
+  },
+  "geographic_quality": {
+    "location_present_count": 120,
+    "us_mappable_count": 104,
+    "unmappable_count": 24,
+    "us_mappable_pct": 81.2
   },
   "time_series": {
     "1_month": {
@@ -300,7 +308,7 @@
           "2025-05": 3,
           "2026-04": 3,
           "2025-04": 2,
-          "2026-03": 7,
+          "2026-03": 6,
           "2025-03": 1,
           "2026-02": 7,
           "2025-02": 1,
@@ -309,7 +317,7 @@
         "Entomology": {
           "2024-08": 1,
           "2025-07": 1,
-          "2025-06": 2,
+          "2025-06": 1,
           "2026-03": 1
         },
         "Forestry and Habitat": {
@@ -337,8 +345,9 @@
         },
         "Other": {
           "2025-09": 1,
-          "2025-06": 2,
+          "2025-06": 3,
           "2026-04": 1,
+          "2026-03": 1,
           "2025-01": 2
         }
       }
@@ -392,7 +401,7 @@
           "2025-05": 3,
           "2026-04": 3,
           "2025-04": 2,
-          "2026-03": 7,
+          "2026-03": 6,
           "2025-03": 1,
           "2026-02": 7,
           "2025-02": 1,
@@ -401,7 +410,7 @@
         "Entomology": {
           "2024-08": 1,
           "2025-07": 1,
-          "2025-06": 2,
+          "2025-06": 1,
           "2026-03": 1
         },
         "Forestry and Habitat": {
@@ -429,8 +438,9 @@
         },
         "Other": {
           "2025-09": 1,
-          "2025-06": 2,
+          "2025-06": 3,
           "2026-04": 1,
+          "2026-03": 1,
           "2025-01": 2
         }
       }
@@ -484,7 +494,7 @@
           "2025-05": 3,
           "2026-04": 3,
           "2025-04": 2,
-          "2026-03": 7,
+          "2026-03": 6,
           "2025-03": 1,
           "2026-02": 7,
           "2025-02": 1,
@@ -493,7 +503,7 @@
         "Entomology": {
           "2024-08": 1,
           "2025-07": 1,
-          "2025-06": 2,
+          "2025-06": 1,
           "2026-03": 1
         },
         "Forestry and Habitat": {
@@ -521,8 +531,9 @@
         },
         "Other": {
           "2025-09": 1,
-          "2025-06": 2,
+          "2025-06": 3,
           "2026-04": 1,
+          "2026-03": 1,
           "2025-01": 2
         }
       }
@@ -576,7 +587,7 @@
           "2025-05": 3,
           "2026-04": 3,
           "2025-04": 2,
-          "2026-03": 7,
+          "2026-03": 6,
           "2025-03": 1,
           "2026-02": 7,
           "2025-02": 1,
@@ -585,7 +596,7 @@
         "Entomology": {
           "2024-08": 1,
           "2025-07": 1,
-          "2025-06": 2,
+          "2025-06": 1,
           "2026-03": 1
         },
         "Forestry and Habitat": {
@@ -613,8 +624,9 @@
         },
         "Other": {
           "2025-09": 1,
-          "2025-06": 2,
+          "2025-06": 3,
           "2026-04": 1,
+          "2026-03": 1,
           "2025-01": 2
         }
       }
@@ -686,5 +698,5 @@
       "Other": 12
     }
   },
-  "last_updated": "2026-04-29T14:26:53Z"
+  "last_updated": "2026-04-29T19:14:29Z"
 }

@@ -55,16 +55,26 @@
     export: 'data/export_data.json'
   };
   const DISCIPLINE_COLOR_MAP = {
-    'Environmental Sciences': '#0f766e',
-    'Fisheries and Aquatic': '#0284c7',
-    Wildlife: '#16a34a',
-    Entomology: '#f59e0b',
-    'Forestry and Habitat': '#a16207',
-    Agriculture: '#ca8a04',
-    'Human Dimensions': '#8b5cf6',
-    Other: '#475569'
+    'Environmental Sciences': '#117a68',
+    'Fisheries and Aquatic': '#1769aa',
+    Wildlife: '#2f8f46',
+    Entomology: '#d28a14',
+    'Forestry and Habitat': '#8a5a12',
+    Agriculture: '#b77a1a',
+    'Human Dimensions': '#7952b3',
+    Other: '#4a5668'
   };
-  const DISCIPLINE_COLOR_FALLBACK = '#475569';
+  const DISCIPLINE_COLOR_FALLBACK = '#4a5668';
+  const CHART_COLOR = {
+    spruce: '#117a68',
+    spruceDark: '#0b4f43',
+    spruceFill: 'rgba(17, 122, 104, 0.22)',
+    water: '#1769aa',
+    waterDark: '#123f68',
+    prairie: '#c78315',
+    ink: '#263241',
+    paper: '#f6f4ed'
+  };
   const DISCIPLINE_LEGEND_ORDER = [
     'Environmental Sciences',
     'Fisheries and Aquatic',
@@ -634,7 +644,15 @@
       .filter((n) => n !== null);
 
     const salaryParsedPct = jobs.length ? Number(((salaries.length / jobs.length) * 100).toFixed(1)) : 0;
-    const locationParsedCount = jobs.filter((job) => isLocationParsed(job.location)).length;
+    const computedGeography = computeGeographyStats(jobs);
+    const geographicQuality = analytics?.geographic_quality || {};
+    const hasGeneratedMappableCount = Object.prototype.hasOwnProperty.call(
+      geographicQuality,
+      'us_mappable_count'
+    );
+    const locationParsedCount = hasGeneratedMappableCount
+      ? asNumber(geographicQuality.us_mappable_count)
+      : computedGeography.locationParsedCount;
     const locationParsedPct = jobs.length ? Number(((locationParsedCount / jobs.length) * 100).toFixed(1)) : 0;
 
     const topDiscipline = Object.entries(topDisciplines)
@@ -900,7 +918,10 @@
 
     const rows = Array.isArray(jobs) ? jobs : [];
     rows.forEach((job) => {
-      const state = extractUsStateFromText(String(job?.location || ''));
+      const explicitState = String(job?.location_state || '').trim();
+      const state = US_STATE_COORDS[explicitState]
+        ? explicitState
+        : extractUsStateFromText(String(job?.location || ''));
       if (!state) return;
       counts[state] = (counts[state] || 0) + 1;
     });
@@ -1449,7 +1470,7 @@
       'kpi-quality-location',
       totalJobs > 0 ? formatRatio(locationParsedCount, totalJobs) : EMPTY_VALUE,
       'kpi-quality-location-reason',
-      totalJobs > 0 ? `${formatPercent(locationPct)} parseable location in unified dataset` : 'No rows after filters'
+      totalJobs > 0 ? `${formatPercent(locationPct)} U.S.-mappable location in unified dataset` : 'No rows after filters'
     );
 
     setCardValue(
@@ -1691,6 +1712,17 @@
 
   function ensureChartJs() {
     return typeof Chart !== 'undefined';
+  }
+
+  function configureChartDefaults() {
+    if (!ensureChartJs()) return;
+    Chart.defaults.animation = false;
+    if (Chart.defaults.transitions?.active?.animation) {
+      Chart.defaults.transitions.active.animation.duration = 0;
+    }
+    if (Chart.defaults.transitions?.resize?.animation) {
+      Chart.defaults.transitions.resize.animation.duration = 0;
+    }
   }
 
   function ensureZoomPluginRegistered() {
@@ -2044,15 +2076,15 @@
         datasets: [{
           label: 'Nominal Avg Salary',
           data: salaryRows.map((r) => r.avgNominal),
-          backgroundColor: '#0284c7',
-          borderColor: '#000000',
+          backgroundColor: CHART_COLOR.water,
+          borderColor: CHART_COLOR.ink,
           borderWidth: 1,
           borderSkipped: false
         }, {
           label: 'COL-Adjusted Avg Salary (Nebraska baseline)',
           data: salaryRows.map((r) => r.avgAdjusted),
-          backgroundColor: '#0f766e',
-          borderColor: '#000000',
+          backgroundColor: CHART_COLOR.spruce,
+          borderColor: CHART_COLOR.ink,
           borderWidth: 1,
           borderSkipped: false
         }]
@@ -2228,13 +2260,13 @@
               label: trendDatasetLabel,
               data: trendValues,
               parsing: false,
-              borderColor: '#0f766e',
-              backgroundColor: 'rgba(15, 118, 110, 0.2)',
+              borderColor: CHART_COLOR.spruce,
+              backgroundColor: CHART_COLOR.spruceFill,
               pointRadius: trendMode === 'daily' ? 4 : 3,
               pointHoverRadius: trendMode === 'daily' ? 6 : 5,
               pointHitRadius: 10,
-              pointBackgroundColor: '#0f766e',
-              pointBorderColor: '#ffffff',
+              pointBackgroundColor: CHART_COLOR.spruce,
+              pointBorderColor: CHART_COLOR.paper,
               pointBorderWidth: 1.5,
               tension: 0.25,
               spanGaps: true,
@@ -2318,8 +2350,8 @@
                   },
                   drag: {
                     enabled: true,
-                    backgroundColor: 'rgba(15, 118, 110, 0.18)',
-                    borderColor: '#0f766e',
+                    backgroundColor: CHART_COLOR.spruceFill,
+                    borderColor: CHART_COLOR.spruce,
                     borderWidth: 1
                   }
                 },
@@ -2368,7 +2400,7 @@
             datasets: [{
               data: latestDisciplineRows.map((r) => r[1]),
               backgroundColor: latestDisciplineRows.map((r) => getDisciplineColor(r[0])),
-              borderColor: '#000000',
+              borderColor: CHART_COLOR.ink,
               borderWidth: 1
             }]
           },
@@ -2388,7 +2420,7 @@
                 offset: (context) => (doughnutLabelIsLarge(context) ? 0 : 4),
                 clamp: true,
                 clip: false,
-                color: (context) => (doughnutLabelIsLarge(context) ? '#ffffff' : '#111111'),
+                color: (context) => (doughnutLabelIsLarge(context) ? CHART_COLOR.paper : CHART_COLOR.ink),
                 font: {
                   weight: '600',
                   size: 11
@@ -2417,7 +2449,7 @@
             datasets: [{
               data: overallDisciplineRows.map((r) => r[1]),
               backgroundColor: overallDisciplineRows.map((r) => getDisciplineColor(r[0])),
-              borderColor: '#000000',
+              borderColor: CHART_COLOR.ink,
               borderWidth: 1
             }]
           },
@@ -2437,7 +2469,7 @@
                 offset: (context) => (doughnutLabelIsLarge(context) ? 0 : 4),
                 clamp: true,
                 clip: false,
-                color: (context) => (doughnutLabelIsLarge(context) ? '#ffffff' : '#111111'),
+                color: (context) => (doughnutLabelIsLarge(context) ? CHART_COLOR.paper : CHART_COLOR.ink),
                 font: {
                   weight: '600',
                   size: 11
@@ -2468,8 +2500,8 @@
             datasets: [{
               label: `Avg Posted Positions / Month (${seasonality.yearsCount} years)`,
               data: seasonality.avgByMonth,
-              backgroundColor: '#0f766e',
-              borderColor: '#000000',
+              backgroundColor: CHART_COLOR.spruce,
+              borderColor: CHART_COLOR.ink,
               borderWidth: 1,
               borderSkipped: false
             }]
@@ -2508,7 +2540,7 @@
     const map = L.map('leaflet-map').setView([37.8, -96], 4);
     const markerColor = selectedDiscipline && selectedDiscipline !== GEOGRAPHY_DISCIPLINE_ALL
       ? getDisciplineColor(selectedDiscipline)
-      : '#0f766e';
+      : CHART_COLOR.spruce;
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors',
       maxZoom: 19
@@ -2520,7 +2552,7 @@
       L.circleMarker(coords, {
         radius: Math.max(5, Math.min(16, Math.sqrt(asNumber(count)) * 2.8)),
         fillColor: markerColor,
-        color: '#000000',
+        color: CHART_COLOR.ink,
         weight: 1,
         opacity: 1,
         fillOpacity: 0.8
@@ -2554,6 +2586,7 @@
       bindSidebarActive();
       bindTrendInteractionControls();
       renderScaffoldPlaceholders();
+      configureChartDefaults();
 
       const [analytics, positionsData, verifiedData, enhanced, exportData] = await Promise.all([
         fetchJsonWithFallback(SOURCE_PATHS.analytics),

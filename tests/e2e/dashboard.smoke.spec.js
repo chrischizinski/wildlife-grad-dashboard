@@ -46,7 +46,7 @@ test('dashboard uses relative data paths and shows data quality labels', async (
   }
 
   await expect(page.locator('#kpi-quality-salary-reason')).toContainText('parseable salary');
-  await expect(page.locator('#kpi-quality-location-reason')).toContainText('parseable location');
+  await expect(page.locator('#kpi-quality-location-reason')).toContainText('U.S.-mappable location');
   await expect(page.locator('#kpi-quality-updated-reason')).toContainText('analytics metadata');
   await expect(page.locator('#kpi-quality-updated')).not.toHaveText('—');
   await expect(page.locator('#kpi-quality-capture-reason')).toContainText('source-data capture');

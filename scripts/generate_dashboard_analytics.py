@@ -87,6 +87,128 @@ DISCIPLINE_CONFIDENCE_QUEUE_CSV = Path("data/processed/discipline_confidence_que
 WEB_DISCIPLINE_CONFIDENCE_QUEUE_JSON = Path("web/data/discipline_confidence_queue.json")
 COL_ADJUSTER = CostOfLivingAdjuster()
 
+US_STATE_NAMES = (
+    "Alabama",
+    "Alaska",
+    "Arizona",
+    "Arkansas",
+    "California",
+    "Colorado",
+    "Connecticut",
+    "Delaware",
+    "Florida",
+    "Georgia",
+    "Hawaii",
+    "Idaho",
+    "Illinois",
+    "Indiana",
+    "Iowa",
+    "Kansas",
+    "Kentucky",
+    "Louisiana",
+    "Maine",
+    "Maryland",
+    "Massachusetts",
+    "Michigan",
+    "Minnesota",
+    "Mississippi",
+    "Missouri",
+    "Montana",
+    "Nebraska",
+    "Nevada",
+    "New Hampshire",
+    "New Jersey",
+    "New Mexico",
+    "New York",
+    "North Carolina",
+    "North Dakota",
+    "Ohio",
+    "Oklahoma",
+    "Oregon",
+    "Pennsylvania",
+    "Rhode Island",
+    "South Carolina",
+    "South Dakota",
+    "Tennessee",
+    "Texas",
+    "Utah",
+    "Vermont",
+    "Virginia",
+    "Washington",
+    "West Virginia",
+    "Wisconsin",
+    "Wyoming",
+)
+US_STATE_ABBREVIATIONS = {
+    "AL": "Alabama",
+    "AK": "Alaska",
+    "AZ": "Arizona",
+    "AR": "Arkansas",
+    "CA": "California",
+    "CO": "Colorado",
+    "CT": "Connecticut",
+    "DE": "Delaware",
+    "FL": "Florida",
+    "GA": "Georgia",
+    "HI": "Hawaii",
+    "ID": "Idaho",
+    "IL": "Illinois",
+    "IN": "Indiana",
+    "IA": "Iowa",
+    "KS": "Kansas",
+    "KY": "Kentucky",
+    "LA": "Louisiana",
+    "ME": "Maine",
+    "MD": "Maryland",
+    "MA": "Massachusetts",
+    "MI": "Michigan",
+    "MN": "Minnesota",
+    "MS": "Mississippi",
+    "MO": "Missouri",
+    "MT": "Montana",
+    "NE": "Nebraska",
+    "NV": "Nevada",
+    "NH": "New Hampshire",
+    "NJ": "New Jersey",
+    "NM": "New Mexico",
+    "NY": "New York",
+    "NC": "North Carolina",
+    "ND": "North Dakota",
+    "OH": "Ohio",
+    "OK": "Oklahoma",
+    "OR": "Oregon",
+    "PA": "Pennsylvania",
+    "RI": "Rhode Island",
+    "SC": "South Carolina",
+    "SD": "South Dakota",
+    "TN": "Tennessee",
+    "TX": "Texas",
+    "UT": "Utah",
+    "VT": "Vermont",
+    "VA": "Virginia",
+    "WA": "Washington",
+    "WV": "West Virginia",
+    "WI": "Wisconsin",
+    "WY": "Wyoming",
+}
+UNMAPPABLE_LOCATION_VALUES = {
+    "",
+    "multiple",
+    "n/a",
+    "na",
+    "none",
+    "not specified",
+    "remote",
+    "remote work allowed",
+    "unknown",
+    "various",
+}
+US_STATE_NAME_REGEXES = tuple(
+    (state, re.compile(rf"\b{re.escape(state)}\b", re.IGNORECASE))
+    for state in sorted(US_STATE_NAMES, key=len, reverse=True)
+)
+US_STATE_ABBREVIATION_RE = re.compile(r"\b([A-Z]{2})\b")
+
 
 def normalize_discipline(disc: str) -> str:
     """Map a discipline to one of the 8 canonical categories."""
@@ -117,6 +239,94 @@ def discipline_sort_key(discipline: str) -> tuple[int, int, str]:
 def sort_disciplines(disciplines: List[str]) -> List[str]:
     """Sort discipline names with canonical order and Other-last rule."""
     return sorted(disciplines, key=discipline_sort_key)
+
+
+def _location_candidates(location: Any) -> List[str]:
+    """Return location parsing candidates, prioritizing parenthetical city/state."""
+    raw = str(location or "").strip()
+    if not raw:
+        return []
+
+    parenthetical = [
+        match.strip()
+        for match in re.findall(r"\(([^()]*)\)", raw)
+        if match and match.strip()
+    ]
+    candidates = list(reversed(parenthetical))
+    candidates.append(raw)
+    return candidates
+
+
+def normalize_location_to_us_state(location: Any) -> Optional[str]:
+    """
+    Extract a canonical U.S. state name from messy location text.
+
+    The scraper commonly stores addresses and institution strings such as
+    "6300 Ocean Drive (Corpus Christi, Texas)" or
+    "6405 Old Main Hill, Logan, UT 84321, USA (Logan, Utah)". Parenthetical
+    city/state content is the most reliable signal, so it is checked first.
+    """
+    raw = str(location or "").strip()
+    if raw.lower() in UNMAPPABLE_LOCATION_VALUES:
+        return None
+
+    for candidate in _location_candidates(raw):
+        cleaned = re.sub(r"\s+", " ", candidate).strip(" ,;|()[]")
+        if cleaned.lower() in UNMAPPABLE_LOCATION_VALUES:
+            continue
+
+        for state, rx in US_STATE_NAME_REGEXES:
+            if rx.search(cleaned):
+                return state
+
+        for match in US_STATE_ABBREVIATION_RE.finditer(cleaned.upper()):
+            state = US_STATE_ABBREVIATIONS.get(match.group(1))
+            if state:
+                return state
+
+    return None
+
+
+def has_meaningful_location_text(location: Any) -> bool:
+    """Return True when raw location text contains more than generic placeholders."""
+    raw = str(location or "").strip()
+    lowered = raw.lower()
+    if lowered in UNMAPPABLE_LOCATION_VALUES:
+        return False
+
+    parts = [part.strip() for part in re.split(r"[|;/]+", lowered) if part.strip()]
+    if parts and all(part in UNMAPPABLE_LOCATION_VALUES for part in parts):
+        return False
+
+    return bool(raw)
+
+
+def enrich_location_fields(rows: List[Dict[str, Any]]) -> Dict[str, int]:
+    """Add canonical U.S. state fields used by dashboard geography metrics."""
+    mappable_count = 0
+    nonempty_count = 0
+
+    for row in rows:
+        raw_location = str(row.get("location") or "").strip()
+        if has_meaningful_location_text(raw_location):
+            nonempty_count += 1
+
+        state = normalize_location_to_us_state(raw_location)
+        if state:
+            row["location_state"] = state
+            row["location_country"] = "US"
+            row["is_us_mappable"] = True
+            mappable_count += 1
+        else:
+            row.pop("location_state", None)
+            row.pop("location_country", None)
+            row["is_us_mappable"] = False
+
+    return {
+        "location_present": nonempty_count,
+        "us_mappable": mappable_count,
+        "unmappable": max(0, len(rows) - mappable_count),
+    }
 
 
 def _as_positive_float(value: Any) -> Optional[float]:
@@ -511,6 +721,7 @@ def load_and_merge_data() -> List[Dict[str, Any]]:
     sanitized_positions = sanitize_and_classify_positions(deduped_positions)
     dropped_guardrail = len(deduped_positions) - len(sanitized_positions)
     compensation_backfill = enrich_compensation_fields(sanitized_positions)
+    location_enrichment = enrich_location_fields(sanitized_positions)
     print(
         f"\n📊 Merged dataset: {len(sanitized_positions)} unique graduate positions "
         f"({len(deduped_positions)} deduped; dropped {dropped_guardrail} non-grad by guardrails)\n"
@@ -520,6 +731,11 @@ def load_and_merge_data() -> List[Dict[str, Any]]:
         f"{compensation_backfill['salary_annualized']} salary-annualized, "
         f"{compensation_backfill['cost_index_backfilled']} cost-index backfilled, "
         f"{compensation_backfill['adjusted_backfilled']} Lincoln-adjusted backfilled"
+    )
+    print(
+        "  ↳ Location enrichment: "
+        f"{location_enrichment['us_mappable']} U.S.-mappable, "
+        f"{location_enrichment['location_present']} non-empty raw locations"
     )
 
     return sanitized_positions
@@ -666,15 +882,22 @@ def calculate_analytics(data: List[Dict[str, Any]]) -> Dict[str, Any]:
         and _as_positive_float(p.get("salary_lincoln_adjusted")) is not None
     )
 
-    # Geographic summary
+    # Geographic summary. Keep this generator-side so all dashboard surfaces
+    # agree on one canonical U.S. state parser.
     location_counts = Counter()
     for p in data:
-        loc = p.get("location", "")
-        if loc:
-            parts = [part.strip() for part in loc.split(",")]
-            if parts:
-                location = parts[-1] if len(parts[-1]) < 20 else parts[0]
-                location_counts[location] += 1
+        state = p.get("location_state") or normalize_location_to_us_state(
+            p.get("location", "")
+        )
+        if state:
+            location_counts[state] += 1
+
+    location_present_count = sum(
+        1
+        for p in data
+        if has_meaningful_location_text(p.get("location"))
+    )
+    us_mappable_count = sum(location_counts.values())
 
     # Time series with normalized disciplines
     monthly_counts = defaultdict(int)
@@ -745,9 +968,21 @@ def calculate_analytics(data: List[Dict[str, Any]]) -> Dict[str, Any]:
             "graduate_positions": total_positions,
             "positions_with_salary": positions_with_salary,
             "positions_with_col_adjusted": positions_with_col_adjusted,
+            "positions_with_location": location_present_count,
+            "positions_with_us_mappable_location": us_mappable_count,
         },
         "top_disciplines": top_disciplines,
         "geographic_summary": dict(location_counts.most_common(25)),
+        "geographic_quality": {
+            "location_present_count": location_present_count,
+            "us_mappable_count": us_mappable_count,
+            "unmappable_count": max(0, total_positions - us_mappable_count),
+            "us_mappable_pct": (
+                round((us_mappable_count / total_positions) * 100, 1)
+                if total_positions
+                else 0
+            ),
+        },
         "time_series": time_series,
         "snapshot_availability": snapshot_availability,
         # Backward-compatible alias. New dashboard code reads metadata.freshness.

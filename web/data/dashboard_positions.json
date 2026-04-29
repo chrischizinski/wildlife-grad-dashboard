@@ -32,7 +32,8 @@
     "salary_annualized": 5000.0,
     "cost_of_living_index": 1.05,
     "salary_lincoln_adjusted": 4761.9,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "is_us_mappable": false
   },
   {
     "title": "Doctoral Graduate Research Assistant Position",
@@ -71,7 +72,10 @@
     "salary_annualized": 30618.0,
     "cost_of_living_index": 1.0,
     "salary_lincoln_adjusted": 30618.0,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Pennsylvania",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Ph.D/MS Positions: Plant quarantine & Invasion biology School of Forestry -Beijing Forestry University",
@@ -110,7 +114,8 @@
     "salary_annualized": 5000.0,
     "cost_of_living_index": 1.05,
     "salary_lincoln_adjusted": 4761.9,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "is_us_mappable": false
   },
   {
     "title": "MS Positions: Plant and Microbial Comparative Genomics - School of Grassland Science - Beijing Forestry University",
@@ -145,7 +150,8 @@
     "salary_annualized": 5000.0,
     "cost_of_living_index": 1.05,
     "salary_lincoln_adjusted": 4761.9,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "is_us_mappable": false
   },
   {
     "title": "Master in Environmental Management Degree",
@@ -176,7 +182,8 @@
     "last_updated": "2026-02-19T18:11:49.195879+00:00",
     "discipline_primary": "Environmental Sciences",
     "discipline_secondary": "",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "is_us_mappable": false
   },
   {
     "title": "PhD project - Snowshoe hare responses to dynamic landscapes",
@@ -213,7 +220,8 @@
     "last_updated": "2026-02-19T18:11:49.242747+00:00",
     "discipline_primary": "Environmental Sciences",
     "discipline_secondary": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "is_us_mappable": false
   },
   {
     "title": "PhD project - Assessing boreal forest dynamics under climate change",
@@ -244,7 +252,8 @@
     "last_updated": "2026-02-19T18:11:49.291624+00:00",
     "discipline_primary": "Environmental Sciences",
     "discipline_secondary": "Forestry and Habitat",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "is_us_mappable": false
   },
   {
     "title": "Graduate Research or Teaching Assistantships (Master's)",
@@ -279,7 +288,10 @@
     "salary_annualized": 24096.0,
     "cost_of_living_index": 1.2,
     "salary_lincoln_adjusted": 20080.0,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Washington",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Ph.D/MS Positions: Global change ecology, grassland ecology and ecological stoichiometry School of Grassland Science -Beijing Forestry University",
@@ -314,7 +326,8 @@
     "salary_annualized": 5000.0,
     "cost_of_living_index": 1.05,
     "salary_lincoln_adjusted": 4761.9,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "is_us_mappable": false
   },
   {
     "title": "MS Positions: Forest ecology/ Ecological meteorology/Forest fire ecology, School of Ecology and Nature Conservation-Beijing Forestry University",
@@ -354,7 +367,8 @@
     "salary_annualized": 5000.0,
     "cost_of_living_index": 1.05,
     "salary_lincoln_adjusted": 4761.9,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "is_us_mappable": false
   },
   {
     "title": "Ph.D/MS Positions: Plant quarantine & Invasion biology",
@@ -393,7 +407,8 @@
     "salary_annualized": 5000.0,
     "cost_of_living_index": 1.05,
     "salary_lincoln_adjusted": 4761.9,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "is_us_mappable": false
   },
   {
     "title": "Ph.D/MS Positions: Ecological Restoration, Grassland Management School of Grassland Science -Beijing Forestry University",
@@ -433,7 +448,8 @@
     "salary_annualized": 5000.0,
     "cost_of_living_index": 1.05,
     "salary_lincoln_adjusted": 4761.9,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "is_us_mappable": false
   },
   {
     "title": "Graduate Assistantship in Environmental Microbiology",
@@ -468,7 +484,10 @@
     "salary_annualized": 14000.0,
     "cost_of_living_index": 0.9,
     "salary_lincoln_adjusted": 15555.56,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Georgia",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Ph.D Positions: Ecological and environmental restoration, Solid waste management, School of Environmental Science and Engineering-Beijing Forestry University",
@@ -508,7 +527,8 @@
     "salary_annualized": 5500.0,
     "cost_of_living_index": 1.05,
     "salary_lincoln_adjusted": 5238.1,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "is_us_mappable": false
   },
   {
     "title": "MS Positions: Behavioral ecology of forest pests, College of Forestry-Beijing Forestry University",
@@ -543,7 +563,8 @@
     "salary_annualized": 5000.0,
     "cost_of_living_index": 1.05,
     "salary_lincoln_adjusted": 4761.9,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "is_us_mappable": false
   },
   {
     "title": "Ph.D/MS Positions: Coastal/Urban wetland ecology",
@@ -583,7 +604,8 @@
     "salary_annualized": 5500.0,
     "cost_of_living_index": 1.05,
     "salary_lincoln_adjusted": 5238.1,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "is_us_mappable": false
   },
   {
     "title": "Now Accepting Summer and Fall 2026 Applications! Master of Wildlife and Fisheries Resources Program",
@@ -614,7 +636,8 @@
     "last_updated": "2026-02-19T18:11:47.854675+00:00",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "is_us_mappable": false
   },
   {
     "title": "Multiple MS positions at Austin Peay State University",
@@ -645,7 +668,10 @@
     "last_updated": "2026-02-19T18:12:10.502931+00:00",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "Human Dimensions",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "location_state": "Tennessee",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "MS or PhD Position in Urban Nature-Based Solutions Assessment",
@@ -680,7 +706,10 @@
     "salary_annualized": 24500.0,
     "cost_of_living_index": 0.8,
     "salary_lincoln_adjusted": 30625.0,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Alabama",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Graduate Student Opportunities in Behavioral Ecology of Fish",
@@ -711,7 +740,10 @@
     "last_updated": "2026-02-19T18:11:55.709709+00:00",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "location_state": "Indiana",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Ph.D. position - CrustNet",
@@ -746,7 +778,10 @@
     "salary_annualized": 28000.0,
     "cost_of_living_index": 0.95,
     "salary_lincoln_adjusted": 29473.68,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Texas",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Graduate Research Assistant/Ant Colony Impacts on Ecosystems",
@@ -785,7 +820,10 @@
     "discipline": "Entomology",
     "discipline_refinement_source": "rule",
     "salary_annualized": 21000.0,
-    "salary_adjustment_source": "source_data"
+    "salary_adjustment_source": "source_data",
+    "location_state": "Texas",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "PhD Position at University of Alaska Fairbanks",
@@ -816,7 +854,10 @@
     "last_updated": "2026-02-19T18:11:49.583267+00:00",
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "location_state": "Alaska",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "MS Assistantship: Use of private, working harvests as stopover habitat by migratory songbirds in West Virginia; filling in the knowledge gaps",
@@ -847,7 +888,10 @@
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "",
     "discipline": "Forestry and Habitat",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "location_state": "West Virginia",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "PhD and MS Assistantships in Forest Soils and Biogeochemistry",
@@ -878,7 +922,10 @@
     "discipline_primary": "Environmental Sciences",
     "discipline_secondary": "Forestry and Habitat",
     "discipline": "Environmental Sciences",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "location_state": "Alabama",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Master's Level Graduate Research Assistantship: Virtual Monitoring/Herding – Sheep",
@@ -910,7 +957,10 @@
     "discipline_primary": "Agriculture",
     "discipline_secondary": "",
     "discipline": "Agriculture",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "location_state": "Idaho",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "PhD Student in amphibian ecology at Lingnan University (Hong Kong, China)",
@@ -941,7 +991,8 @@
     "discipline_primary": "Wildlife",
     "discipline_secondary": "",
     "discipline": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "is_us_mappable": false
   },
   {
     "title": "PhD Assistantship in Arthropod Biodiversity",
@@ -972,7 +1023,10 @@
     "discipline_primary": "Entomology",
     "discipline_secondary": "",
     "discipline": "Entomology",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "location_state": "Arkansas",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "MS position - climate change and fire effects on coastal vegetation - Marshall U, Palmquist lab",
@@ -1003,7 +1057,10 @@
     "discipline_primary": "Environmental Sciences",
     "discipline_secondary": "Forestry and Habitat",
     "discipline": "Environmental Sciences",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "location_state": "West Virginia",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "MS position - impacts of global change drivers on dryland plant communities - Marshall U, Palmquist lab",
@@ -1034,7 +1091,10 @@
     "discipline_primary": "Environmental Sciences",
     "discipline_secondary": "Entomology",
     "discipline": "Environmental Sciences",
-    "discipline_refinement_source": "secondary_ml"
+    "discipline_refinement_source": "secondary_ml",
+    "location_state": "West Virginia",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Master's research assistantship: black bass conservation & ecology",
@@ -1065,7 +1125,10 @@
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "Human Dimensions",
     "discipline": "Fisheries and Aquatic",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "location_state": "North Carolina",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Graduate Research Assistant (M.S.)",
@@ -1093,10 +1156,13 @@
     "grad_confidence": 0.85,
     "classification_backfilled_at": "2026-02-19T18:06:18.298934+00:00",
     "classification_backfill_source": "GraduatePositionDetector",
-    "discipline_primary": "Entomology",
-    "discipline_secondary": "Wildlife",
-    "discipline": "Entomology",
-    "discipline_refinement_source": "secondary_ml"
+    "discipline_primary": "Other",
+    "discipline_secondary": "",
+    "discipline": "Other",
+    "discipline_refinement_source": "rule",
+    "location_state": "Wisconsin",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "M.S. Teaching Assistantship",
@@ -1127,7 +1193,10 @@
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "",
     "discipline": "Fisheries and Aquatic",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "location_state": "Louisiana",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "M.S. Position – Using drones to study urban parrots in Southern California (Cal Poly Pomona)",
@@ -1158,7 +1227,10 @@
     "discipline_primary": "Other",
     "discipline_secondary": "",
     "discipline": "Other",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "location_state": "California",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "PhD Graduate Assistantship: Restoration of Dune Habitat for Dunes Sagebrush Lizard",
@@ -1189,7 +1261,10 @@
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "",
     "discipline": "Forestry and Habitat",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "location_state": "Texas",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Honey bee graduate research assistant",
@@ -1220,7 +1295,10 @@
     "discipline_primary": "Entomology",
     "discipline_secondary": "",
     "discipline": "Entomology",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "location_state": "North Dakota",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "PhD Student in Landscape Ecology at The University of Texas at El Paso",
@@ -1251,7 +1329,10 @@
     "discipline_primary": "Other",
     "discipline_secondary": "",
     "discipline": "Other",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "location_state": "Texas",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "MS student",
@@ -1282,7 +1363,10 @@
     "discipline_primary": "Wildlife",
     "discipline_secondary": "",
     "discipline": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "location_state": "Utah",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "M.S. (Biology) Graduate Research Assistantship Positions in Herpetology, Spatial Ecology, and Behavioral Ecology",
@@ -1321,7 +1405,10 @@
     "discipline": "Wildlife",
     "discipline_refinement_source": "rule",
     "salary_annualized": 26159.0,
-    "salary_adjustment_source": "source_data"
+    "salary_adjustment_source": "source_data",
+    "location_state": "Texas",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "M.S. Graduate Assistantship – Deer population demographics prior to elk reintroduction",
@@ -1357,7 +1444,10 @@
     "discipline": "Wildlife",
     "discipline_refinement_source": "rule",
     "salary_annualized": 28000.0,
-    "salary_adjustment_source": "source_data"
+    "salary_adjustment_source": "source_data",
+    "location_state": "Minnesota",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "MS - Assistantship - Migratory Game Bird Wintering Habitat Assessment - Graduate Research Assistant II",
@@ -1393,7 +1483,10 @@
     "discipline": "Wildlife",
     "discipline_refinement_source": "rule",
     "salary_annualized": 18000.0,
-    "salary_adjustment_source": "source_data"
+    "salary_adjustment_source": "source_data",
+    "location_state": "Texas",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Ph.D. Research Assistantship in Fisheries Conflict and Food Security - Start date Fall 2025 or Spring 2026",
@@ -1429,7 +1522,10 @@
     "discipline": "Fisheries and Aquatic",
     "discipline_refinement_source": "rule",
     "salary_annualized": 26700.0,
-    "salary_adjustment_source": "source_data"
+    "salary_adjustment_source": "source_data",
+    "location_state": "Massachusetts",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "M.S. Research Assistantship in Manta Ray Conservation and Bycatch Mitigation",
@@ -1465,7 +1561,10 @@
     "discipline": "Fisheries and Aquatic",
     "discipline_refinement_source": "rule",
     "salary_annualized": 24700.0,
-    "salary_adjustment_source": "source_data"
+    "salary_adjustment_source": "source_data",
+    "location_state": "Massachusetts",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Ph.D. Research Assistantship in Fisheries Conflict and Food Security",
@@ -1496,7 +1595,10 @@
     "discipline_primary": "Fisheries and Aquatic",
     "discipline_secondary": "",
     "discipline": "Fisheries and Aquatic",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "location_state": "Massachusetts",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "MS Graduate Assistantship in Aquatic Ecology, Fisheries",
@@ -1532,7 +1634,10 @@
     "discipline": "Fisheries and Aquatic",
     "discipline_refinement_source": "rule",
     "salary_annualized": 22000.0,
-    "salary_adjustment_source": "source_data"
+    "salary_adjustment_source": "source_data",
+    "location_state": "South Carolina",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "MS graduate research assistantship - mountain goat adaptive management in Montana",
@@ -1566,7 +1671,10 @@
       "cleaned_location": "Missoula, Montana"
     },
     "discipline": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "location_state": "Montana",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Graduate Assistantship (M.S.) - Forestry/Forest Biometrics",
@@ -1602,7 +1710,10 @@
     "discipline": "Forestry and Habitat",
     "discipline_refinement_source": "rule",
     "salary_annualized": 21000.0,
-    "salary_adjustment_source": "source_data"
+    "salary_adjustment_source": "source_data",
+    "location_state": "Tennessee",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Graduate Assistantship (M.S.)",
@@ -1633,7 +1744,10 @@
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "",
     "discipline": "Forestry and Habitat",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "location_state": "Tennessee",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "PhD and MS Positions in Water Security and Sustainability",
@@ -1670,7 +1784,10 @@
     "data_enhanced": true,
     "enhanced_at": "2025-07-13T14:47:11.244933+00:00",
     "discipline": "Environmental Sciences",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "location_state": "Texas",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Ph.D. or M.S. Graduate Research Assistantship – Physical, Ecological, and Social Dynamics of South Carolina Tidal Trunks",
@@ -1709,7 +1826,8 @@
     "discipline": "Environmental Sciences",
     "discipline_refinement_source": "rule",
     "salary_annualized": 22000.0,
-    "salary_adjustment_source": "source_data"
+    "salary_adjustment_source": "source_data",
+    "is_us_mappable": false
   },
   {
     "title": "MS Research Assistant - Natural Resource Sciences",
@@ -1745,7 +1863,10 @@
     "discipline": "Wildlife",
     "discipline_refinement_source": "rule",
     "salary_annualized": 22000.0,
-    "salary_adjustment_source": "source_data"
+    "salary_adjustment_source": "source_data",
+    "location_state": "North Dakota",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "PhD Research Assistantship - Feral Swine Ecology and Management",
@@ -1781,7 +1902,10 @@
     "discipline": "Wildlife",
     "discipline_refinement_source": "rule",
     "salary_annualized": 22000.0,
-    "salary_adjustment_source": "source_data"
+    "salary_adjustment_source": "source_data",
+    "location_state": "Texas",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Ph.D. or M.Sc.- Graduate Assistantship in American Black Duck Movement Ecology",
@@ -1817,7 +1941,10 @@
     "discipline": "Wildlife",
     "discipline_refinement_source": "rule",
     "salary_annualized": 43000.0,
-    "salary_adjustment_source": "source_data"
+    "salary_adjustment_source": "source_data",
+    "location_state": "Rhode Island",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "PhD Research Assistantship",
@@ -1848,7 +1975,10 @@
     "discipline_primary": "Wildlife",
     "discipline_secondary": "",
     "discipline": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "location_state": "Texas",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "MS - Assistantship - Wetland Habitat Dynamics in the Chihuahuan Desert - Graduate Research Assistant II",
@@ -1884,7 +2014,10 @@
     "discipline": "Forestry and Habitat",
     "discipline_refinement_source": "rule",
     "salary_annualized": 18000.0,
-    "salary_adjustment_source": "source_data"
+    "salary_adjustment_source": "source_data",
+    "location_state": "Texas",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "MS",
@@ -1915,7 +2048,10 @@
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "",
     "discipline": "Forestry and Habitat",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "location_state": "Texas",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "PhD Graduate Research Assistantship: Virtual Fence – Range Cattle",
@@ -1954,7 +2090,10 @@
     "discipline": "Agriculture",
     "discipline_refinement_source": "rule",
     "salary_annualized": 31000.0,
-    "salary_adjustment_source": "source_data"
+    "salary_adjustment_source": "source_data",
+    "location_state": "Idaho",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Camera Trapping Survival and Abundance Master's Position (RI)",
@@ -1983,7 +2122,10 @@
     "scraper_version": "2.0",
     "discipline_primary": "Other",
     "discipline_secondary": "",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "location_state": "Rhode Island",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Master of Science Graduate Position: Aquatic Weed Science",
@@ -2016,7 +2158,10 @@
     "salary_annualized": 20000.0,
     "cost_of_living_index": 1.0,
     "salary_lincoln_adjusted": 20000.0,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Minnesota",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Community‑Engaged Resilience Research Assistantship",
@@ -2049,7 +2194,10 @@
     "salary_annualized": 18000.0,
     "cost_of_living_index": 0.9,
     "salary_lincoln_adjusted": 20000.0,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Idaho",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Graduate Student Assistantship – Forest Management and Environmental Education",
@@ -2078,7 +2226,10 @@
     "scraper_version": "2.0",
     "discipline_primary": "Human Dimensions",
     "discipline_secondary": "Forestry and Habitat",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "location_state": "New Hampshire",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "MS Graduate Research Assistant (Mexican Ducks and Managed Wetlands)",
@@ -2117,7 +2268,10 @@
     "salary_annualized": 18000.0,
     "cost_of_living_index": 0.95,
     "salary_lincoln_adjusted": 18947.37,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Texas",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Master’s Graduate Assistantship: Quantitative ecology",
@@ -2150,7 +2304,10 @@
     "salary_annualized": 27500.0,
     "cost_of_living_index": 0.95,
     "salary_lincoln_adjusted": 28947.37,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Florida",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "M.S. Student Graduate Research Assistantships",
@@ -2183,7 +2340,10 @@
     "salary_annualized": 28000.0,
     "cost_of_living_index": 0.85,
     "salary_lincoln_adjusted": 32941.18,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Kansas",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Masters or Ph.D. position in Human Dimensions of Endangered Species at Texas State University (start September 2026)",
@@ -2217,7 +2377,8 @@
     "scraper_version": "2.0",
     "discipline_primary": "Human Dimensions",
     "discipline_secondary": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "is_us_mappable": false
   },
   {
     "title": "Graduate Research Assistantship – Response of Pond Breeding Amphibians to Habitat Restoration",
@@ -2257,7 +2418,10 @@
     "salary_annualized": 20000.0,
     "cost_of_living_index": 0.8,
     "salary_lincoln_adjusted": 25000.0,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Louisiana",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Graduate Assistantships: Mussel Ecology – Texas A&M University",
@@ -2298,7 +2462,10 @@
     "salary_annualized": 32000.0,
     "cost_of_living_index": 0.95,
     "salary_lincoln_adjusted": 33684.21,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Texas",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "MSc or PhD position: Smallmouth Bass genomics in Lake Champlain",
@@ -2339,7 +2506,10 @@
     "salary_annualized": 34300.0,
     "cost_of_living_index": 1.05,
     "salary_lincoln_adjusted": 32666.67,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Vermont",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "MS and PhD Student Opportunities at Utah State University (Forest Ecology, Disturbance Ecology, Fire Ecology)",
@@ -2380,7 +2550,10 @@
     "salary_annualized": 23500.0,
     "cost_of_living_index": 0.95,
     "salary_lincoln_adjusted": 24736.84,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Utah",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "PhD position: Waterfowl use of farm-adjacent habitats and HPAI risk in Canada",
@@ -2421,7 +2594,8 @@
     "salary_annualized": 35000.0,
     "cost_of_living_index": 1.1,
     "salary_lincoln_adjusted": 31818.18,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "is_us_mappable": false
   },
   {
     "title": "MS Assistantship - Turtle Research in the Coastal Ecology Lab",
@@ -2456,7 +2630,10 @@
     "salary_annualized": 18000.0,
     "cost_of_living_index": 0.8,
     "salary_lincoln_adjusted": 22500.0,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Louisiana",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "PhD Research assistantships at Clemson University: American Shad spawning in the Santee-Cooper Basin",
@@ -2497,7 +2674,10 @@
     "salary_annualized": 30000.0,
     "cost_of_living_index": 0.85,
     "salary_lincoln_adjusted": 35294.12,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "South Carolina",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "MS Research assistantships at Clemson University: American Shad habitat spawning in the Santee-Cooper Basin",
@@ -2538,7 +2718,10 @@
     "salary_annualized": 25000.0,
     "cost_of_living_index": 0.85,
     "salary_lincoln_adjusted": 29411.76,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "South Carolina",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Graduate Assistantship in Environmental Microbiology",
@@ -2574,7 +2757,10 @@
     "discipline": "Environmental Sciences",
     "discipline_refinement_source": "rule",
     "salary_annualized": 14000.0,
-    "salary_adjustment_source": "source_data"
+    "salary_adjustment_source": "source_data",
+    "location_state": "Georgia",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Doctoral Student in Environmental Toxicology",
@@ -2605,7 +2791,10 @@
     "discipline_primary": "Wildlife",
     "discipline_secondary": "Environmental Sciences",
     "discipline": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "location_state": "Texas",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Masters Research Assistant - Michigan State University, Quantitative Fisheries Center",
@@ -2640,7 +2829,10 @@
     "salary_annualized": 24000.0,
     "cost_of_living_index": 0.85,
     "salary_lincoln_adjusted": 28235.29,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Michigan",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Ph.D. Student in Fisheries Ecology",
@@ -2680,7 +2872,10 @@
     "salary_annualized": 30667.0,
     "cost_of_living_index": 0.8,
     "salary_lincoln_adjusted": 38333.75,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Louisiana",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "PhD Student, Movement Ecology of Midcontinent Mallards, Arkansas",
@@ -2719,7 +2914,10 @@
     "discipline": "Wildlife",
     "discipline_refinement_source": "rule",
     "salary_annualized": 30000.0,
-    "salary_adjustment_source": "source_data"
+    "salary_adjustment_source": "source_data",
+    "location_state": "Arkansas",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "PhD student position: Food web ecology and management of nonnative Mysis shrimp in Grand Lake, Colorado",
@@ -2756,7 +2954,10 @@
     "last_updated": "2026-04-05T05:41:51.007751+00:00",
     "discipline_primary": "Human Dimensions",
     "discipline_secondary": "Fisheries and Aquatic",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "location_state": "Colorado",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "MS research assistantship",
@@ -2791,7 +2992,10 @@
     "salary_annualized": 22000.0,
     "cost_of_living_index": 0.8,
     "salary_lincoln_adjusted": 27500.0,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Alabama",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "M.S. Graduate Assistantship – Sea Turtle Ecology & Stable Isotope Research",
@@ -2831,7 +3035,8 @@
     "salary_annualized": 15600.0,
     "cost_of_living_index": 1.0,
     "salary_lincoln_adjusted": 15600.0,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "is_us_mappable": false
   },
   {
     "title": "M.S. Graduate Research Assistantships Forestry - Southern Illinois University",
@@ -2866,7 +3071,10 @@
     "salary_annualized": 22000.0,
     "cost_of_living_index": 1.05,
     "salary_lincoln_adjusted": 20952.38,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Illinois",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Ph.D. Position: Avian movement modeling using Motus data",
@@ -2901,7 +3109,10 @@
     "salary_annualized": 30000.0,
     "cost_of_living_index": 0.8,
     "salary_lincoln_adjusted": 37500.0,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Alabama",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Graduate Assistantship (MS) – Small Mammal Response to Forest Restoration Practices",
@@ -2937,7 +3148,8 @@
     "last_updated": "2026-03-29T05:32:31.425879+00:00",
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "Wildlife",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "is_us_mappable": false
   },
   {
     "title": "PhD Graduate Assistantship, Avian Community and Population Responses to Northern Bobwhite Management",
@@ -2973,7 +3185,10 @@
     "discipline": "Wildlife",
     "discipline_refinement_source": "rule",
     "salary_annualized": 30000.0,
-    "salary_adjustment_source": "source_data"
+    "salary_adjustment_source": "source_data",
+    "location_state": "Texas",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "PhD Assistantship (University of Kentucky Department of Forestry & Natural Resources)",
@@ -3014,7 +3229,10 @@
     "salary_annualized": 31785.0,
     "cost_of_living_index": 0.8,
     "salary_lincoln_adjusted": 39731.25,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Kentucky",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Graduate Research Assistantship - Sandhill crane nesting ecology and population dynamics",
@@ -3055,7 +3273,10 @@
     "salary_annualized": 26000.0,
     "cost_of_living_index": 0.85,
     "salary_lincoln_adjusted": 30588.24,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Iowa",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Graduate Research Assistant (Bottomland Oak Ecology and Management)",
@@ -3094,7 +3315,10 @@
     "salary_annualized": 25000.0,
     "cost_of_living_index": 0.85,
     "salary_lincoln_adjusted": 29411.76,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Missouri",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "M.S. Position in Forest Entomology",
@@ -3133,7 +3357,10 @@
     "salary_annualized": 24300.0,
     "cost_of_living_index": 0.9,
     "salary_lincoln_adjusted": 27000.0,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Georgia",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "M.S. Assistantship in rangeland vegetation modeling at Fresno State",
@@ -3164,7 +3391,10 @@
     "last_updated": "2026-03-29T05:32:31.957675+00:00",
     "discipline_primary": "Forestry and Habitat",
     "discipline_secondary": "",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "location_state": "California",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Ecosystem modeling Ph.D. Student Assistantship - University of Vermont",
@@ -3205,7 +3435,10 @@
     "salary_annualized": 33000.0,
     "cost_of_living_index": 1.05,
     "salary_lincoln_adjusted": 31428.57,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Vermont",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "PhD Student Position - Climate Change Biology - University of Wyoming",
@@ -3246,7 +3479,10 @@
     "salary_annualized": 28000.0,
     "cost_of_living_index": 0.9,
     "salary_lincoln_adjusted": 31111.11,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Wyoming",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Graduate Research Assistantship (M.S. or Ph.D.) – Northern Bobwhite Ecology & Remote Sensing",
@@ -3277,7 +3513,10 @@
     "last_updated": "2026-03-23T17:43:11.734068+00:00",
     "discipline_primary": "Wildlife",
     "discipline_secondary": "Forestry and Habitat",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "location_state": "Georgia",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Ph.D. graduate assistantship in coastal phytoplankton/harmful algal bloom dynamics",
@@ -3312,7 +3551,10 @@
     "salary_annualized": 24000.0,
     "cost_of_living_index": 0.95,
     "salary_lincoln_adjusted": 25263.16,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Texas",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Doctoral Student in Environmental Toxicology",
@@ -3331,7 +3573,7 @@
     "is_graduate_position": true,
     "grad_confidence": 0.85,
     "position_type": "PhD Position",
-    "discipline": "Wildlife",
+    "discipline": "Other",
     "discipline_confidence": 0.0,
     "discipline_keywords": [],
     "is_big10_university": false,
@@ -3341,9 +3583,12 @@
     "scraper_version": "2.0",
     "first_seen": "2026-03-22T05:16:16.857948+00:00",
     "last_updated": "2026-03-23T17:43:21.458288+00:00",
-    "discipline_primary": "Wildlife",
-    "discipline_secondary": "Human Dimensions",
-    "discipline_refinement_source": "secondary_ml"
+    "discipline_primary": "Other",
+    "discipline_secondary": "",
+    "discipline_refinement_source": "rule",
+    "location_state": "Texas",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "University of Tennessee, Knoxville Graduate Assistantship - MS or PhD - Evaluating Success in Aquatic Connectivity Restorations",
@@ -3384,7 +3629,10 @@
     "salary_annualized": 28000.0,
     "cost_of_living_index": 0.85,
     "salary_lincoln_adjusted": 32941.18,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Tennessee",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Graduate Research Assistant (M.S.)",
@@ -3419,7 +3667,10 @@
     "salary_annualized": 19386.0,
     "cost_of_living_index": 1.0,
     "salary_lincoln_adjusted": 19386.0,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Nebraska",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Ph.D. Position: Avian movement modeling",
@@ -3454,7 +3705,10 @@
     "salary_annualized": 30000.0,
     "cost_of_living_index": 0.8,
     "salary_lincoln_adjusted": 37500.0,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Alabama",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Ph.D. research assistantship",
@@ -3489,7 +3743,10 @@
     "salary_annualized": 29000.0,
     "cost_of_living_index": 0.95,
     "salary_lincoln_adjusted": 30526.32,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Florida",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Ph.D. Graduate Assistantship - Estuarine Nekton Ecology",
@@ -3524,7 +3781,10 @@
     "salary_annualized": 24000.0,
     "cost_of_living_index": 0.95,
     "salary_lincoln_adjusted": 25263.16,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Texas",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "M.S. Graduate Assistantship in Toucan Ecology and Seed Dispersal – Iowa State University",
@@ -3559,7 +3819,10 @@
     "salary_annualized": 28000.0,
     "cost_of_living_index": 0.85,
     "salary_lincoln_adjusted": 32941.18,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Iowa",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Funded MS graduate assistantship Wyoming Wildlife policy",
@@ -3600,7 +3863,10 @@
     "salary_annualized": 23000.0,
     "cost_of_living_index": 0.9,
     "salary_lincoln_adjusted": 25555.56,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Wyoming",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "UMaine PhD Assistantship in Fish Environmental RNA (eRNA)",
@@ -3635,7 +3901,10 @@
     "salary_annualized": 31500.0,
     "cost_of_living_index": 1.0,
     "salary_lincoln_adjusted": 31500.0,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Maine",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "M.S. Assistantship – Habitat use, movements, and survival of female Mottled Ducks",
@@ -3670,7 +3939,10 @@
     "salary_annualized": 22000.0,
     "cost_of_living_index": 0.85,
     "salary_lincoln_adjusted": 25882.35,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Tennessee",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Graduate Assistant",
@@ -3705,7 +3977,10 @@
     "salary_annualized": 21660.0,
     "cost_of_living_index": 1.05,
     "salary_lincoln_adjusted": 20628.57,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Illinois",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "M.S. Graduate Research Assistantship — Crayfish Population Ecology (Fall 2026)",
@@ -3746,7 +4021,10 @@
     "salary_annualized": 24000.0,
     "cost_of_living_index": 0.95,
     "salary_lincoln_adjusted": 25263.16,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Texas",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "PhD assistantship: Rio Grande cutthroat trout conservation and genetics",
@@ -3781,7 +4059,10 @@
     "salary_annualized": 28384.0,
     "cost_of_living_index": 0.85,
     "salary_lincoln_adjusted": 33392.94,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "New Mexico",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Large Mammal/AI Graduate Assistantship (MS), Colorado State University",
@@ -3822,7 +4103,10 @@
     "salary_annualized": 36000.0,
     "cost_of_living_index": 1.1,
     "salary_lincoln_adjusted": 32727.27,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Colorado",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "MS Assistantship: Pinyon Jay management, Deschutes County, Oregon. Masters of Natural Resources program, Oregon Tech, Klamath Falls, OR",
@@ -3853,7 +4137,10 @@
     "last_updated": "2026-02-22T05:12:39.055606+00:00",
     "discipline_primary": "Wildlife",
     "discipline_secondary": "Forestry and Habitat",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "location_state": "Oregon",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "PhD Scholarship – Transforming Climate Action",
@@ -3888,7 +4175,8 @@
     "salary_annualized": 30000.0,
     "cost_of_living_index": 1.1,
     "salary_lincoln_adjusted": 27272.73,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "is_us_mappable": false
   },
   {
     "title": "Graduate Assistantship at WVU: Aquatic Species Responses to Changing River Conditions",
@@ -3929,7 +4217,10 @@
     "salary_annualized": 21000.0,
     "cost_of_living_index": 0.75,
     "salary_lincoln_adjusted": 28000.0,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "West Virginia",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Graduate Research Assistant--Bat Ecology and Conservation",
@@ -3965,7 +4256,10 @@
     "discipline": "Wildlife",
     "discipline_refinement_source": "rule",
     "salary_annualized": 18000.0,
-    "salary_adjustment_source": "source_data"
+    "salary_adjustment_source": "source_data",
+    "location_state": "Texas",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Graduate Assistantship (MS/PhD)",
@@ -4000,7 +4294,10 @@
     "salary_annualized": 35328.0,
     "cost_of_living_index": 0.85,
     "salary_lincoln_adjusted": 41562.35,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Tennessee",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "PhD Assistanship: Virtual Fencing, Grazing Behavior, and Animal Welfare",
@@ -4035,7 +4332,8 @@
     "salary_annualized": 30000.0,
     "cost_of_living_index": 1.0,
     "salary_lincoln_adjusted": 30000.0,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "is_us_mappable": false
   },
   {
     "title": "Graduate Teaching Assistantships (PhD): water snake ecology, Fall 2026: Indiana",
@@ -4070,7 +4368,10 @@
     "salary_annualized": 13500.0,
     "cost_of_living_index": 0.85,
     "salary_lincoln_adjusted": 15882.35,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Indiana",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "MS Assistantship - Forest Fire and LiDAR in Wyoming",
@@ -4105,7 +4406,10 @@
     "salary_annualized": 23000.0,
     "cost_of_living_index": 0.9,
     "salary_lincoln_adjusted": 25555.56,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Wyoming",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Arkansas - MS Graduate Assistantship. Landscape Ecology, habitat suitability, and mallards",
@@ -4146,7 +4450,10 @@
     "salary_annualized": 20000.0,
     "cost_of_living_index": 0.8,
     "salary_lincoln_adjusted": 25000.0,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Arkansas",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Arkansas - MS Graduate Assistantship. Movement ecology of Green-winged teal",
@@ -4187,7 +4494,10 @@
     "salary_annualized": 20000.0,
     "cost_of_living_index": 0.8,
     "salary_lincoln_adjusted": 25000.0,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Arkansas",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "PhD Assistantship - Fisheries Science",
@@ -4223,7 +4533,10 @@
     "discipline": "Fisheries and Aquatic",
     "discipline_refinement_source": "rule",
     "salary_annualized": 29000.0,
-    "salary_adjustment_source": "source_data"
+    "salary_adjustment_source": "source_data",
+    "location_state": "South Dakota",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Mesocarnivore Graduate Assistantship (MS), Colorado State University",
@@ -4258,7 +4571,10 @@
     "salary_annualized": 36000.0,
     "cost_of_living_index": 1.1,
     "salary_lincoln_adjusted": 32727.27,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Colorado",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "M.S. Research Assistantship - Stream Restoration",
@@ -4293,7 +4609,10 @@
     "salary_annualized": 25000.0,
     "cost_of_living_index": 0.9,
     "salary_lincoln_adjusted": 27777.78,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "North Dakota",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "MS Assistantship: Understanding how cattle foraging behavior influences weight gain in Central Arizona",
@@ -4328,7 +4647,8 @@
     "salary_annualized": 27500.0,
     "cost_of_living_index": 1.0,
     "salary_lincoln_adjusted": 27500.0,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "is_us_mappable": false
   },
   {
     "title": "Several MS positions in Applied Ecology and Conservation Biology - Frostburg State University",
@@ -4364,7 +4684,10 @@
     "discipline": "Other",
     "discipline_refinement_source": "rule",
     "salary_annualized": 9000.0,
-    "salary_adjustment_source": "source_data"
+    "salary_adjustment_source": "source_data",
+    "location_state": "Maryland",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Several MS positions in Applied Ecology and Conservation Biology",
@@ -4395,7 +4718,10 @@
     "discipline_primary": "Other",
     "discipline_secondary": "",
     "discipline": "Other",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "location_state": "Maryland",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Ph.D/MS Positions: Coastal/Urban wetland ecology - School of Ecology and Nature Conservation - Beijing Forestry University",
@@ -4435,7 +4761,8 @@
     "salary_annualized": 5000.0,
     "cost_of_living_index": 1.05,
     "salary_lincoln_adjusted": 4761.9,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "is_us_mappable": false
   },
   {
     "title": "PhD Graduate Assistantship",
@@ -4470,7 +4797,10 @@
     "salary_annualized": 28000.0,
     "cost_of_living_index": 0.85,
     "salary_lincoln_adjusted": 32941.18,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Missouri",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Graduate Assistantship (Master): Crop Physiology and Environmental Stress",
@@ -4508,7 +4838,10 @@
     "salary_annualized": 15000.0,
     "cost_of_living_index": 1.1,
     "salary_lincoln_adjusted": 13636.36,
-    "salary_adjustment_source": "analytics_backfill"
+    "salary_adjustment_source": "analytics_backfill",
+    "location_state": "Oregon",
+    "location_country": "US",
+    "is_us_mappable": true
   },
   {
     "title": "Animal Microbiome PhD or MS student",
@@ -4539,6 +4872,9 @@
     "last_updated": "2026-02-19T18:11:49.093735+00:00",
     "discipline_primary": "Wildlife",
     "discipline_secondary": "",
-    "discipline_refinement_source": "rule"
+    "discipline_refinement_source": "rule",
+    "location_state": "Virginia",
+    "location_country": "US",
+    "is_us_mappable": true
   }
 ]
