@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-29T09:22:06.314562",
+  "generated_at": "2026-04-29T14:26:53.625676",
   "count": 6,
   "items": [
     {
@@ -56,30 +56,6 @@
         "final_other",
         "still_other_low_signal"
       ],
-      "position_key": "title_org::graduate research assistant (m.s.)::university of wisconsin-la crosse (state)::la crosse, wisconsin::06/27/2025",
-      "discipline_final": "Other",
-      "discipline_model_suggested": "Entomology",
-      "discipline_model_secondary": "",
-      "model_id": "20260222_051435",
-      "model_confidence": 0.201,
-      "model_margin": 0.0174,
-      "title": "Graduate Research Assistant (M.S.)",
-      "organization": "University of Wisconsin-La Crosse (State)",
-      "location": "La Crosse, Wisconsin",
-      "url": "https://jobs.rwfm.tamu.edu/view/107411/",
-      "published_date": "06/27/2025",
-      "discipline_refinement_source": "rule",
-      "review_status": "",
-      "reviewed_discipline": "",
-      "review_notes": "",
-      "reviewer": ""
-    },
-    {
-      "severity": 3,
-      "reasons": [
-        "final_other",
-        "still_other_low_signal"
-      ],
       "position_key": "title_org::phd student in landscape ecology at the university of texas at el paso::utep (state)::el paso, texas::06/26/2025",
       "discipline_final": "Other",
       "discipline_model_suggested": "Entomology",
@@ -92,6 +68,30 @@
       "location": "El Paso, Texas",
       "url": "https://jobs.rwfm.tamu.edu/view/107401/",
       "published_date": "06/26/2025",
+      "discipline_refinement_source": "rule",
+      "review_status": "",
+      "reviewed_discipline": "",
+      "review_notes": "",
+      "reviewer": ""
+    },
+    {
+      "severity": 3,
+      "reasons": [
+        "final_other",
+        "still_other_low_signal"
+      ],
+      "position_key": "title_org::camera trapping survival and abundance master's position (ri)::kathleen carroll (private)::1 greenhouse rd (kingston, rhode island)::04/28/2026",
+      "discipline_final": "Other",
+      "discipline_model_suggested": "Wildlife",
+      "discipline_model_secondary": "",
+      "model_id": "20260222_051435",
+      "model_confidence": 0.1912,
+      "model_margin": 0.0114,
+      "title": "Camera Trapping Survival and Abundance Master's Position (RI)",
+      "organization": "Kathleen Carroll (Private)",
+      "location": "1 Greenhouse Rd (Kingston, Rhode Island)",
+      "url": "https://jobs.rwfm.tamu.edu/view-job/?id=116012",
+      "published_date": "04/28/2026",
       "discipline_refinement_source": "rule",
       "review_status": "",
       "reviewed_discipline": "",
