@@ -1,31 +1,7 @@
 {
-  "generated_at": "2026-05-03T06:23:45.602367",
-  "count": 7,
+  "generated_at": "2026-05-10T06:30:55.117638",
+  "count": 6,
   "items": [
-    {
-      "severity": 3,
-      "reasons": [
-        "final_other",
-        "still_other_low_signal"
-      ],
-      "position_key": "title_org::doctoral student in environmental toxicology::wildlife toxicology laboratory, texas tech university (state)::texas tech university (lubbock, tx, texas)::03/18/2026",
-      "discipline_final": "Other",
-      "discipline_model_suggested": "Wildlife",
-      "discipline_model_secondary": "",
-      "model_id": "20260222_051435",
-      "model_confidence": 0.2206,
-      "model_margin": 0.0522,
-      "title": "Doctoral Student in Environmental Toxicology",
-      "organization": "Wildlife Toxicology Laboratory, Texas Tech University (State)",
-      "location": "Texas Tech University (Lubbock, Tx, Texas)",
-      "url": "https://jobs.rwfm.tamu.edu/view-job/?id=114882",
-      "published_date": "03/18/2026",
-      "discipline_refinement_source": "rule",
-      "review_status": "",
-      "reviewed_discipline": "",
-      "review_notes": "",
-      "reviewer": ""
-    },
     {
       "severity": 3,
       "reasons": [
