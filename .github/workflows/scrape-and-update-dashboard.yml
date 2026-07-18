@@ -86,12 +86,31 @@ jobs:
           [ -f data/dashboard_analytics.json ] && cp data/dashboard_analytics.json web/data/ || echo "dashboard_analytics.json not found in data/"
           echo "Data files copied successfully"
 
-      - name: Archive data
+      - name: Upload data snapshot to rolling release
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           timestamp=$(date +%Y%m%d_%H%M%S)
-          mkdir -p data/archive
-          [ -f data/enhanced_data.json ] && cp data/enhanced_data.json "data/archive/enhanced_${timestamp}.json"
-          [ -f data/historical_positions.json ] && cp data/historical_positions.json "data/archive/historical_${timestamp}.json"
+          # Rolling release holding weekly snapshots; created on first run.
+          if ! gh release view data-archive >/dev/null 2>&1; then
+            gh release create data-archive \
+              --title "Weekly data snapshots" \
+              --notes "Rolling archive of weekly scrape snapshots. The cumulative dataset is downloadable from the dashboard."
+          fi
+          snapshot_dir=$(mktemp -d)
+          [ -f data/enhanced_data.json ] && cp data/enhanced_data.json "${snapshot_dir}/enhanced_${timestamp}.json"
+          [ -f data/historical_positions.json ] && cp data/historical_positions.json "${snapshot_dir}/historical_${timestamp}.json"
+          [ -f data/processed/verified_graduate_assistantships.json ] && cp data/processed/verified_graduate_assistantships.json "${snapshot_dir}/verified_${timestamp}.json"
+          # Raw scrape backup written by the scraper this run (no longer committed to git).
+          latest_backup=$(ls -t data/archive/scraped_backup_*.json 2>/dev/null | head -1)
+          [ -n "$latest_backup" ] && cp "$latest_backup" "${snapshot_dir}/"
+          if ls "${snapshot_dir}"/*.json >/dev/null 2>&1; then
+            gh release upload data-archive "${snapshot_dir}"/*.json
+            echo "Uploaded snapshot files for ${timestamp}"
+          else
+            echo "::error::No snapshot files found to upload"
+            exit 1
+          fi
 
       - name: Commit and push changes
         run: |

@@ -17,3 +17,6 @@ logs/
 
 # Security scan reports
 security/
+
+# Weekly data snapshots — uploaded to the data-archive GitHub release, not git
+data/archive/

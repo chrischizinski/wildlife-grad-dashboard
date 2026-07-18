@@ -1303,6 +1303,35 @@ def calculate_snapshot_availability() -> Dict[str, Any]:
     }
 
 
+def write_positions_csv(data: List[Dict[str, Any]], path: Path) -> None:
+    """Write the merged positions dataset as CSV.
+
+    Column order: keys in first-seen order across all records so sparse
+    fields (present in only some records) still get columns. Nested
+    values (lists/dicts) are JSON-encoded into their cell.
+    """
+    fieldnames: List[str] = []
+    seen = set()
+    for record in data:
+        for key in record:
+            if key not in seen:
+                seen.add(key)
+                fieldnames.append(key)
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "w", encoding="utf-8", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames, extrasaction="ignore")
+        writer.writeheader()
+        for record in data:
+            row = {}
+            for key in fieldnames:
+                value = record.get(key, "")
+                if isinstance(value, (list, dict)):
+                    value = json.dumps(value, ensure_ascii=False)
+                row[key] = value
+            writer.writerow(row)
+
+
 def main():
     """Main execution."""
     try:
@@ -1341,6 +1370,11 @@ def main():
             with open(path, "w", encoding="utf-8") as f:
                 json.dump(data, f, indent=2, ensure_ascii=False)
             print(f"✅ Saved: {path} ({path.stat().st_size / 1024:.1f} KB)")
+
+        # CSV export of the same dataset for non-technical users.
+        csv_path = Path("web/data/dashboard_positions.csv")
+        write_positions_csv(data, csv_path)
+        print(f"✅ Saved: {csv_path} ({csv_path.stat().st_size / 1024:.1f} KB)")
 
         # Print summary
         print("\n📊 Analytics Summary:")
