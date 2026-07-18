@@ -3,3 +3,17 @@ playwright-report/
 test-results/
 __pycache__/
 *.pyc
+
+# Virtual environments
+.venv/
+venv/
+
+# Environment / secrets
+.env
+
+# Logs
+*.log
+logs/
+
+# Security scan reports
+security/
