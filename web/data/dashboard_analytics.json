@@ -1,15 +1,15 @@
 {
   "metadata": {
-    "generated_at": "2026-07-18T21:58:43Z",
-    "last_updated": "2026-07-18T21:58:43Z",
+    "generated_at": "2026-07-19T06:23:23Z",
+    "last_updated": "2026-07-19T06:23:23Z",
     "total_positions": 177,
     "source": "merged (historical + latest + enhanced)",
     "discipline_mapping": "consolidated to 8 categories",
     "freshness": {
-      "analytics_generated_at": "2026-07-18T21:58:43Z",
-      "latest_capture_at": "2026-07-18T21:57:25.833310+00:00",
+      "analytics_generated_at": "2026-07-19T06:23:23Z",
+      "latest_capture_at": "2026-07-19T06:21:59.545796+00:00",
       "latest_capture_source": "scraped_at",
-      "latest_snapshot_run_at": "2026-07-18T21:58:30",
+      "latest_snapshot_run_at": "2026-07-19T06:23:08",
       "posting_period_start": "2024-08-29",
       "posting_period_end": "2026-07-17",
       "row_count": 177
@@ -734,7 +734,7 @@
       "2026-06-28": 9,
       "2026-07-05": 8,
       "2026-07-12": 11,
-      "2026-07-18": 13
+      "2026-07-19": 13
     },
     "daily_run_count": {
       "2025-10-14": 1,
@@ -763,7 +763,7 @@
       "2026-06-28": 1,
       "2026-07-05": 1,
       "2026-07-12": 1,
-      "2026-07-18": 1
+      "2026-07-19": 1
     },
     "monthly_avg_active_grad_positions": {
       "2025-10": 19,
@@ -792,7 +792,7 @@
       "2026-06": 4,
       "2026-07": 3
     },
-    "latest_run_timestamp": "2026-07-18T21:58:30",
+    "latest_run_timestamp": "2026-07-19T06:23:08",
     "latest_run_grad_positions": 13,
     "latest_run_discipline_breakdown": {
       "Environmental Sciences": 1,
@@ -801,5 +801,5 @@
       "Other": 9
     }
   },
-  "last_updated": "2026-07-18T21:58:43Z"
+  "last_updated": "2026-07-19T06:23:23Z"
 }
