@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-07-26T06:29:52.619327",
+  "generated_at": "2026-08-02T06:27:05.777820",
   "trained": true,
-  "promoted": false,
-  "promotion_reason": "validation_not_improved",
+  "promoted": true,
+  "promotion_reason": "macro_f1_improved",
   "metrics": {
     "accuracy": 0.7142857142857143,
-    "macro_f1": 0.44235129949415664,
-    "weighted_f1": 0.6693877551020408,
+    "macro_f1": 0.5822874604387209,
+    "weighted_f1": 0.6796573174724435,
     "evaluation_mode": "holdout",
     "validation_samples": 35
   },
@@ -18,9 +18,9 @@
     "validation_samples": 30
   },
   "candidate_model": {
-    "model_id": "20260726_062952",
-    "trained_at": "2026-07-26T06:29:52.431427",
-    "artifact_path": "data/models/discipline/models/discipline_model_20260726_062952.pkl",
+    "model_id": "20260802_062705",
+    "trained_at": "2026-08-02T06:27:05.514441",
+    "artifact_path": "data/models/discipline/models/discipline_model_20260802_062705.pkl",
     "classes": [
       "Agriculture",
       "Entomology",
@@ -32,8 +32,8 @@
     ],
     "metrics": {
       "accuracy": 0.7142857142857143,
-      "macro_f1": 0.44235129949415664,
-      "weighted_f1": 0.6693877551020408,
+      "macro_f1": 0.5822874604387209,
+      "weighted_f1": 0.6796573174724435,
       "evaluation_mode": "holdout",
       "validation_samples": 35
     },
@@ -48,15 +48,15 @@
         "Entomology": 6,
         "Human Dimensions": 9
       },
-      "pseudo_total": 39,
+      "pseudo_total": 42,
       "pseudo_class_counts": {
-        "Environmental Sciences": 11,
+        "Environmental Sciences": 12,
         "Fisheries and Aquatic": 10,
         "Wildlife": 10,
         "Entomology": 3,
-        "Forestry and Habitat": 3,
+        "Forestry and Habitat": 4,
         "Agriculture": 1,
-        "Human Dimensions": 1
+        "Human Dimensions": 2
       },
       "pseudo_weight": 0.35,
       "positions_file": "web/data/dashboard_positions.json"
@@ -76,15 +76,15 @@
   "dropped_rare_gold_classes": {
     "Other": 1
   },
-  "pseudo_labels": 39,
+  "pseudo_labels": 42,
   "pseudo_class_counts": {
-    "Environmental Sciences": 11,
+    "Environmental Sciences": 12,
     "Fisheries and Aquatic": 10,
     "Wildlife": 10,
     "Entomology": 3,
-    "Forestry and Habitat": 3,
+    "Forestry and Habitat": 4,
     "Agriculture": 1,
-    "Human Dimensions": 1
+    "Human Dimensions": 2
   },
   "confidence_queue_count": 8
 }
