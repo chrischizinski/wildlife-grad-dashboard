@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-16T04:26:02.781306",
+  "updated_at": "2026-08-23T04:28:04.495619",
   "promoted": {
     "model_id": "20260802_062705",
     "artifact_path": "data/models/discipline/models/discipline_model_20260802_062705.pkl",
@@ -581,6 +581,20 @@
         "weighted_f1": 0.49628749628749635,
         "evaluation_mode": "holdout",
         "validation_samples": 37
+      }
+    },
+    {
+      "timestamp": "2026-08-23T04:28:04.495611",
+      "status": "candidate_rejected",
+      "reason": "validation_not_improved",
+      "model_id": "20260823_042804",
+      "artifact_path": "data/models/discipline/models/discipline_model_20260823_042804.pkl",
+      "metrics": {
+        "accuracy": 0.46153846153846156,
+        "macro_f1": 0.3447722567287785,
+        "weighted_f1": 0.4276291341508733,
+        "evaluation_mode": "holdout",
+        "validation_samples": 39
       }
     }
   ]
