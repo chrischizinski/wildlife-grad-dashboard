@@ -1,11 +1,10 @@
 {
-  "total_positions_scraped": 45,
-  "verified_graduate_assistantships": 12,
+  "total_positions_scraped": 49,
+  "verified_graduate_assistantships": 16,
   "confidence_threshold": 0.5,
   "classification_breakdown": {
-    "Graduate": 12,
-    "Professional": 31,
-    "Unknown": 2
+    "Professional": 33,
+    "Graduate": 16
   },
-  "high_confidence_positions": 12
+  "high_confidence_positions": 16
 }
