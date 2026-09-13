@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-06T08:13:51.090447",
-  "count": 9,
+  "generated_at": "2026-09-13T08:38:23.609265",
+  "count": 10,
   "items": [
     {
       "severity": 3,
@@ -68,6 +68,30 @@
       "location": "Frostburg State University (Frostburg, Maryland)",
       "url": "",
       "published_date": "01/17/2025",
+      "discipline_refinement_source": "rule",
+      "review_status": "",
+      "reviewed_discipline": "",
+      "review_notes": "",
+      "reviewer": ""
+    },
+    {
+      "severity": 3,
+      "reasons": [
+        "final_other",
+        "still_other_low_signal"
+      ],
+      "position_key": "title_org::phd research position \u2013 hepatic metabolism in equine insulin dysregulation::mississippi state university (state)::college of veterinary medicine, mississippi state university (mississippi state, mississippi)::09/09/2026",
+      "discipline_final": "Other",
+      "discipline_model_suggested": "Fisheries and Aquatic",
+      "discipline_model_secondary": "",
+      "model_id": "20260802_062705",
+      "model_confidence": 0.2013,
+      "model_margin": 0.0111,
+      "title": "PhD Research Position \u2013 Hepatic Metabolism in Equine Insulin Dysregulation",
+      "organization": "Mississippi State University (State)",
+      "location": "College of Veterinary Medicine, Mississippi State University (Mississippi State, Mississippi)",
+      "url": "https://jobs.rwfm.tamu.edu/view-job/?id=118683",
+      "published_date": "09/09/2026",
       "discipline_refinement_source": "rule",
       "review_status": "",
       "reviewed_discipline": "",
