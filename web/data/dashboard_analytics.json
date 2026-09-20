@@ -1,102 +1,102 @@
 {
   "metadata": {
-    "generated_at": "2026-09-13T08:38:24Z",
-    "last_updated": "2026-09-13T08:38:24Z",
-    "total_positions": 222,
+    "generated_at": "2026-09-20T08:56:02Z",
+    "last_updated": "2026-09-20T08:56:02Z",
+    "total_positions": 233,
     "source": "merged (historical + latest + enhanced)",
     "discipline_mapping": "consolidated to 8 categories",
     "freshness": {
-      "analytics_generated_at": "2026-09-13T08:38:24Z",
-      "latest_capture_at": "2026-09-13T08:36:39.045995+00:00",
+      "analytics_generated_at": "2026-09-20T08:56:02Z",
+      "latest_capture_at": "2026-09-20T08:53:56.427322+00:00",
       "latest_capture_source": "scraped_at",
-      "latest_snapshot_run_at": "2026-09-13T08:38:03",
+      "latest_snapshot_run_at": "2026-09-20T08:55:45",
       "posting_period_start": "2024-08-29",
-      "posting_period_end": "2026-09-11",
-      "row_count": 222
+      "posting_period_end": "2026-09-18",
+      "row_count": 233
     }
   },
   "summary_stats": {
-    "total_positions": 222,
-    "graduate_positions": 222,
-    "positions_with_salary": 154,
-    "positions_with_col_adjusted": 154,
-    "positions_with_location": 209,
-    "positions_with_us_mappable_location": 187
+    "total_positions": 233,
+    "graduate_positions": 233,
+    "positions_with_salary": 165,
+    "positions_with_col_adjusted": 165,
+    "positions_with_location": 220,
+    "positions_with_us_mappable_location": 198
   },
   "top_disciplines": {
     "Environmental Sciences": {
-      "total_positions": 28,
-      "grad_positions": 28,
+      "total_positions": 29,
+      "grad_positions": 29,
       "salary_stats_nominal": {
-        "count": 17,
-        "mean": 25028.76,
-        "median": 26000.0,
+        "count": 18,
+        "mean": 24971.61,
+        "median": 25000.0,
         "min": 5500.0,
         "max": 40000.0
       },
       "salary_stats_col_adjusted": {
-        "count": 17,
-        "mean": 25882.15,
-        "median": 27368.42,
+        "count": 18,
+        "mean": 25847.76,
+        "median": 27320.57,
         "min": 5238.1,
         "max": 38750.0
       },
       "salary_stats": {
-        "count": 17,
-        "mean": 25028.76,
-        "median": 26000.0,
+        "count": 18,
+        "mean": 24971.61,
+        "median": 25000.0,
         "min": 5500.0,
         "max": 40000.0
       }
     },
     "Fisheries and Aquatic": {
-      "total_positions": 55,
-      "grad_positions": 55,
+      "total_positions": 58,
+      "grad_positions": 58,
       "salary_stats_nominal": {
-        "count": 37,
-        "mean": 26676.86,
+        "count": 40,
+        "mean": 26742.5,
         "median": 25000.0,
         "min": 15600.0,
         "max": 41800.0
       },
       "salary_stats_col_adjusted": {
-        "count": 37,
-        "mean": 28772.32,
-        "median": 29411.76,
+        "count": 40,
+        "mean": 29008.43,
+        "median": 29705.88,
         "min": 15600.0,
         "max": 43529.41
       },
       "salary_stats": {
-        "count": 37,
-        "mean": 26676.86,
+        "count": 40,
+        "mean": 26742.5,
         "median": 25000.0,
         "min": 15600.0,
         "max": 41800.0
       }
     },
     "Wildlife": {
-      "total_positions": 69,
-      "grad_positions": 69,
+      "total_positions": 71,
+      "grad_positions": 71,
       "salary_stats_nominal": {
-        "count": 51,
-        "mean": 25545.86,
-        "median": 27000.0,
+        "count": 53,
+        "mean": 26280.43,
+        "median": 27500.0,
         "min": 5500.0,
-        "max": 43000.0
+        "max": 61008.0
       },
       "salary_stats_col_adjusted": {
-        "count": 51,
-        "mean": 27722.15,
-        "median": 29411.76,
+        "count": 53,
+        "mean": 27923.83,
+        "median": 29473.68,
         "min": 5238.1,
         "max": 39090.91
       },
       "salary_stats": {
-        "count": 51,
-        "mean": 25545.86,
-        "median": 27000.0,
+        "count": 53,
+        "mean": 26280.43,
+        "median": 27500.0,
         "min": 5500.0,
-        "max": 43000.0
+        "max": 61008.0
       }
     },
     "Entomology": {
@@ -125,26 +125,26 @@
       }
     },
     "Forestry and Habitat": {
-      "total_positions": 30,
-      "grad_positions": 30,
+      "total_positions": 33,
+      "grad_positions": 33,
       "salary_stats_nominal": {
-        "count": 23,
-        "mean": 15925.43,
-        "median": 18000.0,
+        "count": 26,
+        "mean": 17049.42,
+        "median": 20500.0,
         "min": 5000.0,
         "max": 31785.0
       },
       "salary_stats_col_adjusted": {
-        "count": 23,
-        "mean": 17912.93,
-        "median": 18947.37,
+        "count": 26,
+        "mean": 19464.65,
+        "median": 22829.13,
         "min": 4761.9,
         "max": 39731.25
       },
       "salary_stats": {
-        "count": 23,
-        "mean": 15925.43,
-        "median": 18000.0,
+        "count": 26,
+        "mean": 17049.42,
+        "median": 20500.0,
         "min": 5000.0,
         "max": 31785.0
       }
@@ -175,26 +175,26 @@
       }
     },
     "Human Dimensions": {
-      "total_positions": 14,
-      "grad_positions": 14,
+      "total_positions": 16,
+      "grad_positions": 16,
       "salary_stats_nominal": {
-        "count": 10,
-        "mean": 26582.8,
-        "median": 27000.0,
+        "count": 12,
+        "mean": 25819.0,
+        "median": 25500.0,
         "min": 18000.0,
         "max": 37000.0
       },
       "salary_stats_col_adjusted": {
-        "count": 10,
-        "mean": 28581.58,
-        "median": 28210.53,
+        "count": 12,
+        "mean": 28145.47,
+        "median": 27333.33,
         "min": 20000.0,
         "max": 41562.35
       },
       "salary_stats": {
-        "count": 10,
-        "mean": 26582.8,
-        "median": 27000.0,
+        "count": 12,
+        "mean": 25819.0,
+        "median": 25500.0,
         "min": 18000.0,
         "max": 37000.0
       }
@@ -226,37 +226,37 @@
     }
   },
   "geographic_summary": {
-    "Texas": 35,
+    "Texas": 37,
     "Louisiana": 13,
+    "Alabama": 11,
     "Tennessee": 10,
-    "Alabama": 10,
+    "West Virginia": 6,
     "Arkansas": 6,
+    "Wyoming": 5,
+    "Mississippi": 5,
+    "Missouri": 5,
     "Minnesota": 5,
     "South Carolina": 5,
     "Florida": 5,
     "Utah": 5,
     "Kansas": 5,
-    "West Virginia": 5,
     "Georgia": 4,
-    "Mississippi": 4,
-    "Wyoming": 4,
-    "Missouri": 4,
+    "North Dakota": 4,
+    "North Carolina": 4,
     "Illinois": 4,
     "Vermont": 4,
     "Colorado": 4,
     "South Dakota": 3,
-    "North Carolina": 3,
     "Montana": 3,
     "Idaho": 3,
-    "North Dakota": 3,
     "Massachusetts": 3,
     "Michigan": 3
   },
   "geographic_quality": {
-    "location_present_count": 209,
-    "us_mappable_count": 187,
+    "location_present_count": 220,
+    "us_mappable_count": 198,
     "unmappable_count": 35,
-    "us_mappable_pct": 84.2
+    "us_mappable_pct": 85.0
   },
   "time_series": {
     "1_month": {
@@ -282,14 +282,14 @@
         "2026-06": 23,
         "2026-07": 18,
         "2026-08": 29,
-        "2026-09": 12
+        "2026-09": 23
       },
       "discipline_monthly": {
         "Environmental Sciences": {
           "2025-12": 4,
           "2025-11": 1,
           "2025-10": 1,
-          "2026-09": 1,
+          "2026-09": 2,
           "2026-08": 3,
           "2026-07": 4,
           "2025-07": 1,
@@ -303,7 +303,7 @@
         "Fisheries and Aquatic": {
           "2025-11": 1,
           "2025-10": 3,
-          "2026-09": 5,
+          "2026-09": 8,
           "2026-08": 7,
           "2025-08": 1,
           "2026-07": 4,
@@ -318,7 +318,7 @@
         },
         "Wildlife": {
           "2025-10": 2,
-          "2026-09": 2,
+          "2026-09": 4,
           "2026-08": 15,
           "2026-07": 4,
           "2025-07": 1,
@@ -347,7 +347,7 @@
           "2025-12": 3,
           "2025-11": 4,
           "2025-10": 1,
-          "2026-09": 2,
+          "2026-09": 5,
           "2026-07": 2,
           "2025-07": 1,
           "2026-06": 1,
@@ -366,6 +366,7 @@
           "2026-01": 2
         },
         "Human Dimensions": {
+          "2026-09": 2,
           "2026-08": 3,
           "2026-07": 1,
           "2026-06": 2,
@@ -407,14 +408,14 @@
         "2026-06": 23,
         "2026-07": 18,
         "2026-08": 29,
-        "2026-09": 12
+        "2026-09": 23
       },
       "discipline_monthly": {
         "Environmental Sciences": {
           "2025-12": 4,
           "2025-11": 1,
           "2025-10": 1,
-          "2026-09": 1,
+          "2026-09": 2,
           "2026-08": 3,
           "2026-07": 4,
           "2025-07": 1,
@@ -428,7 +429,7 @@
         "Fisheries and Aquatic": {
           "2025-11": 1,
           "2025-10": 3,
-          "2026-09": 5,
+          "2026-09": 8,
           "2026-08": 7,
           "2025-08": 1,
           "2026-07": 4,
@@ -443,7 +444,7 @@
         },
         "Wildlife": {
           "2025-10": 2,
-          "2026-09": 2,
+          "2026-09": 4,
           "2026-08": 15,
           "2026-07": 4,
           "2025-07": 1,
@@ -472,7 +473,7 @@
           "2025-12": 3,
           "2025-11": 4,
           "2025-10": 1,
-          "2026-09": 2,
+          "2026-09": 5,
           "2026-07": 2,
           "2025-07": 1,
           "2026-06": 1,
@@ -491,6 +492,7 @@
           "2026-01": 2
         },
         "Human Dimensions": {
+          "2026-09": 2,
           "2026-08": 3,
           "2026-07": 1,
           "2026-06": 2,
@@ -532,14 +534,14 @@
         "2026-06": 23,
         "2026-07": 18,
         "2026-08": 29,
-        "2026-09": 12
+        "2026-09": 23
       },
       "discipline_monthly": {
         "Environmental Sciences": {
           "2025-12": 4,
           "2025-11": 1,
           "2025-10": 1,
-          "2026-09": 1,
+          "2026-09": 2,
           "2026-08": 3,
           "2026-07": 4,
           "2025-07": 1,
@@ -553,7 +555,7 @@
         "Fisheries and Aquatic": {
           "2025-11": 1,
           "2025-10": 3,
-          "2026-09": 5,
+          "2026-09": 8,
           "2026-08": 7,
           "2025-08": 1,
           "2026-07": 4,
@@ -568,7 +570,7 @@
         },
         "Wildlife": {
           "2025-10": 2,
-          "2026-09": 2,
+          "2026-09": 4,
           "2026-08": 15,
           "2026-07": 4,
           "2025-07": 1,
@@ -597,7 +599,7 @@
           "2025-12": 3,
           "2025-11": 4,
           "2025-10": 1,
-          "2026-09": 2,
+          "2026-09": 5,
           "2026-07": 2,
           "2025-07": 1,
           "2026-06": 1,
@@ -616,6 +618,7 @@
           "2026-01": 2
         },
         "Human Dimensions": {
+          "2026-09": 2,
           "2026-08": 3,
           "2026-07": 1,
           "2026-06": 2,
@@ -657,14 +660,14 @@
         "2026-06": 23,
         "2026-07": 18,
         "2026-08": 29,
-        "2026-09": 12
+        "2026-09": 23
       },
       "discipline_monthly": {
         "Environmental Sciences": {
           "2025-12": 4,
           "2025-11": 1,
           "2025-10": 1,
-          "2026-09": 1,
+          "2026-09": 2,
           "2026-08": 3,
           "2026-07": 4,
           "2025-07": 1,
@@ -678,7 +681,7 @@
         "Fisheries and Aquatic": {
           "2025-11": 1,
           "2025-10": 3,
-          "2026-09": 5,
+          "2026-09": 8,
           "2026-08": 7,
           "2025-08": 1,
           "2026-07": 4,
@@ -693,7 +696,7 @@
         },
         "Wildlife": {
           "2025-10": 2,
-          "2026-09": 2,
+          "2026-09": 4,
           "2026-08": 15,
           "2026-07": 4,
           "2025-07": 1,
@@ -722,7 +725,7 @@
           "2025-12": 3,
           "2025-11": 4,
           "2025-10": 1,
-          "2026-09": 2,
+          "2026-09": 5,
           "2026-07": 2,
           "2025-07": 1,
           "2026-06": 1,
@@ -741,6 +744,7 @@
           "2026-01": 2
         },
         "Human Dimensions": {
+          "2026-09": 2,
           "2026-08": 3,
           "2026-07": 1,
           "2026-06": 2,
@@ -790,7 +794,7 @@
       "2026-06-28": 9,
       "2026-07-05": 8,
       "2026-07-12": 11,
-      "2026-09-13": 12
+      "2026-09-20": 25
     },
     "daily_run_count": {
       "2025-10-14": 1,
@@ -819,7 +823,7 @@
       "2026-06-28": 1,
       "2026-07-05": 1,
       "2026-07-12": 1,
-      "2026-09-13": 1
+      "2026-09-20": 1
     },
     "monthly_avg_active_grad_positions": {
       "2025-10": 19,
@@ -829,7 +833,7 @@
       "2026-05": 13.25,
       "2026-06": 9.75,
       "2026-07": 9.5,
-      "2026-09": 12
+      "2026-09": 25
     },
     "monthly_relative_to_peak_pct": {
       "2025-10": 56.1,
@@ -839,7 +843,7 @@
       "2026-05": 39.1,
       "2026-06": 28.8,
       "2026-07": 28.1,
-      "2026-09": 35.4
+      "2026-09": 73.8
     },
     "monthly_run_count": {
       "2025-10": 1,
@@ -851,13 +855,14 @@
       "2026-07": 2,
       "2026-09": 1
     },
-    "latest_run_timestamp": "2026-09-13T08:38:03",
-    "latest_run_grad_positions": 12,
+    "latest_run_timestamp": "2026-09-20T08:55:45",
+    "latest_run_grad_positions": 25,
     "latest_run_discipline_breakdown": {
-      "Environmental Sciences": 1,
-      "Fisheries and Aquatic": 3,
-      "Other": 8
+      "Fisheries and Aquatic": 4,
+      "Wildlife": 2,
+      "Forestry and Habitat": 3,
+      "Other": 16
     }
   },
-  "last_updated": "2026-09-13T08:38:24Z"
+  "last_updated": "2026-09-20T08:56:02Z"
 }
