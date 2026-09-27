@@ -1,26 +1,26 @@
 {
-  "generated_at": "2026-09-20T08:55:55.792672",
+  "generated_at": "2026-09-27T09:40:50.485055",
   "trained": true,
-  "promoted": true,
-  "promotion_reason": "macro_f1_improved",
+  "promoted": false,
+  "promotion_reason": "validation_not_improved",
   "metrics": {
+    "accuracy": 0.6595744680851063,
+    "macro_f1": 0.654508348794063,
+    "weighted_f1": 0.6602265819287096,
+    "evaluation_mode": "holdout",
+    "validation_samples": 47
+  },
+  "previous_metrics": {
     "accuracy": 0.6739130434782609,
     "macro_f1": 0.6959307359307358,
     "weighted_f1": 0.6822397891963109,
     "evaluation_mode": "holdout",
     "validation_samples": 46
   },
-  "previous_metrics": {
-    "accuracy": 0.7142857142857143,
-    "macro_f1": 0.5822874604387209,
-    "weighted_f1": 0.6796573174724435,
-    "evaluation_mode": "holdout",
-    "validation_samples": 35
-  },
   "candidate_model": {
-    "model_id": "20260920_085555",
-    "trained_at": "2026-09-20T08:55:55.516175",
-    "artifact_path": "data/models/discipline/models/discipline_model_20260920_085555.pkl",
+    "model_id": "20260927_094050",
+    "trained_at": "2026-09-27T09:40:50.228605",
+    "artifact_path": "data/models/discipline/models/discipline_model_20260927_094050.pkl",
     "classes": [
       "Agriculture",
       "Entomology",
@@ -31,30 +31,30 @@
       "Wildlife"
     ],
     "metrics": {
-      "accuracy": 0.6739130434782609,
-      "macro_f1": 0.6959307359307358,
-      "weighted_f1": 0.6822397891963109,
+      "accuracy": 0.6595744680851063,
+      "macro_f1": 0.654508348794063,
+      "weighted_f1": 0.6602265819287096,
       "evaluation_mode": "holdout",
-      "validation_samples": 46
+      "validation_samples": 47
     },
     "training_summary": {
-      "gold_total": 181,
+      "gold_total": 186,
       "gold_class_counts": {
         "Environmental Sciences": 20,
-        "Fisheries and Aquatic": 46,
+        "Fisheries and Aquatic": 49,
         "Forestry and Habitat": 30,
-        "Wildlife": 57,
+        "Wildlife": 59,
         "Agriculture": 5,
         "Entomology": 8,
         "Human Dimensions": 15
       },
-      "pseudo_total": 45,
+      "pseudo_total": 53,
       "pseudo_class_counts": {
         "Environmental Sciences": 10,
-        "Fisheries and Aquatic": 12,
-        "Wildlife": 15,
-        "Entomology": 2,
-        "Forestry and Habitat": 3,
+        "Fisheries and Aquatic": 16,
+        "Wildlife": 16,
+        "Entomology": 3,
+        "Forestry and Habitat": 5,
         "Agriculture": 2,
         "Human Dimensions": 1
       },
@@ -63,12 +63,12 @@
     }
   },
   "manifest_path": "data/models/discipline/manifest.json",
-  "gold_labels": 181,
+  "gold_labels": 186,
   "gold_class_counts": {
     "Environmental Sciences": 20,
-    "Fisheries and Aquatic": 46,
+    "Fisheries and Aquatic": 49,
     "Forestry and Habitat": 30,
-    "Wildlife": 57,
+    "Wildlife": 59,
     "Agriculture": 5,
     "Entomology": 8,
     "Human Dimensions": 15
@@ -76,13 +76,13 @@
   "dropped_rare_gold_classes": {
     "Other": 1
   },
-  "pseudo_labels": 45,
+  "pseudo_labels": 53,
   "pseudo_class_counts": {
     "Environmental Sciences": 10,
-    "Fisheries and Aquatic": 12,
-    "Wildlife": 15,
-    "Entomology": 2,
-    "Forestry and Habitat": 3,
+    "Fisheries and Aquatic": 16,
+    "Wildlife": 16,
+    "Entomology": 3,
+    "Forestry and Habitat": 5,
     "Agriculture": 2,
     "Human Dimensions": 1
   },
