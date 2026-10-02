@@ -7,12 +7,26 @@ from unittest.mock import MagicMock, patch
 project_root = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(project_root))
 
-# Mock heavy dependencies BEFORE importing pipeline
-sys.modules['src.wildlife_grad.scraper.wildlife_job_scraper'] = MagicMock()
-sys.modules['src.wildlife_grad.analysis.enhanced_analysis'] = MagicMock()
+# Mock heavy dependencies only while importing the pipeline. The pipeline binds
+# its imports at load time, so restoring sys.modules afterwards keeps other test
+# modules (e.g. test_enhanced_analysis) seeing the real modules, not MagicMocks.
+_MOCKED_MODULES = [
+    'src.wildlife_grad.scraper.wildlife_job_scraper',
+    'src.wildlife_grad.analysis.enhanced_analysis',
+]
+_original_modules = {name: sys.modules.get(name) for name in _MOCKED_MODULES}
+for _name in _MOCKED_MODULES:
+    sys.modules[_name] = MagicMock()
 
-import scripts.robust_data_pipeline as pipeline_module
-from scripts.robust_data_pipeline import RobustDataPipeline
+import scripts.robust_data_pipeline as pipeline_module  # noqa: E402
+from scripts.robust_data_pipeline import RobustDataPipeline  # noqa: E402
+
+for _name, _module in _original_modules.items():
+    if _module is None:
+        sys.modules.pop(_name, None)
+    else:
+        sys.modules[_name] = _module
+
 
 class TestRobustDataPipeline(unittest.TestCase):
 
@@ -26,12 +40,12 @@ class TestRobustDataPipeline(unittest.TestCase):
         self.mock_grad_detector = mock_grad.return_value
         self.mock_disc_classifier = mock_disc.return_value
         self.mock_col_adjuster = mock_col.return_value
-        
+
         # Configure helper methods
         self.mock_grad_detector.is_graduate_position.return_value = (True, "Graduate Assistantship", 0.9)
         self.mock_disc_classifier.classify_position.return_value = ("Wildlife", "Ecology")
         self.mock_col_adjuster.get_cost_index.return_value = 1.0
-        
+
         # Use a real class for JobPosition mock to handle attributes correctly
         class FakeJobPosition:
             def __init__(self, **kwargs):
@@ -44,7 +58,7 @@ class TestRobustDataPipeline(unittest.TestCase):
 
         self.pipeline = RobustDataPipeline()
         self.pipeline.setup_directories = MagicMock()
-            
+
     def test_enhance_data(self):
         # Mock raw data
         raw_data = [{
@@ -71,7 +85,7 @@ class TestRobustDataPipeline(unittest.TestCase):
         self.mock_grad_detector.is_graduate_position.assert_called()
         self.mock_disc_classifier.classify_position.assert_called()
         self.mock_col_adjuster.get_cost_index.assert_called()
-        
+
         # Check result
         self.assertTrue(enhanced[0]["is_graduate_position"])
         self.assertEqual(enhanced[0]["discipline_primary"], "Wildlife")

@@ -16,7 +16,6 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 from urllib import error, request
 
-
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 POSITIONS_PATH = PROJECT_ROOT / "web" / "data" / "dashboard_positions.json"
 ANALYTICS_PATH = PROJECT_ROOT / "web" / "data" / "dashboard_analytics.json"

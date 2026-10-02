@@ -14,15 +14,16 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from scripts.robust_data_pipeline import RobustDataPipeline
 
+
 def retry_upload():
     pipeline = RobustDataPipeline()
-    
+
     with open("data/failed_uploads/complete_failure_20251014_104120_retry.json", 'r', encoding='utf-8') as f:
         data = json.load(f)
-    
+
     print(f"🔄 Retrying upload of {len(data)} positions...")
     result = pipeline.upload_to_supabase(data, "20251014_104120_retry_retry")
-    
+
     if result["status"] == "success":
         print("✅ Retry successful! You can delete this file.")
         return True
