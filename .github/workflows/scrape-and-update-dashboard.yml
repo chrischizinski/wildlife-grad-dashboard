@@ -69,7 +69,7 @@ jobs:
       - name: Retrain discipline model (promote only on metric improvement)
         run: |
           echo "Retraining/promoting discipline model..."
-          python3 scripts/retrain_discipline_model.py
+          python3 scripts/retrain_discipline_model.py --no-pseudo
 
       - name: Regenerate dashboard data after model update
         run: |
