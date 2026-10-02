@@ -27,7 +27,7 @@ try:
     from sklearn.feature_extraction.text import TfidfVectorizer
     from sklearn.linear_model import LogisticRegression
     from sklearn.metrics import accuracy_score, f1_score
-    from sklearn.model_selection import StratifiedKFold, train_test_split
+    from sklearn.model_selection import KFold, StratifiedKFold, train_test_split
 
     HAS_SKLEARN = True
 except ImportError:
@@ -636,6 +636,72 @@ def evaluate_cross_validation(
     return metrics, final_vectorizer, final_model
 
 
+MIN_HUMAN_LABELS_FOR_CV = 30
+
+
+def human_gold_keys(payload: Dict[str, Any]) -> set:
+    """Keys of gold labels that a person assigned (not machine-seeded)."""
+    return {
+        str(item.get("position_key") or "").strip()
+        for item in payload.get("labels", [])
+        if isinstance(item, dict) and item.get("source") == "human_validation"
+    }
+
+
+def evaluate_human_cv(
+    gold_texts: Sequence[str],
+    gold_labels: Sequence[str],
+    human_idx: Sequence[int],
+    pseudo_texts: Sequence[str],
+    pseudo_labels: Sequence[str],
+    pseudo_weight: float,
+    min_human: int = MIN_HUMAN_LABELS_FOR_CV,
+    folds: int = 5,
+) -> Optional[Dict[str, Any]]:
+    """Accuracy on human-assigned labels only.
+
+    Machine-seeded labels come from the rules, so scoring on them measures
+    agreement with the rules. Here every human-labeled row is predicted once by
+    a model that never saw that row; everything else (machine gold, pseudo
+    labels, the other human folds) is training data.
+    """
+    human_idx = list(human_idx)
+    if len(human_idx) < min_human:
+        return None
+    human_labels = np.array([gold_labels[i] for i in human_idx])
+    machine_idx = [i for i in range(len(gold_texts)) if i not in set(human_idx)]
+    min_class = min(Counter(human_labels).values())
+    if min_class >= 2:
+        splitter = StratifiedKFold(
+            n_splits=min(folds, min_class), shuffle=True, random_state=42
+        )
+        splits = splitter.split(np.arange(len(human_idx)), human_labels)
+    else:
+        splits = KFold(n_splits=folds, shuffle=True, random_state=42).split(
+            np.arange(len(human_idx))
+        )
+
+    y_true: List[str] = []
+    y_pred: List[str] = []
+    n_folds = 0
+    for train_pos, test_pos in splits:
+        n_folds += 1
+        train_idx = machine_idx + [human_idx[j] for j in train_pos]
+        test_idx = [human_idx[j] for j in test_pos]
+        texts = [gold_texts[i] for i in train_idx] + list(pseudo_texts)
+        labels = [gold_labels[i] for i in train_idx] + list(pseudo_labels)
+        weights = [1.0] * len(train_idx) + [pseudo_weight] * len(pseudo_texts)
+        vectorizer, model = fit_model(texts, labels, weights)
+        y_pred += list(model.predict(vectorizer.transform([gold_texts[i] for i in test_idx])))
+        y_true += [gold_labels[i] for i in test_idx]
+    return {
+        "n": len(y_true),
+        "folds": n_folds,
+        "accuracy": float(accuracy_score(y_true, y_pred)),
+        "macro_f1": float(f1_score(y_true, y_pred, average="macro", zero_division=0)),
+    }
+
+
 def read_manifest(path: Path) -> Dict[str, Any]:
     if not path.exists():
         return {"updated_at": None, "promoted": None, "history": []}
@@ -659,6 +725,16 @@ def promotion_decision(
         return True, "force_promote"
     if not old_metrics:
         return True, "first_promoted_model"
+
+    # Human-label scores are the honest basis. A model scored only against
+    # machine labels has no comparable number, so the first human-scored
+    # candidate takes over; after that candidates compete on human labels.
+    new_human = new_metrics.get("human_cv")
+    old_human = old_metrics.get("human_cv")
+    if new_human and not old_human:
+        return True, "evaluation_basis_changed_to_human_labels"
+    if new_human and old_human:
+        new_metrics, old_metrics = new_human, old_human
 
     new_macro = float(new_metrics.get("macro_f1") or 0.0)
     old_macro = float(old_metrics.get("macro_f1") or 0.0)
@@ -1015,7 +1091,30 @@ def main() -> int:
                 args.pseudo_weight,
             )
 
+        human_keys = human_gold_keys(payload)
+        human_idx = [i for i, key in enumerate(gold_keys) if key in human_keys]
+        human_cv = evaluate_human_cv(
+            gold_texts,
+            gold_labels,
+            human_idx,
+            pseudo_texts,
+            pseudo_labels,
+            args.pseudo_weight,
+        )
+        if human_cv:
+            metrics["human_cv"] = human_cv
+            print(
+                f"Human-label CV: accuracy {human_cv['accuracy']:.3f}, "
+                f"macro-F1 {human_cv['macro_f1']:.3f} (n={human_cv['n']})"
+            )
+        else:
+            print(
+                f"Human-label CV skipped: {len(human_idx)} human labels "
+                f"(need {MIN_HUMAN_LABELS_FOR_CV})"
+            )
+
         training_summary = {
+            "human_gold": len(human_idx),
             "gold_total": len(gold_labels),
             "gold_class_counts": dict(gold_counter),
             "pseudo_total": len(pseudo_labels),
