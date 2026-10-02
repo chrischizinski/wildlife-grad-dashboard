@@ -1484,6 +1484,25 @@
       totalJobs > 0 ? `${formatPercent(locationPct)} U.S.-mappable location in unified dataset` : 'No rows after filters'
     );
 
+    const qualityJobs = Array.isArray(adapter?.jobs) ? adapter.jobs : [];
+    const evidenceRows = qualityJobs.filter((job) => typeof job?.discipline_evidence === 'string');
+    const titleEvidenceCount = evidenceRows.filter((job) => job.discipline_evidence === 'title').length;
+    setCardValue(
+      'kpi-quality-discipline',
+      totalJobs > 0 && evidenceRows.length > 0
+        ? formatRatio(titleEvidenceCount, totalJobs)
+        : EMPTY_VALUE,
+      'kpi-quality-discipline-reason',
+      totalJobs === 0
+        ? 'No rows after filters'
+        : evidenceRows.length === 0
+          ? 'Evidence flag not available in this dataset'
+          : (
+            `${formatPercent(Number(((titleEvidenceCount / totalJobs) * 100).toFixed(1)))} of labels `
+            + 'are supported by the posting title; the rest rest on the description alone'
+          )
+    );
+
     setCardValue(
       'kpi-quality-updated',
       generatedAt ? formatDisplayTimestamp(generatedAt) : EMPTY_VALUE,

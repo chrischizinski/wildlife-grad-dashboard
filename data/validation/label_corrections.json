@@ -35,6 +35,10 @@
     "https://jobs.rwfm.tamu.edu/view-job/?id=112882": {
       "label": null,
       "reason": "pending: note and dropdown disagree or ambiguous; excluded from scoring until resolved"
+    },
+    "https://jobs.rwfm.tamu.edu/view-job/?id=115509": {
+      "label": "Other",
+      "reason": "dual-focus title (forest management and environmental education); reviewer would label Other, not Forestry and Habitat (stated 2026-10-02)"
     }
   }
 }

@@ -286,6 +286,99 @@ def apply_corrections(answers: Dict[str, str], path: Path) -> Tuple[int, int]:
     return applied, excluded
 
 
+def rule_labels(rows: List[Dict[str, Any]]) -> Dict[str, str]:
+    """Current rule-layer discipline for each row (the classifier in this tree)."""
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
+    from wildlife_grad.analysis.enhanced_analysis import (
+        DisciplineClassifier,
+        JobPosition,
+    )
+
+    classifier = DisciplineClassifier()
+
+    def text(row: Dict[str, Any], field: str) -> str:
+        return str(row.get(field) or "")
+
+    labels = {}
+    for row in rows:
+        position = JobPosition(
+            title=text(row, "title"),
+            organization=text(row, "organization"),
+            location=text(row, "location"),
+            salary=text(row, "salary"),
+            starting_date=text(row, "starting_date"),
+            published_date=text(row, "published_date"),
+            tags=text(row, "tags"),
+            description=text(row, "description"),
+        )
+        labels[position_key(row)] = classifier.classify_position(position)[0]
+    return labels
+
+
+def changed_rows(
+    rows: List[Dict[str, Any]],
+    before: Dict[str, str],
+    after: Dict[str, str],
+    already_labeled: set,
+) -> List[Dict[str, Any]]:
+    """Rows whose label changed and that the reviewer has not already seen."""
+    return [
+        r
+        for r in rows
+        if before.get(position_key(r)) != after.get(position_key(r))
+        and position_key(r) not in already_labeled
+    ]
+
+
+def cmd_labels(args: argparse.Namespace) -> int:
+    rows = json.loads(args.positions.read_text(encoding="utf-8"))
+    rows = rows["positions"] if isinstance(rows, dict) else rows
+    args.out.parent.mkdir(parents=True, exist_ok=True)
+    args.out.write_text(json.dumps(rule_labels(rows), indent=2), encoding="utf-8")
+    print(f"Wrote rule labels for {len(rows)} rows to {args.out}")
+    return 0
+
+
+def cmd_recheck(args: argparse.Namespace) -> int:
+    rows = json.loads(args.positions.read_text(encoding="utf-8"))
+    rows = rows["positions"] if isinstance(rows, dict) else rows
+    before = json.loads(args.before.read_text(encoding="utf-8"))
+    after = json.loads(args.after.read_text(encoding="utf-8"))
+    seen: set = set()
+    if args.exclude_key.exists():
+        seen = set(json.loads(args.exclude_key.read_text(encoding="utf-8"))["rows"])
+    todo = changed_rows(rows, before, after, seen)
+    records = [
+        {
+            "position_key": position_key(r),
+            "title": r.get("title", ""),
+            "organization": r.get("organization", ""),
+            "location": r.get("location", ""),
+            "salary": r.get("salary", ""),
+            "url": r.get("url", ""),
+            "description_excerpt": excerpt(r),
+            "human_discipline": "",
+            "notes": "",
+        }
+        for r in todo
+    ]
+    write_workbook(records, args.sample)
+    key = {
+        "meta": {"strata": {"recheck": {"population": len(todo), "sampled": len(todo)}}},
+        "rows": {
+            position_key(r): {
+                "predicted": after[position_key(r)],
+                "previous": before.get(position_key(r), ""),
+                "stratum": "recheck",
+            }
+            for r in todo
+        },
+    }
+    args.key.write_text(json.dumps(key, indent=2), encoding="utf-8")
+    print(f"{len(todo)} changed rows not yet reviewed -> {args.sample}")
+    return 0
+
+
 def cmd_sample(args: argparse.Namespace) -> int:
     rows = json.loads(args.positions.read_text(encoding="utf-8"))
     rows = rows["positions"] if isinstance(rows, dict) else rows
@@ -385,6 +478,27 @@ def main() -> int:
     p_sample.add_argument("--sample", type=Path, default=DEFAULT_SAMPLE)
     p_sample.add_argument("--key", type=Path, default=DEFAULT_KEY)
     p_sample.set_defaults(func=cmd_sample)
+
+    p_labels = sub.add_parser("labels", help="write current rule labels as JSON")
+    p_labels.add_argument("--out", type=Path, required=True)
+    p_labels.add_argument("--positions", type=Path, default=DEFAULT_POSITIONS)
+    p_labels.set_defaults(func=cmd_labels)
+
+    p_recheck = sub.add_parser(
+        "recheck", help="blind workbook of rows whose label changed between two runs"
+    )
+    p_recheck.add_argument("--before", type=Path, required=True)
+    p_recheck.add_argument("--after", type=Path, required=True)
+    p_recheck.add_argument("--positions", type=Path, default=DEFAULT_POSITIONS)
+    p_recheck.add_argument(
+        "--sample", type=Path, default=Path("data/validation/discipline_recheck.xlsx")
+    )
+    p_recheck.add_argument(
+        "--key", type=Path, default=Path("data/validation/discipline_recheck_key.json")
+    )
+    p_recheck.add_argument("--exclude-key", type=Path, default=DEFAULT_KEY,
+                           help="skip rows already in this key (already labeled)")
+    p_recheck.set_defaults(func=cmd_recheck)
 
     p_score = sub.add_parser("score", help="score a filled-in CSV")
     p_score.add_argument("--sample", type=Path, default=DEFAULT_SAMPLE)
