@@ -547,6 +547,7 @@ def sanitize_and_classify_positions(rows: List[Dict[str, Any]]) -> List[Dict[str
     first_pass_positions: List[JobPosition] = []
     first_pass_primary: List[str] = []
     first_pass_secondary: List[str] = []
+    first_pass_evidence: List[str] = []
 
     for row in rows:
         pos = _to_job_position(row)
@@ -572,6 +573,9 @@ def sanitize_and_classify_positions(rows: List[Dict[str, Any]]) -> List[Dict[str
         first_pass_positions.append(pos)
         first_pass_primary.append(predicted_primary_norm)
         first_pass_secondary.append(secondary_final)
+        first_pass_evidence.append(
+            discipline_classifier.discipline_evidence(pos, predicted_primary_norm)
+        )
 
     if not first_pass_rows:
         return []
@@ -633,6 +637,11 @@ def sanitize_and_classify_positions(rows: List[Dict[str, Any]]) -> List[Dict[str
         # Keep legacy field in sync for downstream consumers still reading it.
         out["discipline"] = primary_final
         out["discipline_refinement_source"] = refinement_source
+        # Labels relabeled by the similarity/promoted models have no keyword
+        # evidence in the posting; say so rather than echo the rule layer.
+        out["discipline_evidence"] = (
+            first_pass_evidence[idx] if refinement_source == "rule" else "model"
+        )
         cleaned_rows.append(out)
 
     confidence_queue = build_discipline_confidence_queue(

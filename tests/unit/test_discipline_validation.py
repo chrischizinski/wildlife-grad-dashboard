@@ -152,3 +152,15 @@ def test_corrections_override_labels_and_null_excludes_row(tmp_path):
     assert apply_corrections(answers, path) == (1, 1)
     assert answers == {"a": "Wildlife", "c": "Other"}
     assert apply_corrections(answers, tmp_path / "missing.json") == (0, 0)
+
+
+def test_recheck_selects_only_changed_rows_the_reviewer_has_not_seen():
+    # Re-labeling rows the reviewer already judged would waste their time and
+    # re-labeling unchanged rows would measure nothing about the rule change.
+    from discipline_validation import changed_rows
+
+    rows = [{"url": u} for u in ("a", "b", "c", "d")]
+    before = {"a": "Wildlife", "b": "Wildlife", "c": "Wildlife", "d": "Wildlife"}
+    after = {"a": "Wildlife", "b": "Other", "c": "Other", "d": "Other"}
+    picked = changed_rows(rows, before, after, already_labeled={"c"})
+    assert [r["url"] for r in picked] == ["b", "d"]
