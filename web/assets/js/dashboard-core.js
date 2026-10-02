@@ -1308,6 +1308,12 @@
     return sorted[mid];
   }
 
+  // Salary statistics describe the U.S. market; rows known to be non-U.S. are
+  // excluded from medians and charts (data-quality coverage still counts them).
+  function isUsSalaryRow(job) {
+    return job?.is_us_mappable !== false;
+  }
+
   function renderCompensationCards(adapter) {
     const allJobs = Array.isArray(adapter?.jobs) ? adapter.jobs : [];
     const selectedInstitution = getSelectedCompensationInstitution();
@@ -1319,18 +1325,23 @@
     const salaryValues = filteredJobs
       .map((job) => parseSalaryValue(job.salary ?? job.salary_min))
       .filter((n) => n !== null);
-    const adjustedSalaryValues = filteredJobs
+    const usJobs = filteredJobs.filter(isUsSalaryRow);
+    const usSalaryValues = usJobs
+      .map((job) => parseSalaryValue(job.salary ?? job.salary_min))
+      .filter((n) => n !== null);
+    const usAdjustedSalaryValues = usJobs
       .map((job) => {
         const nominal = parseSalaryValue(job.salary ?? job.salary_min);
         return getAdjustedSalaryValue(job, nominal);
       })
       .filter((n) => n !== null);
+    const usSampleN = usSalaryValues.length;
     const salaryCoverage = computeSalaryCoverage(filteredJobs);
     const parsedCount = salaryValues.length;
     const sampleN = salaryValues.length;
     const pct = totalJobs ? Number(((parsedCount / totalJobs) * 100).toFixed(1)) : 0;
-    const med = median(salaryValues);
-    const adjustedMedian = median(adjustedSalaryValues);
+    const med = median(usSalaryValues);
+    const adjustedMedian = median(usAdjustedSalaryValues);
 
     setCardValue(
       'kpi-salary-parsed-pct',
@@ -1370,7 +1381,7 @@
         : 'No rows after filters'
     );
 
-    if (sampleN < 5 || med === null) {
+    if (usSampleN < 5 || med === null) {
       setCardValue(
         'kpi-salary-median',
         EMPTY_VALUE,
@@ -1378,9 +1389,9 @@
         totalJobs === 0
           ? 'No rows after filters'
           : (
-            sampleN === 0
-              ? 'No salary-parsed rows for selected institution group'
-              : `Suppressed when N < 5 (N=${sampleN})`
+            usSampleN === 0
+              ? 'No salary-parsed U.S. rows for selected institution group'
+              : `Suppressed when N < 5 (N=${usSampleN})`
           )
       );
       return;
@@ -1391,10 +1402,10 @@
       formatCurrency(med),
       'kpi-salary-median-reason',
       (
-        `Median nominal annualized salary from salary-parsed ${selectionLabel} (N=${sampleN}); `
+        `Median nominal annualized salary from salary-parsed U.S. ${selectionLabel} (N=${usSampleN}); `
         + (
-          adjustedMedian !== null && adjustedSalaryValues.length >= 5
-            ? `COL-adjusted median ${formatCurrency(adjustedMedian)} (N=${adjustedSalaryValues.length})`
+          adjustedMedian !== null && usAdjustedSalaryValues.length >= 5
+            ? `COL-adjusted median ${formatCurrency(adjustedMedian)} (N=${usAdjustedSalaryValues.length})`
             : 'COL-adjusted median suppressed when N < 5'
         )
       )
@@ -1754,6 +1765,7 @@
   function buildSalaryByDiscipline(jobs) {
     const groups = new Map();
     jobs.forEach((job) => {
+      if (!isUsSalaryRow(job)) return;
       const discipline = normalizeDisciplineLabel(
         String(job?.discipline_primary || job?.discipline || 'Other').trim() || 'Other'
       );

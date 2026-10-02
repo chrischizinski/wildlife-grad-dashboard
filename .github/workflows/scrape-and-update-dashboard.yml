@@ -87,6 +87,9 @@ jobs:
           [ -f data/dashboard_analytics.json ] && cp data/dashboard_analytics.json web/data/ || echo "dashboard_analytics.json not found in data/"
           echo "Data files copied successfully"
 
+      - name: Remove personal fields from published data
+        run: python3 scripts/sanitize_published_data.py web/data dashboard/data
+
       - name: Guard against empty or shrunken dataset
         run: python3 scripts/check_scrape_health.py guard
 

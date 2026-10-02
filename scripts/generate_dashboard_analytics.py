@@ -26,6 +26,8 @@ SRC_ROOT = PROJECT_ROOT / "src"
 if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
+from sanitize_published_data import strip_private_fields_from_rows  # noqa: E402
+
 from wildlife_grad.analysis.enhanced_analysis import (  # noqa: E402
     CostOfLivingAdjuster,
     DisciplineClassifier,
@@ -843,7 +845,9 @@ def calculate_analytics(data: List[Dict[str, Any]]) -> Dict[str, Any]:
         discipline_data[normalized_disc]["count"] += 1
 
         salary = extract_salary_number(p.get("salary"))
-        if salary:
+        # Salary statistics describe the U.S. market; rows known to be non-U.S.
+        # stay in the dataset but are excluded from these aggregates.
+        if salary and p.get("is_us_mappable") is not False:
             discipline_data[normalized_disc]["salaries"].append(salary)
             adjusted_salary = _as_positive_float(p.get("salary_lincoln_adjusted"))
             if adjusted_salary is not None:
@@ -1365,15 +1369,18 @@ def main():
             Path("web/data/dashboard_positions.json"),
         ]
 
+        # Published copies must not carry scraped contact details.
+        public_data = strip_private_fields_from_rows(data)
+
         for path in positions_output_paths:
             path.parent.mkdir(parents=True, exist_ok=True)
             with open(path, "w", encoding="utf-8") as f:
-                json.dump(data, f, indent=2, ensure_ascii=False)
+                json.dump(public_data, f, indent=2, ensure_ascii=False)
             print(f"✅ Saved: {path} ({path.stat().st_size / 1024:.1f} KB)")
 
         # CSV export of the same dataset for non-technical users.
         csv_path = Path("web/data/dashboard_positions.csv")
-        write_positions_csv(data, csv_path)
+        write_positions_csv(public_data, csv_path)
         print(f"✅ Saved: {csv_path} ({csv_path.stat().st_size / 1024:.1f} KB)")
 
         # Print summary
