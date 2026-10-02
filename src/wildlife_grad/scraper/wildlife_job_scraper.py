@@ -33,6 +33,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select, WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
 
+from src.wildlife_grad.utils.privacy import redact_emails
+
 # Load environment variables
 load_dotenv()
 
@@ -88,7 +90,6 @@ class JobListing(BaseModel):
     description: str = Field(default="", description="Full job description")
     requirements: str = Field(default="", description="Position requirements")
     project_details: str = Field(default="", description="Research project details")
-    contact_info: str = Field(default="", description="Contact information")
     application_deadline: str = Field(default="N/A", description="Application deadline")
 
     # Classification fields
@@ -567,35 +568,6 @@ class WildlifeJobScraper:
                     f"Could not extract project details for {job.title}: {e}"
                 )
 
-            # Extract contact information
-            contact_info = ""
-            try:
-                contact_selectors = [
-                    (By.XPATH, "//*[contains(text(), '@')]"),  # Email addresses
-                    (By.XPATH, "//*[contains(text(), 'contact')]"),
-                    (By.XPATH, "//*[contains(text(), 'Contact')]"),
-                    (By.CSS_SELECTOR, ".contact-info"),
-                ]
-
-                for by, selector in contact_selectors:
-                    try:
-                        contact_element = self.driver.find_element(by, selector)
-                        contact_info = contact_element.text.strip()
-                        if contact_info and "@" in contact_info:
-                            break
-                    except (
-                        NoSuchElementException,
-                        AttributeError,
-                        StaleElementReferenceException,
-                        TimeoutException,
-                    ):
-                        continue
-
-            except Exception as e:
-                self.logger.warning(
-                    f"Could not extract contact info for {job.title}: {e}"
-                )
-
             # Extract application deadline
             deadline = job.application_deadline  # Keep existing value as default
             try:
@@ -617,10 +589,10 @@ class WildlifeJobScraper:
                 self.logger.warning(f"Could not extract deadline for {job.title}: {e}")
 
             # Update job with detailed information
-            job.description = description
-            job.requirements = requirements
-            job.project_details = project_details
-            job.contact_info = contact_info
+            # Postings often include the poster's email; never store it.
+            job.description = redact_emails(description)
+            job.requirements = redact_emails(requirements)
+            job.project_details = redact_emails(project_details)
             job.application_deadline = deadline
 
             return job
