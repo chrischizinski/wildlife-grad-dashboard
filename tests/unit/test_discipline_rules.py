@@ -118,3 +118,25 @@ def test_evidence_description_when_title_is_specific_but_silent():
 
 def test_evidence_none_when_label_is_other():
     assert evidence("PhD position", "Hepatic metabolism.", label="Other") == "none"
+
+
+@pytest.mark.parametrize(
+    "title",
+    [
+        "Graduate research assistant: Cropping adjustments and social science",
+        "M.S. Assistantship: Evaluating Professional Readiness in the Forestry Workforce",
+        "PhD: Public perceptions of wolves",
+    ],
+)
+def test_people_focused_title_is_human_dimensions_over_the_subject(title):
+    # Reviewer: social-science framing is the research question; the crop,
+    # forest or animal is only what the people are studied about.
+    assert classify(title, description="Graduate position.") == "Human Dimensions"
+
+
+def test_secondary_education_component_does_not_override_the_subject():
+    # Reviewer labeled this Forestry and Habitat, not Human Dimensions.
+    assert (
+        classify("Graduate Student Assistantship - Forest Management and Environmental Education", description="Graduate position.")
+        == "Forestry and Habitat"
+    )

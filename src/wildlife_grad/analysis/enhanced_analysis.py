@@ -681,6 +681,14 @@ class DisciplineClassifier:
             r"\b(insects?|pollinators?|bees?|butterfl\w*|beetles?|moths?|"
             r"mosquito\w*|entomolog\w*|arthropods?|ants?)\b"
         )
+        # People-focused framing ("social science", "perceptions", "workforce
+        # readiness") describes the research question, so it outranks the
+        # organism/system the people are being studied about.
+        self.title_human_pattern = re.compile(
+            r"\b(human dimensions?|social science\w*|stakeholders?|perceptions?|"
+            r"attitudes?|workforce|professional readiness|career\w*|"
+            r"public engagement)\b"
+        )
         self.title_agriculture_pattern = re.compile(
             r"\b(cattle|livestock|beef|dairy|ranch\w*|crops?|cropping|agricultur\w*|"
             r"agronom\w*|grazing|pastures?)\b"
@@ -786,12 +794,18 @@ class DisciplineClassifier:
     ) -> Dict[str, int]:
         """Boost the discipline whose subject the title names.
 
-        The subject is an organism group, an agricultural system, or a habitat
-        system, in that order of precedence ("forest birds" is Wildlife,
+        An explicit people-focused framing wins outright. Otherwise the subject
+        is an organism group, an agricultural system, or a habitat system, in
+        that order of precedence ("forest birds" is Wildlife,
         "rangeland cattle" is Agriculture). A habitat bonus is also withheld
         when the title names an abiotic process.
         """
         boosted = dict(scores)
+        if self.title_human_pattern.search(title_text):
+            boosted["Human Dimensions"] = (
+                boosted.get("Human Dimensions", 0) + self.title_focus_bonus
+            )
+            return boosted
         subjects = [
             (self.title_organism_pattern, "Wildlife"),
             (self.title_insect_pattern, "Entomology"),
