@@ -1,0 +1,34 @@
+name: Data Freshness Check
+
+on:
+  schedule:
+    # Daily; fails if the weekly scrape has not refreshed data recently
+    - cron: "0 14 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check data freshness
+        run: python3 scripts/check_scrape_health.py freshness --max-age-days 10
+
+      - name: Alert Discord on failure
+        if: failure()
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          if [ -z "$DISCORD_WEBHOOK_URL" ]; then
+            echo "DISCORD_WEBHOOK_URL not set; skipping alert"
+            exit 0
+          fi
+          curl -sS -H "Content-Type: application/json" \
+            -d "{\"content\": \"Wildlife dashboard data is stale: ${RUN_URL}\"}" \
+            "$DISCORD_WEBHOOK_URL"

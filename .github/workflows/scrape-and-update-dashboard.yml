@@ -86,6 +86,9 @@ jobs:
           [ -f data/dashboard_analytics.json ] && cp data/dashboard_analytics.json web/data/ || echo "dashboard_analytics.json not found in data/"
           echo "Data files copied successfully"
 
+      - name: Guard against empty or shrunken dataset
+        run: python3 scripts/check_scrape_health.py guard
+
       - name: Upload data snapshot to rolling release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -154,3 +157,17 @@ jobs:
           fi
           echo "- **Dashboard refreshed**: Yes" >> $GITHUB_STEP_SUMMARY
           echo "- **Mode**: ${{ steps.check_data.outputs.mode }}" >> $GITHUB_STEP_SUMMARY
+
+      - name: Alert Discord on failure
+        if: failure()
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          if [ -z "$DISCORD_WEBHOOK_URL" ]; then
+            echo "DISCORD_WEBHOOK_URL not set; skipping alert"
+            exit 0
+          fi
+          curl -sS -H "Content-Type: application/json" \
+            -d "{\"content\": \"Weekly wildlife scrape FAILED: ${RUN_URL}\"}" \
+            "$DISCORD_WEBHOOK_URL"
