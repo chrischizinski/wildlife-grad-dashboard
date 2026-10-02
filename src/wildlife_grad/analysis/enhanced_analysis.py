@@ -422,7 +422,6 @@ class DisciplineClassifier:
                 "geochemistry",
                 "contaminant",
                 "pollution",
-                "toxicology",
                 "air quality",
                 "climate",
                 "climate change",
@@ -432,8 +431,6 @@ class DisciplineClassifier:
                 "spatial analysis",
                 "water security",
                 "sustainability",
-                "microbiology",
-                "environmental microbiology",
                 "carbon",
                 "coastal",
                 "tidal",
@@ -501,6 +498,19 @@ class DisciplineClassifier:
                 "natural resource sciences",
                 "turtle",
                 "cooter",
+                "tortoise",
+                "snake",
+                "lizard",
+                "salamander",
+                "frog",
+                "toad",
+                "herpetologist",
+                "parrot",
+                "songbird",
+                "raptor",
+                "shorebird",
+                "owl",
+                "small mammal",
             ],
             "Entomology": [
                 "entomology",
@@ -544,6 +554,11 @@ class DisciplineClassifier:
                 "fuel treatment",
                 "prescribed burn",
                 "wildfire",
+                "wetland",
+                "plant community",
+                "plant communities",
+                "grassland",
+                "dryland",
             ],
             "Agriculture": [
                 "agriculture",
@@ -651,6 +666,35 @@ class DisciplineClassifier:
             "Agriculture",
             "Environmental Sciences",
         ]
+        # The title names the study focus; description boilerplate is noisy. An
+        # organism named in the title outranks habitat words (birds in forest
+        # habitat is Wildlife), and a habitat system named in the title
+        # outranks incidental management/climate words.
+        self.title_organism_pattern = re.compile(
+            r"\b(birds?|avian|ornitholog\w*|mammals?|ducks?|waterfowl|amphibians?|"
+            r"reptiles?|herpetolog\w*|turtles?|tortoises?|snakes?|lizards?|"
+            r"salamanders?|frogs?|toads?|parrots?|songbirds?|raptors?|"
+            r"shorebirds?|owls?|bats?|deer|elk|bears?|wolf|wolves|"
+            r"carnivores?|ungulates?)\b"
+        )
+        self.title_insect_pattern = re.compile(
+            r"\b(insects?|pollinators?|bees?|butterfl\w*|beetles?|moths?|"
+            r"mosquito\w*|entomolog\w*|arthropods?|ants?)\b"
+        )
+        self.title_agriculture_pattern = re.compile(
+            r"\b(cattle|livestock|beef|dairy|ranch\w*|crops?|cropping|agricultur\w*|"
+            r"agronom\w*|grazing|pastures?)\b"
+        )
+        self.title_habitat_pattern = re.compile(
+            r"\b(forests?|forestry|vegetation|wetlands?|plant communit\w*|"
+            r"silviculture|timber|woodlands?|rangelands?|grasslands?|drylands?)\b"
+        )
+        # A title naming an abiotic process is Environmental Sciences even when
+        # it also names a habitat (e.g. grassland ecohydrology).
+        self.title_abiotic_pattern = re.compile(
+            r"\b(hydrolog\w*|ecohydrolog\w*|soils?|biogeochem\w*|geochem\w*)\b"
+        )
+        self.title_focus_bonus = 8
         self.ml_refine_enabled = HAS_SKLEARN
         self.ml_min_similarity = 0.12
         self.ml_override_similarity = 0.2
@@ -698,6 +742,10 @@ class DisciplineClassifier:
 
         # Title-first: return only when title gives a confident taxonomy signal.
         title_primary, title_secondary, title_scores = self._keyword_classify_with_scores(title_text)
+        title_scores = self._apply_title_focus(title_text, title_scores)
+        title_scores = {d: v for d, v in title_scores.items() if v > 0}
+        if title_scores:
+            title_primary, title_secondary = self._classify_from_scores(title_scores)
         if self._is_confident_title_match(title_scores):
             return title_primary, title_secondary
 
@@ -705,6 +753,9 @@ class DisciplineClassifier:
         full_primary, full_secondary, full_scores = self._keyword_classify_with_scores(
             text_content
         )
+        full_scores = self._apply_title_focus(title_text, full_scores)
+        if full_scores:
+            full_primary, full_secondary = self._classify_from_scores(full_scores)
         if not full_scores:
             return self._maybe_refine_with_ml("Other", "", {}, text_content)
 
@@ -719,6 +770,37 @@ class DisciplineClassifier:
         return self._maybe_refine_with_ml(
             full_primary, full_secondary, full_scores, text_content
         )
+
+    def _apply_title_focus(
+        self, title_text: str, scores: Dict[str, int]
+    ) -> Dict[str, int]:
+        """Boost the discipline whose subject the title names.
+
+        The subject is an organism group, an agricultural system, or a habitat
+        system, in that order of precedence ("forest birds" is Wildlife,
+        "rangeland cattle" is Agriculture). A habitat bonus is also withheld
+        when the title names an abiotic process.
+        """
+        boosted = dict(scores)
+        subjects = [
+            (self.title_organism_pattern, "Wildlife"),
+            (self.title_insect_pattern, "Entomology"),
+            (self.title_agriculture_pattern, "Agriculture"),
+        ]
+        named_subject = False
+        for pattern, discipline in subjects:
+            if pattern.search(title_text):
+                boosted[discipline] = boosted.get(discipline, 0) + self.title_focus_bonus
+                named_subject = True
+        if (
+            not named_subject
+            and self.title_habitat_pattern.search(title_text)
+            and not self.title_abiotic_pattern.search(title_text)
+        ):
+            boosted["Forestry and Habitat"] = (
+                boosted.get("Forestry and Habitat", 0) + self.title_focus_bonus - 1
+            )
+        return boosted
 
     def _is_confident_title_match(self, scores: Dict[str, int]) -> bool:
         """Determine whether title-only evidence is strong enough to finalize."""
@@ -747,8 +829,6 @@ class DisciplineClassifier:
             "hydrology",
             "water security",
             "water quality",
-            "environmental microbiology",
-            "microbiology",
             "sustainability",
         ]
         has_strong_abiotic_signal = any(term in text for term in strong_abiotic_terms)
@@ -792,7 +872,6 @@ class DisciplineClassifier:
                     "biogeochemistry",
                     "hydrology",
                     "water quality",
-                    "environmental microbiology",
                 ]
             ):
                 scores["Environmental Sciences"] += 2
