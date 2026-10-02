@@ -25,6 +25,7 @@ if str(SRC_ROOT) not in sys.path:
 from wildlife_grad.utils.privacy import redact_emails  # noqa: E402
 
 PRIVATE_FIELDS = frozenset({"contact_info"})
+ROW_LIST_KEYS = ("positions", "labels")
 
 
 def _redact_value(value: Any) -> Any:
@@ -51,13 +52,15 @@ def strip_private_fields(payload: Any) -> Any:
     """Return payload without private fields on its position rows.
 
     Handles the two shapes used by published files: a list of rows, or a dict
-    holding the rows under "positions". Anything else is returned unchanged.
+    holding the rows under "positions" or "labels". Anything else is returned unchanged.
     """
     if isinstance(payload, list):
         return strip_private_fields_from_rows(payload)
-    if isinstance(payload, dict) and isinstance(payload.get("positions"), list):
+    if isinstance(payload, dict):
         cleaned: Dict[str, Any] = dict(payload)
-        cleaned["positions"] = strip_private_fields_from_rows(payload["positions"])
+        for key in ROW_LIST_KEYS:
+            if isinstance(payload.get(key), list):
+                cleaned[key] = strip_private_fields_from_rows(payload[key])
         return cleaned
     return payload
 
