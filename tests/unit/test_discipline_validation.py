@@ -108,3 +108,33 @@ def test_wilson_interval_brackets_the_proportion():
     lo, hi = wilson(9, 10)
     assert lo < 0.9 < hi and 0 <= lo and hi <= 1
     assert wilson(0, 0) == (0.0, 1.0)
+
+
+def test_workbook_has_dropdown_limited_to_allowed_answers(tmp_path):
+    # The dropdown is what keeps typos out of the human labels.
+    openpyxl = pytest.importorskip("openpyxl")
+    from discipline_validation import ANSWERS, write_workbook
+
+    records = [{"position_key": f"k{i}", "title": f"t{i}"} for i in range(3)]
+    path = tmp_path / "s.xlsx"
+    write_workbook(records, path)
+
+    wb = openpyxl.load_workbook(path)
+    validation = wb["Label"].data_validations.dataValidation[0]
+    assert validation.type == "list" and validation.showErrorMessage
+    assert str(validation.sqref) == "H2:H4"
+    assert [c.value for c in wb["Lists"]["A"]] == ANSWERS
+
+
+def test_answers_round_trip_through_workbook(tmp_path):
+    openpyxl = pytest.importorskip("openpyxl")
+    from discipline_validation import read_answers, write_workbook
+
+    path = tmp_path / "s.xlsx"
+    write_workbook([{"position_key": "k1", "title": "t"}, {"position_key": "k2"}], path)
+    wb = openpyxl.load_workbook(path)
+    wb["Label"]["H2"] = "Wildlife"
+    wb.save(path)
+
+    rows = read_answers(path)
+    assert [r["human_discipline"] for r in rows] == ["Wildlife", ""]

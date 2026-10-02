@@ -12,10 +12,10 @@ cannot measure accuracy. This tool builds an independent check:
   score:  compare the filled-in CSV with the key and report stratified accuracy
           with a 95% confidence interval, per-label precision, and confusions.
 
-Reviewer instructions: fill `human_discipline` with one of the labels below
-(case-insensitive, unique prefix is fine, e.g. "fish" or "wild"). Use
-`not_graduate` if the posting is not a graduate position, `unclear` if you
-cannot tell from the posting.
+Reviewer instructions: open the .xlsx and pick an answer from the dropdown in
+`human_discipline` (a CSV also works: type the label, case-insensitive, unique
+prefix is fine, e.g. "fish" or "wild"). Use `not_graduate` if the posting is not
+a graduate position, `unclear` if you cannot tell from the posting.
 """
 
 from __future__ import annotations
@@ -46,7 +46,7 @@ UNCLEAR = "unclear"
 ANSWERS = DISCIPLINES + [NOT_GRAD, UNCLEAR]
 
 DEFAULT_POSITIONS = Path("web/data/dashboard_positions.json")
-DEFAULT_SAMPLE = Path("data/validation/discipline_sample.csv")
+DEFAULT_SAMPLE = Path("data/validation/discipline_sample.xlsx")
 DEFAULT_KEY = Path("data/validation/discipline_sample_key.json")
 EXCERPT_CHARS = 700
 SAMPLE_COLUMNS = [
@@ -184,29 +184,118 @@ def score(key: Dict[str, Any], answers: Dict[str, str]) -> Dict[str, Any]:
     }
 
 
+def write_workbook(records: List[Dict[str, Any]], path: Path) -> None:
+    """Write the labeling workbook: dropdown answers, wrapped text, progress count."""
+    from openpyxl import Workbook
+    from openpyxl.styles import Alignment, Font, PatternFill
+    from openpyxl.utils import get_column_letter
+    from openpyxl.worksheet.datavalidation import DataValidation
+
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Label"
+    lists = wb.create_sheet("Lists")
+    for i, answer in enumerate(ANSWERS, start=1):
+        lists.cell(row=i, column=1, value=answer)
+    lists.sheet_state = "hidden"
+
+    ws.append(SAMPLE_COLUMNS)
+    for cell in ws[1]:
+        cell.font = Font(bold=True, color="FFFFFF")
+        cell.fill = PatternFill("solid", fgColor="305496")
+    for record in records:
+        ws.append([record.get(col, "") for col in SAMPLE_COLUMNS])
+
+    widths = {"position_key": 8, "title": 45, "organization": 28, "location": 28,
+              "salary": 16, "url": 26, "description_excerpt": 80,
+              "human_discipline": 26, "notes": 36}
+    for idx, col in enumerate(SAMPLE_COLUMNS, start=1):
+        ws.column_dimensions[get_column_letter(idx)].width = widths[col]
+    wrap = Alignment(wrap_text=True, vertical="top")
+    for row in ws.iter_rows(min_row=2):
+        for cell in row:
+            cell.alignment = wrap
+
+    label_col = get_column_letter(SAMPLE_COLUMNS.index("human_discipline") + 1)
+    last_row = len(records) + 1
+    validation = DataValidation(
+        type="list",
+        formula1=f"=Lists!$A$1:$A${len(ANSWERS)}",
+        allow_blank=True,
+        showErrorMessage=True,
+        errorTitle="Pick from the list",
+        error="Choose one of the dropdown answers.",
+    )
+    ws.add_data_validation(validation)
+    validation.add(f"{label_col}2:{label_col}{last_row}")
+    ws.freeze_panes = "C2"
+    ws.auto_filter.ref = f"A1:{get_column_letter(len(SAMPLE_COLUMNS))}{last_row}"
+
+    info = wb.create_sheet("Instructions", 0)
+    lines = [
+        "Discipline label validation",
+        "",
+        "1. Go to the 'Label' sheet.",
+        "2. For each posting pick an answer from the dropdown in 'human_discipline'.",
+        "3. Label from the posting itself. The pipeline's label is deliberately not shown.",
+        "4. 'not_graduate' = not a graduate position; 'unclear' = cannot tell from the posting.",
+        "5. Use 'notes' when a posting could fit two disciplines.",
+        "6. Save the file when done, then run: python scripts/discipline_validation.py score",
+        "",
+        f'=\"Labeled so far: \"&COUNTA(Label!{label_col}2:{label_col}{last_row})&\" of {len(records)}\"',
+    ]
+    for i, line in enumerate(lines, start=1):
+        info.cell(row=i, column=1, value=line)
+    info["A1"].font = Font(bold=True, size=14)
+    info.column_dimensions["A"].width = 90
+    path.parent.mkdir(parents=True, exist_ok=True)
+    wb.save(path)
+
+
+def read_answers(path: Path) -> List[Dict[str, Any]]:
+    """Read labeling rows from the workbook (sheet 'Label') or a CSV."""
+    if path.suffix.lower() == ".xlsx":
+        from openpyxl import load_workbook
+
+        sheet = load_workbook(path, data_only=True)["Label"]
+        rows = list(sheet.iter_rows(values_only=True))
+        header = [str(h) for h in rows[0]]
+        return [
+            {h: ("" if v is None else v) for h, v in zip(header, r)}
+            for r in rows[1:]
+            if any(v is not None for v in r)
+        ]
+    with open(path, encoding="utf-8", newline="") as handle:
+        return list(csv.DictReader(handle))
+
+
 def cmd_sample(args: argparse.Namespace) -> int:
     rows = json.loads(args.positions.read_text(encoding="utf-8"))
     rows = rows["positions"] if isinstance(rows, dict) else rows
     sample, meta = draw_sample(rows, args.n, args.rare_below, args.seed)
 
+    records = [
+        {
+            "position_key": position_key(row),
+            "title": row.get("title", ""),
+            "organization": row.get("organization", ""),
+            "location": row.get("location", ""),
+            "salary": row.get("salary", ""),
+            "url": row.get("url", ""),
+            "description_excerpt": excerpt(row),
+            "human_discipline": "",
+            "notes": "",
+        }
+        for row, _stratum in sample
+    ]
     args.sample.parent.mkdir(parents=True, exist_ok=True)
-    with open(args.sample, "w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=SAMPLE_COLUMNS)
-        writer.writeheader()
-        for row, _stratum in sample:
-            writer.writerow(
-                {
-                    "position_key": position_key(row),
-                    "title": row.get("title", ""),
-                    "organization": row.get("organization", ""),
-                    "location": row.get("location", ""),
-                    "salary": row.get("salary", ""),
-                    "url": row.get("url", ""),
-                    "description_excerpt": excerpt(row),
-                    "human_discipline": "",
-                    "notes": "",
-                }
-            )
+    if args.sample.suffix.lower() == ".xlsx":
+        write_workbook(records, args.sample)
+    else:
+        with open(args.sample, "w", encoding="utf-8", newline="") as handle:
+            writer = csv.DictWriter(handle, fieldnames=SAMPLE_COLUMNS)
+            writer.writeheader()
+            writer.writerows(records)
     key = {
         "meta": meta,
         "rows": {
@@ -230,16 +319,15 @@ def cmd_score(args: argparse.Namespace) -> int:
     key = json.loads(args.key.read_text(encoding="utf-8"))
     answers: Dict[str, str] = {}
     bad = []
-    with open(args.sample, encoding="utf-8", newline="") as handle:
-        for row in csv.DictReader(handle):
-            raw = row.get("human_discipline", "")
-            if not str(raw).strip():
-                continue
-            normalized = normalize_answer(raw)
-            if normalized is None:
-                bad.append((row["position_key"], raw))
-            else:
-                answers[row["position_key"]] = normalized
+    for row in read_answers(args.sample):
+        raw = row.get("human_discipline", "")
+        if not str(raw).strip():
+            continue
+        normalized = normalize_answer(raw)
+        if normalized is None:
+            bad.append((row["position_key"], raw))
+        else:
+            answers[row["position_key"]] = normalized
     if bad:
         print(f"{len(bad)} unrecognized answers (fix these rows):", file=sys.stderr)
         for pos_key, raw in bad[:10]:
