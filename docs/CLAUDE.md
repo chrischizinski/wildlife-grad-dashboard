@@ -405,7 +405,7 @@ graph TB
 ## 🚀 Technical Implementation
 
 ### Technology Stack
-- **Backend**: Python 3.9+ with Selenium, Pydantic, pandas
+- **Backend**: Python 3.12+ with Selenium, Pydantic, pandas
 - **ML/Analytics**: scikit-learn, TF-IDF, cosine similarity
 - **Frontend**: Vanilla JavaScript ES6+, Chart.js, Plotly
 - **Data Storage**: JSON files with automatic backup and versioning

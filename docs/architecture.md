@@ -33,7 +33,7 @@ Website → Scraper → JSON/CSV → Analysis → Dashboard → GitHub Pages
 ## Technical Specifications
 
 ### Dependencies
-- Python 3.11+
+- Python 3.12+
 - Selenium WebDriver
 - BeautifulSoup4
 - Pandas for data analysis
