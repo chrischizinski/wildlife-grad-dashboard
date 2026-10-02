@@ -1,15 +1,15 @@
 {
   "metadata": {
-    "generated_at": "2026-10-02T16:25:04Z",
-    "last_updated": "2026-10-02T16:25:04Z",
+    "generated_at": "2026-10-02T16:40:15Z",
+    "last_updated": "2026-10-02T16:40:15Z",
     "total_positions": 252,
     "source": "merged (historical + latest + enhanced)",
     "discipline_mapping": "consolidated to 8 categories",
     "freshness": {
-      "analytics_generated_at": "2026-10-02T16:25:04Z",
-      "latest_capture_at": "2026-10-02T16:22:43.143023+00:00",
+      "analytics_generated_at": "2026-10-02T16:40:15Z",
+      "latest_capture_at": "2026-10-02T16:38:07.718911+00:00",
       "latest_capture_source": "scraped_at",
-      "latest_snapshot_run_at": "2026-10-02T16:24:51",
+      "latest_snapshot_run_at": "2026-10-02T16:40:01",
       "posting_period_start": "2024-08-29",
       "posting_period_end": "2026-10-01",
       "row_count": 252
@@ -806,7 +806,7 @@
       "2026-06-28": 9,
       "2026-07-05": 8,
       "2026-07-12": 11,
-      "2026-10-02": 25
+      "2026-10-02": 23
     },
     "daily_run_count": {
       "2025-10-14": 1,
@@ -845,7 +845,7 @@
       "2026-05": 13.25,
       "2026-06": 9.75,
       "2026-07": 9.5,
-      "2026-10": 25
+      "2026-10": 23
     },
     "monthly_relative_to_peak_pct": {
       "2025-10": 56.1,
@@ -855,7 +855,7 @@
       "2026-05": 39.1,
       "2026-06": 28.8,
       "2026-07": 28.1,
-      "2026-10": 73.8
+      "2026-10": 67.9
     },
     "monthly_run_count": {
       "2025-10": 1,
@@ -867,15 +867,15 @@
       "2026-07": 2,
       "2026-10": 1
     },
-    "latest_run_timestamp": "2026-10-02T16:24:51",
-    "latest_run_grad_positions": 25,
+    "latest_run_timestamp": "2026-10-02T16:40:01",
+    "latest_run_grad_positions": 23,
     "latest_run_discipline_breakdown": {
       "Environmental Sciences": 1,
       "Fisheries and Aquatic": 4,
       "Wildlife": 3,
       "Forestry and Habitat": 2,
-      "Other": 15
+      "Other": 13
     }
   },
-  "last_updated": "2026-10-02T16:25:04Z"
+  "last_updated": "2026-10-02T16:40:15Z"
 }
