@@ -22,7 +22,11 @@ class TestScraperConfig:
         config = ScraperConfig()
 
         assert config.base_url == "https://jobs.rwfm.tamu.edu/search/"
-        assert config.keywords == "(Master) OR (PhD) OR (Graduate)"
+        # Assistantship/Fellowship terms are intentional: the dashboard tracks
+        # funded positions, not just degree programs.
+        assert config.keywords == (
+            "(Master) OR (PhD) OR (Graduate) OR (Assistantship) OR (Fellowship)"
+        )
         assert config.page_size == 50
         assert config.headless is True
         assert config.timeout == 20
@@ -160,11 +164,14 @@ class TestWildlifeJobScraper:
             (By.XPATH, ".//div[contains(text(), 'Location')]/following-sibling::div"): Mock(text="Austin, TX"),
         }.get((by, value), Mock(text="N/A"))
 
-        # Mock tags
-        mock_job_element.find_elements.return_value = [
-            Mock(text="Research"),
-            Mock(text="Wildlife")
-        ]
+        # No clickable detail-link elements; tags come from the badge selector
+        mock_job_element.get_attribute.return_value = ""
+        mock_job_element.find_elements.side_effect = lambda by, value: {
+            (By.CSS_SELECTOR, ".badge.bg-secondary"): [
+                Mock(text="Research"),
+                Mock(text="Wildlife"),
+            ],
+        }.get((by, value), [])
 
         result = scraper.extract_job_data(mock_job_element)
 
@@ -228,7 +235,9 @@ class TestWildlifeJobScraper:
 
         result = scraper.get_pagination_pages()
 
-        assert result == [2, 3]
+        # Only some page links are visible at a time; the scraper must still
+        # visit every page from 1 to the highest one found.
+        assert result == [1, 2, 3]
 
     def test_get_pagination_pages_exception(self, scraper):
         """Test pagination with exception."""
@@ -237,7 +246,8 @@ class TestWildlifeJobScraper:
 
         result = scraper.get_pagination_pages()
 
-        assert result == []
+        # A pagination failure must not skip the scrape entirely: fall back to page 1.
+        assert result == [1]
 
     def test_save_jobs_json(self, scraper):
         """Test saving jobs to JSON file."""

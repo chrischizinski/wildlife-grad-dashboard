@@ -6,8 +6,14 @@ Test the dashboard frontend functionality
 import asyncio
 
 import aiohttp
+import pytest
 
 
+@pytest.mark.skip(
+    reason="Manual script: needs a dashboard server on localhost:8081 and an "
+    "async pytest plugin. Frontend is covered by the Playwright e2e workflow. "
+    "Run directly with `python tests/integration/test_dashboard_frontend.py`."
+)
 async def test_dashboard_frontend():
     """Test if the dashboard loads and basic functionality works"""
 

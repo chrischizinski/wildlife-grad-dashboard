@@ -7,12 +7,25 @@ from unittest.mock import MagicMock, patch
 project_root = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(project_root))
 
-# Mock heavy dependencies BEFORE importing pipeline
-sys.modules['src.wildlife_grad.scraper.wildlife_job_scraper'] = MagicMock()
-sys.modules['src.wildlife_grad.analysis.enhanced_analysis'] = MagicMock()
+# Mock heavy dependencies only while importing the pipeline. The pipeline binds
+# its imports at load time, so restoring sys.modules afterwards keeps other test
+# modules (e.g. test_enhanced_analysis) seeing the real modules, not MagicMocks.
+_MOCKED_MODULES = [
+    'src.wildlife_grad.scraper.wildlife_job_scraper',
+    'src.wildlife_grad.analysis.enhanced_analysis',
+]
+_original_modules = {name: sys.modules.get(name) for name in _MOCKED_MODULES}
+for _name in _MOCKED_MODULES:
+    sys.modules[_name] = MagicMock()
 
 import scripts.robust_data_pipeline as pipeline_module  # noqa: E402
 from scripts.robust_data_pipeline import RobustDataPipeline  # noqa: E402
+
+for _name, _module in _original_modules.items():
+    if _module is None:
+        sys.modules.pop(_name, None)
+    else:
+        sys.modules[_name] = _module
 
 
 class TestRobustDataPipeline(unittest.TestCase):

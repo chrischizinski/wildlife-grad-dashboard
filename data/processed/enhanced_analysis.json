@@ -1,35 +1,42 @@
 {
-  "total_positions": 6,
-  "graduate_positions": 6,
-  "non_graduate_positions": 0,
-  "high_confidence_graduate": 3,
+  "total_positions": 25,
+  "graduate_positions": 8,
+  "non_graduate_positions": 17,
+  "high_confidence_graduate": 8,
   "merge_stats": {
-    "new_positions": 2,
+    "new_positions": 25,
     "updated_positions": 0,
-    "total_positions": 6,
-    "merge_date": "2025-07-15T16:17:55.230306"
+    "total_positions": 25,
+    "merge_date": "2026-10-02T11:30:47.584046"
   },
   "disciplines": {
-    "Environmental Science": 3,
-    "Wildlife Management and Conservation": 3
+    "Fisheries and Aquatic": 5,
+    "Wildlife": 2,
+    "Human Dimensions": 1
   },
   "position_types": {
-    "Graduate Position": 3,
-    "PhD Position": 3
+    "Graduate Assistantship": 6,
+    "Professional/Other": 17,
+    "Graduate Position": 1,
+    "PhD Position": 1
   },
   "geographic_regions": {
-    "Southeast": 3,
-    "Other": 3
+    "Midwest": 4,
+    "Southeast": 9,
+    "West": 5,
+    "Remote/Multiple": 5,
+    "Northeast": 2
   },
   "salary_analysis_lincoln_adjusted": {
-    "mean": 29375.0,
-    "median": 29375.0,
-    "min": 29375.0,
-    "max": 29375.0,
-    "count": 3
+    "mean": 28963.960037962555,
+    "median": 27142.857142857145,
+    "min": 17052.5,
+    "max": 50526.31578947369,
+    "count": 8
   },
   "temporal_trends": {
-    "2025-07": 6
+    "2026-10": 6,
+    "2026-09": 19
   },
-  "last_updated": "2025-07-15T16:17:55.231155"
+  "last_updated": "2026-10-02T11:30:47.585565"
 }
