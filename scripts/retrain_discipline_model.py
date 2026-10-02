@@ -189,6 +189,12 @@ def parse_args() -> argparse.Namespace:
         default=Path("data/models/discipline"),
     )
     parser.add_argument(
+        "--keep-recent-models",
+        type=int,
+        default=3,
+        help="Newest candidate models to keep besides the promoted one",
+    )
+    parser.add_argument(
         "--min-macro-f1-improvement",
         type=float,
         default=0.005,
@@ -747,6 +753,32 @@ def update_manifest(
     return out
 
 
+def prune_artifacts(
+    model_dir: Path, promoted_artifact_path: Optional[str], keep_recent: int
+) -> List[Path]:
+    """Delete retired model files so weekly candidates don't pile up in git.
+
+    Keeps the promoted model (the only one ever loaded) plus the `keep_recent`
+    newest candidates (model ids are timestamps, so names sort by age).
+    Returns the files removed.
+    """
+    models_dir = model_dir / "models"
+    if not models_dir.is_dir():
+        return []
+    promoted_name = Path(promoted_artifact_path).name if promoted_artifact_path else None
+    pickles = sorted(models_dir.glob("discipline_model_*.pkl"), key=lambda p: p.name)
+    recent = {p.name for p in pickles[-keep_recent:]} if keep_recent > 0 else set()
+    removed: List[Path] = []
+    for pkl in pickles:
+        if pkl.name == promoted_name or pkl.name in recent:
+            continue
+        for stale in (pkl, pkl.with_suffix(".json")):
+            if stale.exists():
+                stale.unlink()
+                removed.append(stale)
+    return removed
+
+
 def load_artifact(path: Path) -> Optional[Dict[str, Any]]:
     if not path.exists():
         return None
@@ -1013,6 +1045,13 @@ def main() -> int:
             promote=promote,
             reason=reason,
         )
+        removed = prune_artifacts(
+            model_dir,
+            (manifest.get("promoted") or {}).get("artifact_path"),
+            keep_recent=args.keep_recent_models,
+        )
+        if removed:
+            print(f"Pruned {len(removed)} retired model files")
     else:
         print("Not enough gold labels to train. Need >= 8 and >= 2 classes.")
 
