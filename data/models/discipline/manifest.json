@@ -1,40 +1,40 @@
 {
-  "updated_at": "2026-09-27T09:40:50.253936",
+  "updated_at": "2026-10-02T16:19:03.859214",
   "promoted": {
-    "model_id": "20260920_085555",
-    "artifact_path": "data/models/discipline/models/discipline_model_20260920_085555.pkl",
+    "model_id": "20261002_161903",
+    "artifact_path": "data/models/discipline/models/discipline_model_20261002_161903.pkl",
     "metrics": {
-      "accuracy": 0.6739130434782609,
-      "macro_f1": 0.6959307359307358,
-      "weighted_f1": 0.6822397891963109,
+      "accuracy": 0.7291666666666666,
+      "macro_f1": 0.7063208157163158,
+      "weighted_f1": 0.7229220436952885,
       "evaluation_mode": "holdout",
-      "validation_samples": 46
+      "validation_samples": 48
     },
     "training_summary": {
-      "gold_total": 181,
+      "gold_total": 189,
       "gold_class_counts": {
         "Environmental Sciences": 20,
-        "Fisheries and Aquatic": 46,
+        "Fisheries and Aquatic": 52,
         "Forestry and Habitat": 30,
-        "Wildlife": 57,
+        "Wildlife": 59,
         "Agriculture": 5,
         "Entomology": 8,
         "Human Dimensions": 15
       },
-      "pseudo_total": 45,
+      "pseudo_total": 56,
       "pseudo_class_counts": {
         "Environmental Sciences": 10,
-        "Fisheries and Aquatic": 12,
-        "Wildlife": 15,
-        "Entomology": 2,
-        "Forestry and Habitat": 3,
+        "Fisheries and Aquatic": 16,
+        "Wildlife": 18,
+        "Entomology": 3,
+        "Forestry and Habitat": 5,
         "Agriculture": 2,
-        "Human Dimensions": 1
+        "Human Dimensions": 2
       },
       "pseudo_weight": 0.35,
       "positions_file": "web/data/dashboard_positions.json"
     },
-    "promoted_at": "2026-09-20T08:55:55.573537"
+    "promoted_at": "2026-10-02T16:19:03.859217"
   },
   "history": [
     {
@@ -665,6 +665,20 @@
         "weighted_f1": 0.6602265819287096,
         "evaluation_mode": "holdout",
         "validation_samples": 47
+      }
+    },
+    {
+      "timestamp": "2026-10-02T16:19:03.859203",
+      "status": "promoted",
+      "reason": "macro_f1_improved",
+      "model_id": "20261002_161903",
+      "artifact_path": "data/models/discipline/models/discipline_model_20261002_161903.pkl",
+      "metrics": {
+        "accuracy": 0.7291666666666666,
+        "macro_f1": 0.7063208157163158,
+        "weighted_f1": 0.7229220436952885,
+        "evaluation_mode": "holdout",
+        "validation_samples": 48
       }
     }
   ]
