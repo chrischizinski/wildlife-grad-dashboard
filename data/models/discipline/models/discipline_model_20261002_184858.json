@@ -1,7 +1,7 @@
 {
-  "model_id": "20261002_164033",
-  "trained_at": "2026-10-02T16:40:33.867762",
-  "artifact_path": "data/models/discipline/models/discipline_model_20261002_164033.pkl",
+  "model_id": "20261002_184858",
+  "trained_at": "2026-10-02T18:48:58.377678",
+  "artifact_path": "data/models/discipline/models/discipline_model_20261002_184858.pkl",
   "classes": [
     "Agriculture",
     "Entomology",
@@ -12,9 +12,9 @@
     "Wildlife"
   ],
   "metrics": {
-    "accuracy": 0.7083333333333334,
-    "macro_f1": 0.6951886209029066,
-    "weighted_f1": 0.7042893217893217,
+    "accuracy": 0.6875,
+    "macro_f1": 0.5446474953617811,
+    "weighted_f1": 0.6727236652236651,
     "evaluation_mode": "holdout",
     "validation_samples": 48
   },
@@ -29,15 +29,15 @@
       "Entomology": 8,
       "Human Dimensions": 15
     },
-    "pseudo_total": 56,
+    "pseudo_total": 58,
     "pseudo_class_counts": {
-      "Environmental Sciences": 10,
+      "Environmental Sciences": 6,
       "Fisheries and Aquatic": 16,
-      "Wildlife": 18,
-      "Entomology": 3,
-      "Forestry and Habitat": 5,
+      "Wildlife": 19,
+      "Entomology": 4,
+      "Forestry and Habitat": 10,
       "Agriculture": 2,
-      "Human Dimensions": 2
+      "Human Dimensions": 1
     },
     "pseudo_weight": 0.35,
     "positions_file": "web/data/dashboard_positions.json"

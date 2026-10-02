@@ -1,7 +1,55 @@
 {
-  "generated_at": "2026-10-02T17:16:24.154174",
+  "generated_at": "2026-10-02T18:49:02.893526",
   "count": 10,
   "items": [
+    {
+      "severity": 3,
+      "reasons": [
+        "final_other",
+        "still_other_low_signal"
+      ],
+      "position_key": "title_org::graduate assistantship in environmental microbiology::georgia southern university (state)::4324 old register road (statesboro, georgia)::11/03/2025",
+      "discipline_final": "Other",
+      "discipline_model_suggested": "Environmental Sciences",
+      "discipline_model_secondary": "",
+      "model_id": "20261002_161903",
+      "model_confidence": 0.3832,
+      "model_margin": 0.2537,
+      "title": "Graduate Assistantship in Environmental Microbiology",
+      "organization": "Georgia Southern University (State)",
+      "location": "4324 Old Register Road (Statesboro, Georgia)",
+      "url": "https://jobs.rwfm.tamu.edu/view-job/?id=110156",
+      "published_date": "11/03/2025",
+      "discipline_refinement_source": "rule",
+      "review_status": "",
+      "reviewed_discipline": "",
+      "review_notes": "",
+      "reviewer": ""
+    },
+    {
+      "severity": 3,
+      "reasons": [
+        "final_other",
+        "still_other_low_signal"
+      ],
+      "position_key": "title_org::graduate assistantship in environmental microbiology::georgia southern university (state)::georgia southern university (statesboro, georgia)::04/09/2025",
+      "discipline_final": "Other",
+      "discipline_model_suggested": "Environmental Sciences",
+      "discipline_model_secondary": "",
+      "model_id": "20261002_161903",
+      "model_confidence": 0.366,
+      "model_margin": 0.231,
+      "title": "Graduate Assistantship in Environmental Microbiology",
+      "organization": "Georgia Southern University (State)",
+      "location": "Georgia Southern University (Statesboro, Georgia)",
+      "url": "",
+      "published_date": "04/09/2025",
+      "discipline_refinement_source": "rule",
+      "review_status": "",
+      "reviewed_discipline": "",
+      "review_notes": "",
+      "reviewer": ""
+    },
     {
       "severity": 3,
       "reasons": [
@@ -20,30 +68,6 @@
       "location": "Texas Tech University (Lubbock, Tx, Texas)",
       "url": "https://jobs.rwfm.tamu.edu/view-job/?id=114882",
       "published_date": "03/18/2026",
-      "discipline_refinement_source": "rule",
-      "review_status": "",
-      "reviewed_discipline": "",
-      "review_notes": "",
-      "reviewer": ""
-    },
-    {
-      "severity": 3,
-      "reasons": [
-        "final_other",
-        "still_other_low_signal"
-      ],
-      "position_key": "title_org::ms position - impacts of global change drivers on dryland plant communities - marshall u, palmquist lab::marshall university (state)::department of biological sciences, marshall university (huntington, west virginia)::06/30/2025",
-      "discipline_final": "Other",
-      "discipline_model_suggested": "Environmental Sciences",
-      "discipline_model_secondary": "",
-      "model_id": "20261002_161903",
-      "model_confidence": 0.276,
-      "model_margin": 0.0841,
-      "title": "MS position - impacts of global change drivers on dryland plant communities - Marshall U, Palmquist lab",
-      "organization": "Marshall University (State)",
-      "location": "Department of Biological Sciences, Marshall University (Huntington, West Virginia)",
-      "url": "https://jobs.rwfm.tamu.edu/view/107468/",
-      "published_date": "06/30/2025",
       "discipline_refinement_source": "rule",
       "review_status": "",
       "reviewed_discipline": "",
@@ -188,30 +212,6 @@
       "location": "Frostburg State University (Frostburg, Maryland)",
       "url": "https://jobs.rwfm.tamu.edu/view/102817/",
       "published_date": "01/17/2025",
-      "discipline_refinement_source": "rule",
-      "review_status": "",
-      "reviewed_discipline": "",
-      "review_notes": "",
-      "reviewer": ""
-    },
-    {
-      "severity": 3,
-      "reasons": [
-        "final_other",
-        "still_other_low_signal"
-      ],
-      "position_key": "title_org::m.s. position \u2013 using drones to study urban parrots in southern california (cal poly pomona)::cal poly pomona (state)::3801 w. temple ave (pomona, california)::06/26/2025",
-      "discipline_final": "Other",
-      "discipline_model_suggested": "Fisheries and Aquatic",
-      "discipline_model_secondary": "",
-      "model_id": "20261002_161903",
-      "model_confidence": 0.1764,
-      "model_margin": 0.0112,
-      "title": "M.S. Position \u2013 Using drones to study urban parrots in Southern California (Cal Poly Pomona)",
-      "organization": "Cal Poly Pomona (State)",
-      "location": "3801 W. Temple Ave (Pomona, California)",
-      "url": "https://jobs.rwfm.tamu.edu/view/107434/",
-      "published_date": "06/26/2025",
       "discipline_refinement_source": "rule",
       "review_status": "",
       "reviewed_discipline": "",
