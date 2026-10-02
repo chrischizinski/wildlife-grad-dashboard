@@ -10,13 +10,13 @@
   <link rel="preconnect" href="https://unpkg.com" crossorigin>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <link rel="stylesheet" href="assets/css/enhanced-styles.css?v=7" />
+  <link rel="stylesheet" href="assets/css/enhanced-styles.css?v=12" />
 
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1"></script>
   <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script defer src="assets/js/dashboard-core.js?v=25"></script>
+  <script defer src="assets/js/dashboard-core.js?v=27"></script>
 </head>
 
 <body>
@@ -291,32 +291,18 @@
               <p class="kpi-card__value" id="kpi-quality-capture">—</p>
               <p class="kpi-card__reason" id="kpi-quality-capture-reason">No capture timestamp available</p>
             </article>
-            <article class="kpi-card">
-              <h3>Download Full Data (JSON)</h3>
-              <p class="kpi-card__value">
-                <a class="kpi-card__action" href="data/dashboard_positions.json" download>Download</a>
-              </p>
-              <p class="kpi-card__reason">Unified captured dataset used for dashboard metrics</p>
-            </article>
-            <article class="kpi-card">
-              <h3>Download Full Data (CSV)</h3>
-              <p class="kpi-card__value">
-                <a class="kpi-card__action" href="data/dashboard_positions.csv" download>Download</a>
-              </p>
-              <p class="kpi-card__reason">Same dataset as spreadsheet-friendly CSV</p>
-            </article>
-            <article class="kpi-card">
-              <h3>Full Position History (JSON)</h3>
-              <p class="kpi-card__value">
-                <a class="kpi-card__action" href="data/historical_positions.json" download>Download</a>
-              </p>
-              <p class="kpi-card__reason">
-                Cumulative record of every captured position.
-                Weekly raw snapshots on the
-                <a href="https://github.com/chrischizinski/wildlife-grad-dashboard/releases/tag/data-archive" target="_blank" rel="noopener">releases page</a>.
-              </p>
-            </article>
           </div>
+          <p class="data-links">
+            <span class="data-links__label">Get the data</span>
+            <a href="data/dashboard_positions.json" download>All positions (JSON)</a>
+            <a href="data/dashboard_positions.csv" download>All positions (CSV)</a>
+            <a href="data/historical_positions.json" download>Full position history (JSON)</a>
+            <a href="https://github.com/chrischizinski/wildlife-grad-dashboard/releases/tag/data-archive" target="_blank" rel="noopener">Weekly raw snapshots</a>
+            <span class="data-links__note">
+              The first two are the unified dataset behind every metric on this page; the history file is the
+              cumulative record of every captured position.
+            </span>
+          </p>
         </section>
 
         <section class="section" id="listings">

@@ -278,9 +278,9 @@ test('shows how many discipline labels are supported by the title', async ({ pag
     published_date: '2026-02-10', ...(discipline_evidence ? { discipline_evidence } : {})
   });
 
-  for (const [rows, valueText, reasonText] of [
-    [[row('A', 'title'), row('B', 'title'), row('C', 'title'), row('D', 'generic_title')], '3 / 4', 'supported by the posting title'],
-    [[row('A'), row('B')], '—', 'Evidence flag not available in this dataset']
+  for (const [rows, valueText, reasonText, coverage] of [
+    [[row('A', 'title'), row('B', 'title'), row('C', 'title'), row('D', 'generic_title')], '3 / 4', 'supported by the posting title', 0.75],
+    [[row('A'), row('B')], '—', 'Evidence flag not available in this dataset', null]
   ]) {
     await page.route(/\/data\/dashboard_analytics\.json$/, (route) => route.fulfill({ json: mockAnalytics }));
     await page.route(/\/data\/dashboard_positions\.json$/, (route) => route.fulfill({ json: rows }));
@@ -293,6 +293,14 @@ test('shows how many discipline labels are supported by the title', async ({ pag
 
     await expect(page.locator('#kpi-quality-discipline')).toHaveText(valueText);
     await expect(page.locator('#kpi-quality-discipline-reason')).toContainText(reasonText);
+    // The coverage bar is derived from the displayed "N / Total", so it must agree.
+    const card = page.locator('.kpi-card:has(#kpi-quality-discipline)');
+    if (coverage === null) {
+      await expect(card).not.toHaveAttribute('data-coverage', /.*/);
+    } else {
+      await expect(card).toHaveAttribute('data-coverage', 'true');
+      await expect(card).toHaveCSS('--coverage', String(coverage));
+    }
     await page.unrouteAll();
   }
 });

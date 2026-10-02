@@ -54,27 +54,46 @@
     enhanced: 'data/enhanced_data.json',
     export: 'data/export_data.json'
   };
+  // Discipline hues are fixed per discipline (never by rank). Slots come from the
+  // validated categorical palette, assigned so every adjacent pair in the display
+  // order passes the CVD and normal-vision separation checks on the #faf7f0
+  // panel surface; "Other" is a neutral gray folded last. Paler hues fall under
+  // 3:1 contrast, so slices always carry visible labels or the shared legend.
   const DISCIPLINE_COLOR_MAP = {
-    'Environmental Sciences': '#117a68',
-    'Fisheries and Aquatic': '#1769aa',
-    Wildlife: '#2f8f46',
-    Entomology: '#d28a14',
-    'Forestry and Habitat': '#8a5a12',
-    Agriculture: '#b77a1a',
-    'Human Dimensions': '#7952b3',
-    Other: '#4a5668'
+    'Environmental Sciences': '#eb6834',
+    'Fisheries and Aquatic': '#2a78d6',
+    Wildlife: '#008300',
+    Entomology: '#eda100',
+    'Forestry and Habitat': '#1baf7a',
+    Agriculture: '#e34948',
+    'Human Dimensions': '#4a3aa7',
+    Other: '#8a8578'
   };
-  const DISCIPLINE_COLOR_FALLBACK = '#4a5668';
+  const DISCIPLINE_COLOR_FALLBACK = '#8a8578';
   const CHART_COLOR = {
-    spruce: '#117a68',
-    spruceDark: '#0b4f43',
-    spruceFill: 'rgba(17, 122, 104, 0.22)',
-    water: '#1769aa',
-    waterDark: '#123f68',
-    prairie: '#c78315',
-    ink: '#263241',
-    paper: '#f6f4ed'
+    spruce: '#2d5a45',
+    spruceDark: '#1f4435',
+    spruceFill: 'rgba(45, 90, 69, 0.12)',
+    water: '#8f8672',
+    waterDark: '#6b6455',
+    prairie: '#a8741f',
+    ink: '#26231d',
+    paper: '#faf7f0',
+    grid: '#e6dfcd',
+    axis: '#5a5446'
   };
+
+  // Text on a filled slice: ink on light fills, paper on dark fills (WCAG-style).
+  function readableOn(hex) {
+    const m = /^#?([0-9a-f]{6})$/i.exec(String(hex || ''));
+    if (!m) return CHART_COLOR.ink;
+    const [r, g, b] = [0, 2, 4].map((i) => {
+      const c = parseInt(m[1].slice(i, i + 2), 16) / 255;
+      return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+    });
+    const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    return lum > 0.3 ? CHART_COLOR.ink : CHART_COLOR.paper;
+  }
   const DISCIPLINE_LEGEND_ORDER = [
     'Environmental Sciences',
     'Fisheries and Aquatic',
@@ -776,6 +795,21 @@
     const reasonEl = document.getElementById(reasonId);
     if (valueEl) valueEl.textContent = value;
     if (reasonEl) reasonEl.textContent = reason;
+    // Ratio metrics ("184 / 252") also draw a coverage bar. It is read from the
+    // displayed text so the bar can never disagree with the number.
+    const card = valueEl ? valueEl.closest('.kpi-card') : null;
+    if (card) {
+      const m = /^\s*([\d,]+)\s*\/\s*([\d,]+)\s*$/.exec(String(value));
+      const num = m ? Number(m[1].replace(/,/g, '')) : NaN;
+      const den = m ? Number(m[2].replace(/,/g, '')) : NaN;
+      if (m && den > 0) {
+        card.dataset.coverage = 'true';
+        card.style.setProperty('--coverage', String(Math.min(1, num / den)));
+      } else {
+        delete card.dataset.coverage;
+        card.style.removeProperty('--coverage');
+      }
+    }
   }
 
   function formatRatio(numerator, denominator) {
@@ -1747,6 +1781,21 @@
   function configureChartDefaults() {
     if (!ensureChartJs()) return;
     Chart.defaults.animation = false;
+    Chart.defaults.font.family = '-apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif';
+    Chart.defaults.font.size = 12;
+    Chart.defaults.color = CHART_COLOR.axis;
+    if (Chart.defaults.plugins?.legend?.labels) {
+      Chart.defaults.plugins.legend.labels.boxWidth = 10;
+      Chart.defaults.plugins.legend.labels.boxHeight = 10;
+    }
+    if (Chart.defaults.scale) {
+      // Recessive grid: light horizontal lines only, no tick stubs or axis border.
+      Chart.defaults.scale.grid.color = CHART_COLOR.grid;
+      Chart.defaults.scale.grid.tickColor = 'transparent';
+      if (Chart.defaults.scale.border) Chart.defaults.scale.border.display = false;
+    }
+    if (Chart.defaults.scales?.category?.grid) Chart.defaults.scales.category.grid.display = false;
+    if (Chart.defaults.scales?.time?.grid) Chart.defaults.scales.time.grid.display = false;
     if (Chart.defaults.transitions?.active?.animation) {
       Chart.defaults.transitions.active.animation.duration = 0;
     }
@@ -2108,15 +2157,15 @@
           label: 'Nominal Avg Salary',
           data: salaryRows.map((r) => r.avgNominal),
           backgroundColor: CHART_COLOR.water,
-          borderColor: CHART_COLOR.ink,
-          borderWidth: 1,
+          borderWidth: 0,
+          borderRadius: 2,
           borderSkipped: false
         }, {
           label: 'COL-Adjusted Avg Salary (Nebraska baseline)',
           data: salaryRows.map((r) => r.avgAdjusted),
           backgroundColor: CHART_COLOR.spruce,
-          borderColor: CHART_COLOR.ink,
-          borderWidth: 1,
+          borderWidth: 0,
+          borderRadius: 2,
           borderSkipped: false
         }]
       },
@@ -2125,6 +2174,7 @@
         maintainAspectRatio: false,
         scales: {
           x: {
+            grid: { display: false },
             ticks: {
               autoSkip: false,
               maxRotation: 0,
@@ -2293,13 +2343,14 @@
               parsing: false,
               borderColor: CHART_COLOR.spruce,
               backgroundColor: CHART_COLOR.spruceFill,
-              pointRadius: trendMode === 'daily' ? 4 : 3,
-              pointHoverRadius: trendMode === 'daily' ? 6 : 5,
+              borderWidth: 2,
+              pointRadius: 0,
+              pointHoverRadius: 5,
               pointHitRadius: 10,
               pointBackgroundColor: CHART_COLOR.spruce,
               pointBorderColor: CHART_COLOR.paper,
-              pointBorderWidth: 1.5,
-              tension: 0.25,
+              pointBorderWidth: 2,
+              tension: 0.15,
               spanGaps: true,
               fill: true
             }]
@@ -2335,6 +2386,7 @@
             scales: {
               x: {
                 type: 'linear',
+                grid: { display: false },
                 title: { display: true, text: trendXAxisTitle },
                 ticks: {
                   maxRotation: 0,
@@ -2352,6 +2404,8 @@
               }
             },
             plugins: {
+              // One series: the panel title names it, so no legend box.
+              legend: { display: false },
               tooltip: {
                 callbacks: {
                   title: (items) => {
@@ -2431,8 +2485,8 @@
             datasets: [{
               data: latestDisciplineRows.map((r) => r[1]),
               backgroundColor: latestDisciplineRows.map((r) => getDisciplineColor(r[0])),
-              borderColor: CHART_COLOR.ink,
-              borderWidth: 1
+              borderColor: CHART_COLOR.paper,
+              borderWidth: 2
             }]
           },
           options: {
@@ -2451,7 +2505,11 @@
                 offset: (context) => (doughnutLabelIsLarge(context) ? 0 : 4),
                 clamp: true,
                 clip: false,
-                color: (context) => (doughnutLabelIsLarge(context) ? CHART_COLOR.paper : CHART_COLOR.ink),
+                color: (context) => (
+                  doughnutLabelIsLarge(context)
+                    ? readableOn(context.dataset.backgroundColor[context.dataIndex])
+                    : CHART_COLOR.ink
+                ),
                 font: {
                   weight: '600',
                   size: 11
@@ -2480,8 +2538,8 @@
             datasets: [{
               data: overallDisciplineRows.map((r) => r[1]),
               backgroundColor: overallDisciplineRows.map((r) => getDisciplineColor(r[0])),
-              borderColor: CHART_COLOR.ink,
-              borderWidth: 1
+              borderColor: CHART_COLOR.paper,
+              borderWidth: 2
             }]
           },
           options: {
@@ -2500,7 +2558,11 @@
                 offset: (context) => (doughnutLabelIsLarge(context) ? 0 : 4),
                 clamp: true,
                 clip: false,
-                color: (context) => (doughnutLabelIsLarge(context) ? CHART_COLOR.paper : CHART_COLOR.ink),
+                color: (context) => (
+                  doughnutLabelIsLarge(context)
+                    ? readableOn(context.dataset.backgroundColor[context.dataIndex])
+                    : CHART_COLOR.ink
+                ),
                 font: {
                   weight: '600',
                   size: 11
@@ -2532,8 +2594,8 @@
               label: `Avg Posted Positions / Month (${seasonality.yearsCount} years)`,
               data: seasonality.avgByMonth,
               backgroundColor: CHART_COLOR.spruce,
-              borderColor: CHART_COLOR.ink,
-              borderWidth: 1,
+              borderWidth: 0,
+              borderRadius: 2,
               borderSkipped: false
             }]
           },
@@ -2541,10 +2603,15 @@
             responsive: true,
             maintainAspectRatio: false,
             scales: {
+              x: { grid: { display: false } },
               y: {
                 beginAtZero: true,
                 title: { display: true, text: 'Average Posted Positions' }
               }
+            },
+            plugins: {
+              // One series: the panel title names it, so no legend box.
+              legend: { display: false }
             }
           }
         });
@@ -2567,14 +2634,18 @@
       return;
     }
 
-    mapPanel.innerHTML = '<div id="leaflet-map" style="height: 100%; width: 100%; border-radius: 8px;"></div>';
+    mapPanel.innerHTML = '<div id="leaflet-map" style="height: 100%; width: 100%; border-radius: 2px;"></div>';
     const map = L.map('leaflet-map').setView([37.8, -96], 4);
     const markerColor = selectedDiscipline && selectedDiscipline !== GEOGRAPHY_DISCIPLINE_ALL
       ? getDisciplineColor(selectedDiscipline)
       : CHART_COLOR.spruce;
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors',
-      maxZoom: 19
+    // Keyless light-gray basemap: quiet enough that the data markers lead.
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+      maxZoom: 16
+    }).addTo(map);
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {
+      maxZoom: 16
     }).addTo(map);
 
     entries.forEach(([state, count]) => {
@@ -2583,10 +2654,10 @@
       L.circleMarker(coords, {
         radius: Math.max(5, Math.min(16, Math.sqrt(asNumber(count)) * 2.8)),
         fillColor: markerColor,
-        color: CHART_COLOR.ink,
-        weight: 1,
+        color: CHART_COLOR.paper,
+        weight: 1.5,
         opacity: 1,
-        fillOpacity: 0.8
+        fillOpacity: 0.78
       }).bindPopup(
         `<strong>${escapeHtml(state)}${US_NON_CONTIGUOUS_STATES.has(state) ? ' (inset)' : ''}</strong><br>${asNumber(count)} postings`
       ).addTo(map);
