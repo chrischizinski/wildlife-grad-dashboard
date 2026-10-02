@@ -1,15 +1,15 @@
 {
   "metadata": {
-    "generated_at": "2026-10-02T18:49:03Z",
-    "last_updated": "2026-10-02T18:49:03Z",
+    "generated_at": "2026-10-02T19:01:46Z",
+    "last_updated": "2026-10-02T19:01:46Z",
     "total_positions": 252,
     "source": "merged (historical + latest + enhanced)",
     "discipline_mapping": "consolidated to 8 categories",
     "freshness": {
-      "analytics_generated_at": "2026-10-02T18:49:03Z",
-      "latest_capture_at": "2026-10-02T18:46:51.804099+00:00",
+      "analytics_generated_at": "2026-10-02T19:01:46Z",
+      "latest_capture_at": "2026-10-02T18:59:40.005450+00:00",
       "latest_capture_source": "scraped_at",
-      "latest_snapshot_run_at": "2026-10-02T18:48:50",
+      "latest_snapshot_run_at": "2026-10-02T19:01:34",
       "posting_period_start": "2024-08-29",
       "posting_period_end": "2026-10-01",
       "row_count": 252
@@ -863,7 +863,7 @@
       "2026-07": 2,
       "2026-10": 1
     },
-    "latest_run_timestamp": "2026-10-02T18:48:50",
+    "latest_run_timestamp": "2026-10-02T19:01:34",
     "latest_run_grad_positions": 23,
     "latest_run_discipline_breakdown": {
       "Environmental Sciences": 1,
@@ -873,5 +873,5 @@
       "Other": 13
     }
   },
-  "last_updated": "2026-10-02T18:49:03Z"
+  "last_updated": "2026-10-02T19:01:46Z"
 }
