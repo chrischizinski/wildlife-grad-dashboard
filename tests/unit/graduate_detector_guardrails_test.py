@@ -1,12 +1,15 @@
 """Regression tests for graduate-position false positives."""
 
-from pathlib import Path
 import sys
+from pathlib import Path
 
 # Ensure src/ is importable when running tests from repo root.
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
 
-from wildlife_grad.analysis.enhanced_analysis import GraduatePositionDetector, JobPosition
+from wildlife_grad.analysis.enhanced_analysis import (
+    GraduatePositionDetector,
+    JobPosition,
+)
 
 
 def make_position(title: str, tags: str = "Graduate Opportunities", description: str = "") -> JobPosition:

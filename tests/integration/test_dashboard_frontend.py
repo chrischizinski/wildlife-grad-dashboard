@@ -3,24 +3,26 @@
 Test the dashboard frontend functionality
 """
 
-import aiohttp
 import asyncio
+
+import aiohttp
+
 
 async def test_dashboard_frontend():
     """Test if the dashboard loads and basic functionality works"""
-    
+
     dashboard_url = "http://localhost:8081/wildlife_dashboard.html"
-    
+
     print("🌐 Testing Dashboard Frontend")
     print("="*60)
-    
+
     async with aiohttp.ClientSession() as session:
         try:
             print(f"📱 Testing dashboard load at {dashboard_url}")
             async with session.get(dashboard_url) as response:
                 if response.status == 200:
                     content = await response.text()
-                    
+
                     # Check for key elements
                     checks = [
                         ("HTML structure", "<html" in content and "</html>" in content),
@@ -32,17 +34,17 @@ async def test_dashboard_frontend():
                         ("Chart.js", "chart.js" in content),
                         ("Bootstrap", "bootstrap" in content)
                     ]
-                    
+
                     print("✅ Dashboard HTML loaded successfully")
                     print("\n📋 Component Check:")
-                    
+
                     all_passed = True
                     for check_name, passed in checks:
                         status = "✅" if passed else "❌"
                         print(f"{status} {check_name}")
                         if not passed:
                             all_passed = False
-                    
+
                     if all_passed:
                         print(f"\n🎉 Dashboard is ready! Open: {dashboard_url}")
                         print("\n📋 Manual Testing Checklist:")
@@ -55,11 +57,11 @@ async def test_dashboard_frontend():
                     else:
                         print("\n❌ Some components missing - check the dashboard code")
                         return False
-                        
+
                 else:
                     print(f"❌ Dashboard failed to load: HTTP {response.status}")
                     return False
-                    
+
         except Exception as e:
             print(f"❌ Error testing dashboard: {e}")
             print("🔧 Make sure the server is running:")
