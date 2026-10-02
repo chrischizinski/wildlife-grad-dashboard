@@ -23,3 +23,6 @@ data/archive/
 
 # Build metadata
 *.egg-info/
+
+# Blind-validation key (pipeline labels); keep local so the reviewer is not anchored
+data/validation/*_key.json
