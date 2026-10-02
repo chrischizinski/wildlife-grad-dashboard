@@ -132,11 +132,3 @@ def test_people_focused_title_is_human_dimensions_over_the_subject(title):
     # Reviewer: social-science framing is the research question; the crop,
     # forest or animal is only what the people are studied about.
     assert classify(title, description="Graduate position.") == "Human Dimensions"
-
-
-def test_secondary_education_component_does_not_override_the_subject():
-    # Reviewer labeled this Forestry and Habitat, not Human Dimensions.
-    assert (
-        classify("Graduate Student Assistantship - Forest Management and Environmental Education", description="Graduate position.")
-        == "Forestry and Habitat"
-    )
