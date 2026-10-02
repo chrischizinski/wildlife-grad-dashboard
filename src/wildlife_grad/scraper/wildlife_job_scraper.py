@@ -571,17 +571,15 @@ class WildlifeJobScraper:
             contact_info = ""
             try:
                 contact_selectors = [
-                    "*[contains(text(), '@')]",  # Email addresses
-                    "*[contains(text(), 'contact')]",
-                    "*[contains(text(), 'Contact')]",
-                    ".contact-info",
+                    (By.XPATH, "//*[contains(text(), '@')]"),  # Email addresses
+                    (By.XPATH, "//*[contains(text(), 'contact')]"),
+                    (By.XPATH, "//*[contains(text(), 'Contact')]"),
+                    (By.CSS_SELECTOR, ".contact-info"),
                 ]
 
-                for selector in contact_selectors:
+                for by, selector in contact_selectors:
                     try:
-                        contact_element = self.driver.find_element(
-                            By.CSS_SELECTOR, selector
-                        )
+                        contact_element = self.driver.find_element(by, selector)
                         contact_info = contact_element.text.strip()
                         if contact_info and "@" in contact_info:
                             break
