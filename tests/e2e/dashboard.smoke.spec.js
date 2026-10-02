@@ -252,3 +252,47 @@ test('weekly spotlight excludes professional roles even if they are flagged grad
   await expect(page.locator('#weekly-spotlight')).toContainText('M.S. Graduate Research Assistantship');
   await expect(page.locator('#weekly-spotlight')).not.toContainText('Database Engineer');
 });
+
+test('shows how many discipline labels are supported by the title', async ({ page }) => {
+  const mockAnalytics = {
+    metadata: {
+      generated_at: '2026-02-18T00:00:00Z',
+      freshness: {
+        analytics_generated_at: '2026-02-18T00:00:00Z',
+        latest_capture_at: '2026-02-17T23:00:00Z',
+        latest_capture_source: 'scraped_at',
+        posting_period_start: '2026-02-10',
+        posting_period_end: '2026-02-10',
+        row_count: 4
+      }
+    },
+    summary_stats: { total_positions: 4, graduate_positions: 4, positions_with_salary: 0 },
+    top_disciplines: { Fisheries: { total_positions: 4, grad_positions: 4, salary_stats: { count: 0 } } },
+    geographic_summary: { Texas: 4 },
+    time_series: { '12_month': { total_monthly: { '2026-02': 4 }, discipline_monthly: {} } },
+    last_updated: '2026-02-18 00:00:00'
+  };
+
+  const row = (title, discipline_evidence) => ({
+    title, organization: 'Org', location: 'Texas', discipline: 'Fisheries',
+    published_date: '2026-02-10', ...(discipline_evidence ? { discipline_evidence } : {})
+  });
+
+  for (const [rows, valueText, reasonText] of [
+    [[row('A', 'title'), row('B', 'title'), row('C', 'title'), row('D', 'generic_title')], '3 / 4', 'supported by the posting title'],
+    [[row('A'), row('B')], '—', 'Evidence flag not available in this dataset']
+  ]) {
+    await page.route(/\/data\/dashboard_analytics\.json$/, (route) => route.fulfill({ json: mockAnalytics }));
+    await page.route(/\/data\/dashboard_positions\.json$/, (route) => route.fulfill({ json: rows }));
+    await page.route(/\/data\/verified_graduate_assistantships\.json$/, (route) => route.fulfill({ json: [] }));
+    await page.route(/\/data\/enhanced_data\.json$/, (route) => route.fulfill({ json: [] }));
+    await page.route(/\/data\/export_data\.json$/, (route) => route.fulfill({ json: [] }));
+
+    await page.goto('/wildlife_dashboard.html');
+    await page.waitForFunction(() => window.WGD_ADAPTER_STATUS === 'ready');
+
+    await expect(page.locator('#kpi-quality-discipline')).toHaveText(valueText);
+    await expect(page.locator('#kpi-quality-discipline-reason')).toContainText(reasonText);
+    await page.unrouteAll();
+  }
+});

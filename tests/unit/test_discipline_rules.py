@@ -79,3 +79,42 @@ def test_fixture_is_as_noisy_as_a_95th_percentile_posting():
     classifier = DisciplineClassifier()
     scores = classifier._keyword_classify_with_scores(HABITAT_NOISE.lower())[2]
     assert 4 <= scores.get("Forestry and Habitat", 0) <= 6
+
+
+def evidence(title, description, label=None):
+    position = JobPosition(
+        title=title,
+        organization="State University",
+        location="Texas",
+        salary="",
+        starting_date="",
+        published_date="",
+        tags="Graduate Opportunities",
+        description=description,
+    )
+    classifier = DisciplineClassifier()
+    label = label or classifier.classify_position(position)[0]
+    return classifier.discipline_evidence(position, label)
+
+
+def test_evidence_title_when_the_title_names_the_subject():
+    assert evidence("PhD Assistantship in Fish Population Dynamics", "Graduate position.") == "title"
+
+
+def test_evidence_generic_title_when_title_names_no_field():
+    # Reviewer's "definitely grad but unclear in what": MS/PhD/assistantship
+    # with no qualifier. Any label then rests on the description alone.
+    for title in ("MS student", "PhD position", "Graduate Research Assistant (M.S.)"):
+        assert evidence(title, "We study bird behavior and wildlife management.") == "generic_title"
+
+
+def test_evidence_description_when_title_is_specific_but_silent():
+    # Specific words, none of them a discipline keyword; label comes from the text.
+    assert evidence(
+        "Quantitative approaches to hierarchical models",
+        "Fisheries stock assessment using river and stream survey data.",
+    ) == "description"
+
+
+def test_evidence_none_when_label_is_other():
+    assert evidence("PhD position", "Hepatic metabolism.", label="Other") == "none"

@@ -695,6 +695,16 @@ class DisciplineClassifier:
             r"\b(hydrolog\w*|ecohydrolog\w*|soils?|biogeochem\w*|geochem\w*)\b"
         )
         self.title_focus_bonus = 8
+        # Words that say "this is a graduate position" without naming a field.
+        self.generic_title_words = frozenset(
+            "ms m s phd ph d doctoral doctorate master masters master's graduate "
+            "grad assistantship assistantships assistant research teaching position "
+            "positions student students opportunity opportunities available call "
+            "open openings opening candidate several multiple new fellowship fellow "
+            "program degree biology science sciences ecology conservation applied "
+            "or and in at the of for a an with to on from by is are university "
+            "universities college state".split()
+        )
         self.ml_refine_enabled = HAS_SKLEARN
         self.ml_min_similarity = 0.12
         self.ml_override_similarity = 0.2
@@ -801,6 +811,37 @@ class DisciplineClassifier:
                 boosted.get("Forestry and Habitat", 0) + self.title_focus_bonus - 1
             )
         return boosted
+
+    def _title_content_words(self, title: str) -> List[str]:
+        """Title words that name something beyond "a graduate position"."""
+        text = re.sub(r"[()\[\]:,/\u2013\u2014\-|]", " ", title.lower().replace("\u2019", "'"))
+        text = re.sub(
+            r"\b(fall|spring|summer|winter)\s*\d{0,4}\b|\b20\d\d\b|\bm\.?s\.?\b|\bph\.?d\.?\b",
+            " ",
+            text,
+        )
+        words = (word.strip(".'") for word in text.split())
+        return [w for w in words if w and w not in self.generic_title_words]
+
+    def discipline_evidence(self, position: JobPosition, label: str) -> str:
+        """How well the posting itself supports its discipline label.
+
+        - "title": the title names the subject
+        - "generic_title": the title names no field, so the label rests on the description
+        - "description": the title is specific but the label rests on the description
+        - "none": no discipline signal ("Other")
+        """
+        if label == "Other":
+            return "none"
+        title_text = f"{position.title} {position.tags}".lower()
+        title_scores = self._apply_title_focus(
+            title_text, self._keyword_classify_with_scores(title_text)[2]
+        )
+        if any(score > 0 for score in title_scores.values()):
+            return "title"
+        if not self._title_content_words(position.title):
+            return "generic_title"
+        return "description"
 
     def _is_confident_title_match(self, scores: Dict[str, int]) -> bool:
         """Determine whether title-only evidence is strong enough to finalize."""
