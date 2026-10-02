@@ -164,3 +164,67 @@ def test_recheck_selects_only_changed_rows_the_reviewer_has_not_seen():
     after = {"a": "Wildlife", "b": "Other", "c": "Other", "d": "Other"}
     picked = changed_rows(rows, before, after, already_labeled={"c"})
     assert [r["url"] for r in picked] == ["b", "d"]
+
+
+def test_gold_key_matches_the_retrainer_key_format():
+    # A mismatch would make imported labels invisible to (or duplicated by) retraining.
+    from discipline_validation import gold_key
+    from retrain_discipline_model import position_key as retrain_key
+
+    for row in (
+        {"url": "HTTPS://Jobs.Example/View?id=1"},
+        {"title": "T", "organization": "O", "location": "L", "published_date": "1/2/26"},
+        {"title": "Only title", "published_date": "1/2/26"},
+    ):
+        assert gold_key(row) == retrain_key(row)
+
+
+def test_human_labels_replace_machine_labels_and_are_counted():
+    from discipline_validation import gold_key, merge_human_gold
+
+    rows = {k: {"url": f"u/{k}", "title": k, "description": f"d-{k}"} for k in "abcd"}
+    payload = {"labels": [
+        {"position_key": gold_key(rows["a"]), "discipline": "Wildlife", "source": "auto_seed_high_confidence_v1", "description": ""},
+        {"position_key": gold_key(rows["b"]), "discipline": "Wildlife", "source": "auto_seed_high_confidence_v1", "description": "kept"},
+    ]}
+    counts = merge_human_gold(
+        payload,
+        {"a": "Forestry and Habitat", "b": "Wildlife", "c": "Other", "zzz": "Wildlife"},
+        rows,
+        "2026-10-02",
+    )
+    assert counts == {"added": 1, "relabeled": 1, "confirmed": 1, "missing_row": 1}
+    by_key = {item["position_key"]: item for item in payload["labels"]}
+    relabeled = by_key[gold_key(rows["a"])]
+    assert relabeled["discipline"] == "Forestry and Habitat"
+    assert relabeled["source"] == "human_validation" and relabeled["description"] == "d-a"
+    assert by_key[gold_key(rows["b"])]["description"] == "kept"
+    assert by_key[gold_key(rows["c"])]["discipline"] == "Other"
+
+
+def test_weekly_auto_seed_never_overwrites_a_human_label(tmp_path):
+    # The workflow auto-seeds gold from the pipeline's own output every run;
+    # human labels are only worth importing if that cannot clobber them.
+    from retrain_discipline_model import position_key as retrain_key
+    from retrain_discipline_model import seed_gold_from_positions
+
+    def row(i, title):
+        return {
+            "url": f"u/{i}", "title": title, "organization": "Univ",
+            "description": "wildlife mammal bird wildlife management wildlife ecology",
+            "discipline_primary": "Wildlife", "grad_confidence": 0.9,
+        }
+
+    human_row = row(0, "Wildlife mammal bird ecology position")
+    payload = {"version": 1, "labels": [{
+        "position_key": retrain_key(human_row), "discipline": "Forestry and Habitat",
+        "source": "human_validation", "title": human_row["title"],
+    }]}
+    others = [row(1, "Wildlife bird study"), row(2, "Wildlife mammal study")]
+    added = seed_gold_from_positions(payload, tmp_path / "gold.json", [human_row] + others, 5, 0.5)
+
+    assert added == 2  # the machine seeding did run, so this is not vacuous
+    kept = [x for x in payload["labels"] if x["position_key"] == retrain_key(human_row)]
+    assert len(kept) == 1
+    assert kept[0]["discipline"] == "Forestry and Habitat"
+    assert kept[0]["source"] == "human_validation"

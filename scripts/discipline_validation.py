@@ -379,6 +379,89 @@ def cmd_recheck(args: argparse.Namespace) -> int:
     return 0
 
 
+def gold_key(row: Dict[str, Any]) -> str:
+    """Key used by the gold label store (matches retrain_discipline_model)."""
+    url = str(row.get("url") or "").strip().lower()
+    if url:
+        return f"url::{url}"
+    title = str(row.get("title") or "").strip().lower()
+    org = str(row.get("organization") or "").strip().lower()
+    loc = str(row.get("location") or "").strip().lower()
+    pub = str(row.get("published_date") or "").strip().lower()
+    if title and org:
+        return f"title_org::{title}::{org}::{loc}::{pub}"
+    return f"title::{title}::{pub}" if title else ""
+
+
+def collect_human_labels(sample_paths: List[Path], corrections: Path) -> Dict[str, str]:
+    """Reviewer labels usable as ground truth: real disciplines only, corrections applied."""
+    answers: Dict[str, str] = {}
+    for path in sample_paths:
+        for row in read_answers(path):
+            answer = normalize_answer(row.get("human_discipline", ""))
+            if answer:
+                answers[row["position_key"]] = answer
+    apply_corrections(answers, corrections)
+    return {k: v for k, v in answers.items() if v in DISCIPLINES}
+
+
+def merge_human_gold(
+    payload: Dict[str, Any],
+    human: Dict[str, str],
+    rows_by_key: Dict[str, Dict[str, Any]],
+    reviewed_at: str,
+) -> Dict[str, int]:
+    """Add reviewer labels to a gold payload; a human label replaces a machine one."""
+    index = {str(item.get("position_key")): item for item in payload["labels"]}
+    counts = {"added": 0, "relabeled": 0, "confirmed": 0, "missing_row": 0}
+    for pos_key, discipline in human.items():
+        row = rows_by_key.get(pos_key)
+        if row is None:
+            counts["missing_row"] += 1
+            continue
+        key = gold_key(row)
+        existing = index.get(key)
+        if existing is None:
+            entry = {
+                "position_key": key,
+                "title": str(row.get("title") or ""),
+                "organization": str(row.get("organization") or ""),
+                "url": str(row.get("url") or ""),
+                "description": str(row.get("description") or ""),
+                "discipline": discipline,
+                "source": "human_validation",
+                "reviewed_at": reviewed_at,
+            }
+            payload["labels"].append(entry)
+            index[key] = entry
+            counts["added"] += 1
+            continue
+        counts["confirmed" if existing.get("discipline") == discipline else "relabeled"] += 1
+        existing["discipline"] = discipline
+        existing["source"] = "human_validation"
+        existing["reviewed_at"] = reviewed_at
+        if not existing.get("description"):
+            existing["description"] = str(row.get("description") or "")
+    payload["updated_at"] = reviewed_at
+    return counts
+
+
+def cmd_gold(args: argparse.Namespace) -> int:
+    from datetime import datetime
+
+    rows = json.loads(args.positions.read_text(encoding="utf-8"))
+    rows = rows["positions"] if isinstance(rows, dict) else rows
+    rows_by_key = {position_key(r): r for r in rows}
+    human = collect_human_labels(args.sample, args.corrections)
+    payload = json.loads(args.gold_file.read_text(encoding="utf-8"))
+    counts = merge_human_gold(payload, human, rows_by_key, datetime.now().isoformat())
+    args.gold_file.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    sources = Counter(item.get("source") for item in payload["labels"])
+    print(f"Human labels: {len(human)}  ->  {counts}")
+    print(f"Gold now holds {len(payload['labels'])} labels by source: {dict(sources)}")
+    return 0
+
+
 def cmd_sample(args: argparse.Namespace) -> int:
     rows = json.loads(args.positions.read_text(encoding="utf-8"))
     rows = rows["positions"] if isinstance(rows, dict) else rows
@@ -499,6 +582,20 @@ def main() -> int:
     p_recheck.add_argument("--exclude-key", type=Path, default=DEFAULT_KEY,
                            help="skip rows already in this key (already labeled)")
     p_recheck.set_defaults(func=cmd_recheck)
+
+    p_gold = sub.add_parser(
+        "gold", help="import reviewer labels into the gold label store as human_validation"
+    )
+    p_gold.add_argument(
+        "--sample", type=Path, nargs="+",
+        default=[DEFAULT_SAMPLE, Path("data/validation/discipline_recheck.xlsx")],
+    )
+    p_gold.add_argument("--corrections", type=Path, default=DEFAULT_CORRECTIONS)
+    p_gold.add_argument("--positions", type=Path, default=DEFAULT_POSITIONS)
+    p_gold.add_argument(
+        "--gold-file", type=Path, default=Path("data/processed/discipline_labels_gold.json")
+    )
+    p_gold.set_defaults(func=cmd_gold)
 
     p_score = sub.add_parser("score", help="score a filled-in CSV")
     p_score.add_argument("--sample", type=Path, default=DEFAULT_SAMPLE)
