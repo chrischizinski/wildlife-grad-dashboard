@@ -74,3 +74,26 @@ def test_rows_without_us_flag_still_count_for_salary():
         "salary_stats_nominal"
     ]
     assert stats["count"] == 1
+
+
+def test_emails_in_text_fields_are_redacted_everywhere_in_a_row():
+    # Postings embed the poster's address in free text, not just contact_info.
+    cleaned = strip_private_fields(
+        [row(description="Send CV to jane.doe@uni.edu or bob@fw.msu.edu today")]
+    )[0]
+    assert "@" not in cleaned["description"]
+    assert cleaned["description"].startswith("Send CV to [email removed] or")
+
+
+def test_redaction_leaves_non_email_text_alone():
+    from wildlife_grad.utils.privacy import redact_emails
+
+    text = "Apply by 3/1 at our site @ the field station (no address here)"
+    assert redact_emails(text) == text
+    assert redact_emails(None) is None
+
+
+def test_scraper_no_longer_collects_contact_info():
+    import wildlife_job_scraper
+
+    assert "contact_info" not in wildlife_job_scraper.JobListing.model_fields
