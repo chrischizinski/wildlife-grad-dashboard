@@ -48,6 +48,7 @@ ANSWERS = DISCIPLINES + [NOT_GRAD, UNCLEAR]
 DEFAULT_POSITIONS = Path("web/data/dashboard_positions.json")
 DEFAULT_SAMPLE = Path("data/validation/discipline_sample.xlsx")
 DEFAULT_KEY = Path("data/validation/discipline_sample_key.json")
+DEFAULT_CORRECTIONS = Path("data/validation/label_corrections.json")
 EXCERPT_CHARS = 700
 SAMPLE_COLUMNS = [
     "position_key",
@@ -269,6 +270,22 @@ def read_answers(path: Path) -> List[Dict[str, Any]]:
         return list(csv.DictReader(handle))
 
 
+def apply_corrections(answers: Dict[str, str], path: Path) -> Tuple[int, int]:
+    """Apply reviewer corrections in place; a null label excludes the row."""
+    if not path.exists():
+        return 0, 0
+    corrections = json.loads(path.read_text(encoding="utf-8"))["corrections"]
+    applied = excluded = 0
+    for pos_key, entry in corrections.items():
+        if entry.get("label") is None:
+            if answers.pop(pos_key, None) is not None:
+                excluded += 1
+        elif pos_key in answers:
+            answers[pos_key] = entry["label"]
+            applied += 1
+    return applied, excluded
+
+
 def cmd_sample(args: argparse.Namespace) -> int:
     rows = json.loads(args.positions.read_text(encoding="utf-8"))
     rows = rows["positions"] if isinstance(rows, dict) else rows
@@ -334,6 +351,9 @@ def cmd_score(args: argparse.Namespace) -> int:
             print(f"  {raw!r}  {pos_key}", file=sys.stderr)
         return 1
 
+    applied, excluded = apply_corrections(answers, args.corrections)
+    if applied or excluded:
+        print(f"Corrections applied: {applied}; excluded pending: {excluded}")
     result = score(key, answers)
     print(f"Labeled: {result['labeled']}  unclear: {result['unclear']}  "
           f"not_graduate: {result['not_graduate']}  unanswered: {result['unanswered']}")
@@ -369,6 +389,7 @@ def main() -> int:
     p_score = sub.add_parser("score", help="score a filled-in CSV")
     p_score.add_argument("--sample", type=Path, default=DEFAULT_SAMPLE)
     p_score.add_argument("--key", type=Path, default=DEFAULT_KEY)
+    p_score.add_argument("--corrections", type=Path, default=DEFAULT_CORRECTIONS)
     p_score.set_defaults(func=cmd_score)
 
     args = parser.parse_args()

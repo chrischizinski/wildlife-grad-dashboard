@@ -1,0 +1,40 @@
+{
+  "corrections": {
+    "https://jobs.rwfm.tamu.edu/view-job/?id=118524": {
+      "label": "Wildlife",
+      "reason": "herpetology belongs in Wildlife (reviewer, 2026-10-02)"
+    },
+    "https://jobs.rwfm.tamu.edu/view-job/?id=118758": {
+      "label": "Wildlife",
+      "reason": "herpetology belongs in Wildlife (reviewer, 2026-10-02)"
+    },
+    "https://jobs.rwfm.tamu.edu/view/107556/": {
+      "label": "Wildlife",
+      "reason": "herpetology belongs in Wildlife (reviewer, 2026-10-02)"
+    },
+    "https://jobs.rwfm.tamu.edu/view-job/?id=118371": {
+      "label": "Wildlife",
+      "reason": "herpetology belongs in Wildlife (reviewer, 2026-10-02)"
+    },
+    "https://jobs.rwfm.tamu.edu/view-job/?id=118916": {
+      "label": null,
+      "reason": "pending: note and dropdown disagree or ambiguous; excluded from scoring until resolved"
+    },
+    "https://jobs.rwfm.tamu.edu/view-job/?id=117976": {
+      "label": null,
+      "reason": "pending: note and dropdown disagree or ambiguous; excluded from scoring until resolved"
+    },
+    "https://jobs.rwfm.tamu.edu/view-job/?id=115117": {
+      "label": null,
+      "reason": "pending: note and dropdown disagree or ambiguous; excluded from scoring until resolved"
+    },
+    "https://jobs.rwfm.tamu.edu/view-job/?id=115214": {
+      "label": null,
+      "reason": "pending: note and dropdown disagree or ambiguous; excluded from scoring until resolved"
+    },
+    "https://jobs.rwfm.tamu.edu/view-job/?id=112882": {
+      "label": null,
+      "reason": "pending: note and dropdown disagree or ambiguous; excluded from scoring until resolved"
+    }
+  }
+}

@@ -138,3 +138,17 @@ def test_answers_round_trip_through_workbook(tmp_path):
 
     rows = read_answers(path)
     assert [r["human_discipline"] for r in rows] == ["Wildlife", ""]
+
+
+def test_corrections_override_labels_and_null_excludes_row(tmp_path):
+    from discipline_validation import apply_corrections
+
+    path = tmp_path / "c.json"
+    path.write_text(json.dumps({"corrections": {
+        "a": {"label": "Wildlife", "reason": "herpetology"},
+        "b": {"label": None, "reason": "pending"},
+    }}))
+    answers = {"a": "Other", "b": "Other", "c": "Other"}
+    assert apply_corrections(answers, path) == (1, 1)
+    assert answers == {"a": "Wildlife", "c": "Other"}
+    assert apply_corrections(answers, tmp_path / "missing.json") == (0, 0)
