@@ -189,7 +189,9 @@ class TestCostOfLivingAdjuster:
         # Test various salary formats
         assert self.adjuster._extract_salary_value("$25,000 per year") == 25000.0
         assert self.adjuster._extract_salary_value("starting at $30,000") == 30000.0
-        assert self.adjuster._extract_salary_value("$20,000 to $25,000") == 20000.0
+        # A posted range is summarised by its midpoint (it was the lower bound before
+        # parser version 2); minimum and maximum are kept by ``parse_salary``.
+        assert self.adjuster._extract_salary_value("$20,000 to $25,000") == 22500.0
         assert self.adjuster._extract_salary_value("$2,000 per month") == 24000.0
         assert self.adjuster._extract_salary_value("$600 per week") == 31200.0
         assert self.adjuster._extract_salary_value("$15 per hour") == 0.0
