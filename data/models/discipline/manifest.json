@@ -1,46 +1,40 @@
 {
-  "updated_at": "2026-10-02T19:01:42.631328",
+  "updated_at": "2026-10-04T10:19:30.564429",
   "promoted": {
-    "model_id": "20261002_190142",
-    "artifact_path": "data/models/discipline/models/discipline_model_20261002_190142.pkl",
+    "model_id": "20261004_101930",
+    "artifact_path": "data/models/discipline/models/discipline_model_20261004_101930.pkl",
     "metrics": {
-      "accuracy": 0.7222222222222222,
-      "macro_f1": 0.6359182160072038,
-      "weighted_f1": 0.7085415305660021,
+      "accuracy": 0.7090909090909091,
+      "macro_f1": 0.6232142857142857,
+      "weighted_f1": 0.6949783549783549,
       "evaluation_mode": "holdout",
-      "validation_samples": 54,
+      "validation_samples": 55,
       "human_cv": {
-        "n": 109,
+        "n": 114,
         "folds": 3,
-        "accuracy": 0.6422018348623854,
-        "macro_f1": 0.5789626385145253
+        "accuracy": 0.6403508771929824,
+        "macro_f1": 0.5938020721750101
       }
     },
     "training_summary": {
-      "human_gold": 109,
-      "gold_total": 216,
+      "human_gold": 114,
+      "gold_total": 217,
       "gold_class_counts": {
         "Other": 10,
         "Environmental Sciences": 17,
         "Fisheries and Aquatic": 55,
         "Forestry and Habitat": 35,
         "Wildlife": 66,
-        "Agriculture": 7,
+        "Agriculture": 8,
         "Entomology": 12,
         "Human Dimensions": 14
       },
-      "pseudo_total": 34,
-      "pseudo_class_counts": {
-        "Environmental Sciences": 3,
-        "Fisheries and Aquatic": 12,
-        "Wildlife": 15,
-        "Forestry and Habitat": 3,
-        "Agriculture": 1
-      },
+      "pseudo_total": 0,
+      "pseudo_class_counts": {},
       "pseudo_weight": 0.35,
       "positions_file": "web/data/dashboard_positions.json"
     },
-    "promoted_at": "2026-10-02T19:01:42.631331"
+    "promoted_at": "2026-10-04T10:19:30.564433"
   },
   "history": [
     {
@@ -774,6 +768,26 @@
           "folds": 3,
           "accuracy": 0.6422018348623854,
           "macro_f1": 0.5789626385145253
+        }
+      }
+    },
+    {
+      "timestamp": "2026-10-04T10:19:30.564414",
+      "status": "promoted",
+      "reason": "macro_f1_improved",
+      "model_id": "20261004_101930",
+      "artifact_path": "data/models/discipline/models/discipline_model_20261004_101930.pkl",
+      "metrics": {
+        "accuracy": 0.7090909090909091,
+        "macro_f1": 0.6232142857142857,
+        "weighted_f1": 0.6949783549783549,
+        "evaluation_mode": "holdout",
+        "validation_samples": 55,
+        "human_cv": {
+          "n": 114,
+          "folds": 3,
+          "accuracy": 0.6403508771929824,
+          "macro_f1": 0.5938020721750101
         }
       }
     }

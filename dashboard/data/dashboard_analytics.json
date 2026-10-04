@@ -1,25 +1,25 @@
 {
   "metadata": {
-    "generated_at": "2026-10-02T19:01:46Z",
-    "last_updated": "2026-10-02T19:01:46Z",
-    "total_positions": 252,
+    "generated_at": "2026-10-04T10:19:35Z",
+    "last_updated": "2026-10-04T10:19:35Z",
+    "total_positions": 253,
     "source": "merged (historical + latest + enhanced)",
     "discipline_mapping": "consolidated to 8 categories",
     "freshness": {
-      "analytics_generated_at": "2026-10-02T19:01:46Z",
-      "latest_capture_at": "2026-10-02T18:59:40.005450+00:00",
+      "analytics_generated_at": "2026-10-04T10:19:35Z",
+      "latest_capture_at": "2026-10-04T10:17:40.034037+00:00",
       "latest_capture_source": "scraped_at",
-      "latest_snapshot_run_at": "2026-10-02T19:01:34",
+      "latest_snapshot_run_at": "2026-10-04T10:19:20",
       "posting_period_start": "2024-08-29",
-      "posting_period_end": "2026-10-01",
-      "row_count": 252
+      "posting_period_end": "2026-10-02",
+      "row_count": 253
     }
   },
   "summary_stats": {
-    "total_positions": 252,
-    "graduate_positions": 252,
-    "positions_with_salary": 184,
-    "positions_with_col_adjusted": 184,
+    "total_positions": 253,
+    "graduate_positions": 253,
+    "positions_with_salary": 185,
+    "positions_with_col_adjusted": 185,
     "positions_with_location": 237,
     "positions_with_us_mappable_location": 215
   },
@@ -100,8 +100,8 @@
       }
     },
     "Entomology": {
-      "total_positions": 12,
-      "grad_positions": 12,
+      "total_positions": 13,
+      "grad_positions": 13,
       "salary_stats_nominal": {
         "count": 10,
         "mean": 26290.7,
@@ -255,8 +255,8 @@
   "geographic_quality": {
     "location_present_count": 237,
     "us_mappable_count": 215,
-    "unmappable_count": 37,
-    "us_mappable_pct": 85.3
+    "unmappable_count": 38,
+    "us_mappable_pct": 85.0
   },
   "time_series": {
     "1_month": {
@@ -283,7 +283,7 @@
         "2026-07": 18,
         "2026-08": 29,
         "2026-09": 37,
-        "2026-10": 5
+        "2026-10": 6
       },
       "discipline_monthly": {
         "Environmental Sciences": {
@@ -335,6 +335,7 @@
           "2026-01": 2
         },
         "Entomology": {
+          "2026-10": 1,
           "2026-09": 2,
           "2024-08": 1,
           "2026-07": 4,
@@ -411,7 +412,7 @@
         "2026-07": 18,
         "2026-08": 29,
         "2026-09": 37,
-        "2026-10": 5
+        "2026-10": 6
       },
       "discipline_monthly": {
         "Environmental Sciences": {
@@ -463,6 +464,7 @@
           "2026-01": 2
         },
         "Entomology": {
+          "2026-10": 1,
           "2026-09": 2,
           "2024-08": 1,
           "2026-07": 4,
@@ -539,7 +541,7 @@
         "2026-07": 18,
         "2026-08": 29,
         "2026-09": 37,
-        "2026-10": 5
+        "2026-10": 6
       },
       "discipline_monthly": {
         "Environmental Sciences": {
@@ -591,6 +593,7 @@
           "2026-01": 2
         },
         "Entomology": {
+          "2026-10": 1,
           "2026-09": 2,
           "2024-08": 1,
           "2026-07": 4,
@@ -667,7 +670,7 @@
         "2026-07": 18,
         "2026-08": 29,
         "2026-09": 37,
-        "2026-10": 5
+        "2026-10": 6
       },
       "discipline_monthly": {
         "Environmental Sciences": {
@@ -719,6 +722,7 @@
           "2026-01": 2
         },
         "Entomology": {
+          "2026-10": 1,
           "2026-09": 2,
           "2024-08": 1,
           "2026-07": 4,
@@ -802,7 +806,7 @@
       "2026-06-28": 9,
       "2026-07-05": 8,
       "2026-07-12": 11,
-      "2026-10-02": 23
+      "2026-10-04": 17
     },
     "daily_run_count": {
       "2025-10-14": 1,
@@ -831,7 +835,7 @@
       "2026-06-28": 1,
       "2026-07-05": 1,
       "2026-07-12": 1,
-      "2026-10-02": 1
+      "2026-10-04": 1
     },
     "monthly_avg_active_grad_positions": {
       "2025-10": 19,
@@ -841,7 +845,7 @@
       "2026-05": 13.25,
       "2026-06": 9.75,
       "2026-07": 9.5,
-      "2026-10": 23
+      "2026-10": 17
     },
     "monthly_relative_to_peak_pct": {
       "2025-10": 56.1,
@@ -851,7 +855,7 @@
       "2026-05": 39.1,
       "2026-06": 28.8,
       "2026-07": 28.1,
-      "2026-10": 67.9
+      "2026-10": 50.2
     },
     "monthly_run_count": {
       "2025-10": 1,
@@ -863,15 +867,15 @@
       "2026-07": 2,
       "2026-10": 1
     },
-    "latest_run_timestamp": "2026-10-02T19:01:34",
-    "latest_run_grad_positions": 23,
+    "latest_run_timestamp": "2026-10-04T10:19:20",
+    "latest_run_grad_positions": 17,
     "latest_run_discipline_breakdown": {
       "Environmental Sciences": 1,
       "Fisheries and Aquatic": 4,
       "Wildlife": 3,
-      "Forestry and Habitat": 2,
-      "Other": 13
+      "Forestry and Habitat": 1,
+      "Other": 8
     }
   },
-  "last_updated": "2026-10-02T19:01:46Z"
+  "last_updated": "2026-10-04T10:19:35Z"
 }
