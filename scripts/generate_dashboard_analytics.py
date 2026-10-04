@@ -34,6 +34,14 @@ from wildlife_grad.analysis.enhanced_analysis import (  # noqa: E402
     GraduatePositionDetector,
     JobPosition,
 )  # noqa: E402
+from wildlife_grad.utils.posting_text import header_field, posting_prose  # noqa: E402
+from wildlife_grad.utils.salary import (  # noqa: E402
+    PARSER_VERSION,
+    SalaryParse,
+    find_salary_phrase,
+    parse_hours_per_week,
+    parse_salary,
+)
 
 # Discipline consolidation mapping
 DISCIPLINE_MAPPING = {
@@ -739,7 +747,8 @@ def load_and_merge_data() -> List[Dict[str, Any]]:
     )
     print(
         "  ↳ Compensation enrichment: "
-        f"{compensation_backfill['salary_annualized']} salary-annualized, "
+        f"{compensation_backfill['salary_annualized']} salary-annualized "
+        f"({compensation_backfill['salary_recovered']} recovered from description), "
         f"{compensation_backfill['cost_index_backfilled']} cost-index backfilled, "
         f"{compensation_backfill['adjusted_backfilled']} Lincoln-adjusted backfilled"
     )
@@ -753,11 +762,43 @@ def load_and_merge_data() -> List[Dict[str, Any]]:
 
 
 def extract_salary_number(salary_str: Any) -> Optional[float]:
-    """Extract annualized salary from string."""
+    """Extract annualized salary (midpoint of a range) from string."""
     if not salary_str or salary_str in ["", "N/A", "Unknown", "None"]:
         return None
     parsed = COL_ADJUSTER._extract_salary_value(str(salary_str))
     return round(parsed, 2) if parsed > 0 else None
+
+
+def row_salary(row: Dict[str, Any]) -> Optional[float]:
+    """Annualized salary for a row, preferring the enriched value.
+
+    ``enrich_compensation_fields`` can recover salaries the raw ``salary`` field
+    lacks, so aggregates read ``salary_annualized`` first and only then re-parse.
+    """
+    enriched = _as_positive_float(row.get("salary_annualized"))
+    if enriched is not None:
+        return enriched
+    return extract_salary_number(row.get("salary"))
+
+
+def parse_row_salary(row: Dict[str, Any]) -> tuple[SalaryParse, Optional[str]]:
+    """Parse a row's salary, recovering it from the description when it is empty.
+
+    Returns the parse and where the text came from ("salary field" or
+    "description text"); the source is None when there was nothing to parse.
+    """
+    page_text = row.get("description")
+    hours = parse_hours_per_week(row.get("hours_per_week")) or parse_hours_per_week(
+        header_field(page_text, "Hours per Week")
+    )
+    salary_text = str(row.get("salary") or "").strip()
+    if salary_text.lower() not in {"", "n/a", "unknown"}:
+        return parse_salary(salary_text, hours), "salary field"
+
+    recovered = find_salary_phrase(posting_prose(page_text))
+    if recovered:
+        return parse_salary(recovered, hours), "description text"
+    return SalaryParse(), None
 
 
 def enrich_compensation_fields(rows: List[Dict[str, Any]]) -> Dict[str, int]:
@@ -765,23 +806,43 @@ def enrich_compensation_fields(rows: List[Dict[str, Any]]) -> Dict[str, int]:
     Backfill salary/COL fields used by dashboard compensation charts.
 
     This keeps older rows (that predate COL enrichment) usable by deriving:
-    - salary_annualized
+    - salary_annualized (midpoint of a posted range) with salary_min / salary_max,
+      salary_is_range, salary_is_floor ("starting at"), salary_period,
+      salary_source and salary_parser_version
     - cost_of_living_index
     - salary_lincoln_adjusted
     """
     salary_annualized_count = 0
+    salary_recovered_count = 0
     cost_index_backfilled = 0
     adjusted_backfilled = 0
 
     for row in rows:
-        salary_annualized = extract_salary_number(row.get("salary"))
-        if salary_annualized is None:
+        parsed, source = parse_row_salary(row)
+        if not parsed.has_value:
             continue
+        salary_annualized = parsed.annual_mid
         salary_annualized_count += 1
+        if source == "description text":
+            salary_recovered_count += 1
         row["salary_annualized"] = salary_annualized
+        row["salary_min"] = parsed.annual_min
+        row["salary_max"] = parsed.annual_max
+        row["salary_is_range"] = parsed.is_range
+        row["salary_is_floor"] = parsed.is_floor
+        row["salary_period"] = parsed.period
+        row["salary_source"] = source
+        row["salary_parser_version"] = PARSER_VERSION
 
         existing_adjusted = _as_positive_float(row.get("salary_lincoln_adjusted"))
         existing_index = _as_positive_float(row.get("cost_of_living_index"))
+        # An adjusted value computed from an earlier annualized figure (older parser
+        # or a different range convention) no longer matches; recompute it.
+        if existing_adjusted is not None and existing_index is not None:
+            if abs(existing_adjusted * existing_index - salary_annualized) > 1:
+                existing_adjusted = None
+        elif row.get("salary_adjustment_source") == "analytics_backfill":
+            existing_adjusted = None
         mapped_index = COL_ADJUSTER.get_cost_index(
             str(row.get("location") or ""),
             log_missing=False,
@@ -814,6 +875,7 @@ def enrich_compensation_fields(rows: List[Dict[str, Any]]) -> Dict[str, int]:
 
     return {
         "salary_annualized": salary_annualized_count,
+        "salary_recovered": salary_recovered_count,
         "cost_index_backfilled": cost_index_backfilled,
         "adjusted_backfilled": adjusted_backfilled,
     }
@@ -853,7 +915,7 @@ def calculate_analytics(data: List[Dict[str, Any]]) -> Dict[str, Any]:
         normalized_disc = normalize_discipline(original_disc)
         discipline_data[normalized_disc]["count"] += 1
 
-        salary = extract_salary_number(p.get("salary"))
+        salary = row_salary(p)
         # Salary statistics describe the U.S. market; rows known to be non-U.S.
         # stay in the dataset but are excluded from these aggregates.
         if salary and p.get("is_us_mappable") is not False:
@@ -886,12 +948,12 @@ def calculate_analytics(data: List[Dict[str, Any]]) -> Dict[str, Any]:
             }
 
     positions_with_salary = sum(
-        1 for p in data if extract_salary_number(p.get("salary"))
+        1 for p in data if row_salary(p)
     )
     positions_with_col_adjusted = sum(
         1
         for p in data
-        if extract_salary_number(p.get("salary"))
+        if row_salary(p)
         and _as_positive_float(p.get("salary_lincoln_adjusted")) is not None
     )
 

@@ -17,6 +17,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
+from wildlife_grad.utils.salary import parse_salary
+
 # For NLP-based classification
 try:
     import numpy as np
@@ -1609,87 +1611,16 @@ class CostOfLivingAdjuster:
 
         return 0.0, cost_index
 
-    def _extract_salary_value(self, salary_str: str) -> float:
-        """Extract annualized salary value from salary text."""
-        if not salary_str:
-            return 0.0
+    def _extract_salary_value(
+        self, salary_str: str, hours_per_week: Optional[float] = None
+    ) -> float:
+        """Annualized salary for a posting: the midpoint of a posted range.
 
-        salary_lower = salary_str.lower().strip()
-
-        # Return 0 for explicitly non-numeric salaries
-        if any(
-            phrase in salary_lower
-            for phrase in [
-                "commensurate",
-                "negotiable",
-                "competitive",
-                "none",
-                "n/a",
-                "depends on",
-                "varies",
-                "tbd",
-                "to be determined",
-            ]
-        ):
-            return 0.0
-
-        annual_multiplier = 1.0
-        hourly_match = re.search(r"\b(hour|hr|hrs|/hr)\b", salary_lower)
-        if hourly_match:
-            rate_match = re.search(
-                r"\$?\s*(\d{1,3}(?:\.\d+)?)\s*(?:/|\s+per\s+)?\s*(?:hour|hr|hrs)\b",
-                salary_lower,
-            )
-            hours_match = re.search(
-                r"(\d{1,2}(?:\.\d+)?)\s*(?:hours?|hrs?)\s*(?:/|\s+per\s+)?\s*(?:week|wk)\b",
-                salary_lower,
-            )
-            if not rate_match or not hours_match:
-                return 0.0
-            hourly_rate = float(rate_match.group(1))
-            weekly_hours = float(hours_match.group(1))
-            annualized = hourly_rate * weekly_hours * 52.0
-            return annualized if 1000 <= annualized <= 300000 else 0.0
-        elif re.search(r"\b(bi-?week|fortnight)\b", salary_lower):
-            annual_multiplier = 26.0
-        elif re.search(r"\b(week|wk|/wk)\b", salary_lower):
-            annual_multiplier = 52.0
-        elif re.search(r"\b(day|daily|/day)\b", salary_lower):
-            annual_multiplier = 260.0
-        elif re.search(r"\b(month|mo|/mo)\b", salary_lower):
-            annual_multiplier = 12.0
-        elif re.search(r"\b(semester|term)\b", salary_lower):
-            annual_multiplier = 2.0
-
-        amounts = []
-        for raw_num, k_suffix in re.findall(
-            r"\$?\s*(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d{4,7}(?:\.\d+)?|\d{1,3}(?:\.\d+)?)\s*([kK]?)",
-            salary_str,
-        ):
-            try:
-                clean_num = raw_num.replace(",", "")
-                value = float(clean_num)
-                if k_suffix:
-                    value *= 1000.0
-                if value <= 0:
-                    continue
-                amounts.append(value)
-            except (ValueError, TypeError):
-                continue
-
-        if not amounts:
-            return 0.0
-
-        uses_range = (
-            len(amounts) >= 2
-            and bool(re.search(r"\bbetween\b|\bto\b|\bup to\b|[-–—]", salary_lower))
-        )
-        base_amount = min(amounts) if uses_range else max(amounts)
-        annualized = base_amount * annual_multiplier
-
-        if 1000 <= annualized <= 300000:
-            return annualized
-        return 0.0
+        Returns 0.0 when no usable number exists. Use ``parse_salary`` directly for
+        the minimum, maximum and floor flag.
+        """
+        parsed = parse_salary(salary_str, hours_per_week)
+        return parsed.annual_mid or 0.0
 
 
 class HistoricalDataManager:
