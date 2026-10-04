@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-04T10:19:30.564429",
+  "updated_at": "2026-10-04T15:10:01.297091",
   "promoted": {
     "model_id": "20261004_101930",
     "artifact_path": "data/models/discipline/models/discipline_model_20261004_101930.pkl",
@@ -777,6 +777,26 @@
       "reason": "macro_f1_improved",
       "model_id": "20261004_101930",
       "artifact_path": "data/models/discipline/models/discipline_model_20261004_101930.pkl",
+      "metrics": {
+        "accuracy": 0.7090909090909091,
+        "macro_f1": 0.6232142857142857,
+        "weighted_f1": 0.6949783549783549,
+        "evaluation_mode": "holdout",
+        "validation_samples": 55,
+        "human_cv": {
+          "n": 114,
+          "folds": 3,
+          "accuracy": 0.6403508771929824,
+          "macro_f1": 0.5938020721750101
+        }
+      }
+    },
+    {
+      "timestamp": "2026-10-04T15:10:01.297077",
+      "status": "candidate_rejected",
+      "reason": "validation_not_improved",
+      "model_id": "20261004_151001",
+      "artifact_path": "data/models/discipline/models/discipline_model_20261004_151001.pkl",
       "metrics": {
         "accuracy": 0.7090909090909091,
         "macro_f1": 0.6232142857142857,

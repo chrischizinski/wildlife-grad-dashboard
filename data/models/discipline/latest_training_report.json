@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-10-04T10:19:30.827632",
+  "generated_at": "2026-10-04T15:10:01.553975",
   "trained": true,
-  "promoted": true,
-  "promotion_reason": "macro_f1_improved",
+  "promoted": false,
+  "promotion_reason": "validation_not_improved",
   "metrics": {
     "accuracy": 0.7090909090909091,
     "macro_f1": 0.6232142857142857,
@@ -17,22 +17,22 @@
     }
   },
   "previous_metrics": {
-    "accuracy": 0.7222222222222222,
-    "macro_f1": 0.6359182160072038,
-    "weighted_f1": 0.7085415305660021,
+    "accuracy": 0.7090909090909091,
+    "macro_f1": 0.6232142857142857,
+    "weighted_f1": 0.6949783549783549,
     "evaluation_mode": "holdout",
-    "validation_samples": 54,
+    "validation_samples": 55,
     "human_cv": {
-      "n": 109,
+      "n": 114,
       "folds": 3,
-      "accuracy": 0.6422018348623854,
-      "macro_f1": 0.5789626385145253
+      "accuracy": 0.6403508771929824,
+      "macro_f1": 0.5938020721750101
     }
   },
   "candidate_model": {
-    "model_id": "20261004_101930",
-    "trained_at": "2026-10-04T10:19:30.517415",
-    "artifact_path": "data/models/discipline/models/discipline_model_20261004_101930.pkl",
+    "model_id": "20261004_151001",
+    "trained_at": "2026-10-04T15:10:01.263630",
+    "artifact_path": "data/models/discipline/models/discipline_model_20261004_151001.pkl",
     "classes": [
       "Agriculture",
       "Entomology",

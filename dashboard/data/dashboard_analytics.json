@@ -1,15 +1,15 @@
 {
   "metadata": {
-    "generated_at": "2026-10-04T10:19:35Z",
-    "last_updated": "2026-10-04T10:19:35Z",
+    "generated_at": "2026-10-04T15:10:06Z",
+    "last_updated": "2026-10-04T15:10:06Z",
     "total_positions": 253,
     "source": "merged (historical + latest + enhanced)",
     "discipline_mapping": "consolidated to 8 categories",
     "freshness": {
-      "analytics_generated_at": "2026-10-04T10:19:35Z",
-      "latest_capture_at": "2026-10-04T10:17:40.034037+00:00",
+      "analytics_generated_at": "2026-10-04T15:10:06Z",
+      "latest_capture_at": "2026-10-04T15:08:14.535524+00:00",
       "latest_capture_source": "scraped_at",
-      "latest_snapshot_run_at": "2026-10-04T10:19:20",
+      "latest_snapshot_run_at": "2026-10-04T15:09:51",
       "posting_period_start": "2024-08-29",
       "posting_period_end": "2026-10-02",
       "row_count": 253
@@ -18,8 +18,8 @@
   "summary_stats": {
     "total_positions": 253,
     "graduate_positions": 253,
-    "positions_with_salary": 185,
-    "positions_with_col_adjusted": 185,
+    "positions_with_salary": 206,
+    "positions_with_col_adjusted": 206,
     "positions_with_location": 237,
     "positions_with_us_mappable_location": 215
   },
@@ -28,23 +28,23 @@
       "total_positions": 20,
       "grad_positions": 20,
       "salary_stats_nominal": {
-        "count": 11,
-        "mean": 28253.55,
-        "median": 28000.0,
+        "count": 12,
+        "mean": 28332.42,
+        "median": 27500.0,
         "min": 14400.0,
         "max": 40000.0
       },
       "salary_stats_col_adjusted": {
-        "count": 11,
-        "mean": 28852.76,
-        "median": 30618.0,
+        "count": 12,
+        "mean": 29420.95,
+        "median": 30864.56,
         "min": 15157.89,
         "max": 38750.0
       },
       "salary_stats": {
-        "count": 11,
-        "mean": 28253.55,
-        "median": 28000.0,
+        "count": 12,
+        "mean": 28332.42,
+        "median": 27500.0,
         "min": 14400.0,
         "max": 40000.0
       }
@@ -53,73 +53,73 @@
       "total_positions": 65,
       "grad_positions": 65,
       "salary_stats_nominal": {
-        "count": 47,
-        "mean": 27292.02,
-        "median": 27000.0,
+        "count": 50,
+        "mean": 27978.7,
+        "median": 28356.25,
         "min": 15000.0,
-        "max": 45000.0
+        "max": 47500.0
       },
       "salary_stats_col_adjusted": {
-        "count": 47,
-        "mean": 29350.05,
-        "median": 30000.0,
+        "count": 50,
+        "mean": 29905.77,
+        "median": 30714.28,
         "min": 15789.47,
-        "max": 52941.18
+        "max": 55882.35
       },
       "salary_stats": {
-        "count": 47,
-        "mean": 27292.02,
-        "median": 27000.0,
+        "count": 50,
+        "mean": 27978.7,
+        "median": 28356.25,
         "min": 15000.0,
-        "max": 45000.0
+        "max": 47500.0
       }
     },
     "Wildlife": {
       "total_positions": 85,
       "grad_positions": 85,
       "salary_stats_nominal": {
-        "count": 56,
-        "mean": 26433.38,
-        "median": 26579.5,
+        "count": 61,
+        "mean": 26711.19,
+        "median": 26508.0,
         "min": 9900.0,
-        "max": 61008.0
+        "max": 67548.0
       },
       "salary_stats_col_adjusted": {
-        "count": 56,
-        "mean": 28804.31,
-        "median": 29442.72,
+        "count": 61,
+        "mean": 28961.83,
+        "median": 30300.0,
         "min": 11647.06,
         "max": 50526.32
       },
       "salary_stats": {
-        "count": 56,
-        "mean": 26433.38,
-        "median": 26579.5,
+        "count": 61,
+        "mean": 26711.19,
+        "median": 26508.0,
         "min": 9900.0,
-        "max": 61008.0
+        "max": 67548.0
       }
     },
     "Entomology": {
       "total_positions": 13,
       "grad_positions": 13,
       "salary_stats_nominal": {
-        "count": 10,
-        "mean": 26290.7,
-        "median": 25700.0,
+        "count": 12,
+        "mean": 25863.92,
+        "median": 24650.0,
         "min": 18000.0,
         "max": 34000.0
       },
       "salary_stats_col_adjusted": {
-        "count": 10,
-        "mean": 30232.31,
-        "median": 29519.74,
+        "count": 12,
+        "mean": 29849.56,
+        "median": 28775.0,
         "min": 18947.37,
         "max": 40000.0
       },
       "salary_stats": {
-        "count": 10,
-        "mean": 26290.7,
-        "median": 25700.0,
+        "count": 12,
+        "mean": 25863.92,
+        "median": 24650.0,
         "min": 18000.0,
         "max": 34000.0
       }
@@ -128,23 +128,23 @@
       "total_positions": 39,
       "grad_positions": 39,
       "salary_stats_nominal": {
-        "count": 18,
-        "mean": 24820.5,
-        "median": 23750.0,
+        "count": 24,
+        "mean": 23972.73,
+        "median": 24000.0,
         "min": 15000.0,
         "max": 35484.0
       },
       "salary_stats_col_adjusted": {
-        "count": 18,
-        "mean": 28699.06,
-        "median": 28000.0,
-        "min": 15000.0,
+        "count": 24,
+        "mean": 27509.75,
+        "median": 28823.53,
+        "min": 12814.29,
         "max": 44355.0
       },
       "salary_stats": {
-        "count": 18,
-        "mean": 24820.5,
-        "median": 23750.0,
+        "count": 24,
+        "mean": 23972.73,
+        "median": 24000.0,
         "min": 15000.0,
         "max": 35484.0
       }
@@ -153,23 +153,23 @@
       "total_positions": 7,
       "grad_positions": 7,
       "salary_stats_nominal": {
-        "count": 3,
-        "mean": 25333.33,
-        "median": 30000.0,
+        "count": 4,
+        "mean": 25250.0,
+        "median": 27500.0,
         "min": 15000.0,
         "max": 31000.0
       },
       "salary_stats_col_adjusted": {
-        "count": 3,
-        "mean": 26553.25,
-        "median": 31578.95,
+        "count": 4,
+        "mean": 26859.38,
+        "median": 29678.36,
         "min": 13636.36,
         "max": 34444.44
       },
       "salary_stats": {
-        "count": 3,
-        "mean": 25333.33,
-        "median": 30000.0,
+        "count": 4,
+        "mean": 25250.0,
+        "median": 27500.0,
         "min": 15000.0,
         "max": 31000.0
       }
@@ -203,24 +203,24 @@
       "total_positions": 10,
       "grad_positions": 10,
       "salary_stats_nominal": {
-        "count": 5,
-        "mean": 21000.0,
-        "median": 14000.0,
-        "min": 9000.0,
+        "count": 7,
+        "mean": 21928.57,
+        "median": 21000.0,
+        "min": 12000.0,
         "max": 40000.0
       },
       "salary_stats_col_adjusted": {
-        "count": 5,
-        "mean": 24348.84,
-        "median": 15555.56,
-        "min": 7826.09,
+        "count": 7,
+        "mean": 24572.84,
+        "median": 23333.33,
+        "min": 10434.78,
         "max": 53333.33
       },
       "salary_stats": {
-        "count": 5,
-        "mean": 21000.0,
-        "median": 14000.0,
-        "min": 9000.0,
+        "count": 7,
+        "mean": 21928.57,
+        "median": 21000.0,
+        "min": 12000.0,
         "max": 40000.0
       }
     }
@@ -867,7 +867,7 @@
       "2026-07": 2,
       "2026-10": 1
     },
-    "latest_run_timestamp": "2026-10-04T10:19:20",
+    "latest_run_timestamp": "2026-10-04T15:09:51",
     "latest_run_grad_positions": 17,
     "latest_run_discipline_breakdown": {
       "Environmental Sciences": 1,
@@ -877,5 +877,5 @@
       "Other": 8
     }
   },
-  "last_updated": "2026-10-04T10:19:35Z"
+  "last_updated": "2026-10-04T15:10:06Z"
 }
