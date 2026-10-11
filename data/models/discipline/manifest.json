@@ -1,8 +1,8 @@
 {
-  "updated_at": "2026-10-04T15:10:01.297091",
+  "updated_at": "2026-10-11T10:26:27.805371",
   "promoted": {
-    "model_id": "20261004_101930",
-    "artifact_path": "data/models/discipline/models/discipline_model_20261004_101930.pkl",
+    "model_id": "20261011_102627",
+    "artifact_path": "data/models/discipline/models/discipline_model_20261011_102627.pkl",
     "metrics": {
       "accuracy": 0.7090909090909091,
       "macro_f1": 0.6232142857142857,
@@ -12,8 +12,8 @@
       "human_cv": {
         "n": 114,
         "folds": 3,
-        "accuracy": 0.6403508771929824,
-        "macro_f1": 0.5938020721750101
+        "accuracy": 0.6491228070175439,
+        "macro_f1": 0.608737137110075
       }
     },
     "training_summary": {
@@ -34,7 +34,7 @@
       "pseudo_weight": 0.35,
       "positions_file": "web/data/dashboard_positions.json"
     },
-    "promoted_at": "2026-10-04T10:19:30.564433"
+    "promoted_at": "2026-10-11T10:26:27.805374"
   },
   "history": [
     {
@@ -808,6 +808,26 @@
           "folds": 3,
           "accuracy": 0.6403508771929824,
           "macro_f1": 0.5938020721750101
+        }
+      }
+    },
+    {
+      "timestamp": "2026-10-11T10:26:27.805359",
+      "status": "promoted",
+      "reason": "macro_f1_improved",
+      "model_id": "20261011_102627",
+      "artifact_path": "data/models/discipline/models/discipline_model_20261011_102627.pkl",
+      "metrics": {
+        "accuracy": 0.7090909090909091,
+        "macro_f1": 0.6232142857142857,
+        "weighted_f1": 0.6949783549783549,
+        "evaluation_mode": "holdout",
+        "validation_samples": 55,
+        "human_cv": {
+          "n": 114,
+          "folds": 3,
+          "accuracy": 0.6491228070175439,
+          "macro_f1": 0.608737137110075
         }
       }
     }
