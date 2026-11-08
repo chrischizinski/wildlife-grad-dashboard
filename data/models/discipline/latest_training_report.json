@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-01T10:55:09.200933",
+  "generated_at": "2026-11-08T10:52:41.024662",
   "trained": true,
   "promoted": false,
   "promotion_reason": "validation_not_improved",
@@ -30,9 +30,9 @@
     }
   },
   "candidate_model": {
-    "model_id": "20261101_105509",
-    "trained_at": "2026-11-01T10:55:09.003458",
-    "artifact_path": "data/models/discipline/models/discipline_model_20261101_105509.pkl",
+    "model_id": "20261108_105240",
+    "trained_at": "2026-11-08T10:52:40.759981",
+    "artifact_path": "data/models/discipline/models/discipline_model_20261108_105240.pkl",
     "classes": [
       "Agriculture",
       "Entomology",
@@ -90,5 +90,5 @@
   "dropped_rare_gold_classes": {},
   "pseudo_labels": 0,
   "pseudo_class_counts": {},
-  "confidence_queue_count": 10
+  "confidence_queue_count": 11
 }

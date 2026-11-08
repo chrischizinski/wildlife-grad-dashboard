@@ -1,7 +1,7 @@
 {
-  "model_id": "20261018_082549",
-  "trained_at": "2026-10-18T08:25:49.209847",
-  "artifact_path": "data/models/discipline/models/discipline_model_20261018_082549.pkl",
+  "model_id": "20261108_105240",
+  "trained_at": "2026-11-08T10:52:40.759981",
+  "artifact_path": "data/models/discipline/models/discipline_model_20261108_105240.pkl",
   "classes": [
     "Agriculture",
     "Entomology",
@@ -21,8 +21,8 @@
     "human_cv": {
       "n": 114,
       "folds": 3,
-      "accuracy": 0.6403508771929824,
-      "macro_f1": 0.5938020721750101
+      "accuracy": 0.6491228070175439,
+      "macro_f1": 0.608737137110075
     }
   },
   "training_summary": {

@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-01T10:55:12.385457",
-  "count": 10,
+  "generated_at": "2026-11-08T10:52:44.874993",
+  "count": 11,
   "items": [
     {
       "severity": 3,
@@ -188,6 +188,30 @@
       "location": "1 Greenhouse Rd (Kingston, Rhode Island)",
       "url": "https://jobs.rwfm.tamu.edu/view-job/?id=116012",
       "published_date": "04/28/2026",
+      "discipline_refinement_source": "rule",
+      "review_status": "",
+      "reviewed_discipline": "",
+      "review_notes": "",
+      "reviewer": ""
+    },
+    {
+      "severity": 3,
+      "reasons": [
+        "final_other",
+        "still_other_low_signal"
+      ],
+      "position_key": "title_org::m.s. assistantship \u2013 eastern red cedar response to environmental stressors::oklahoma state university (state)::stillwater, oklahoma::11/03/2026",
+      "discipline_final": "Other",
+      "discipline_model_suggested": "Wildlife",
+      "discipline_model_secondary": "",
+      "model_id": "20261011_102627",
+      "model_confidence": 0.181,
+      "model_margin": 0.007,
+      "title": "M.S. Assistantship \u2013 Eastern red cedar response to environmental stressors",
+      "organization": "Oklahoma State University (State)",
+      "location": "Stillwater, Oklahoma",
+      "url": "https://jobs.rwfm.tamu.edu/view-job/?id=119932",
+      "published_date": "11/03/2026",
       "discipline_refinement_source": "rule",
       "review_status": "",
       "reviewed_discipline": "",
