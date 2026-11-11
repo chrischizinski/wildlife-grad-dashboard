@@ -1,27 +1,27 @@
 {
   "metadata": {
-    "generated_at": "2026-11-08T10:52:45Z",
-    "last_updated": "2026-11-08T10:52:45Z",
-    "total_positions": 288,
+    "generated_at": "2026-11-11T19:18:28Z",
+    "last_updated": "2026-11-11T19:18:28Z",
+    "total_positions": 291,
     "source": "merged (historical + latest + enhanced)",
     "discipline_mapping": "consolidated to 8 categories",
     "freshness": {
-      "analytics_generated_at": "2026-11-08T10:52:45Z",
-      "latest_capture_at": "2026-11-08T10:51:11.547456+00:00",
+      "analytics_generated_at": "2026-11-11T19:18:28Z",
+      "latest_capture_at": "2026-11-11T19:17:00.577592+00:00",
       "latest_capture_source": "scraped_at",
-      "latest_snapshot_run_at": "2026-11-08T10:52:31",
+      "latest_snapshot_run_at": "2026-11-11T19:18:15",
       "posting_period_start": "2024-08-29",
-      "posting_period_end": "2026-11-03",
-      "row_count": 288
+      "posting_period_end": "2026-11-10",
+      "row_count": 291
     }
   },
   "summary_stats": {
-    "total_positions": 288,
-    "graduate_positions": 288,
-    "positions_with_salary": 237,
-    "positions_with_col_adjusted": 237,
-    "positions_with_location": 271,
-    "positions_with_us_mappable_location": 247
+    "total_positions": 291,
+    "graduate_positions": 291,
+    "positions_with_salary": 238,
+    "positions_with_col_adjusted": 238,
+    "positions_with_location": 274,
+    "positions_with_us_mappable_location": 250
   },
   "top_disciplines": {
     "Environmental Sciences": {
@@ -75,26 +75,26 @@
       }
     },
     "Wildlife": {
-      "total_positions": 97,
-      "grad_positions": 97,
+      "total_positions": 98,
+      "grad_positions": 98,
       "salary_stats_nominal": {
-        "count": 69,
-        "mean": 26199.92,
-        "median": 26100.0,
+        "count": 70,
+        "mean": 26682.78,
+        "median": 26142.0,
         "min": 9900.0,
         "max": 67548.0
       },
       "salary_stats_col_adjusted": {
-        "count": 69,
-        "mean": 28507.99,
-        "median": 29453.33,
+        "count": 70,
+        "mean": 29053.11,
+        "median": 29726.67,
         "min": 11647.06,
-        "max": 50526.32
+        "max": 66666.67
       },
       "salary_stats": {
-        "count": 69,
-        "mean": 26199.92,
-        "median": 26100.0,
+        "count": 70,
+        "mean": 26682.78,
+        "median": 26142.0,
         "min": 9900.0,
         "max": 67548.0
       }
@@ -175,8 +175,8 @@
       }
     },
     "Human Dimensions": {
-      "total_positions": 16,
-      "grad_positions": 16,
+      "total_positions": 18,
+      "grad_positions": 18,
       "salary_stats_nominal": {
         "count": 12,
         "mean": 25767.67,
@@ -230,14 +230,14 @@
     "Alabama": 14,
     "Louisiana": 14,
     "Tennessee": 11,
+    "South Carolina": 8,
     "Arkansas": 8,
-    "South Carolina": 7,
+    "Illinois": 7,
+    "Georgia": 7,
     "Florida": 7,
-    "Georgia": 6,
     "Kansas": 6,
     "North Dakota": 6,
     "Ohio": 6,
-    "Illinois": 6,
     "Minnesota": 6,
     "Mississippi": 6,
     "West Virginia": 6,
@@ -253,10 +253,10 @@
     "Maryland": 4
   },
   "geographic_quality": {
-    "location_present_count": 271,
-    "us_mappable_count": 247,
+    "location_present_count": 274,
+    "us_mappable_count": 250,
     "unmappable_count": 41,
-    "us_mappable_pct": 85.8
+    "us_mappable_pct": 85.9
   },
   "time_series": {
     "1_month": {
@@ -280,11 +280,11 @@
         "2026-04": 19,
         "2026-05": 12,
         "2026-06": 23,
-        "2026-07": 17,
+        "2026-07": 16,
         "2026-08": 29,
         "2026-09": 37,
         "2026-10": 39,
-        "2026-11": 3
+        "2026-11": 7
       },
       "discipline_monthly": {
         "Environmental Sciences": {
@@ -319,11 +319,12 @@
           "2025-02": 1
         },
         "Wildlife": {
+          "2026-11": 2,
           "2026-10": 14,
           "2025-10": 1,
           "2026-09": 9,
           "2026-08": 15,
-          "2026-07": 5,
+          "2026-07": 4,
           "2025-07": 2,
           "2026-06": 9,
           "2025-06": 8,
@@ -373,6 +374,7 @@
           "2026-01": 2
         },
         "Human Dimensions": {
+          "2026-11": 2,
           "2026-10": 2,
           "2026-09": 3,
           "2026-08": 3,
@@ -416,11 +418,11 @@
         "2026-04": 19,
         "2026-05": 12,
         "2026-06": 23,
-        "2026-07": 17,
+        "2026-07": 16,
         "2026-08": 29,
         "2026-09": 37,
         "2026-10": 39,
-        "2026-11": 3
+        "2026-11": 7
       },
       "discipline_monthly": {
         "Environmental Sciences": {
@@ -455,11 +457,12 @@
           "2025-02": 1
         },
         "Wildlife": {
+          "2026-11": 2,
           "2026-10": 14,
           "2025-10": 1,
           "2026-09": 9,
           "2026-08": 15,
-          "2026-07": 5,
+          "2026-07": 4,
           "2025-07": 2,
           "2026-06": 9,
           "2025-06": 8,
@@ -509,6 +512,7 @@
           "2026-01": 2
         },
         "Human Dimensions": {
+          "2026-11": 2,
           "2026-10": 2,
           "2026-09": 3,
           "2026-08": 3,
@@ -552,11 +556,11 @@
         "2026-04": 19,
         "2026-05": 12,
         "2026-06": 23,
-        "2026-07": 17,
+        "2026-07": 16,
         "2026-08": 29,
         "2026-09": 37,
         "2026-10": 39,
-        "2026-11": 3
+        "2026-11": 7
       },
       "discipline_monthly": {
         "Environmental Sciences": {
@@ -591,11 +595,12 @@
           "2025-02": 1
         },
         "Wildlife": {
+          "2026-11": 2,
           "2026-10": 14,
           "2025-10": 1,
           "2026-09": 9,
           "2026-08": 15,
-          "2026-07": 5,
+          "2026-07": 4,
           "2025-07": 2,
           "2026-06": 9,
           "2025-06": 8,
@@ -645,6 +650,7 @@
           "2026-01": 2
         },
         "Human Dimensions": {
+          "2026-11": 2,
           "2026-10": 2,
           "2026-09": 3,
           "2026-08": 3,
@@ -688,11 +694,11 @@
         "2026-04": 19,
         "2026-05": 12,
         "2026-06": 23,
-        "2026-07": 17,
+        "2026-07": 16,
         "2026-08": 29,
         "2026-09": 37,
         "2026-10": 39,
-        "2026-11": 3
+        "2026-11": 7
       },
       "discipline_monthly": {
         "Environmental Sciences": {
@@ -727,11 +733,12 @@
           "2025-02": 1
         },
         "Wildlife": {
+          "2026-11": 2,
           "2026-10": 14,
           "2025-10": 1,
           "2026-09": 9,
           "2026-08": 15,
-          "2026-07": 5,
+          "2026-07": 4,
           "2025-07": 2,
           "2026-06": 9,
           "2025-06": 8,
@@ -781,6 +788,7 @@
           "2026-01": 2
         },
         "Human Dimensions": {
+          "2026-11": 2,
           "2026-10": 2,
           "2026-09": 3,
           "2026-08": 3,
@@ -834,7 +842,7 @@
       "2026-06-28": 9,
       "2026-07-05": 8,
       "2026-07-12": 11,
-      "2026-11-08": 11
+      "2026-11-11": 9
     },
     "daily_run_count": {
       "2025-10-14": 1,
@@ -863,7 +871,7 @@
       "2026-06-28": 1,
       "2026-07-05": 1,
       "2026-07-12": 1,
-      "2026-11-08": 1
+      "2026-11-11": 1
     },
     "monthly_avg_active_grad_positions": {
       "2025-10": 19,
@@ -873,7 +881,7 @@
       "2026-05": 13.25,
       "2026-06": 9.75,
       "2026-07": 9.5,
-      "2026-11": 11
+      "2026-11": 9
     },
     "monthly_relative_to_peak_pct": {
       "2025-10": 56.1,
@@ -883,7 +891,7 @@
       "2026-05": 39.1,
       "2026-06": 28.8,
       "2026-07": 28.1,
-      "2026-11": 32.5
+      "2026-11": 26.6
     },
     "monthly_run_count": {
       "2025-10": 1,
@@ -895,13 +903,14 @@
       "2026-07": 2,
       "2026-11": 1
     },
-    "latest_run_timestamp": "2026-11-08T10:52:31",
-    "latest_run_grad_positions": 11,
+    "latest_run_timestamp": "2026-11-11T19:18:15",
+    "latest_run_grad_positions": 9,
     "latest_run_discipline_breakdown": {
+      "Fisheries and Aquatic": 1,
       "Wildlife": 2,
-      "Forestry and Habitat": 3,
-      "Other": 6
+      "Forestry and Habitat": 2,
+      "Other": 4
     }
   },
-  "last_updated": "2026-11-08T10:52:45Z"
+  "last_updated": "2026-11-11T19:18:28Z"
 }
