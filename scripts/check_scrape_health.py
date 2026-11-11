@@ -3,9 +3,11 @@
 Health checks for the weekly scrape pipeline. Exit code 1 means "fail loudly".
 
 Modes:
-- guard:     the cumulative dataset must not shrink or come back empty after a
-             scrape (a broken selector or site change would otherwise commit
-             an empty week silently).
+- guard:     after a scrape, (1) the cumulative dataset must not shrink or come
+             back empty, and (2) the scraper must have written a non-empty
+             weekly batch. A broken selector or site change would otherwise
+             commit an empty week silently: when the scraper finds 0 jobs it
+             writes nothing, so the cumulative file just stays the same size.
 - freshness: dashboard_analytics.json must have been updated recently (catches
              a scheduled run that never fired).
 """
@@ -21,7 +23,11 @@ from pathlib import Path
 from typing import Any, List, Optional
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-ENHANCED_PATH = "data/enhanced_data.json"
+# Both files are written by src/wildlife_grad/scraper/wildlife_job_scraper.py.
+# (The guard previously read data/enhanced_data.json, which nothing writes, so
+# it compared a frozen file with itself and could never fail.)
+CUMULATIVE_PATH = "data/historical_positions.json"
+BATCH_PATH = "data/processed/verified_graduate_assistantships.json"
 ANALYTICS_PATH = PROJECT_ROOT / "web" / "data" / "dashboard_analytics.json"
 MAX_SHRINK_FRACTION = 0.10
 DEFAULT_MAX_AGE_DAYS = 10
@@ -48,6 +54,22 @@ def check_guard(new_count: int, previous_count: Optional[int]) -> List[str]:
     return problems
 
 
+def check_batch(batch_count: int, rewritten: bool) -> List[str]:
+    """Problems with this run's weekly batch; empty list means healthy.
+
+    `rewritten` is False when the batch file is byte-identical to the committed
+    version, i.e. the scraper did not write it this run (it skips all writes
+    when it finds 0 jobs).
+    """
+    if not rewritten:
+        return [
+            f"{BATCH_PATH} was not rewritten this run (scraper likely found 0 jobs)"
+        ]
+    if batch_count == 0:
+        return ["scraper found 0 new graduate positions this week"]
+    return []
+
+
 def check_freshness(
     last_updated: Optional[str], now: datetime, max_age_days: int
 ) -> List[str]:
@@ -65,16 +87,41 @@ def check_freshness(
     return []
 
 
-def previous_count_from_git() -> Optional[int]:
+def committed_text(rel_path: str) -> Optional[str]:
+    """The file's content at HEAD, or None if it is not committed."""
     result = subprocess.run(
-        ["git", "show", f"HEAD:{ENHANCED_PATH}"],
+        ["git", "show", f"HEAD:{rel_path}"],
         cwd=PROJECT_ROOT,
         capture_output=True,
         text=True,
     )
-    if result.returncode != 0:
-        return None
-    return count_positions(json.loads(result.stdout))
+    return result.stdout if result.returncode == 0 else None
+
+
+def run_guard() -> List[str]:
+    problems: List[str] = []
+
+    cumulative = PROJECT_ROOT / CUMULATIVE_PATH
+    if not cumulative.exists():
+        problems.append(f"{CUMULATIVE_PATH} is missing after scrape")
+    else:
+        new_count = count_positions(json.loads(cumulative.read_text(encoding="utf-8")))
+        committed = committed_text(CUMULATIVE_PATH)
+        previous = count_positions(json.loads(committed)) if committed else None
+        print(f"cumulative positions: previous={previous} new={new_count}")
+        problems.extend(check_guard(new_count, previous))
+
+    batch = PROJECT_ROOT / BATCH_PATH
+    if not batch.exists():
+        problems.append(f"{BATCH_PATH} is missing after scrape")
+    else:
+        text = batch.read_text(encoding="utf-8")
+        batch_count = count_positions(json.loads(text))
+        rewritten = text != committed_text(BATCH_PATH)
+        print(f"weekly batch: positions={batch_count} rewritten={rewritten}")
+        problems.extend(check_batch(batch_count, rewritten))
+
+    return problems
 
 
 def main() -> int:
@@ -84,14 +131,7 @@ def main() -> int:
     args = parser.parse_args()
 
     if args.mode == "guard":
-        path = PROJECT_ROOT / ENHANCED_PATH
-        if not path.exists():
-            problems = [f"{ENHANCED_PATH} is missing after scrape"]
-        else:
-            new_count = count_positions(json.loads(path.read_text(encoding="utf-8")))
-            previous = previous_count_from_git()
-            print(f"positions: previous={previous} new={new_count}")
-            problems = check_guard(new_count, previous)
+        problems = run_guard()
     else:
         payload = json.loads(ANALYTICS_PATH.read_text(encoding="utf-8"))
         problems = check_freshness(
