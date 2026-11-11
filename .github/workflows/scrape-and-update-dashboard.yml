@@ -81,7 +81,6 @@ jobs:
           echo "Copying data files for GitHub Pages deployment..."
           mkdir -p web/data
           cp data/processed/verified_graduate_assistantships.json web/data/
-          [ -f data/enhanced_data.json ] && cp data/enhanced_data.json web/data/ || echo "enhanced_data.json not found, skipping"
           [ -f data/historical_positions.json ] && cp data/historical_positions.json web/data/ || echo "historical_positions.json not found, skipping"
           [ -f dashboard/data/dashboard_analytics.json ] && cp dashboard/data/dashboard_analytics.json web/data/ || echo "dashboard_analytics.json not in dashboard/data/, checking other locations"
           [ -f data/dashboard_analytics.json ] && cp data/dashboard_analytics.json web/data/ || echo "dashboard_analytics.json not found in data/"
@@ -154,10 +153,6 @@ jobs:
           if [ -f "data/processed/verified_graduate_assistantships.json" ]; then
             total_jobs=$(jq 'length' data/processed/verified_graduate_assistantships.json 2>/dev/null || echo "0")
             echo "- **Graduate positions**: $total_jobs" >> $GITHUB_STEP_SUMMARY
-          fi
-          if [ -f "data/enhanced_data.json" ]; then
-            total_all=$(jq '.positions | length' data/enhanced_data.json 2>/dev/null || echo "0")
-            echo "- **Total positions scraped**: $total_all" >> $GITHUB_STEP_SUMMARY
           fi
           echo "- **Dashboard refreshed**: Yes" >> $GITHUB_STEP_SUMMARY
           echo "- **Mode**: ${{ steps.check_data.outputs.mode }}" >> $GITHUB_STEP_SUMMARY
