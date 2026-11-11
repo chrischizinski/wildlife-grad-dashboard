@@ -705,26 +705,9 @@ def load_and_merge_data() -> List[Dict[str, Any]]:
             except Exception as e:
                 print(f"  ✗ Latest scrape error: {e}")
 
-    # Source 3: Enhanced data (if exists)
-    enhanced_path = Path("web/data/enhanced_data.json")
-    if enhanced_path.exists():
-        try:
-            with open(enhanced_path, "r", encoding="utf-8") as f:
-                data = json.load(f)
-                enhanced = (
-                    data.get("positions", data) if isinstance(data, dict) else data
-                )
-                grad_enhanced = [p for p in enhanced if p.get("is_graduate_position")]
-
-                # Only add if not already present (check by URL)
-                existing_urls = {p.get("url") for p in all_positions if p.get("url")}
-                new_enhanced = [
-                    p for p in grad_enhanced if p.get("url") not in existing_urls
-                ]
-                all_positions.extend(new_enhanced)
-                print(f"  ✓ Enhanced data: {len(new_enhanced)} new positions")
-        except Exception as e:
-            print(f"  ✗ Enhanced data error: {e}")
+    # web/data/enhanced_data.json used to be merged here as "Source 3". Nothing
+    # has written it since 2025; its URL-less rows tied with current historical
+    # rows in dedup and, being loaded last, replaced them (issue #25).
 
     # Deduplicate with a stable row key.
     unique_positions: Dict[str, Dict[str, Any]] = {}
