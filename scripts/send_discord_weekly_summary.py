@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 from urllib import error, request
@@ -32,20 +32,34 @@ def load_json(path: Path) -> Any:
         return json.load(handle)
 
 
+# Sort key for rows with no usable date. Timezone-aware so it compares with
+# every parsed value.
+EARLIEST = datetime.min.replace(tzinfo=timezone.utc)
+
+
 def parse_iso_datetime(value: Optional[str]) -> Optional[datetime]:
+    """Parse a date or timestamp, always returning a UTC-aware datetime.
+
+    Published rows mix aware timestamps with naive ones (older history rows
+    have no offset); comparing the two raises TypeError, so naive values are
+    treated as UTC.
+    """
     if not value:
         return None
     text = str(value).strip().replace("Z", "+00:00")
+    parsed: Optional[datetime] = None
     try:
-        return datetime.fromisoformat(text)
+        parsed = datetime.fromisoformat(text)
     except ValueError:
-        pass
-    for fmt in ("%m/%d/%Y", "%Y-%m-%d"):
-        try:
-            return datetime.strptime(text, fmt)
-        except ValueError:
-            continue
-    return None
+        for fmt in ("%m/%d/%Y", "%Y-%m-%d"):
+            try:
+                parsed = datetime.strptime(text, fmt)
+                break
+            except ValueError:
+                continue
+    if parsed is None:
+        return None
+    return parsed if parsed.tzinfo else parsed.replace(tzinfo=timezone.utc)
 
 
 def extract_rows(payload: Any) -> List[Dict[str, Any]]:
@@ -64,7 +78,7 @@ def latest_capture_rows(rows: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     if with_run_ids:
         latest_row = max(
             with_run_ids,
-            key=lambda row: parse_iso_datetime(row.get("scraped_at")) or datetime.min,
+            key=lambda row: parse_iso_datetime(row.get("scraped_at")) or EARLIEST,
         )
         latest_run_id = str(latest_row.get("scrape_run_id") or "").strip()
         return [row for row in with_run_ids if str(row.get("scrape_run_id") or "").strip() == latest_run_id]
@@ -86,8 +100,8 @@ def sort_capture_rows(rows: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     return sorted(
         rows,
         key=lambda row: (
-            parse_iso_datetime(row.get("published_date")) or datetime.min,
-            parse_iso_datetime(row.get("scraped_at")) or datetime.min,
+            parse_iso_datetime(row.get("published_date")) or EARLIEST,
+            parse_iso_datetime(row.get("scraped_at")) or EARLIEST,
             str(row.get("title") or ""),
         ),
         reverse=True,
