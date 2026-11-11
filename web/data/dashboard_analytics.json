@@ -1,15 +1,15 @@
 {
   "metadata": {
-    "generated_at": "2026-11-11T19:18:28Z",
-    "last_updated": "2026-11-11T19:18:28Z",
+    "generated_at": "2026-11-11T19:29:14Z",
+    "last_updated": "2026-11-11T19:29:14Z",
     "total_positions": 291,
     "source": "merged (historical + latest + enhanced)",
     "discipline_mapping": "consolidated to 8 categories",
     "freshness": {
-      "analytics_generated_at": "2026-11-11T19:18:28Z",
-      "latest_capture_at": "2026-11-11T19:17:00.577592+00:00",
+      "analytics_generated_at": "2026-11-11T19:29:14Z",
+      "latest_capture_at": "2026-11-11T19:27:38.458175+00:00",
       "latest_capture_source": "scraped_at",
-      "latest_snapshot_run_at": "2026-11-11T19:18:15",
+      "latest_snapshot_run_at": "2026-11-11T19:28:59",
       "posting_period_start": "2024-08-29",
       "posting_period_end": "2026-11-10",
       "row_count": 291
@@ -903,7 +903,7 @@
       "2026-07": 2,
       "2026-11": 1
     },
-    "latest_run_timestamp": "2026-11-11T19:18:15",
+    "latest_run_timestamp": "2026-11-11T19:28:59",
     "latest_run_grad_positions": 9,
     "latest_run_discipline_breakdown": {
       "Fisheries and Aquatic": 1,
@@ -912,5 +912,5 @@
       "Other": 4
     }
   },
-  "last_updated": "2026-11-11T19:18:28Z"
+  "last_updated": "2026-11-11T19:29:14Z"
 }

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-11T19:18:24.863831",
+  "generated_at": "2026-11-11T19:29:08.955701",
   "trained": true,
   "promoted": false,
   "promotion_reason": "validation_not_improved",
@@ -12,8 +12,8 @@
     "human_cv": {
       "n": 114,
       "folds": 3,
-      "accuracy": 0.6491228070175439,
-      "macro_f1": 0.608737137110075
+      "accuracy": 0.6403508771929824,
+      "macro_f1": 0.5938020721750101
     }
   },
   "previous_metrics": {
@@ -30,9 +30,9 @@
     }
   },
   "candidate_model": {
-    "model_id": "20261111_191824",
-    "trained_at": "2026-11-11T19:18:24.611334",
-    "artifact_path": "data/models/discipline/models/discipline_model_20261111_191824.pkl",
+    "model_id": "20261111_192908",
+    "trained_at": "2026-11-11T19:29:08.620719",
+    "artifact_path": "data/models/discipline/models/discipline_model_20261111_192908.pkl",
     "classes": [
       "Agriculture",
       "Entomology",
@@ -52,8 +52,8 @@
       "human_cv": {
         "n": 114,
         "folds": 3,
-        "accuracy": 0.6491228070175439,
-        "macro_f1": 0.608737137110075
+        "accuracy": 0.6403508771929824,
+        "macro_f1": 0.5938020721750101
       }
     },
     "training_summary": {
