@@ -6,7 +6,9 @@ on:
 
 jobs:
   playwright-smoke:
-    runs-on: ubuntu-latest
+    # Pinned: ubuntu-latest moved to 26.04 (Nov 2026), which Playwright 1.58.2
+    # cannot install browsers on. Unpin when Playwright is upgraded.
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
 
     steps:
