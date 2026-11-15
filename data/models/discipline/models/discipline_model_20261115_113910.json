@@ -1,7 +1,7 @@
 {
-  "model_id": "20261108_105240",
-  "trained_at": "2026-11-08T10:52:40.759981",
-  "artifact_path": "data/models/discipline/models/discipline_model_20261108_105240.pkl",
+  "model_id": "20261115_113910",
+  "trained_at": "2026-11-15T11:39:10.272645",
+  "artifact_path": "data/models/discipline/models/discipline_model_20261115_113910.pkl",
   "classes": [
     "Agriculture",
     "Entomology",
